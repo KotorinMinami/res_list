@@ -1,0 +1,82 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu May 25 18:33:42 2023 - INFO  - Start to prepare the test environment.
++ touch file1
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu May 25 18:33:43 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'start to run test.'
++ message='start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start to run test.'
+Thu May 25 18:33:44 2023 - INFO  - start to run test.
++ expect
+spawn openssl enc -sm4 -pbkdf2 -in file1 -out file1.sm4
+enter SM4-CBC encryption password:
+Verifying - enter SM4-CBC encryption password:
++ CHECK_RESULT 0 0 0 'sm4 encrypt file fail '
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sm4 encrypt file fail '
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn openssl enc -sm4 -pbkdf2 -d -in file1.sm4 -out file2
+enter SM4-CBC decryption password:
++ CHECK_RESULT 0 0 0 'sm4 decrypt file fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sm4 decrypt file fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu May 25 18:33:46 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu May 25 18:33:47 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu May 25 18:33:48 2023 - INFO  - Start to restore the test environment.
++ rm -f file1 file1.sm4 file2
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Thu May 25 18:33:49 2023 - INFO  - Finish restoring the test environment.

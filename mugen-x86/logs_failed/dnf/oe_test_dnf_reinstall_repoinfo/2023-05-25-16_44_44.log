@@ -1,0 +1,464 @@
++ source common/common_dnf.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu May 25 16:44:44 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ OLD_LANG=en_US.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL tree
++ pkgs=tree
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs tree --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpuyve1thb
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpuyve1thb
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Thu May 25 16:44:49 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu May 25 16:44:49 2023 - INFO  - Start to run test.
++ dnf -y reinstall tree
++ grep Reinstalled
+Reinstalled:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rpm -q tree
++ grep tree
+tree-2.1.0-1.oe2303.x86_64
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf remove -y tree
++ grep Removed
+Removed:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf reinstall -y tree
++ grep 'Package tree available, but not installed'
+Package tree available, but not installed.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf --repo=everything repolist
++ grep everything
+everything                              everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ dnf --repo=everything repolist
+++ wc -l
++ ret=2
++ CHECK_RESULT 2 2 0
++ actual_result=2
++ expect_result=2
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 2x
++ return 0
++ dnf --repoid=everything repolist
++ grep everything
+everything                              everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoinfo
++ grep Repo-id
+Last metadata expiration check: 0:00:17 ago on Thu 25 May 2023 04:44:39 PM UTC.
+Repo-id            : EPOL
+Repo-id            : OS
+Repo-id            : debuginfo
+Repo-id            : everything
+Repo-id            : source
+Repo-id            : update
+Repo-id            : update-source
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repolist
++ grep 'repo id'
+repo id                                 repo name
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoquery tree
++ grep tree
+Last metadata expiration check: 0:00:18 ago on Thu 25 May 2023 04:44:39 PM UTC.
+tree-0:2.1.0-1.oe2303.src
+tree-0:2.1.0-1.oe2303.x86_64
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoquery -all
++ grep /usr/bin/tree
+Last metadata expiration check: 0:00:19 ago on Thu 25 May 2023 04:44:39 PM UTC.
+Package basesystem-12-3.oe2303.noarch contains no files
+Package fftw-libs-3.3.10-1.oe2303.x86_64 contains no files
+Package gnome-packagekit-3.32.0-1.oe2303.x86_64 contains no files
+Package gperftools-2.10-2.oe2303.x86_64 contains no files
+Package libvirt-6.2.0-51.oe2303.x86_64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-51.oe2303.x86_64 contains no files
+Package libvirt-daemon-kvm-6.2.0-51.oe2303.x86_64 contains no files
+Package libvirt-daemon-qemu-6.2.0-51.oe2303.x86_64 contains no files
+Package texlive-collection-basic-9:svn59159-2.oe2303.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn54074-1.oe2303.noarch contains no files
+Package xorg-x11-drivers-7.7-29.oe2303.x86_64 contains no files
+Package abrt-cli-2.14.6-1.oe2303.x86_64 contains no files
+Package abrt-desktop-2.14.6-1.oe2303.x86_64 contains no files
+Package basesystem-12-3.oe2303.noarch contains no files
+Package ceph-2:16.2.7-18.oe2303.x86_64 contains no files
+Package dpdk-doc-21.11-31.oe2303.noarch contains no files
+Package erlang-23.3.4.9-3.oe2303.x86_64 contains no files
+Package erlang-otp_mibs-23.3.4.9-3.oe2303.x86_64 contains no files
+Package esc-help-1.1.2-5.oe2303.noarch contains no files
+Package fence-agents-all-4.2.1-35.oe2303.x86_64 contains no files
+Package fftw-libs-3.3.10-1.oe2303.x86_64 contains no files
+Package gcc_secure-1.0-0.12.oe2303.x86_64 contains no files
+Package gnome-packagekit-3.32.0-1.oe2303.x86_64 contains no files
+Package gperftools-2.10-2.oe2303.x86_64 contains no files
+Package hsqldb-demo-1:2.4.0-4.oe2303.noarch contains no files
+Package hunspell-es-1:2.3-4.oe2303.noarch contains no files
+Package ibus-table-chinese-1.8.2-13.oe2303.noarch contains no files
+Package java-lasso-2.8.0-1.oe2303.x86_64 contains no files
+Package kata-integration-v1.0.0-9.oe2303.x86_64 contains no files
+Package kiwi-systemdeps-9.21.7-4.oe2303.x86_64 contains no files
+Package libknet1-compress-plugins-all-1.22-1.oe2303.x86_64 contains no files
+Package libknet1-crypto-plugins-all-1.22-1.oe2303.x86_64 contains no files
+Package libknet1-plugins-all-1.22-1.oe2303.x86_64 contains no files
+Package libvirt-6.2.0-51.oe2303.x86_64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-51.oe2303.x86_64 contains no files
+Package libvirt-daemon-kvm-6.2.0-51.oe2303.x86_64 contains no files
+Package libvirt-daemon-qemu-6.2.0-51.oe2303.x86_64 contains no files
+Package lorax-lmc-novirt-34.1-3.oe2303.x86_64 contains no files
+Package maven-local-5.3.0-5.oe2303.noarch contains no files
+Package mesa-vulkan-devel-21.3.1-3.oe2303.x86_64 contains no files
+Package nagios-plugins-all-2.3.3-4.oe2303.x86_64 contains no files
+Package nbdkit-1.29.11-1.oe2303.x86_64 contains no files
+Package nginx-all-modules-1:1.23.2-2.oe2303.noarch contains no files
+Package obs-env-1.0-7.oe2303.x86_64 contains no files
+Package pseudo-df1d1321fb093283485c387e3c933d2d264e509c-1.oe2303.x86_64 contains no files
+Package python3-pillow-help-9.3.0-1.oe2303.noarch contains no files
+Package setools-4.4.0-3.oe2303.x86_64 contains no files
+Package texlive-9:2021-2.oe2303.noarch contains no files
+Package texlive-babel-bahasa-doc-9:svn30255.1.0l.metapackage-1.oe2303.noarch contains no files
+Package texlive-babel-bahasa-9:svn30255.1.0l.metapackage-1.oe2303.noarch contains no files
+Package texlive-bibtexperllibs-9:svn57137-1.oe2303.noarch contains no files
+Package texlive-collection-basic-9:svn59159-2.oe2303.noarch contains no files
+Package texlive-collection-context-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn54074-1.oe2303.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-games-9:svn58896-1.oe2303.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-2.oe2303.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-2.oe2303.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-2.oe2303.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-2.oe2303.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-2.oe2303.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-2.oe2303.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-2.oe2303.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-2.oe2303.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-2.oe2303.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-2.oe2303.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-2.oe2303.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-langother-9:svn57757-2.oe2303.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-2.oe2303.noarch contains no files
+Package texlive-collection-latex-9:svn57048-2.oe2303.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-2.oe2303.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-2.oe2303.noarch contains no files
+Package texlive-collection-metapost-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-music-9:svn57878-2.oe2303.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-2.oe2303.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-2.oe2303.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-2.oe2303.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-2.oe2303.noarch contains no files
+Package texlive-collection-texworks-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-2.oe2303.noarch contains no files
+Package texlive-gloss-occitan-9:svn52593-1.oe2303.noarch contains no files
+Package texlive-hyphen-arabic-9:svn54568-2.oe2303.noarch contains no files
+Package texlive-hyphen-farsi-9:svn54568-2.oe2303.noarch contains no files
+Package texlive-obsolete-9:2021-1.oe2303.noarch contains no files
+Package texlive-scheme-basic-9:svn54191-1.oe2303.noarch contains no files
+Package texlive-scheme-context-9:svn54074-1.oe2303.noarch contains no files
+Package texlive-scheme-minimal-9:svn54191-1.oe2303.noarch contains no files
+Package texlive-scheme-small-9:svn54191-1.oe2303.noarch contains no files
+Package uthash-help-2.1.0-1.oe2303.noarch contains no files
+Package xorg-x11-drivers-7.7-29.oe2303.x86_64 contains no files
+Package yaffs2-b4ce1bb-1.oe2303.x86_64 contains no files
+Package yocto-poky-3.3.6-1.oe2303.noarch contains no files
+Package biometric-authentication-0.9.72-8.oe2303.x86_64 contains no files
+Package claws-mail-plugins-4.0.0-1.oe2303.x86_64 contains no files
+Package dde-qt5wayland-plugin-5.0.25.1-1.oe2303.x86_64 contains no files
+Package fastdfs-6.9.4-1.oe2303.x86_64 contains no files
+Package gala-ops-1.0.1-3.oe2303.x86_64 contains no files
+Package kiran-themes-0.8.1-3.kb1.oe2303.noarch contains no files
+Package kubernetes-1.24.0-1.oe2303.x86_64 contains no files
+Package libkysdk-applications-2.0.0-3.oe2303.x86_64 contains no files
+Package libkysdk-base-2.0.0-3.oe2303.x86_64 contains no files
+Package libkysdk-system-2.0.0-4.oe2303.x86_64 contains no files
+Package mate-utils-1.24.0-4.oe2303.x86_64 contains no files
+Package python-msgpack-debuginfo-1.0.4-1.oe2303.x86_64 contains no files
+Package python-msgpack-debugsource-1.0.4-1.oe2303.x86_64 contains no files
+Package python-scandir-debuginfo-1.10.0-2.oe2303.x86_64 contains no files
+Package python-scandir-debugsource-1.10.0-2.oe2303.x86_64 contains no files
+Package python-selenium-debuginfo-3.141.0-3.oe2303.x86_64 contains no files
+Package python-selenium-debugsource-3.141.0-3.oe2303.x86_64 contains no files
+Package python-ujson-debuginfo-5.1.0-2.oe2303.x86_64 contains no files
+Package python-ujson-debugsource-5.1.0-2.oe2303.x86_64 contains no files
+Package python-watchdog-debuginfo-2.2.1-1.oe2303.x86_64 contains no files
+Package python-watchdog-debugsource-2.2.1-1.oe2303.x86_64 contains no files
+Package stb-devel-0.20220908git8b5f1f3-0.4.oe2303.x86_64 contains no files
+Package basesystem-12-3.oe2303.noarch contains no files
+Package python-mypy-debuginfo-0.991-1.oe2303.x86_64 contains no files
+Package python-mypy-debugsource-0.991-1.oe2303.x86_64 contains no files
+Package python-pyinstaller-debuginfo-3.6-1.oe2303.x86_64 contains no files
+Package python-pyinstaller-debugsource-3.6-1.oe2303.x86_64 contains no files
+Package tensorflow-debugsource-2.10.0-5.oe2303.x86_64 contains no files
+/usr/bin/tree
+/usr/lib/debug/usr/bin/tree-2.1.0-1.oe2303.x86_64.debug
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf -y install sysstat
++ rpm -q sysstat
++ grep sysstat
+package sysstat is not installed
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf search vim
++ grep vim-enhanced
+Waiting for process with pid 4341 to finish.
+Last metadata expiration check: 0:00:40 ago on Thu 25 May 2023 04:44:39 PM UTC.
+Dependencies resolved.
+================================================================================
+ Package             Architecture    Version                  Repository   Size
+================================================================================
+Installing:
+ sysstat             x86_64          12.6.2-1.oe2303          OS          427 k
+Installing dependencies:
+ lm_sensors          x86_64          3.6.0-5.oe2303           OS          139 k
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total download size: 566 k
+Installed size: 2.1 M
+Downloading Packages:
+(1/2): lm_sensors-3.6.0-5.oe2303.x86_64.rpm     220 kB/s | 139 kB     00:00    
+(2/2): sysstat-12.6.2-1.oe2303.x86_64.rpm       475 kB/s | 427 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                           628 kB/s | 566 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Last metadata expiration check: 0:00:41 ago on Thu 25 May 2023 04:44:39 PM UTC.
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1vim-enhanced.x86_64 : This is a package containing enhanced vim editor.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep Upgrading:
++ dnf update-minimal --assumeno
+ 
+  Installing       : lm_sensors-3.6.0-5.oe2303.x86_64                       1/2 
+  Running scriptlet: lm_sensors-3.6.0-5.oe2303.x86_64                       1/2 
+Created symlink /etc/systemd/system/multi-user.target.wants/lm_sensors.service → /usr/lib/systemd/system/lm_sensors.service.
+
+  Running scriptlet: sysstat-12.6.2-1.oe2303.x86_64                         2/2 
+  Installing       : sysstat-12.6.2-1.oe2303.x86_64                         2/2 
+  Running scriptlet: sysstat-12.6.2-1.oe2303.x86_64                         2/2 
+Created symlink /etc/systemd/system/multi-user.target.wants/sysstat.service → /usr/lib/systemd/system/sysstat.service.
+Created symlink /etc/systemd/system/sysstat.service.wants/sysstat-collect.timer → /usr/lib/systemd/system/sysstat-collect.timer.
+Created symlink /etc/systemd/system/sysstat.service.wants/sysstat-summary.timer → /usr/lib/systemd/system/sysstat-summary.timer.
+
+  Verifying        : lm_sensors-3.6.0-5.oe2303.x86_64                       1/2 
+  Verifying        : sysstat-12.6.2-1.oe2303.x86_64                         2/2+ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 59'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 59'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 59'
+ 
+
+Installed:
+  lm_sensors-3.6.0-5.oe2303.x86_64        sysstat-12.6.2-1.oe2303.x86_64       
+
+Complete!
+Thu May 25 16:45:21 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 59
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf --version
++ grep -B 1 dnf
+4.14.0
+  Installed: dnf-0:4.14.0-13.oe2303.noarch at Wed 29 Mar 2023 07:39:23 AM GMT
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Thu May 25 16:45:22 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu May 25 16:45:22 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu May 25 16:45:22 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_REMOVE 1 'tree sysstat'
++ node=1
++ pkg_list='tree sysstat'
++ mode=0
++ [[ -z /tmp/tmpuyve1thb ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs 'tree sysstat' --tempfile /tmp/tmpuyve1thb
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Thu May 25 16:45:24 2023 - INFO  - Finish restoring the test environment.
