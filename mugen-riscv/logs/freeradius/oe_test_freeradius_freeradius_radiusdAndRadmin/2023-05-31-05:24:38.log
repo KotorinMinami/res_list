@@ -1,0 +1,389 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed May 31 05:24:44 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL freeradius
++ pkgs=freeradius
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs freeradius --node 1 --tempfile ''
+Wed May 31 05:25:08 2023 - INFO  - pkgs:(freeradius) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e 'show version\nquit'
+++ rpm -q freeradius
+++ awk -F - '{print $2}'
++ radiusd_version=3.0.26
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed May 31 05:25:10 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed May 31 05:25:12 2023 - INFO  - Start to run test.
++ grep 3.0.26
++ radiusd -v
+radiusd: FreeRADIUS Version 3.0.26, for host riscv64-openEuler-linux-gnu, built on Mar 20 2023 at 16:22:34
+FreeRADIUS Version 3.0.26
++ CHECK_RESULT 0 0 0 'radiusd -v execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -v execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ CHECK_RESULT 0 0 0 'radiusd -X execution failed.'
++ actual_result=0
++ expect_result=0
++ grep Loading
++ mode=0
++ error_log='radiusd -X execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ radiusd -X
++ return 0
+++ pgrep -f 'radiusd -X'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ ln -s /etc/raddb/sites-available/control-socket /etc/raddb/sites-enabled/control-socket
+ln: failed to create symbolic link '/etc/raddb/sites-enabled/control-socket': No such file or directory
++ systemctl start radiusd
+Job for radiusd.service failed because the control process exited with error code.
+See "systemctl status radiusd.service" and "journalctl -xeu radiusd.service" for details.
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ radmin -d /etc/raddb
++ grep 3.0.26
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ CHECK_RESULT 1 0 0 'radmin -d execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='radmin -d execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'radmin -d execution failed.'
++ LOG_ERROR 'radmin -d execution failed.'
++ message='radmin -d execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'radmin -d execution failed.'
+Wed May 31 05:25:21 2023 - ERROR - radmin -d execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 43'
++ message='oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 43'
+Wed May 31 05:25:23 2023 - ERROR - oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ radmin -D /usr/share/freeradius
++ grep 3.0.26
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ CHECK_RESULT 1 0 0 'radmin -D execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='radmin -D execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'radmin -D execution failed.'
++ LOG_ERROR 'radmin -D execution failed.'
++ message='radmin -D execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'radmin -D execution failed.'
+Wed May 31 05:25:26 2023 - ERROR - radmin -D execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 45'
++ message='oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 45'
+Wed May 31 05:25:28 2023 - ERROR - oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ radmin -e 'show version'
++ grep 3.0.26
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ CHECK_RESULT 1 0 0 'radmin -e execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='radmin -e execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'radmin -e execution failed.'
++ LOG_ERROR 'radmin -e execution failed.'
++ message='radmin -e execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'radmin -e execution failed.'
+Wed May 31 05:25:30 2023 - ERROR - radmin -e execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 47'
++ message='oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 47'
+Wed May 31 05:25:32 2023 - ERROR - oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
+++ radmin -E
+++ grep -c 'show version'
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ '[' 0 -eq 2 ']'
++ CHECK_RESULT 1 0 0 'radmin -E execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='radmin -E execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'radmin -E execution failed.'
++ LOG_ERROR 'radmin -E execution failed.'
++ message='radmin -E execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'radmin -E execution failed.'
+Wed May 31 05:25:34 2023 - ERROR - radmin -E execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 49'
++ message='oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 49'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 49'
+Wed May 31 05:25:36 2023 - ERROR - oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 49
++ '[' 0 -eq 1 ']'
++ return 0
++ radmin -f /var/run/radiusd/radiusd.sock
++ grep 3.0.26
+radmin: Failed connecting to /var/run/radiusd/radiusd.sock: No such file or directory
+Perhaps you need to run the commands:	cd /etc/raddb
+	ln -s sites-available/control-socket sites-enabled/control-socket
+and then re-start the server?
++ CHECK_RESULT 1 0 0 'radmin -f execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='radmin -f execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'radmin -f execution failed.'
++ LOG_ERROR 'radmin -f execution failed.'
++ message='radmin -f execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'radmin -f execution failed.'
+Wed May 31 05:25:38 2023 - ERROR - radmin -f execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 51'
++ message='oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 51'
+Wed May 31 05:25:40 2023 - ERROR - oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
++ radmin -h
++ grep Usage
+Usage: radmin [ args ]
++ CHECK_RESULT 0 0 0 'radmin -h execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radmin -h execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ radmin -i /tmp/radminfile
++ grep 3.0.26
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ CHECK_RESULT 1 0 0 'radmin -i execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='radmin -i execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'radmin -i execution failed.'
++ LOG_ERROR 'radmin -i execution failed.'
++ message='radmin -i execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'radmin -i execution failed.'
+Wed May 31 05:25:43 2023 - ERROR - radmin -i execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 55'
++ message='oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 55'
+Wed May 31 05:25:45 2023 - ERROR - oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ cp /etc/raddb/radiusd.conf /etc/raddb/test.conf
+cp: cannot stat '/etc/raddb/radiusd.conf': No such file or directory
++ radmin -n test
++ grep 3.0.26
+radmin: Errors reading or parsing /etc/raddb/test.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ CHECK_RESULT 1 0 0 'radmin -n execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='radmin -n execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'radmin -n execution failed.'
++ LOG_ERROR 'radmin -n execution failed.'
++ message='radmin -n execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'radmin -n execution failed.'
+Wed May 31 05:25:48 2023 - ERROR - radmin -n execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 58'
++ message='oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 58'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 58'
+Wed May 31 05:25:49 2023 - ERROR - oe_test_freeradius_freeradius_radiusdAndRadmin.sh line 58
++ '[' 0 -eq 1 ']'
++ return 0
++ '[' '!' -s /tmp/test ']'
++ CHECK_RESULT 0 0 0 'radmin -q execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radmin -q execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ radmin -q
+++ pgrep -f 'radmin -q'
++ kill -9 838
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed May 31 05:25:52 2023 - INFO  - End to run test.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 19:   838 Killed                  radmin -q > /tmp/test
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed May 31 05:25:54 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed May 31 05:25:55 2023 - INFO  - Start to restore the test environment.
++ systemctl stop radiusd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed May 31 05:25:58 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf /etc/raddb
++ rm -rf /var/log/radius
++ rm -rf /tmp/radminfile
++ rm -rf /tmp/test
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed May 31 05:26:00 2023 - INFO  - End to restore the test environment.

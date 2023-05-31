@@ -1,0 +1,185 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed May 31 04:38:53 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL etcd
++ pkgs=etcd
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs etcd --node 1 --tempfile ''
+Wed May 31 04:39:20 2023 - INFO  - pkgs:(etcd) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl start etcd
+Job for etcd.service failed because the control process exited with error code.
+See "systemctl status etcd.service" and "journalctl -xeu etcd.service" for details.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed May 31 04:39:25 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed May 31 04:39:28 2023 - INFO  - Start to run test.
++ systemctl status etcd
++ grep 'active (running)'
++ CHECK_RESULT 1 0 0 'Check etcd.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcd.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcd.service start failed'
++ LOG_ERROR 'Check etcd.service start failed'
++ message='Check etcd.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcd.service start failed'
+Wed May 31 04:39:31 2023 - ERROR - Check etcd.service start failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_04.sh line 29'
++ message='oe_test_etcd_04.sh line 29'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_04.sh line 29'
+Wed May 31 04:39:33 2023 - ERROR - oe_test_etcd_04.sh line 29
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+spawn etcdctl user add root
+Password of root: 123456
+
+Type password of root again for confirmation: 123456
+
++ expect
+spawn etcdctl user passwd root
+Password of root: 12345
+
+Type password of root again for confirmation: 12345
+
++ grep 'Password updated' etcd_log
++ CHECK_RESULT 1 0 0 'Check etcdctl user passwd root failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user passwd root failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl user passwd root failed.'
++ LOG_ERROR 'Check etcdctl user passwd root failed.'
++ message='Check etcdctl user passwd root failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl user passwd root failed.'
+Wed May 31 04:40:09 2023 - ERROR - Check etcdctl user passwd root failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_04.sh line 51'
++ message='oe_test_etcd_04.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_04.sh line 51'
+Wed May 31 04:40:10 2023 - ERROR - oe_test_etcd_04.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl lease grant 100
++ grep 'TTL(100s)'
+{"level":"warn","ts":"2023-05-31T04:40:17.199+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-e5c4e1ae-ea9b-4d96-8df0-e9d16d395092/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: failed to grant lease (context deadline exceeded)
++ CHECK_RESULT 1 0 0 'Check etcdctl lease grant failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl lease grant failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl lease grant failed.'
++ LOG_ERROR 'Check etcdctl lease grant failed.'
++ message='Check etcdctl lease grant failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl lease grant failed.'
+Wed May 31 04:40:19 2023 - ERROR - Check etcdctl lease grant failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_04.sh line 53'
++ message='oe_test_etcd_04.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_04.sh line 53'
+Wed May 31 04:40:20 2023 - ERROR - oe_test_etcd_04.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
+++ etcdctl lease grant 100
+++ awk '{print $2}'
+{"level":"warn","ts":"2023-05-31T04:40:27.131+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-e968df68-ece9-4396-904c-0349a8982296/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: failed to grant lease (context deadline exceeded)
++ Lease=
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ nohup etcdctl lease keep-alive
++ grep keepalived result
++ CHECK_RESULT 1 0 0 'Check etcdctl lease keep-alive failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl lease keep-alive failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl lease keep-alive failed.'
++ LOG_ERROR 'Check etcdctl lease keep-alive failed.'
++ message='Check etcdctl lease keep-alive failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl lease keep-alive failed.'
+Wed May 31 04:40:41 2023 - ERROR - Check etcdctl lease keep-alive failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_04.sh line 58'
++ message='oe_test_etcd_04.sh line 58'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_04.sh line 58'
+Wed May 31 04:40:43 2023 - ERROR - oe_test_etcd_04.sh line 58
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl lease timetolive --keys
++ grep ''
+Error: lease timetolive command needs lease ID as argument
++ CHECK_RESULT 1 0 0 'Check etcdctl lease timetolive failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl lease timetolive failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl lease timetolive failed.'
++ LOG_ERROR 'Check etcdctl lease timetolive failed.'
++ message='Check etcdctl lease timetolive failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl lease timetolive failed.'
+Wed May 31 04:40:46 2023 - ERROR - Check etcdctl lease timetolive failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_04.sh line 60'
++ message='oe_test_etcd_04.sh line 60'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_04.sh line 60'
+Wed May 31 04:40:47 2023 - ERROR - oe_test_etcd_04.sh line 60
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl lease list
++ grep ''
+Wed May 31 05:08:48 2023 - ERROR - Timeout : Command 'bash -x oe_test_etcd_04.sh' timed out after 1799.9989783229994 seconds

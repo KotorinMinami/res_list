@@ -1,0 +1,203 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue May 30 19:00:45 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL dnssec-trigger
++ pkgs=dnssec-trigger
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs dnssec-trigger --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpadfn2j_p
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpadfn2j_p
++ rm -rf /etc/dnssec-trigger/dnssec_trigger_control.key
++ service=dnssec-triggerd-keygen.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-05-30 19:02:37'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue May 30 19:02:39 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue May 30 19:02:40 2023 - INFO  - Start testing...
++ systemctl restart dnssec-triggerd-keygen.service
++ CHECK_RESULT 0 0 0 'dnssec-triggerd-keygen.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dnssec-triggerd-keygen.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status dnssec-triggerd-keygen.service
++ grep 'Active: active'
+     Active: active (exited) since Tue 2023-05-30 19:03:11 CST; 7s ago
++ CHECK_RESULT 0 0 0 'dnssec-triggerd-keygen.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dnssec-triggerd-keygen.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop dnssec-triggerd-keygen.service
++ CHECK_RESULT 0 0 0 'dnssec-triggerd-keygen.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dnssec-triggerd-keygen.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'Active: inactive'
++ systemctl status dnssec-triggerd-keygen.service
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'dnssec-triggerd-keygen.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dnssec-triggerd-keygen.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf /etc/dnssec-trigger/dnssec_trigger_control.key
++ systemctl start dnssec-triggerd-keygen.service
++ CHECK_RESULT 0 0 0 'dnssec-triggerd-keygen.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dnssec-triggerd-keygen.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status dnssec-triggerd-keygen.service
++ grep 'Active: active'
+     Active: active (exited) since Tue 2023-05-30 19:03:48 CST; 558ms ago
++ CHECK_RESULT 0 0 0 'dnssec-triggerd-keygen.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dnssec-triggerd-keygen.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled dnssec-triggerd-keygen.service
++ service=dnssec-triggerd-keygen.service
+++ systemctl is-enabled dnssec-triggerd-keygen.service
++ state=static
++ '[' static == enabled ']'
++ '[' static == disabled ']'
++ '[' static == masked ']'
++ '[' static == static ']'
++ LOG_INFO 'The unit files have no installation config,This means they are not meant to be enabled using systemctl.'
++ message='The unit files have no installation config,This means they are not meant to be enabled using systemctl.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'The unit files have no installation config,This means they are not meant to be enabled using systemctl.'
+Tue May 30 19:03:50 2023 - INFO  - The unit files have no installation config,This means they are not meant to be enabled using systemctl.
++ test_reload dnssec-triggerd-keygen.service
++ service=dnssec-triggerd-keygen.service
++ systemctl start dnssec-triggerd-keygen.service
++ systemctl reload dnssec-triggerd-keygen.service
++ grep 'Job type reload is not applicable'
+Failed to reload dnssec-triggerd-keygen.service: Job type reload is not applicable for unit dnssec-triggerd-keygen.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit dnssec-triggerd-keygen.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit dnssec-triggerd-keygen.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status dnssec-triggerd-keygen.service
++ grep 'Active: active'
+     Active: active (exited) since Tue 2023-05-30 19:03:48 CST; 3s ago
++ grep -i 'fail\|error'
++ journalctl --since '2023-05-30 19:02:37' -u dnssec-triggerd-keygen.service
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of dnssec-triggerd-keygen.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of dnssec-triggerd-keygen.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue May 30 19:03:53 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue May 30 19:03:55 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Tue May 30 19:03:57 2023 - INFO  - start environment cleanup.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpadfn2j_p ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpadfn2j_p
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Tue May 30 19:04:38 2023 - INFO  - Finish environment cleanup!

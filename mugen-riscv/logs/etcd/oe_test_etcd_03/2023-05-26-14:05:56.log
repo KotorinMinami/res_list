@@ -1,0 +1,387 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri May 26 14:06:04 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL etcd
++ pkgs=etcd
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs etcd --node 1 --tempfile ''
+Fri May 26 14:06:26 2023 - INFO  - pkgs:(etcd) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl start etcd
+Job for etcd.service failed because the control process exited with error code.
+See "systemctl status etcd.service" and "journalctl -xeu etcd.service" for details.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri May 26 14:06:31 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri May 26 14:06:33 2023 - INFO  - Start to run test.
++ systemctl status etcd
++ grep 'active (running)'
++ CHECK_RESULT 1 0 0 'Check etcd.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcd.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcd.service start failed'
++ LOG_ERROR 'Check etcd.service start failed'
++ message='Check etcd.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcd.service start failed'
+Fri May 26 14:06:35 2023 - ERROR - Check etcd.service start failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 29'
++ message='oe_test_etcd_03.sh line 29'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 29'
+Fri May 26 14:06:37 2023 - ERROR - oe_test_etcd_03.sh line 29
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+spawn etcdctl user add root
+Password of root: 123456
+
+Type password of root again for confirmation: 123456
+
++ grep 'User root created' etcd_log1
++ CHECK_RESULT 1 0 0 'Check etcdctl user add failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user add failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl user add failed.'
++ LOG_ERROR 'Check etcdctl user add failed.'
++ message='Check etcdctl user add failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl user add failed.'
+Fri May 26 14:06:56 2023 - ERROR - Check etcdctl user add failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 41'
++ message='oe_test_etcd_03.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 41'
+Fri May 26 14:06:58 2023 - ERROR - oe_test_etcd_03.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+spawn etcdctl user add test
+Password of test: 123
+
+Type password of test again for confirmation: 123
+
++ grep 'User test created' etcd_log2
++ CHECK_RESULT 1 0 0 'Check etcdctl user add failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user add failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl user add failed.'
++ LOG_ERROR 'Check etcdctl user add failed.'
++ message='Check etcdctl user add failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl user add failed.'
+Fri May 26 14:07:11 2023 - ERROR - Check etcdctl user add failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 52'
++ message='oe_test_etcd_03.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 52'
+Fri May 26 14:07:13 2023 - ERROR - oe_test_etcd_03.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl --endpoints=http://127.0.0.1:2379 auth enable
++ grep -i 'Authentication Enabled'
+{"level":"warn","ts":"2023-05-26T14:07:19.802+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-aabd6f77-eefc-41a9-9090-4e9d91149ade/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 0 0 'Check etcdctl auth enable failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl auth enable failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl auth enable failed.'
++ LOG_ERROR 'Check etcdctl auth enable failed.'
++ message='Check etcdctl auth enable failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl auth enable failed.'
+Fri May 26 14:07:21 2023 - ERROR - Check etcdctl auth enable failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 54'
++ message='oe_test_etcd_03.sh line 54'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 54'
+Fri May 26 14:07:23 2023 - ERROR - oe_test_etcd_03.sh line 54
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl role add role1 --user=root --password=123456
++ grep 'Role role1 created'
+{"level":"warn","ts":"2023-05-26T14:07:26.974+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-4b13e47a-a745-4406-9927-fc5d376c5ebe/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 0 0 'Check etcdctl role add failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl role add failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl role add failed.'
++ LOG_ERROR 'Check etcdctl role add failed.'
++ message='Check etcdctl role add failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl role add failed.'
+Fri May 26 14:07:28 2023 - ERROR - Check etcdctl role add failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 56'
++ message='oe_test_etcd_03.sh line 56'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 56'
+Fri May 26 14:07:30 2023 - ERROR - oe_test_etcd_03.sh line 56
++ '[' 0 -eq 1 ']'
++ return 0
++ grep 'Role role1 is granted to user test'
++ etcdctl user grant-role test role1 --user=root --password=123456
+{"level":"warn","ts":"2023-05-26T14:07:33.894+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-f2a98797-6c0a-4529-91a9-3e5a90599145/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 0 0 'Check etcdctl user grant-role failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user grant-role failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl user grant-role failed.'
++ LOG_ERROR 'Check etcdctl user grant-role failed.'
++ message='Check etcdctl user grant-role failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl user grant-role failed.'
+Fri May 26 14:07:35 2023 - ERROR - Check etcdctl user grant-role failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 58'
++ message='oe_test_etcd_03.sh line 58'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 58'
+Fri May 26 14:07:37 2023 - ERROR - oe_test_etcd_03.sh line 58
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl role grant-permission role1 read a --user=root --password=123456
++ grep 'Role role1 updated'
+{"level":"warn","ts":"2023-05-26T14:07:40.973+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-573a2e56-26fa-4319-a71a-3605666b8b96/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 0 0 'Check etcdctl role grant-permission failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl role grant-permission failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl role grant-permission failed.'
++ LOG_ERROR 'Check etcdctl role grant-permission failed.'
++ message='Check etcdctl role grant-permission failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl role grant-permission failed.'
+Fri May 26 14:07:42 2023 - ERROR - Check etcdctl role grant-permission failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 60'
++ message='oe_test_etcd_03.sh line 60'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 60'
+Fri May 26 14:07:44 2023 - ERROR - oe_test_etcd_03.sh line 60
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl --endpoints=http://127.0.0.1:2379 put a 123 --user=root --password=123456
++ grep OK
+{"level":"warn","ts":"2023-05-26T14:07:47.744+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-186a3669-a7a0-4d24-862c-1b6d7aa23d20/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 0 0 'Check etcdctl put failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl put failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl put failed.'
++ LOG_ERROR 'Check etcdctl put failed.'
++ message='Check etcdctl put failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl put failed.'
+Fri May 26 14:07:49 2023 - ERROR - Check etcdctl put failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 62'
++ message='oe_test_etcd_03.sh line 62'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 62'
+Fri May 26 14:07:51 2023 - ERROR - oe_test_etcd_03.sh line 62
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl get a --user=test:123
+{"level":"warn","ts":"2023-05-26T14:07:54.540+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-532f4360-6948-4aae-83e7-9bc9dcb1b1ae/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 2 0 0 'Check etcdctl get --user failed.'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl get --user failed.'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Check etcdctl get --user failed.'
++ LOG_ERROR 'Check etcdctl get --user failed.'
++ message='Check etcdctl get --user failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl get --user failed.'
+Fri May 26 14:07:56 2023 - ERROR - Check etcdctl get --user failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 64'
++ message='oe_test_etcd_03.sh line 64'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 64'
+Fri May 26 14:07:58 2023 - ERROR - oe_test_etcd_03.sh line 64
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl user list --user=root --password=123456
++ grep 'root\|test'
+{"level":"warn","ts":"2023-05-26T14:08:01.321+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-8b088b97-0e9e-47d4-a46c-40eabf3fb405/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 0 0 'Check etcdctl user list failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user list failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl user list failed.'
++ LOG_ERROR 'Check etcdctl user list failed.'
++ message='Check etcdctl user list failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl user list failed.'
+Fri May 26 14:08:03 2023 - ERROR - Check etcdctl user list failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 66'
++ message='oe_test_etcd_03.sh line 66'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 66'
+Fri May 26 14:08:04 2023 - ERROR - oe_test_etcd_03.sh line 66
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl user delete test --user=root --password=123456
+{"level":"warn","ts":"2023-05-26T14:08:08.120+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-c9ca6085-903b-447b-97b2-3dd1ff56f03d/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 2 0 0 'Check etcdctl user deletel failed.'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user deletel failed.'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Check etcdctl user deletel failed.'
++ LOG_ERROR 'Check etcdctl user deletel failed.'
++ message='Check etcdctl user deletel failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl user deletel failed.'
+Fri May 26 14:08:09 2023 - ERROR - Check etcdctl user deletel failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 68'
++ message='oe_test_etcd_03.sh line 68'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 68'
+Fri May 26 14:08:11 2023 - ERROR - oe_test_etcd_03.sh line 68
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl user list --user=root --password=123456
++ grep test
+{"level":"warn","ts":"2023-05-26T14:08:15.236+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-17c70774-df66-474d-a365-2181c283c5d0/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 1 0 'Check etcdctl user deletel failed.'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='Check etcdctl user deletel failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ etcdctl role delete role1 --user=root --password=123456
++ grep 'Role role1 deleted'
+{"level":"warn","ts":"2023-05-26T14:08:18.520+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-b6e09179-0a23-4d22-aaae-40bba13470d0/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 0 0 'Check etcdctl role deletel failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl role deletel failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl role deletel failed.'
++ LOG_ERROR 'Check etcdctl role deletel failed.'
++ message='Check etcdctl role deletel failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl role deletel failed.'
+Fri May 26 14:08:20 2023 - ERROR - Check etcdctl role deletel failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 72'
++ message='oe_test_etcd_03.sh line 72'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 72'
+Fri May 26 14:08:22 2023 - ERROR - oe_test_etcd_03.sh line 72
++ '[' 0 -eq 1 ']'
++ return 0
++ grep 'Authentication Disabled'
++ etcdctl --endpoints=http://127.0.0.1:2379 --user=root --password=123456 auth disable
+{"level":"warn","ts":"2023-05-26T14:08:26.308+0800","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-9e947c63-ac25-48e5-9c26-0fb8312f4503/127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = latest balancer error: all SubConns are in TransientFailure, latest connection error: connection error: desc = \"transport: Error while dialing dial tcp 127.0.0.1:2379: connect: connection refused\""}
+Error: context deadline exceeded
++ CHECK_RESULT 1 0 0 'Check etcdctl auth disable failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl auth disable failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl auth disable failed.'
++ LOG_ERROR 'Check etcdctl auth disable failed.'
++ message='Check etcdctl auth disable failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl auth disable failed.'
+Fri May 26 14:08:28 2023 - ERROR - Check etcdctl auth disable failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 74'
++ message='oe_test_etcd_03.sh line 74'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 74'
+Fri May 26 14:08:30 2023 - ERROR - oe_test_etcd_03.sh line 74
++ '[' 0 -eq 1 ']'
++ return 0
++ etcdctl user del root
++ grep -i 'User root deleted'
+Fri May 26 14:35:58 2023 - ERROR - Timeout : Command 'bash -x oe_test_etcd_03.sh' timed out after 1799.998918805 seconds

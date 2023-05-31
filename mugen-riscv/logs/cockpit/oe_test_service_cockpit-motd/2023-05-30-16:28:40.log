@@ -1,0 +1,159 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue May 30 16:28:48 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL cockpit
++ pkgs=cockpit
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs cockpit --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:00:43 ago on Tue 30 May 2023 04:29:18 PM CST.
+Error: 
+ Problem: package libvirt-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage = 6.2.0-52.oe2303, but none of the providers can be installed
+  - package cockpit-285-1.oe2303.riscv64 requires libvirt, but none of the providers can be installed
+  - package libvirt-daemon-driver-storage-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage-rbd = 6.2.0-52.oe2303, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides librados.so.2()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+  - nothing provides librbd.so.1()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+  - nothing provides librados.so.2(LIBRADOS_14.2.0)(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:00:43 ago on Tue 30 May 2023 04:29:18 PM CST.
+Error: 
+ Problem: package libvirt-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage = 6.2.0-52.oe2303, but none of the providers can be installed
+  - package cockpit-285-1.oe2303.riscv64 requires libvirt, but none of the providers can be installed
+  - package libvirt-daemon-driver-storage-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage-rbd = 6.2.0-52.oe2303, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides librados.so.2()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+  - nothing provides librbd.so.1()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+  - nothing provides librados.so.2(LIBRADOS_14.2.0)(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ systemctl start cockpit-motd.service
+Failed to start cockpit-motd.service: Unit cockpit-motd.service not found.
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue May 30 16:30:06 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue May 30 16:30:08 2023 - INFO  - Start testing...
++ test_oneshot cockpit-motd.service 'inactive (dead)'
++ service=cockpit-motd.service
++ status='inactive (dead)'
++ systemctl status cockpit-motd.service
++ grep Active
++ grep -v 'inactive (dead)'
+Unit cockpit-motd.service could not be found.
++ CHECK_RESULT 1 0 1 'There is an error for the status of cockpit-motd.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error for the status of cockpit-motd.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_enabled cockpit-motd.service
++ service=cockpit-motd.service
+++ systemctl is-enabled cockpit-motd.service
+Failed to get unit file state for cockpit-motd.service: No such file or directory
++ state=
++ '[' '' == enabled ']'
++ '[' '' == disabled ']'
++ '[' '' == masked ']'
++ '[' '' == static ']'
++ LOG_INFO 'Unit is indirect, ignoring.'
++ message='Unit is indirect, ignoring.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Unit is indirect, ignoring.'
+Tue May 30 16:30:10 2023 - INFO  - Unit is indirect, ignoring.
++ journalctl -u cockpit-motd.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of cockpit-motd.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of cockpit-motd.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue May 30 16:30:12 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue May 30 16:30:14 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Tue May 30 16:30:16 2023 - INFO  - start environment cleanup.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:00:43 ago on Tue 30 May 2023 04:29:18 PM CST.
+Error: 
+ Problem: package libvirt-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage = 6.2.0-52.oe2303, but none of the providers can be installed
+  - package cockpit-285-1.oe2303.riscv64 requires libvirt, but none of the providers can be installed
+  - package libvirt-daemon-driver-storage-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage-rbd = 6.2.0-52.oe2303, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides librados.so.2()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+  - nothing provides librbd.so.1()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+  - nothing provides librados.so.2(LIBRADOS_14.2.0)(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:00:43 ago on Tue 30 May 2023 04:29:18 PM CST.
+Error: 
+ Problem: package libvirt-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage = 6.2.0-52.oe2303, but none of the providers can be installed
+  - package cockpit-285-1.oe2303.riscv64 requires libvirt, but none of the providers can be installed
+  - package libvirt-daemon-driver-storage-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage-rbd = 6.2.0-52.oe2303, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides librados.so.2()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+  - nothing provides librbd.so.1()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+  - nothing provides librados.so.2(LIBRADOS_14.2.0)(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 181, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 152, in rpm_remove
+    with open(tmpfile, "r") as f:
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 0:00:43 ago on Tue 30 May 2023 04:29:18 PM CST.\nError: \n Problem: package libvirt-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage = 6.2.0-52.oe2303, but none of the providers can be installed\n  - package cockpit-285-1.oe2303.riscv64 requires libvirt, but none of the providers can be installed\n  - package libvirt-daemon-driver-storage-6.2.0-52.oe2303.riscv64 requires libvirt-daemon-driver-storage-rbd = 6.2.0-52.oe2303, but none of the providers can be installed\n  - conflicting requests\n  - nothing provides librados.so.2()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64\n  - nothing provides librbd.so.1()(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64\n  - nothing provides librados.so.2(LIBRADOS_14.2.0)(64bit) needed by libvirt-daemon-driver-storage-rbd-6.2.0-52.oe2303.riscv64\n(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Tue May 30 16:30:24 2023 - INFO  - Finish environment cleanup!
