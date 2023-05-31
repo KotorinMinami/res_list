@@ -1,0 +1,207 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Tue May 30 15:04:18 2023 - INFO  - Start to prepare the database config.
++ DNF_INSTALL 'clamav clamav-server'
++ pkgs='clamav clamav-server'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'clamav clamav-server' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpr_6x9o7c
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpr_6x9o7c
++ mv /etc/clamd.d/scan.conf /etc/clamd.d/scan.conf.bak
++ echo 'LogFile /var/log/clamd.scan
+        LogFileMaxSize 2M
+        LogTime yes
+        PidFile /run/clamd.scan/clamd.pid
+        DatabaseDirectory /var/lib/clamav
+        TCPAddr 0.0.0.0
+        TCPSocket 3310
+        LocalSocket /run/clamd.scan/clamd.sock
+'
++ systemctl restart clamd@scan.service
+Job for clamd@scan.service failed because a timeout was exceeded.
+See "systemctl status clamd@scan.service" and "journalctl -xeu clamd@scan.service" for details.
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Tue May 30 15:17:33 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue May 30 15:17:35 2023 - INFO  - Start to run test.
++ clamdtop localhost
++ echo q
++ grep 'Connecting to: localhost'
+connect: Connection refused
+connect: Connection refused
+Abnormal program termination: Unable to connect to all clamds in setup_connections at line 1456
+Connecting to: localhost
+Connecting to: localhost
++ CHECK_RESULT 0 0 0 'Connecting to localhost failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Connecting to localhost failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo q
++ clamdtop /run/clamd.scan/clamd.sock
++ grep 'Connecting to: /run/clamd.scan/clamd.sock'
+connect: No such file or directory
+Abnormal program termination: Unable to connect to all clamds in setup_connections at line 1456
+Connecting to: /run/clamd.scan/clamd.sock
++ CHECK_RESULT 0 0 0 'Connecting /run/clamd.scan/clamd.sock failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Connecting /run/clamd.scan/clamd.sock failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ clamdtop --version
+Clam AntiVirus Monitoring Tool 0.103.8
++ CHECK_RESULT 0 0 0 'Check clamdtop version failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check clamdtop version failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ clamdtop --help
+
+                       Clam AntiVirus: Monitoring Tool 0.103.8
+           By The ClamAV Team: https://www.clamav.net/about.html#credits
+           (C) 2022 Cisco Systems, Inc.
+
+    clamdtop [-hVc] [host[:port] /path/to/clamd.socket ...]
+
+    --help                 -h         Show this help
+    --version              -V         Show version
+    --config-file=FILE     -c FILE    Read clamd's configuration files from FILE
+    --defaultcolors        -d         Use default terminal colors
+    host[:port]                       Connect to clamd on host at port (default 3310)
+    /path/to/clamd.socket             Connect to clamd over a local socket
+
++ CHECK_RESULT 0 0 0 'Check clamdtop help message failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check clamdtop help message failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo q
++ clamdtop -c /etc/clamd.d/scan.conf
++ grep Connecting
+connect: No such file or directory
+Abnormal program termination: Unable to connect to all clamds in setup_connections at line 1456
+Connecting to: /run/clamd.scan/clamd.sock
++ CHECK_RESULT 0 0 0 'Check clamdtop -c message failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check clamdtop -c message failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo q
++ clamdtop -d
+connect: No such file or directory
+Abnormal program termination: Unable to connect to all clamds in setup_connections at line 1456
+        __                    ____
+  _____/ /___ _____ ___  ____/ / /_____  ____
+ / ___/ / __ `/ __ `__ \/ __  / __/ __ \/ __ \
+/ /__/ / /_/ / / / / / / /_/ / /_/ /_/ / /_/ /
+\___/_/\__,_/_/ /_/ /_/\__,_/\__/\____/ .___/
+                                     /_/
+Connecting to: /run/clamd.scan/clamd.sock
++ CHECK_RESULT 2 0 0 'Execute clamdtop -d failed.'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Execute clamdtop -d failed.'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Execute clamdtop -d failed.'
++ LOG_ERROR 'Execute clamdtop -d failed.'
++ message='Execute clamdtop -d failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Execute clamdtop -d failed.'
+Tue May 30 15:17:39 2023 - ERROR - Execute clamdtop -d failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_clamav_clamdtop.sh line 54'
++ message='oe_test_clamav_clamdtop.sh line 54'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_clamav_clamdtop.sh line 54'
+Tue May 30 15:17:41 2023 - ERROR - oe_test_clamav_clamdtop.sh line 54
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue May 30 15:17:42 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue May 30 15:17:45 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue May 30 15:17:47 2023 - INFO  - Start to restore the test environment.
++ rm -f /etc/clamd.d/scan.conf
++ mv /etc/clamd.d/scan.conf.bak /etc/clamd.d/scan.conf
++ systemctl restart clamd@scan.service
+Job for clamd@scan.service failed because the control process exited with error code.
+See "systemctl status clamd@scan.service" and "journalctl -xeu clamd@scan.service" for details.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpr_6x9o7c ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpr_6x9o7c
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue May 30 15:19:01 2023 - INFO  - End to restore the test environment.

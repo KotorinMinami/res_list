@@ -1,0 +1,604 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed May 31 04:52:22 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL freeradius
++ pkgs=freeradius
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs freeradius --node 1 --tempfile ''
+Wed May 31 05:22:18 2023 - ERROR - Timeout : Command 'bash -x oe_test_freeradius_freeradius_raddebugAndCheckrad.sh' timed out after 1799.9989014999999 seconds
++ tmpfile2=/tmp/tmpbrk4m8w5
+++ post_test
+++ LOG_INFO 'Start to restore the test environment.'
+++ message='Start to restore the test environment.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed May 31 06:03:47 2023 - INFO  - Start to restore the test environment.
+++ systemctl stop radiusd
+++ DNF_REMOVE
+++ node=1
+++ pkg_list=
+++ mode=0
+++ [[ -z '' ]]
+++ [[ -z '' ]]
+++ LOG_WARN 'no thing to do.'
+++ message='no thing to do.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed May 31 06:03:49 2023 - WARN  - no thing to do.
+++ return 0
+++ rm -rf /etc/raddb
+++ rm -rf /var/log/radius
+++ LOG_INFO 'End to restore the test environment.'
+++ message='End to restore the test environment.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed May 31 06:03:51 2023 - INFO  - End to restore the test environment.
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpbrk4m8w5
++ ln -s /etc/raddb/sites-available/control-socket /etc/raddb/sites-enabled/control-socket
+ln: failed to create symbolic link '/etc/raddb/sites-enabled/control-socket': No such file or directory
++ sed -i '/mode = rw/a mode = rw' /etc/raddb/sites-enabled/control-socket
+sed: can't read /etc/raddb/sites-enabled/control-socket: No such file or directory
++ sed -i '1i "test" Cleartext-Password := "pass123"' /etc/raddb/users
+sed: can't read /etc/raddb/users: No such file or directory
++ systemctl start radiusd
+Job for radiusd.service failed because the control process exited with error code.
+See "systemctl status radiusd.service" and "journalctl -xeu radiusd.service" for details.
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed May 31 06:04:00 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed May 31 06:04:02 2023 - INFO  - Start to run test.
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ raddebug -c '&Framed-IP-Address == 127.0.0.1'
+Wed May 31 06:04:04 2023 : Error: Unable to open file "/etc/raddb/radiusd.conf": No such file or directory
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ ps -ef
++ grep 'tail -f /var/log/radius'
++ grep -v grep
++ status=1
++ SLEEP_WAIT 60
++ wait_time=60
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 60 --cmd '' --mode 1
+++ ps -ef
+++ grep -v grep
+++ grep 'raddebug -c'
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -c execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -c execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -c execution failed.'
++ LOG_ERROR 'raddebug -c execution failed.'
++ message='raddebug -c execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -c execution failed.'
+Wed May 31 06:05:10 2023 - ERROR - raddebug -c execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 43'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 43'
+Wed May 31 06:05:12 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ raddebug -d /etc/raddb/
+Wed May 31 06:05:13 2023 : Error: Unable to open file "/etc/raddb//radiusd.conf": No such file or directory
+radmin: Errors reading or parsing /etc/raddb//radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ grep 'tail -f /var/log/radius'
++ ps -ef
++ grep -v grep
++ status=1
++ SLEEP_WAIT 60
++ wait_time=60
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 60 --cmd '' --mode 1
+++ grep -v grep
+++ grep 'raddebug -d'
+++ ps -ef
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -d execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -d execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -d execution failed.'
++ LOG_ERROR 'raddebug -d execution failed.'
++ message='raddebug -d execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -d execution failed.'
+Wed May 31 06:06:20 2023 - ERROR - raddebug -d execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 50'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 50'
+Wed May 31 06:06:21 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ cp /etc/raddb/radiusd.conf /etc/raddb/test.conf
+cp: cannot stat '/etc/raddb/radiusd.conf': No such file or directory
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ raddebug -n test
+Wed May 31 06:06:22 2023 : Error: Unable to open file "/etc/raddb/test.conf": No such file or directory
+radmin: Errors reading or parsing /etc/raddb/test.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ ps -ef
++ grep 'tail -f /var/log/radius'
++ grep -v grep
++ status=1
++ SLEEP_WAIT 60
++ wait_time=60
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 60 --cmd '' --mode 1
+++ grep 'raddebug -n'
+++ grep -v grep
+++ ps -ef
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -n execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -n execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -n execution failed.'
++ LOG_ERROR 'raddebug -n execution failed.'
++ message='raddebug -n execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -n execution failed.'
+Wed May 31 06:07:31 2023 - ERROR - raddebug -n execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 58'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 58'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 58'
+Wed May 31 06:07:33 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 58
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ raddebug -D /usr/share/freeradius
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
+Wed May 31 06:07:34 2023 : Error: Unable to open file "/etc/raddb/radiusd.conf": No such file or directory
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ ps -ef
++ grep 'tail -f /var/log/radius'
++ grep -v grep
++ status=1
++ SLEEP_WAIT 60
++ wait_time=60
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 60 --cmd '' --mode 1
+++ grep 'raddebug -D'
+++ grep -v grep
+++ ps -ef
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -D execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -D execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -D execution failed.'
++ LOG_ERROR 'raddebug -D execution failed.'
++ message='raddebug -D execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -D execution failed.'
+Wed May 31 06:08:41 2023 - ERROR - raddebug -D execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 65'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 65'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 65'
+Wed May 31 06:08:43 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 65
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ raddebug -i 127.0.0.1
+Wed May 31 06:08:44 2023 : Error: Unable to open file "/etc/raddb/radiusd.conf": No such file or directory
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ ps -ef
++ grep 'tail -f /var/log/radius'
++ grep -v grep
++ status=1
++ SLEEP_WAIT 60
++ wait_time=60
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 60 --cmd '' --mode 1
+++ grep -v grep
+++ ps -ef
+++ grep 'raddebug -i'
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -i execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -i execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -i execution failed.'
++ LOG_ERROR 'raddebug -i execution failed.'
++ message='raddebug -i execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -i execution failed.'
+Wed May 31 06:09:52 2023 - ERROR - raddebug -i execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 72'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 72'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 72'
+Wed May 31 06:09:54 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 72
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ raddebug -I ''
+Wed May 31 06:09:55 2023 : Error: Unable to open file "/etc/raddb/radiusd.conf": No such file or directory
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ ps -ef
++ grep 'tail -f /var/log/radius'
++ grep -v grep
++ status=1
++ SLEEP_WAIT 60
++ wait_time=60
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 60 --cmd '' --mode 1
+++ grep -v grep
+++ ps -ef
+++ grep 'raddebug -I'
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -I execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -I execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -I execution failed.'
++ LOG_ERROR 'raddebug -I execution failed.'
++ message='raddebug -I execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -I execution failed.'
+Wed May 31 06:11:03 2023 - ERROR - raddebug -I execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 79'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 79'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 79'
+Wed May 31 06:11:05 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 79
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ raddebug -f /var/run/radiusd/radiusd.sock
+radmin: Failed connecting to /var/run/radiusd/radiusd.sock: No such file or directory
+Perhaps you need to run the commands:	cd /etc/raddb
+	ln -s sites-available/control-socket sites-enabled/control-socket
+and then re-start the server?
++ ps -ef
++ grep 'tail -f /var/log/radius'
++ grep -v grep
++ status=1
++ SLEEP_WAIT 60
++ wait_time=60
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 60 --cmd '' --mode 1
+++ ps -ef
+++ grep 'raddebug -f'
+++ grep -v grep
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -f execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -f execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -f execution failed.'
++ LOG_ERROR 'raddebug -f execution failed.'
++ message='raddebug -f execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -f execution failed.'
+Wed May 31 06:12:13 2023 - ERROR - raddebug -f execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 86'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 86'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 86'
+Wed May 31 06:12:15 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 86
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ raddebug -t 2
+Wed May 31 06:12:16 2023 : Error: Unable to open file "/etc/raddb/radiusd.conf": No such file or directory
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ ps -ef
++ grep 'tail -f /var/log/radius'
++ grep -v grep
++ status=1
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+++ ps -ef
+++ grep 'raddebug -t'
+++ grep -v grep
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -t execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -t execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -t execution failed.'
++ LOG_ERROR 'raddebug -t execution failed.'
++ message='raddebug -t execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -t execution failed.'
+Wed May 31 06:12:25 2023 - ERROR - raddebug -t execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 93'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 93'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 93'
+Wed May 31 06:12:27 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 93
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ raddebug -u test
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
+Wed May 31 06:12:28 2023 : Error: Unable to open file "/etc/raddb/radiusd.conf": No such file or directory
+radmin: Errors reading or parsing /etc/raddb/radiusd.conf
+Usage: radmin [ args ]
+  -d raddb_dir    Configuration files are in "raddbdir/*".
+  -D <dictdir>    Set main dictionary directory (defaults to /usr/share/freeradius).
+  -e command      Execute 'command' and then exit.
+  -E              Echo commands as they are being executed.
+  -f socket_file  Open socket_file directly, without reading radius.conf
+  -h              Print usage help information.
+  -i input_file   Read commands from 'input_file'.
+  -n name         Read raddb/name.conf instead of raddb/radiusd.conf
+  -q              Quiet mode.
+  -v              Show program version information.
++ grep -v grep
++ ps -ef
++ grep 'tail -f /var/log/radius'
++ status=1
++ SLEEP_WAIT 60
++ wait_time=60
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 60 --cmd '' --mode 1
+++ ps -ef
+++ grep -v grep
+++ grep 'raddebug -u'
++ '[' -z ']'
++ '[' 1 -eq 0 ']'
++ CHECK_RESULT 1 0 0 'raddebug -u execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='raddebug -u execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'raddebug -u execution failed.'
++ LOG_ERROR 'raddebug -u execution failed.'
++ message='raddebug -u execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'raddebug -u execution failed.'
+Wed May 31 06:13:35 2023 - ERROR - raddebug -u execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 100'
++ message='oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 100'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 100'
+Wed May 31 06:13:37 2023 - ERROR - oe_test_freeradius_freeradius_raddebugAndCheckrad.sh line 100
++ '[' 0 -eq 1 ']'
++ return 0
++ checkrad other 127.0.0.1 0 test 1
++ stat=1
++ '[' 1 -eq 0 ']'
++ '[' 1 -eq 1 ']'
++ CHECK_RESULT 0 0 0 'checkrad execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='checkrad execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed May 31 06:13:39 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 9
++ test 9 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed May 31 06:13:41 2023 - ERROR - failed to execute the case.
++ exit 9
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed May 31 06:13:43 2023 - INFO  - Start to restore the test environment.
++ systemctl stop radiusd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpbrk4m8w5 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpbrk4m8w5
++ '[' 0 -ne 0 ']'
++ rm -rf /etc/raddb
++ rm -rf /var/log/radius
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed May 31 06:14:35 2023 - INFO  - End to restore the test environment.

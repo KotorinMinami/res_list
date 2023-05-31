@@ -1,0 +1,538 @@
++ source ../common/ha.sh
+++ source ../common/common_lib.sh
++++ source /root/mugen/libs/locallibs/common_lib.sh
+++++ python3 --version
+++++ '[' 0 -eq 0 ']'
+++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu May 25 18:27:12 2023 - INFO  - Start environmental preparation.
++ service=corosync-qnetd.service
++ ha_pre
++ systemctl stop firewalld
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ systemctl disable firewalld
+Failed to disable unit: Unit file firewalld.service does not exist.
++ flag=false
+++ getenforce
+++ grep Enforcing
++ '[' ']'
++ DNF_INSTALL 'corosync pacemaker pcs'
++ pkgs='corosync pacemaker pcs'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'corosync pacemaker pcs' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpul4ixg2k
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpul4ixg2k
+++ hostname
++ hostname=openeuler-riscv64
++ hostnamectl set-hostname ha1
++ cp /etc/hosts /etc/hosts_bak
++ echo '127.0.0.1 ha1
+ ha2'
++ echo 'openEuler12#$'
++ passwd --stdin hacluster
+Changing password for user hacluster.
+passwd: all authentication tokens updated successfully.
++ echo 'totem {
+        version: 2
+        cluster_name: hacluster
+        crypto_cipher: none
+        crypto_hash: none
+}
+logging {         
+        fileline: off
+        to_stderr: yes
+        to_logfile: yes
+        logfile: /var/log/cluster/corosync.log
+        to_syslog: yes
+        debug: off
+        logger_subsys {
+               subsys: QUORUM
+               debug: off
+        }
+}
+quorum {
+        provider: corosync_votequorum
+        two_node: 1
+}
+nodelist {
+        node {
+               name: ha1
+               nodeid: 1
+               ring0_addr: 127.0.0.1
+        }
+        node {
+               name: ha2
+               nodeid: 2
+               ring0_addr:  
+        }
+}'
++ P_SSH_CMD --node 2 --cmd '
+    systemctl stop firewalld;
+    systemctl disable firewalld;
+    dnf install -y corosync pacemaker pcs;
+    hostnamectl set-hostname ha2;
+    echo openEuler12#$ | passwd --stdin hacluster;
+    mv /etc/hosts /etc/hosts_bak'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd '
+    systemctl stop firewalld;
+    systemctl disable firewalld;
+    dnf install -y corosync pacemaker pcs;
+    hostnamectl set-hostname ha2;
+    echo openEuler12#$ | passwd --stdin hacluster;
+    mv /etc/hosts /etc/hosts_bak'
+Thu May 25 18:32:00 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ SSH_SCP /etc/hosts @:/etc/ ''
++ src=/etc/hosts
++ dest=@:/etc/
++ remotepasswd=
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p '' -o 22 -s /etc/hosts -d @:/etc/
+Thu May 25 18:32:03 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/hosts @:/etc/
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu May 25 18:32:06 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ SSH_SCP /etc/corosync/corosync.conf @:/etc/corosync/ ''
++ src=/etc/corosync/corosync.conf
++ dest=@:/etc/corosync/
++ remotepasswd=
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p '' -o 22 -s /etc/corosync/corosync.conf -d @:/etc/corosync/
+Thu May 25 18:32:08 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/corosync/corosync.conf @:/etc/corosync/
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu May 25 18:32:10 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ systemctl start pcsd
++ systemctl start pacemaker
+A dependency job for pacemaker.service failed. See 'journalctl -xe' for details.
++ pcs property set stonith-enabled=false
+Error: unable to get cib
++ pcs property set no-quorum-policy=stop
+Error: unable to get cib
++ crm_verify -L
+crm_verify: CIB query failed: Transport endpoint is not connected
++ systemctl start corosync
+Job for corosync.service failed because the control process exited with error code.
+See "systemctl status corosync.service" and "journalctl -xeu corosync.service" for details.
++ P_SSH_CMD --node 2 --cmd '
+    systemctl start pcsd;
+    systemctl start pacemaker;
+    pcs property set stonith-enabled=false;
+    pcs property set no-quorum-policy=stop;
+    crm_verify -L;
+    systemctl start corosync'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd '
+    systemctl start pcsd;
+    systemctl start pacemaker;
+    pcs property set stonith-enabled=false;
+    pcs property set no-quorum-policy=stop;
+    crm_verify -L;
+    systemctl start corosync'
+Thu May 25 18:33:49 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ cat
++ pcs host auth ha1 ha2
+Username: Password: Error: Unable to communicate with ha2
+ha1: Authorized
++ systemctl restart pacemaker
+A dependency job for pacemaker.service failed. See 'journalctl -xe' for details.
++ systemctl restart corosync
+Job for corosync.service failed because the control process exited with error code.
+See "systemctl status corosync.service" and "journalctl -xeu corosync.service" for details.
++ systemctl restart pcsd
++ P_SSH_CMD --node 2 --cmd '
+    systemctl restart pacemaker;
+    systemctl restart corosync;
+    systemctl restart pcsd'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd '
+    systemctl restart pacemaker;
+    systemctl restart corosync;
+    systemctl restart pcsd'
+Thu May 25 18:35:19 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ DNF_INSTALL 'corosync-qdevice corosync-qnetd'
++ pkgs='corosync-qdevice corosync-qnetd'
++ node=1
++ '[' -z /tmp/tmpul4ixg2k ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'corosync-qdevice corosync-qnetd' --node 1 --tempfile /tmp/tmpul4ixg2k
++ tmpfile2=/tmp/tmpul4ixg2k
++ '[' -z /tmp/tmpul4ixg2k ']'
++ P_SSH_CMD --node 2 --cmd 'dnf install -y corosync-qdevice corosync-qnetd'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'dnf install -y corosync-qdevice corosync-qnetd'
+Thu May 25 18:36:52 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ P_SSH_CMD --node 3 --cmd 'mv /etc/hosts /etc/hosts_bak'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 3 --cmd 'mv /etc/hosts /etc/hosts_bak'
+Thu May 25 18:36:59 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ echo ' qdevice'
++ SSH_SCP /etc/hosts @:/etc/ ''
++ src=/etc/hosts
++ dest=@:/etc/
++ remotepasswd=
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p '' -o 22 -s /etc/hosts -d @:/etc/
+Thu May 25 18:37:01 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/hosts @:/etc/
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu May 25 18:37:03 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ SSH_SCP /etc/hosts @:/etc/ ''
++ src=/etc/hosts
++ dest=@:/etc/
++ remotepasswd=
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p '' -o 22 -s /etc/hosts -d @:/etc/
+Thu May 25 18:37:05 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/hosts @:/etc/
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu May 25 18:37:07 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ P_SSH_CMD --node 3 --cmd 'dnf install -y corosync pacemaker pcs corosync-qdevice corosync-qnetd;
+    systemctl start pcsd;
+    hostnamectl set-hostname qdevice;
+    systemctl stop firewalld;
+    systemctl disable firewalld;
+    echo openEuler12#$ | passwd --stdin hacluster;
+    pcs qdevice setup model net --enable --start'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 3 --cmd 'dnf install -y corosync pacemaker pcs corosync-qdevice corosync-qnetd;
+    systemctl start pcsd;
+    hostnamectl set-hostname qdevice;
+    systemctl stop firewalld;
+    systemctl disable firewalld;
+    echo openEuler12#$ | passwd --stdin hacluster;
+    pcs qdevice setup model net --enable --start'
+Thu May 25 18:37:14 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ pcs host auth qdevice
+Username: Password: Error: Unable to communicate with qdevice
++ pcs quorum device add model net host=qdevice algorithm=ffsplit
+Error: Host 'ha2' is not known to pcs, try to authenticate the host using 'pcs host auth ha2' command, use --skip-offline to override
+Error: Errors have occurred, therefore pcs is unable to continue
++ corosync-qnetd-certutil -i
+Creating /etc/corosync/qnetd/nssdb
+Creating new key and cert db
+password file contains no data
+Creating new noise file /etc/corosync/qnetd/nssdb/noise.txt
+Creating new CA
+
+
+Generating key.  This may take a few moments...
+
+Is this a CA certificate [y/N]?
+Enter the path length constraint, enter to skip [<0 for unlimited path]: > Is this a critical extension [y/N]?
+
+
+Generating key.  This may take a few moments...
+
+Notice: Trust flag u is set automatically if the private key is present.
+QNetd CA certificate is exported as /etc/corosync/qnetd/nssdb/qnetd-cacert.crt
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu May 25 18:38:34 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Thu May 25 18:38:36 2023 - INFO  - Start testing...
++ test_execution corosync-qnetd.service
++ service=corosync-qnetd.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-05-25 18:38:36'
++ test_restart corosync-qnetd.service
++ service=corosync-qnetd.service
++ systemctl restart corosync-qnetd.service
++ CHECK_RESULT 0 0 0 'corosync-qnetd.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-qnetd.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'Active: active'
++ systemctl status corosync-qnetd.service
+     Active: active (running) since Thu 2023-05-25 18:38:37 CST; 7s ago
++ CHECK_RESULT 0 0 0 'corosync-qnetd.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-qnetd.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop corosync-qnetd.service
++ CHECK_RESULT 0 0 0 'corosync-qnetd.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-qnetd.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status corosync-qnetd.service
++ grep 'Active: inactive'
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'corosync-qnetd.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-qnetd.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start corosync-qnetd.service
++ CHECK_RESULT 0 0 0 'corosync-qnetd.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-qnetd.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status corosync-qnetd.service
++ grep 'Active: active'
+     Active: active (running) since Thu 2023-05-25 18:38:54 CST; 7s ago
++ CHECK_RESULT 0 0 0 'corosync-qnetd.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-qnetd.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled corosync-qnetd.service
++ service=corosync-qnetd.service
+++ systemctl is-enabled corosync-qnetd.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ systemctl enable corosync-qnetd.service
+++ awk '{print $3}'
+++ grep 'Created symlink'
++ symlink_file=/etc/systemd/system/multi-user.target.wants/corosync-qnetd.service
++ find /etc/systemd/system/multi-user.target.wants/corosync-qnetd.service
+/etc/systemd/system/multi-user.target.wants/corosync-qnetd.service
++ CHECK_RESULT 0 0 0 'corosync-qnetd.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-qnetd.service enable failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable corosync-qnetd.service
+Removed /etc/systemd/system/multi-user.target.wants/corosync-qnetd.service.
++ find /etc/systemd/system/multi-user.target.wants/corosync-qnetd.service
+find: ‘/etc/systemd/system/multi-user.target.wants/corosync-qnetd.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'corosync-qnetd.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='corosync-qnetd.service disable failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ grep -i 'fail\|error'
++ journalctl --since '2023-05-25 18:38:36' -u corosync-qnetd.service
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of corosync-qnetd.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of corosync-qnetd.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload corosync-qnetd.service
++ service=corosync-qnetd.service
++ systemctl start corosync-qnetd.service
++ systemctl reload corosync-qnetd.service
++ grep 'Job type reload is not applicable'
+Failed to reload corosync-qnetd.service: Job type reload is not applicable for unit corosync-qnetd.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit corosync-qnetd.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit corosync-qnetd.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status corosync-qnetd.service
++ grep 'Active: active'
+     Active: active (running) since Thu 2023-05-25 18:38:54 CST; 34s ago
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Thu May 25 18:39:30 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu May 25 18:39:32 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu May 25 18:39:33 2023 - INFO  - start environment cleanup.
++ systemctl stop corosync-qnetd.service
++ pcs quorum device remove model net host=qdevice
+
+Usage: pcs quorum <command>
+    device remove
+        Remove a quorum device from the cluster.
+
++ P_SSH_CMD --node 3 --cmd 'pcs qdevice destroy net;
+    systemctl stop pcsd;
+    hostnamectl set-hostname openeuler-riscv64;
+    systemctl start firewalld;
+    systemctl enable firewalld;
+    dnf remove -y corosync pacemaker pcs corosync-qdevice corosync-qnetd;
+    mv /etc/hosts_bak /etc/hosts'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 3 --cmd 'pcs qdevice destroy net;
+    systemctl stop pcsd;
+    hostnamectl set-hostname openeuler-riscv64;
+    systemctl start firewalld;
+    systemctl enable firewalld;
+    dnf remove -y corosync pacemaker pcs corosync-qdevice corosync-qnetd;
+    mv /etc/hosts_bak /etc/hosts'
+Thu May 25 18:40:02 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpul4ixg2k ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpul4ixg2k
++ '[' 0 -ne 0 ']'
++ P_SSH_CMD --node 2 --cmd 'dnf remove -y corosync-qdevice corosync-qnetd'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'dnf remove -y corosync-qdevice corosync-qnetd'
+Thu May 25 18:41:30 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ ha_post
++ systemctl stop corosync
++ systemctl stop pacemaker
+Failed to stop pacemaker.service: Unit pacemaker.service not loaded.
++ systemctl stop pcsd
+Failed to stop pcsd.service: Unit pcsd.service not loaded.
++ rm -rf /etc/hosts /etc/corosync/corosync.conf
++ mv /etc/hosts_bak /etc/hosts
++ hostnamectl set-hostname openeuler-riscv64
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpul4ixg2k ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpul4ixg2k
++ '[' 0 -ne 0 ']'
++ '[' false = true ']'
++ systemctl start firewalld
+Failed to start firewalld.service: Unit firewalld.service not found.
++ systemctl enable firewalld
+Failed to enable unit: Unit file firewalld.service does not exist.
++ P_SSH_CMD --node 2 --cmd '
+    systemctl stop corosync;
+    systemctl stop pacemaker;
+    systemctl stop pcsd;
+    rm -rf /etc/hosts /etc/corosync/corosync.conf;
+    mv /etc/hosts_bak /etc/hosts;
+    hostnamectl set-hostname openeuler-riscv64;
+    dnf remove -y corosync pacemaker pcs;
+    systemctl start firewalld;
+    systemctl enable firewalld'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd '
+    systemctl stop corosync;
+    systemctl stop pacemaker;
+    systemctl stop pcsd;
+    rm -rf /etc/hosts /etc/corosync/corosync.conf;
+    mv /etc/hosts_bak /etc/hosts;
+    hostnamectl set-hostname openeuler-riscv64;
+    dnf remove -y corosync pacemaker pcs;
+    systemctl start firewalld;
+    systemctl enable firewalld'
+Thu May 25 18:41:54 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Thu May 25 18:41:55 2023 - INFO  - Finish environment cleanup!

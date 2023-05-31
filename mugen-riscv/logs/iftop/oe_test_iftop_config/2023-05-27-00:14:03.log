@@ -1,0 +1,321 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Sat May 27 00:14:08 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL iftop
++ pkgs=iftop
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iftop --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpdaojakew
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpdaojakew
++ DNF_INSTALL bind-utils
++ pkgs=bind-utils
++ node=1
++ '[' -z /tmp/tmpdaojakew ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs bind-utils --node 1 --tempfile /tmp/tmpdaojakew
++ tmpfile2=/tmp/tmpdaojakew
++ '[' -z /tmp/tmpdaojakew ']'
++ DNF_INSTALL ipcalc
++ pkgs=ipcalc
++ node=1
++ '[' -z /tmp/tmpdaojakew ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs ipcalc --node 1 --tempfile /tmp/tmpdaojakew
++ tmpfile2=/tmp/tmpdaojakew
++ '[' -z /tmp/tmpdaojakew ']'
++ IFS=' '
++ read -r -a net_cards
+++ TEST_NIC
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device nic --node 1
+++ grep IP4.ADDRESS
+++ nmcli device show
+++ awk '{print $2}'
+++ cut -d / -f1
++ ipv4_addr_1='10.0.2.15
+127.0.0.1'
+++ nmcli device show
+++ grep IP4.ADDRESS
+++ awk '{print $2}'
+++ cut -d / -f1
++ ipv4_addr_2='10.0.2.15
+127.0.0.1'
+++ host huawei.com
+++ grep 'has address'
+++ awk '{print $4}'
++ ipv4_target_addr=121.37.49.12
++ IFS=.
++ read -r -a target_addr
++ ipv4_target_hostname=12.49.37.121
+++ host huawei.com
+++ grep IPv6
+++ awk '{print $5}'
++ ipv6_target_addr=2407:c080:17ef:ffff::7274:d206
+++ ipcalc -n 2407:c080:17ef:ffff::7274:d206/64
+++ cut -d = -f2
++ ipv6_target_network=2407:c080:17ef:ffff::
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Sat May 27 00:18:11 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Sat May 27 00:18:13 2023 - INFO  - Start testing...
++ echo 'interface: '
++ iftop -t -s 1
++ grep 'Listening on '
+Listening on eth0
++ CHECK_RESULT 0 0 0 'Failed to use config directive: interface'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: interface'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dns_resolution_work=1
++ (( i = 0 ))
++ (( i < 10 ))
++ ping 121.37.49.12 -c 100
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ pkill -f ping
++ '[' 1 -eq 0 ']'
++ LOG_WARN 'DNS RESOLUTION NOT WORK.'
++ message='DNS RESOLUTION NOT WORK.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'DNS RESOLUTION NOT WORK.'
+Sat May 27 00:27:38 2023 - WARN  - DNS RESOLUTION NOT WORK.
++ pkill -f ping
++ result=1
++ echo 'port-resolution: no'
++ (( i = 0 ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ grep :22
++ iftop -t -s 1 -P -c ./iftoprc
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
+Sat May 27 00:44:05 2023 - ERROR - Timeout : Command 'bash -x oe_test_iftop_config.sh' timed out after 1799.9990303130003 seconds
+++ post_test
+++ LOG_INFO 'start environment cleanup.'
+++ message='start environment cleanup.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Sat May 27 00:44:08 2023 - INFO  - start environment cleanup.
+++ DNF_REMOVE
+++ node=1
+++ pkg_list=
+++ mode=0
+++ [[ -z /tmp/tmpdaojakew ]]
+++ '[' 0 -ne 0 ']'
+++ '[' 1 == 0 ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpdaojakew
+++ '[' 0 -ne 0 ']'
+++ rm -f ./iftoprc
+++ LOG_INFO 'Finish environment cleanup!'
+++ message='Finish environment cleanup!'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Sat May 27 00:44:35 2023 - INFO  - Finish environment cleanup!
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ CHECK_RESULT 1 0 0 'Failed to use config directive: port-resolution'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: port-resolution'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to use config directive: port-resolution'
++ LOG_ERROR 'Failed to use config directive: port-resolution'
++ message='Failed to use config directive: port-resolution'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: port-resolution'
+Sat May 27 00:44:37 2023 - ERROR - Failed to use config directive: port-resolution
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iftop_config.sh line 69'
++ message='oe_test_iftop_config.sh line 69'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iftop_config.sh line 69'
+Sat May 27 00:44:39 2023 - ERROR - oe_test_iftop_config.sh line 69
++ '[' 0 -eq 1 ']'
++ return 0
++ result=1
++ echo 'filter-code: dst port 22'
++ (( i = 0 ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ grep :22
++ iftop -t -s 1 -P -N -c ./iftoprc
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ CHECK_RESULT 1 0 0 'Failed to use config directive: filter-code'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: filter-code'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to use config directive: filter-code'
++ LOG_ERROR 'Failed to use config directive: filter-code'
++ message='Failed to use config directive: filter-code'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: filter-code'
+Sat May 27 00:44:42 2023 - ERROR - Failed to use config directive: filter-code
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iftop_config.sh line 78'
++ message='oe_test_iftop_config.sh line 78'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iftop_config.sh line 78'
+Sat May 27 00:44:43 2023 - ERROR - oe_test_iftop_config.sh line 78
++ '[' 0 -eq 1 ']'
++ return 0
++ echo 'show-bars: yes'
++ expect
+spawn iftop -c ./iftoprc
+couldn't execute "iftop": no such file or directory
+    while executing
+"spawn iftop -c ./iftoprc"
++ ls ./config_show_bars
+ls: cannot access './config_show_bars': No such file or directory
++ CHECK_RESULT 2 0 0 'Failed to use config directive: show-bars'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: show-bars'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Failed to use config directive: show-bars'
++ LOG_ERROR 'Failed to use config directive: show-bars'
++ message='Failed to use config directive: show-bars'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: show-bars'
