@@ -1,0 +1,204 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Jun  7 11:48:03 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL 'docker-engine wget'
++ pkgs='docker-engine wget'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs 'docker-engine wget' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpox11kyc8
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpox11kyc8
++ . /etc/os-release
+++ NAME=openEuler
+++ VERSION=23.03
+++ ID=openEuler
+++ VERSION_ID=23.03
+++ PRETTY_NAME='openEuler 23.03'
+++ ANSI_COLOR='0;31'
+++ echo openEuler 23.03
+++ tr -d '('
+++ tr -d ')'
+++ tr ' ' -
++ PRETTY_NAME=openEuler-23.03
++ wget -q https://repo.openeuler.org/openEuler-23.03/docker_img/x86_64/openEuler-docker.x86_64.tar.xz
++ docker load
+Loaded image: openeuler-23.03:latest
+++ docker images --format '{{.Repository}}:{{.Tag}}'
++ IMAGE_NAME=openeuler-23.03:latest
++ cat
++ docker build -t openeuler-container-exception-logger .
+Sending build context to Docker daemon  47.87MB
+Step 1/2 : FROM openeuler-23.03:latest
+ ---> 9ca9007eb254
+Step 2/2 : RUN yum install -y container-exception-logger && yum clean all
+ ---> Running in cd7d6136f90e
+OS                                              538 kB/s | 3.4 MB     00:06    
+everything                                      1.0 MB/s |  17 MB     00:16    
+EPOL                                            714 kB/s | 4.8 MB     00:06    
+debuginfo                                       691 kB/s | 4.0 MB     00:05    
+source                                          343 kB/s | 1.7 MB     00:05    
+update                                           62  B/s | 257  B     00:04    
+update-source                                    61  B/s | 257  B     00:04    
+Last metadata expiration check: 0:00:02 ago on Wed Jun  7 19:56:20 2023.
+Dependencies resolved.
+================================================================================
+ Package                       Arch      Version            Repository     Size
+================================================================================
+Installing:
+ container-exception-logger    x86_64    1.0.3-5.oe2303     everything     22 k
+
+Transaction Summary
+================================================================================
+Install  1 Package
+
+Total download size: 22 k
+Installed size: 49 k
+Downloading Packages:
+container-exception-logger-1.0.3-5.oe2303.x86_6  10 kB/s |  22 kB     00:02    
+--------------------------------------------------------------------------------
+Total                                            10 kB/s |  22 kB     00:02     
+[91mretrieving repo key for everything unencrypted from http://repo.openeuler.org/openEuler-23.03/everything/x86_64/RPM-GPG-KEY-openEuler
+[0meverything                                      1.4 kB/s | 3.0 kB     00:02    
+[91mImporting GPG key 0xB675600B:
+ Userid     : "openeuler <openeuler@compass-ci.com>"
+ Fingerprint: 8AA1 6BF9 F2CA 5244 010D CA96 3B47 7C60 B675 600B
+ From       : http://repo.openeuler.org/openEuler-23.03/everything/x86_64/RPM-GPG-KEY-openEuler
+[0mKey imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : container-exception-logger-1.0.3-5.oe2303.x86_64       1/1 
+  Verifying        : container-exception-logger-1.0.3-5.oe2303.x86_64       1/1 
+
+Installed:
+  container-exception-logger-1.0.3-5.oe2303.x86_64                              
+
+Complete!
+39 files removed
+Removing intermediate container cd7d6136f90e
+ ---> c2415995dd1e
+Successfully built c2415995dd1e
+Successfully tagged openeuler-container-exception-logger:latest
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Jun  7 11:56:56 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Wed Jun  7 11:56:57 2023 - INFO  - Start testing...
++ echo without-option-test
++ docker run --rm -i openeuler-container-exception-logger container-exception-logger
++ grep 'container-exception-logger - without-option-test'
+container-exception-logger - without-option-test
++ CHECK_RESULT 0 0 0 'test failed without option'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='test failed without option'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker run --rm -i openeuler-container-exception-logger container-exception-logger --help
++ grep 'Usage: container-exception-logger'
+Usage: container-exception-logger [--no-tag | --tag STRING | --help]
++ CHECK_RESULT 0 0 0 'test failed with option --help'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='test failed with option --help'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo option-no-tag-test
++ docker run --rm -i openeuler-container-exception-logger container-exception-logger --no-tag
++ grep option-no-tag-test
+option-no-tag-test
++ CHECK_RESULT 0 0 0 'test failed with option --no-tag'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='test failed with option --no-tag'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo option-tag-test
++ docker run --rm -i openeuler-container-exception-logger container-exception-logger --tag example-tag
++ grep 'example-tag - option-tag-test'
+example-tag - option-tag-test
++ CHECK_RESULT 0 0 0 'test failed with option --tag'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='test failed with option --tag'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Wed Jun  7 11:57:25 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Jun  7 11:57:26 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Jun  7 11:57:27 2023 - INFO  - start environment cleanup.
++ rm -rf Dockerfile openEuler-docker.x86_64.tar.xz
++ docker rmi openeuler-container-exception-logger openeuler-23.03:latest
+Untagged: openeuler-container-exception-logger:latest
+Deleted: sha256:c2415995dd1e8c0146acbaf76b55f8c8fd6f2f924ea8aa1f43984f7d47584142
+Deleted: sha256:53b0cc4f47e8493fc14380e6f9575058703880f881949ea9bc343ff640a7cfac
+Untagged: openeuler-23.03:latest
+Deleted: sha256:9ca9007eb254f800d658f3a13480b192073d26b36f2c80cbefe3c89b862dc5f2
+Deleted: sha256:880206e946e2ce84c7fb59f9e5bed0b1163fe07c333a20a1c390d04a511bdfc1
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpox11kyc8 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpox11kyc8
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Jun  7 11:57:59 2023 - INFO  - Finish environment cleanup!

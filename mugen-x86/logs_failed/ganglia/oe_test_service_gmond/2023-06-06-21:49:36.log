@@ -1,0 +1,242 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue Jun  6 21:49:45 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL ganglia-gmond
++ pkgs=ganglia-gmond
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs ganglia-gmond --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp3882py9c
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp3882py9c
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Jun  6 21:50:57 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue Jun  6 21:50:59 2023 - INFO  - Start testing...
++ test_execution gmond.service
++ service=gmond.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-06-06 21:50:59'
++ test_restart gmond.service
++ service=gmond.service
++ systemctl restart gmond.service
++ CHECK_RESULT 0 0 0 'gmond.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='gmond.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'Active: active'
++ systemctl status gmond.service
+     Active: active (running) since Tue 2023-06-06 21:50:59 UTC; 7s ago
++ CHECK_RESULT 0 0 0 'gmond.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='gmond.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop gmond.service
++ CHECK_RESULT 0 0 0 'gmond.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='gmond.service stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status gmond.service
++ grep 'Active: inactive'
++ CHECK_RESULT 1 0 0 'gmond.service stop failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='gmond.service stop failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'gmond.service stop failed'
++ LOG_ERROR 'gmond.service stop failed'
++ message='gmond.service stop failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'gmond.service stop failed'
+Tue Jun  6 21:51:20 2023 - ERROR - gmond.service stop failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 42'
++ message='../common/common_lib.sh line 42'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 42'
+Tue Jun  6 21:51:22 2023 - ERROR - ../common/common_lib.sh line 42
++ return 0
++ systemctl start gmond.service
++ CHECK_RESULT 0 0 0 'gmond.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='gmond.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status gmond.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-06-06 21:51:22 UTC; 6s ago
++ CHECK_RESULT 0 0 0 'gmond.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='gmond.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled gmond.service
++ service=gmond.service
+++ systemctl is-enabled gmond.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ systemctl enable gmond.service
+++ grep 'Created symlink'
+++ awk '{print $3}'
++ symlink_file=/etc/systemd/system/multi-user.target.wants/gmond.service
++ find /etc/systemd/system/multi-user.target.wants/gmond.service
+/etc/systemd/system/multi-user.target.wants/gmond.service
++ CHECK_RESULT 0 0 0 'gmond.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='gmond.service enable failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable gmond.service
+Removed /etc/systemd/system/multi-user.target.wants/gmond.service.
++ find /etc/systemd/system/multi-user.target.wants/gmond.service
+find: ‘/etc/systemd/system/multi-user.target.wants/gmond.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'gmond.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='gmond.service disable failed'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ journalctl --since '2023-06-06 21:50:59' -u gmond.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
+Jun 06 21:51:11 localhost.localdomain systemd[1]: gmond.service: Failed with result 'core-dump'.
++ CHECK_RESULT 0 0 1 'There is an error message for the log of gmond.service'
++ actual_result=0
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of gmond.service'
++ '[' -z 0 ']'
++ '[' 1 -eq 0 ']'
++ test 0x == 0x
++ test -n 'There is an error message for the log of gmond.service'
++ LOG_ERROR 'There is an error message for the log of gmond.service'
++ message='There is an error message for the log of gmond.service'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'There is an error message for the log of gmond.service'
+Tue Jun  6 21:51:41 2023 - ERROR - There is an error message for the log of gmond.service
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 28'
++ message='../common/common_lib.sh line 28'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 28'
+Tue Jun  6 21:51:42 2023 - ERROR - ../common/common_lib.sh line 28
++ return 0
++ test_reload gmond.service
++ service=gmond.service
++ systemctl start gmond.service
++ systemctl reload gmond.service
++ grep 'Job type reload is not applicable'
+Failed to reload gmond.service: Job type reload is not applicable for unit gmond.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit gmond.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit gmond.service'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status gmond.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-06-06 21:51:22 UTC; 20s ago
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue Jun  6 21:51:45 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Jun  6 21:51:46 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Tue Jun  6 21:51:47 2023 - INFO  - start environment cleanup.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp3882py9c ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp3882py9c
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Tue Jun  6 21:52:18 2023 - INFO  - Finish environment cleanup!

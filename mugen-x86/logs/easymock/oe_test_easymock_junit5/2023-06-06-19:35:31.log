@@ -1,0 +1,137 @@
++ source ../common/common_easymock.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Jun  6 19:35:41 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'easymock junit5 maven'
++ pkgs='easymock junit5 maven'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs 'easymock junit5 maven' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpefbbqv2b
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpefbbqv2b
+++ grep 'java-.*-openjdk'
+++ rpm -qa 'java*'
+++ awk -F - '{print $2}'
++ java_version='1.8.0
+1.8.0
+1.8.0'
++ DNF_INSTALL java-1.8.0 1.8.0 1.8.0-devel
++ pkgs=java-1.8.0
++ node=1.8.0
++ '[' -z /tmp/tmpefbbqv2b ']'
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs java-1.8.0 --node 1.8.0 --tempfile /tmp/tmpefbbqv2b
+usage: rpm_manage.py install|remove [-h] [--node NODE] [--pkgs PKG] [--tempfile TEPMFILE]
+rpm_manage.py: error: argument --node: invalid int value: '1.8.0'
++ tmpfile2=
++ '[' -z /tmp/tmpefbbqv2b ']'
++ mkdir libs
+++ rpm -ql junit5
+++ grep junit-jupiter-api.jar
+++ grep easymock.jar
+++ rpm -ql easymock
+++ rpm -ql hamcrest
+++ grep core.jar
++ cp -rf /usr/share/java/junit5/junit-jupiter-api.jar /usr/share/java/easymock.jar /usr/share/java/hamcrest/core.jar libs
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Jun  6 19:40:03 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Jun  6 19:40:05 2023 - INFO  - Start to run test.
++ mvn test
++ grep 'Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+BUILD SUCCESS'
+Tue Jun  6 20:05:33 2023 - ERROR - Timeout : Command 'bash -x oe_test_easymock_junit5.sh' timed out after 1799.9988085679993 seconds
+++ post_test
+++ LOG_INFO 'Start to restore the test environment.'
+++ message='Start to restore the test environment.'
+++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Jun  6 21:04:46 2023 - INFO  - Start to restore the test environment.
+++ DNF_REMOVE
+++ node=1
+++ pkg_list=
+++ mode=0
+++ [[ -z /tmp/tmpefbbqv2b ]]
+++ '[' 0 -ne 0 ']'
+++ '[' 1 == 0 ']'
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpefbbqv2b
+++ '[' 0 -ne 0 ']'
++++ ls
++++ grep -vE '.xml|main|.sh|test'
+++ rm -rf hs_err_pid3703.log libs target /root/.m2
+++ LOG_INFO 'End to restore the test environment.'
+++ message='End to restore the test environment.'
+++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Jun  6 21:05:48 2023 - INFO  - End to restore the test environment.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_easymock_junit5.sh line 33'
++ message='oe_test_easymock_junit5.sh line 33'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_easymock_junit5.sh line 33'
+Tue Jun  6 21:05:50 2023 - ERROR - oe_test_easymock_junit5.sh line 33
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Jun  6 21:05:51 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Jun  6 21:05:53 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Jun  6 21:05:54 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpefbbqv2b ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpefbbqv2b
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE '.xml|main|.sh|test'
++ rm -rf /root/.m2
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Jun  6 21:06:14 2023 - INFO  - End to restore the test environment.

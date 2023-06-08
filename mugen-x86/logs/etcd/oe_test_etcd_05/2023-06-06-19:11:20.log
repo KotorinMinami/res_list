@@ -1,0 +1,172 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Jun  6 19:11:31 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL etcd
++ pkgs=etcd
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs etcd --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpnkko96kf
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpnkko96kf
++ systemctl start etcd
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Jun  6 19:13:24 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Jun  6 19:13:26 2023 - INFO  - Start to run test.
++ systemctl status etcd
++ grep 'active (running)'
+     Active: active (running) since Tue 2023-06-06 19:13:23 UTC; 3s ago
++ CHECK_RESULT 0 0 0 'Check etcd.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcd.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl defrag
++ grep defragmenting
+{"level":"warn","ts":"2023-06-06T19:13:33.246Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"passthrough:///127.0.0.1:2379","attempt":0,"error":"rpc error: code = DeadlineExceeded desc = context deadline exceeded"}
+Failed to defragment etcd member[127.0.0.1:2379] (context deadline exceeded)
++ CHECK_RESULT 1 0 0 'Check etcdctl defrag failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl defrag failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl defrag failed.'
++ LOG_ERROR 'Check etcdctl defrag failed.'
++ message='Check etcdctl defrag failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl defrag failed.'
+Tue Jun  6 19:13:36 2023 - ERROR - Check etcdctl defrag failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_05.sh line 31'
++ message='oe_test_etcd_05.sh line 31'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_05.sh line 31'
+Tue Jun  6 19:13:38 2023 - ERROR - oe_test_etcd_05.sh line 31
++ return 0
++ etcdctl --endpoints=:2379 endpoint status
++ grep true
+:2379, 8e9e05c52164694d, 3.4.14, 41 MB, true, false, 15, 18448, 18448, 
++ CHECK_RESULT 0 0 0 'Check etcdctl --endpoints failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl --endpoints failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl alarm disarm
++ CHECK_RESULT 0 0 0 'Check etcdctl alarm disarm failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl alarm disarm failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl alarm list
++ CHECK_RESULT 0 0 0 'Check etcdctl alarm listfailed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl alarm listfailed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl check datascale
++ grep PASS:
+PASS: Approximate system memory used : 8.32 MB.
++ CHECK_RESULT 0 0 0 'Check etcdctl check datascale failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl check datascale failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl check perf
++ grep PASS:
++ CHECK_RESULT 1 0 0 'Check etcdctl check perf failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl check perf failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl check perf failed.'
++ LOG_ERROR 'Check etcdctl check perf failed.'
++ message='Check etcdctl check perf failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl check perf failed.'
+Tue Jun  6 19:15:55 2023 - ERROR - Check etcdctl check perf failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_05.sh line 41'
++ message='oe_test_etcd_05.sh line 41'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_05.sh line 41'
+Tue Jun  6 19:15:56 2023 - ERROR - oe_test_etcd_05.sh line 41
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Jun  6 19:15:58 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Jun  6 19:15:59 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Jun  6 19:16:01 2023 - INFO  - Start to restore the test environment.
++ systemctl stop etcd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpnkko96kf ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpnkko96kf
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Jun  6 19:16:42 2023 - INFO  - End to restore the test environment.

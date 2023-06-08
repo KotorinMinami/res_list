@@ -1,0 +1,601 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Jun  7 17:01:57 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL net-tools
++ pkgs=net-tools
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs net-tools --node 1 --tempfile ''
+Wed Jun  7 17:02:13 2023 - INFO  - pkgs:(net-tools) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ SSH_CMD 'sudo dnf install -y httpd net-tools
+        sudo systemctl start httpd
+        sudo systemctl stop firewalld' '' '' ''
++ cmd='sudo dnf install -y httpd net-tools
+        sudo systemctl start httpd
+        sudo systemctl stop firewalld'
++ remoteip=
++ remotepasswd=
++ remoteuser=
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sudo dnf install -y httpd net-tools
+        sudo systemctl start httpd
+        sudo systemctl stop firewalld' -i '' -u '' -p '' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Wed Jun  7 17:02:15 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ sudo systemctl start firewalld
+Failed to start firewalld.service: Unit firewalld.service not found.
+++ TEST_NIC 1
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device nic --node 1
+Wed Jun  7 17:02:33 2023 - INFO  - pkgs:(lshw) is already installed
++ net_cards=
+++ echo ''
+++ awk -F ' ' '{print $1}'
++ net_card2=
+++ TEST_NIC 2
+++ id=2
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device nic --node 2
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/get_test_device.py", line 125, in <module>
+    print(get_test_nic(args.node))
+  File "/root/mugen/libs/locallibs/get_test_device.py", line 41, in get_test_nic
+    exitcode, tmpfile = rpm_manage.rpm_install(pkgs="lshw", node=node)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 66, in rpm_install
+    conn = ssh_cmd.pssh_conn(
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 340, in connect
+    to_try = list(self._families_and_addresses(hostname, port))
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 203, in _families_and_addresses
+    addrinfos = socket.getaddrinfo(
+  File "/usr/lib64/python3.10/socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
++ remote_net_cards=
+++ echo ''
+++ awk -F ' ' '{print $1}'
++ remote_net_card2=
+++ sudo firewall-cmd --get-zone-of-interface=
+sudo: firewall-cmd: command not found
++ zone1=
+++ sudo firewall-cmd --get-zone-of-interface=
+sudo: firewall-cmd: command not found
++ zone2=
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Jun  7 17:02:55 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Wed Jun  7 17:02:57 2023 - INFO  - Start executing testcase.
++ sudo ifconfig '' 192.168.100.1/24
+SIOCSIFADDR: No such device
+: ERROR while getting interface flags: No such device
+SIOCSIFNETMASK: No such device
++ sudo ifconfig '' up
+: ERROR while getting interface flags: No such device
++ SSH_CMD 'sudo ifconfig  192.168.100.2/24;sudo ifconfig  up;sudo route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1' '' '' ''
++ cmd='sudo ifconfig  192.168.100.2/24;sudo ifconfig  up;sudo route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1'
++ remoteip=
++ remotepasswd=
++ remoteuser=
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sudo ifconfig  192.168.100.2/24;sudo ifconfig  up;sudo route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1' -i '' -u '' -p '' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Wed Jun  7 17:03:00 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ SSH_CMD 'curl http://127.0.0.1' '' '' ''
++ cmd='curl http://127.0.0.1'
++ remoteip=
++ remotepasswd=
++ remoteuser=
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'curl http://127.0.0.1' -i '' -u '' -p '' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Wed Jun  7 17:03:05 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ CHECK_RESULT 1 0 1
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ echo net.ipv4.ip_forward=1
++ sysctl -p
+kernel.sysrq = 0
+net.ipv4.ip_forward = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.default.secure_redirects = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.tcp_syncookies = 1
+kernel.dmesg_restrict = 1
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv6.conf.default.accept_redirects = 0
+net.ipv4.ip_forward = 1
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ sudo firewall-cmd --zone=external --change-interface=
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 49'
++ message='oe_test_firewalld_dnat.sh line 49'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 49'
+Wed Jun  7 17:03:07 2023 - ERROR - oe_test_firewalld_dnat.sh line 49
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --zone=internal --change-interface=
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 51'
++ message='oe_test_firewalld_dnat.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 51'
+Wed Jun  7 17:03:09 2023 - ERROR - oe_test_firewalld_dnat.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --zone=external --add-masquerade
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 53'
++ message='oe_test_firewalld_dnat.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 53'
+Wed Jun  7 17:03:10 2023 - ERROR - oe_test_firewalld_dnat.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -F
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 55'
++ message='oe_test_firewalld_dnat.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 55'
+Wed Jun  7 17:03:12 2023 - ERROR - oe_test_firewalld_dnat.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -t nat -F
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 57'
++ message='oe_test_firewalld_dnat.sh line 57'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 57'
+Wed Jun  7 17:03:14 2023 - ERROR - oe_test_firewalld_dnat.sh line 57
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -t mangle -F
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 59'
++ message='oe_test_firewalld_dnat.sh line 59'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 59'
+Wed Jun  7 17:03:15 2023 - ERROR - oe_test_firewalld_dnat.sh line 59
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -X
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 61'
++ message='oe_test_firewalld_dnat.sh line 61'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 61'
+Wed Jun  7 17:03:17 2023 - ERROR - oe_test_firewalld_dnat.sh line 61
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -t nat -X
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 63'
++ message='oe_test_firewalld_dnat.sh line 63'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 63'
+Wed Jun  7 17:03:19 2023 - ERROR - oe_test_firewalld_dnat.sh line 63
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -t mangle -X
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 65'
++ message='oe_test_firewalld_dnat.sh line 65'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 65'
+Wed Jun  7 17:03:21 2023 - ERROR - oe_test_firewalld_dnat.sh line 65
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -A INPUT -i lo -j ACCEPT
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 67'
++ message='oe_test_firewalld_dnat.sh line 67'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 67'
+Wed Jun  7 17:03:22 2023 - ERROR - oe_test_firewalld_dnat.sh line 67
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -A OUTPUT -o lo -j ACCEPT
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 69'
++ message='oe_test_firewalld_dnat.sh line 69'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 69'
+Wed Jun  7 17:03:24 2023 - ERROR - oe_test_firewalld_dnat.sh line 69
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -P INPUT ACCEPT
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 71'
++ message='oe_test_firewalld_dnat.sh line 71'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 71'
+Wed Jun  7 17:03:25 2023 - ERROR - oe_test_firewalld_dnat.sh line 71
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -P OUTPUT ACCEPT
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 73'
++ message='oe_test_firewalld_dnat.sh line 73'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 73'
+Wed Jun  7 17:03:27 2023 - ERROR - oe_test_firewalld_dnat.sh line 73
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -P FORWARD ACCEPT
++ grep success
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 75'
++ message='oe_test_firewalld_dnat.sh line 75'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 75'
+Wed Jun  7 17:03:29 2023 - ERROR - oe_test_firewalld_dnat.sh line 75
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -t nat -A PREROUTING -d 127.0.0.1 -p tcp --dport 80 -j DNAT --to-destination 192.168.100.2:80
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 77'
++ message='oe_test_firewalld_dnat.sh line 77'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 77'
+Wed Jun  7 17:03:30 2023 - ERROR - oe_test_firewalld_dnat.sh line 77
++ '[' 0 -eq 1 ']'
++ return 0
++ sudo firewall-cmd --direct --passthrough ipv4 -t nat -A POSTROUTING -d 192.168.100.2 -p tcp --dport 80 -j SNAT --to 192.168.100.1
+sudo: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 80'
++ message='oe_test_firewalld_dnat.sh line 80'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 80'
+Wed Jun  7 17:03:32 2023 - ERROR - oe_test_firewalld_dnat.sh line 80
++ '[' 0 -eq 1 ']'
++ return 0
++ SSH_CMD 'curl http://127.0.0.1' '' '' ''
++ cmd='curl http://127.0.0.1'
++ remoteip=
++ remotepasswd=
++ remoteuser=
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'curl http://127.0.0.1' -i '' -u '' -p '' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Wed Jun  7 17:03:34 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_dnat.sh line 82'
++ message='oe_test_firewalld_dnat.sh line 82'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_dnat.sh line 82'
+Wed Jun  7 17:03:36 2023 - ERROR - oe_test_firewalld_dnat.sh line 82
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'Finish testcase execution.'
++ message='Finish testcase execution.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish testcase execution.'
+Wed Jun  7 17:03:37 2023 - INFO  - Finish testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z 17
++ test 17 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Jun  7 17:03:39 2023 - ERROR - failed to execute the case.
++ exit 17
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Jun  7 17:03:40 2023 - INFO  - start environment cleanup.
++ sudo firewall-cmd --direct --passthrough ipv4 -t nat -D POSTROUTING -d 192.168.100.2 -p tcp --dport 80 -j SNAT --to 192.168.100.1
+sudo: firewall-cmd: command not found
++ sudo firewall-cmd --direct --passthrough ipv4 -t nat -D PREROUTING -d 127.0.0.1 -p tcp --dport 80 -j DNAT --to-destination 192.168.100.2:80
+sudo: firewall-cmd: command not found
++ sudo firewall-cmd --direct --passthrough ipv4 -t nat -F
+sudo: firewall-cmd: command not found
++ sudo firewall-cmd --zone=external --remove-masquerade
+sudo: firewall-cmd: command not found
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ sudo firewall-cmd --zone=internal --remove-interface=
+sudo: firewall-cmd: command not found
++ sudo firewall-cmd --reload
+sudo: firewall-cmd: command not found
++ sudo systemctl start firewalld
+Failed to start firewalld.service: Unit firewalld.service not found.
++ sudo ip addr del 192.168.100.1 dev ''
+Warning: Executing wildcard deletion to stay compatible with old scripts.
+         Explicitly specify the prefix length (192.168.100.1/32) to avoid this warning.
+         This special behaviour is likely to disappear in further releases,
+         fix your scripts!
+Cannot find device ""
++ sudo systemctl stop httpd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Jun  7 17:03:44 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf /tmp/ip_remote
++ SSH_CMD 'sudo systemctl stop httpd;sudo ip addr del 192.168.100.2 dev ;sudo route del -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1;sudo yum remove -y net-tools httpd;rm -rf /root/ip_remote' '' '' ''
++ cmd='sudo systemctl stop httpd;sudo ip addr del 192.168.100.2 dev ;sudo route del -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1;sudo yum remove -y net-tools httpd;rm -rf /root/ip_remote'
++ remoteip=
++ remotepasswd=
++ remoteuser=
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sudo systemctl stop httpd;sudo ip addr del 192.168.100.2 dev ;sudo route del -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1;sudo yum remove -y net-tools httpd;rm -rf /root/ip_remote' -i '' -u '' -p '' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Wed Jun  7 17:03:46 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Jun  7 17:03:47 2023 - INFO  - Finish environment cleanup!

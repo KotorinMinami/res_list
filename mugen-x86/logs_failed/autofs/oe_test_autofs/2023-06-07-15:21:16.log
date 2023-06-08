@@ -1,0 +1,121 @@
++ source common/common_autofs.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Jun  7 15:21:26 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'nfs-utils net-tools' 2
++ pkgs='nfs-utils net-tools'
++ node=2
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'nfs-utils net-tools' --node 2 --tempfile ''
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 187, in <module>
+    exitcode, output = rpm_install(args.pkgs, args.node, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 66, in rpm_install
+    conn = ssh_cmd.pssh_conn(
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 340, in connect
+    to_try = list(self._families_and_addresses(hostname, port))
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 203, in _families_and_addresses
+    addrinfos = socket.getaddrinfo(
+  File "/usr/lib64/python3.10/socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ P_SSH_CMD --node 2 --cmd 'mkdir -p /shared/{automount_a,automount_b};
+        echo '\''/shared *(rw,sync,no_root_squash)'\'' >/etc/exports;
+        systemctl stop firewalld;
+        systemctl restart rpcbind;
+        systemctl restart nfs;
+        netstat -antulp | grep '\'':2049'\'';
+        showmount -e localhost | grep '\''/shared'\''
+        '
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'mkdir -p /shared/{automount_a,automount_b};
+        echo '\''/shared *(rw,sync,no_root_squash)'\'' >/etc/exports;
+        systemctl stop firewalld;
+        systemctl restart rpcbind;
+        systemctl restart nfs;
+        netstat -antulp | grep '\'':2049'\'';
+        showmount -e localhost | grep '\''/shared'\''
+        '
+Wed Jun  7 15:21:39 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ DNF_INSTALL 'autofs nfs-utils'
++ pkgs='autofs nfs-utils'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'autofs nfs-utils' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmptne7xtpe
++ '[' -z '' ']'
++ tmpfile=/tmp/tmptne7xtpe
++ cat
++ echo 'nfs -rw,soft,intr :/shared'
++ systemctl stop firewalld
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ systemctl restart autofs
++ systemctl restart nfs
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ cd /mnt01/nfs
+common/common_autofs.sh: line 41: cd: /mnt01/nfs: No such file or directory
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Jun  7 15:23:51 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ systemctl stop autofs
++ systemctl stop nfs
++ systemctl start firewalld
+Failed to start firewalld.service: Unit firewalld.service not found.
++ P_SSH_CMD --node 2 --cmd 'rm -rf /shared;
+        > /etc/exports;
+        systemctl stop rpcbind;
+        systemctl stop nfs;
+        systemctl start firewalld
+        '
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'rm -rf /shared;
+        > /etc/exports;
+        systemctl stop rpcbind;
+        systemctl stop nfs;
+        systemctl start firewalld
+        '
+Wed Jun  7 15:23:59 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmptne7xtpe ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmptne7xtpe
++ '[' 0 -ne 0 ']'
++ rm -f /etc/auto.master.rpmsave /etc/auto.mnt01 /tmp/automount_pid /run/autofs.fifodevel
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Jun  7 15:24:43 2023 - INFO  - End to restore the test environment.

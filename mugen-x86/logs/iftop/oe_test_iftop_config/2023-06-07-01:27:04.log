@@ -1,0 +1,536 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Jun  7 01:27:13 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL iftop
++ pkgs=iftop
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs iftop --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp5j0he3su
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp5j0he3su
++ DNF_INSTALL bind-utils
++ pkgs=bind-utils
++ node=1
++ '[' -z /tmp/tmp5j0he3su ']'
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs bind-utils --node 1 --tempfile /tmp/tmp5j0he3su
++ tmpfile2=/tmp/tmp5j0he3su
++ '[' -z /tmp/tmp5j0he3su ']'
++ DNF_INSTALL ipcalc
++ pkgs=ipcalc
++ node=1
++ '[' -z /tmp/tmp5j0he3su ']'
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs ipcalc --node 1 --tempfile /tmp/tmp5j0he3su
+Wed Jun  7 01:29:34 2023 - INFO  - pkgs:(ipcalc) is already installed
++ tmpfile2=
++ '[' -z /tmp/tmp5j0he3su ']'
++ IFS=' '
++ read -r -a net_cards
+++ TEST_NIC
+++ id=1
+++ python3 /root/mugen-riscv/libs/locallibs/get_test_device.py --device nic --node 1
+Wed Jun  7 01:29:52 2023 - INFO  - pkgs:(lshw) is already installed
+++ nmcli device show
+++ grep IP4.ADDRESS
+++ cut -d / -f1
+++ awk '{print $2}'
++ ipv4_addr_1='10.0.2.15
+127.0.0.1'
+++ nmcli device show
+++ cut -d / -f1
+++ grep IP4.ADDRESS
+++ awk '{print $2}'
++ ipv4_addr_2='10.0.2.15
+127.0.0.1'
+++ host huawei.com
+++ grep 'has address'
+++ awk '{print $4}'
++ ipv4_target_addr=121.37.49.12
++ IFS=.
++ read -r -a target_addr
++ ipv4_target_hostname=12.49.37.121
+++ grep IPv6
+++ awk '{print $5}'
+++ host huawei.com
++ ipv6_target_addr=2407:c080:17ef:ffff::7274:d206
+++ ipcalc -n 2407:c080:17ef:ffff::7274:d206/64
+++ cut -d = -f2
++ ipv6_target_network=2407:c080:17ef:ffff::
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Jun  7 01:30:14 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Wed Jun  7 01:30:15 2023 - INFO  - Start testing...
++ echo 'interface: '
++ iftop -t -s 1
++ grep 'Listening on '
+Listening on ens4
++ CHECK_RESULT 0 0 0 'Failed to use config directive: interface'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: interface'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dns_resolution_work=1
++ ping 121.37.49.12 -c 100
++ (( i = 0 ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1
++ grep 12.49.37.121
++ (( i++ ))
++ (( i < 10 ))
++ pkill -f ping
++ '[' 1 -eq 0 ']'
++ LOG_WARN 'DNS RESOLUTION NOT WORK.'
++ message='DNS RESOLUTION NOT WORK.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level warn --message 'DNS RESOLUTION NOT WORK.'
+Wed Jun  7 01:31:17 2023 - WARN  - DNS RESOLUTION NOT WORK.
++ pkill -f ping
++ result=1
++ echo 'port-resolution: no'
++ (( i = 0 ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ CHECK_RESULT 1 0 0 'Failed to use config directive: port-resolution'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: port-resolution'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to use config directive: port-resolution'
++ LOG_ERROR 'Failed to use config directive: port-resolution'
++ message='Failed to use config directive: port-resolution'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: port-resolution'
+Wed Jun  7 01:43:18 2023 - ERROR - Failed to use config directive: port-resolution
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iftop_config.sh line 69'
++ message='oe_test_iftop_config.sh line 69'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_iftop_config.sh line 69'
+Wed Jun  7 01:43:19 2023 - ERROR - oe_test_iftop_config.sh line 69
++ return 0
++ result=1
++ echo 'filter-code: dst port 22'
++ (( i = 0 ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
+Wed Jun  7 01:57:05 2023 - ERROR - Timeout : Command 'bash -x oe_test_iftop_config.sh' timed out after 1799.9989876099999 seconds
+++ post_test
+++ LOG_INFO 'start environment cleanup.'
+++ message='start environment cleanup.'
+++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Jun  7 01:57:09 2023 - INFO  - start environment cleanup.
+++ DNF_REMOVE
+++ node=1
+++ pkg_list=
+++ mode=0
+++ [[ -z /tmp/tmp5j0he3su ]]
+++ '[' 0 -ne 0 ']'
+++ '[' 1 == 0 ']'
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp5j0he3su
+++ '[' 0 -ne 0 ']'
+++ rm -f ./iftoprc
+++ LOG_INFO 'Finish environment cleanup!'
+++ message='Finish environment cleanup!'
+++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Jun  7 01:57:41 2023 - INFO  - Finish environment cleanup!
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -P -N -c ./iftoprc
++ grep :22
++ (( i++ ))
++ (( i < 10 ))
++ CHECK_RESULT 1 0 0 'Failed to use config directive: filter-code'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: filter-code'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to use config directive: filter-code'
++ LOG_ERROR 'Failed to use config directive: filter-code'
++ message='Failed to use config directive: filter-code'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: filter-code'
+Wed Jun  7 01:57:43 2023 - ERROR - Failed to use config directive: filter-code
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iftop_config.sh line 78'
++ message='oe_test_iftop_config.sh line 78'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_iftop_config.sh line 78'
+Wed Jun  7 01:57:45 2023 - ERROR - oe_test_iftop_config.sh line 78
++ return 0
++ echo 'show-bars: yes'
++ expect
+spawn iftop -c ./iftoprc
+couldn't execute "iftop": no such file or directory
+    while executing
+"spawn iftop -c ./iftoprc"
++ ls ./config_show_bars
+ls: cannot access './config_show_bars': No such file or directory
++ CHECK_RESULT 2 0 0 'Failed to use config directive: show-bars'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: show-bars'
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Failed to use config directive: show-bars'
++ LOG_ERROR 'Failed to use config directive: show-bars'
++ message='Failed to use config directive: show-bars'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: show-bars'
+Wed Jun  7 01:57:47 2023 - ERROR - Failed to use config directive: show-bars
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iftop_config.sh line 89'
++ message='oe_test_iftop_config.sh line 89'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_iftop_config.sh line 89'
+Wed Jun  7 01:57:48 2023 - ERROR - oe_test_iftop_config.sh line 89
++ return 0
++ rm -f ./config_show_bars
++ echo 'promiscuous: yes'
++ result=1
++ (( i = 0 ))
++ (( i < 10 ))
++ ping -I '10.0.2.15
+127.0.0.1' 121.37.49.12 -c 100
++ ping -I '10.0.2.15
+127.0.0.1' 121.37.49.12 -c 100
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep '10.0.2.15
+127.0.0.1'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ grep '10.0.2.15
+127.0.0.1'
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ grep '10.0.2.15
+127.0.0.1'
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ grep '10.0.2.15
+127.0.0.1'
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ grep '10.0.2.15
+127.0.0.1'
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ grep '10.0.2.15
+127.0.0.1'
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ grep '10.0.2.15
+127.0.0.1'
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ grep '10.0.2.15
+127.0.0.1'
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep '10.0.2.15
+127.0.0.1'
++ grep -B 1 121.37.49.12
++ (( i++ ))
++ (( i < 10 ))
+++ iftop -t -s 1 -n -c ./iftoprc
++ output='oe_test_iftop_config.sh: line 96: iftop: command not found'
++ echo 'oe_test_iftop_config.sh: line 96: iftop: command not found'
++ grep -B 1 121.37.49.12
++ grep '10.0.2.15
+127.0.0.1'
++ (( i++ ))
++ (( i < 10 ))
++ CHECK_RESULT 1 0 0 'Failed to use config directive: promiscuous'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: promiscuous'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to use config directive: promiscuous'
++ LOG_ERROR 'Failed to use config directive: promiscuous'
++ message='Failed to use config directive: promiscuous'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: promiscuous'
+Wed Jun  7 01:57:53 2023 - ERROR - Failed to use config directive: promiscuous
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iftop_config.sh line 102'
++ message='oe_test_iftop_config.sh line 102'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_iftop_config.sh line 102'
+Wed Jun  7 01:57:54 2023 - ERROR - oe_test_iftop_config.sh line 102
++ return 0
++ pkill -f ping
++ echo 'port-display: on'
++ result=1
++ (( i = 0 ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ iftop -t -s 1 -c ./iftoprc
++ grep :ssh
++ (( i++ ))
++ (( i < 10 ))
++ CHECK_RESULT 1 0 0 'Failed to use config directive: port-display'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: port-display'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to use config directive: port-display'
++ LOG_ERROR 'Failed to use config directive: port-display'
++ message='Failed to use config directive: port-display'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: port-display'
+Wed Jun  7 01:57:58 2023 - ERROR - Failed to use config directive: port-display
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iftop_config.sh line 112'
++ message='oe_test_iftop_config.sh line 112'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_iftop_config.sh line 112'
+Wed Jun  7 01:58:00 2023 - ERROR - oe_test_iftop_config.sh line 112
++ return 0
++ echo 'link-local: yes'
++ iftop -t -s 1 -c ./iftoprc
++ grep 'Listening on'
++ CHECK_RESULT 1 0 0 'Failed to use config directive: link-local'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: link-local'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to use config directive: link-local'
++ LOG_ERROR 'Failed to use config directive: link-local'
++ message='Failed to use config directive: link-local'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: link-local'
+Wed Jun  7 01:58:02 2023 - ERROR - Failed to use config directive: link-local
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iftop_config.sh line 115'
++ message='oe_test_iftop_config.sh line 115'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_iftop_config.sh line 115'
+Wed Jun  7 01:58:04 2023 - ERROR - oe_test_iftop_config.sh line 115
++ return 0
++ echo 'hide-source: yes'
++ ping -I '10.0.2.15
+127.0.0.1' 121.37.49.12 -c 100
++ iftop -t -s 1 -n -c ./iftoprc
++ grep -B 1 121.37.49.12
++ grep '*'
++ CHECK_RESULT 1 0 0 'Failed to use config directive: hide-source'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to use config directive: hide-source'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to use config directive: hide-source'
++ LOG_ERROR 'Failed to use config directive: hide-source'
++ message='Failed to use config directive: hide-source'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed to use config directive: hide-source'

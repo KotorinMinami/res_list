@@ -1,0 +1,286 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Jun  6 19:04:12 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL etcd
++ pkgs=etcd
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs etcd --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp28mbfzfh
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp28mbfzfh
++ systemctl start etcd
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Jun  6 19:06:05 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Jun  6 19:06:06 2023 - INFO  - Start to run test.
++ systemctl status etcd
++ grep 'active (running)'
+     Active: active (running) since Tue 2023-06-06 19:06:03 UTC; 3s ago
++ CHECK_RESULT 0 0 0 'Check etcd.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcd.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn etcdctl user add root
+Password of root: 123456
+
+Type password of root again for confirmation: 123456
+
+User root created
++ grep 'User root created' etcd_log1
+User root created
++ CHECK_RESULT 0 0 0 'Check etcdctl user add failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user add failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn etcdctl user add test
+Password of test: 123
+
+Type password of test again for confirmation: 123
+
+User test created
++ grep 'User test created' etcd_log2
+User test created
++ CHECK_RESULT 0 0 0 'Check etcdctl user add failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user add failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl --endpoints=http://127.0.0.1:2379 auth enable
++ grep -i 'Authentication Enabled'
+{"level":"warn","ts":"2023-06-06T19:06:18.378Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-2bb76af9-a292-435c-b6b3-fb73ce85ebdc/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: root user does not have root role"}
+{"level":"warn","ts":"2023-06-06T19:06:18.426Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-2bb76af9-a292-435c-b6b3-fb73ce85ebdc/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: role name already exists"}
+Error: etcdserver: role name already exists
++ CHECK_RESULT 1 0 0 'Check etcdctl auth enable failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl auth enable failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check etcdctl auth enable failed.'
++ LOG_ERROR 'Check etcdctl auth enable failed.'
++ message='Check etcdctl auth enable failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check etcdctl auth enable failed.'
+Tue Jun  6 19:06:19 2023 - ERROR - Check etcdctl auth enable failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_etcd_03.sh line 54'
++ message='oe_test_etcd_03.sh line 54'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_etcd_03.sh line 54'
+Tue Jun  6 19:06:21 2023 - ERROR - oe_test_etcd_03.sh line 54
++ return 0
++ etcdctl role add role1 --user=root --password=123456
++ grep 'Role role1 created'
+{"level":"warn","ts":"2023-06-06T19:06:22.804Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-be7094c5-7cfc-4b48-847d-9abca45b1e53/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+Role role1 created
++ CHECK_RESULT 0 0 0 'Check etcdctl role add failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl role add failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl user grant-role test role1 --user=root --password=123456
++ grep 'Role role1 is granted to user test'
+{"level":"warn","ts":"2023-06-06T19:06:24.136Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-7f81a808-f271-4671-9122-3fd966e79d2c/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+Role role1 is granted to user test
++ CHECK_RESULT 0 0 0 'Check etcdctl user grant-role failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user grant-role failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl role grant-permission role1 read a --user=root --password=123456
++ grep 'Role role1 updated'
+{"level":"warn","ts":"2023-06-06T19:06:25.555Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-161695b5-ce6e-4211-bd6a-ad58c27fc578/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+Role role1 updated
++ CHECK_RESULT 0 0 0 'Check etcdctl role grant-permission failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl role grant-permission failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep OK
++ etcdctl --endpoints=http://127.0.0.1:2379 put a 123 --user=root --password=123456
+{"level":"warn","ts":"2023-06-06T19:06:26.981Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-fed45361-5738-47c3-9831-9e55be0d38f2/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+OK
++ CHECK_RESULT 0 0 0 'Check etcdctl put failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl put failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl get a --user=test:123
+{"level":"warn","ts":"2023-06-06T19:06:28.339Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-8fa5e569-8245-48b4-9741-193934344123/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+a
+123
++ CHECK_RESULT 0 0 0 'Check etcdctl get --user failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl get --user failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'root\|test'
++ etcdctl user list --user=root --password=123456
+{"level":"warn","ts":"2023-06-06T19:06:29.863Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-5596c200-a507-42d4-a649-12a40e9611f7/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+root
+test
++ CHECK_RESULT 0 0 0 'Check etcdctl user list failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user list failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl user delete test --user=root --password=123456
+{"level":"warn","ts":"2023-06-06T19:06:31.346Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-9f32daee-2115-4631-be16-4488139c0887/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+User test deleted
++ CHECK_RESULT 0 0 0 'Check etcdctl user deletel failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user deletel failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl user list --user=root --password=123456
++ grep test
+{"level":"warn","ts":"2023-06-06T19:06:32.672Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-75ff0773-fe5c-4637-bfda-085b7966c4bf/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
++ CHECK_RESULT 1 1 0 'Check etcdctl user deletel failed.'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='Check etcdctl user deletel failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ etcdctl role delete role1 --user=root --password=123456
++ grep 'Role role1 deleted'
+{"level":"warn","ts":"2023-06-06T19:06:34.020Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-cf51b424-ed8e-4391-8242-30e58b75a10d/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+Role role1 deleted
++ CHECK_RESULT 0 0 0 'Check etcdctl role deletel failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl role deletel failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl --endpoints=http://127.0.0.1:2379 --user=root --password=123456 auth disable
++ grep 'Authentication Disabled'
+{"level":"warn","ts":"2023-06-06T19:06:35.392Z","caller":"clientv3/retry_interceptor.go:62","msg":"retrying of unary invoker failed","target":"endpoint://client-1dd39db0-974d-47de-acdd-d61bf546652f/127.0.0.1:2379","attempt":0,"error":"rpc error: code = FailedPrecondition desc = etcdserver: authentication is not enabled"}
+Authentication Disabled
++ CHECK_RESULT 0 0 0 'Check etcdctl auth disable failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl auth disable failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ etcdctl user del root
++ grep -i 'User root deleted'
+User root deleted
++ CHECK_RESULT 0 0 0 'Check etcdctl user del failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check etcdctl user del failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Jun  6 19:06:38 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Jun  6 19:06:40 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Jun  6 19:06:42 2023 - INFO  - Start to restore the test environment.
++ systemctl stop etcd
++ rm -rf etcd_log1 etcd_log2
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp28mbfzfh ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp28mbfzfh
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Jun  6 19:07:20 2023 - INFO  - End to restore the test environment.
