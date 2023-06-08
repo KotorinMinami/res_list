@@ -1,0 +1,299 @@
++ source ./common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Fri Jun  2 10:05:52 2023 - INFO  - Start to prepare the database config.
++ SET_CONF
++ DNF_INSTALL libreswan
++ pkgs=libreswan
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 1 --tempfile ''
++ tmpfile2=/tmp/tmppac0yrdo
++ '[' -z '' ']'
++ tmpfile=/tmp/tmppac0yrdo
++ DNF_INSTALL libreswan 2
++ pkgs=libreswan
++ node=2
++ '[' -z /tmp/tmppac0yrdo ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 2 --tempfile /tmp/tmppac0yrdo
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 168, in <module>
+    exitcode, output = rpm_install(args.pkgs, args.node, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 66, in rpm_install
+    conn = ssh_cmd.pssh_conn(
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 340, in connect
+    to_try = list(self._families_and_addresses(hostname, port))
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 203, in _families_and_addresses
+    addrinfos = socket.getaddrinfo(
+  File "/usr/lib64/python3.10/socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
++ tmpfile2=
++ '[' -z /tmp/tmppac0yrdo ']'
++ cp ./common/test-vm.secrets /etc/ipsec.d/test-vm.secrets
++ sed -i s/left=left/left=10.198.114.1/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/right=right/right=/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/leftid=testA/leftid=10.198.114.1/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/rightid=testB/rightid=/g /etc/ipsec.d/test-vm.secrets
++ SSH_SCP ./common/test-vm.secrets @:/etc/ipsec.d
++ src=./common/test-vm.secrets
++ dest=@:/etc/ipsec.d
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s ./common/test-vm.secrets -d @:/etc/ipsec.d
+Fri Jun  2 10:06:37 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun  2 10:06:37 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r ./common/test-vm.secrets @:/etc/ipsec.d
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Fri Jun  2 10:06:39 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ SSH_CMD 'sed -i '\''s/left=left/left=/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.198.114.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.198.114.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart'
++ cmd='sed -i '\''s/left=left/left=/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.198.114.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.198.114.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart'
++ remoteip=
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sed -i '\''s/left=left/left=/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.198.114.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.198.114.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart' -i '' -u root -p 'openEuler12#$' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Fri Jun  2 10:06:39 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ ipsec restart
+Redirecting to: systemctl restart ipsec.service
++ ADD_CONN
++ ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test
++ SSH_CMD 'ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test'
++ cmd='ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test'
++ remoteip=
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test' -i '' -u root -p 'openEuler12#$' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Fri Jun  2 10:06:46 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ ipsec auto --up test-vm-test
++ ipsec auto --up test-vm-test
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Fri Jun  2 10:06:48 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun  2 10:06:48 2023 - INFO  - Start to run test.
++ ipsec addconn --config /etc/ipsec.d/test-vm.secrets --varprefix /etc/ipsec.d/test-vm.secrets --noexport --verbose test-vm-test
+debugging mode enabled
+end of file /etc/ipsec.d/test-vm.secrets
+Loading conn test-vm-test
+conn: "test-vm-test" modecfgdns=<unset>
+conn: "test-vm-test" modecfgdomains=<unset>
+conn: "test-vm-test" modecfgbanner=<unset>
+conn: "test-vm-test" mark=<unset>
+conn: "test-vm-test" mark-in=<unset>
+conn: "test-vm-test" mark-out=<unset>
+conn: "test-vm-test" vti_iface=<unset>
+conn: "test-vm-test" redirect-to=<unset>
+conn: "test-vm-test" accept-redirect-to=<unset>
++ CHECK_RESULT 255 0 0 'Check ipsec addconn --config --varprefix --noexport --verbose failed.'
++ actual_result=255
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --config --varprefix --noexport --verbose failed.'
++ exit_mode=0
++ '[' -z 255 ']'
++ '[' 0 -eq 0 ']'
++ test 255x '!=' 0x
++ test -n 'Check ipsec addconn --config --varprefix --noexport --verbose failed.'
++ LOG_ERROR 'Check ipsec addconn --config --varprefix --noexport --verbose failed.'
++ message='Check ipsec addconn --config --varprefix --noexport --verbose failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check ipsec addconn --config --varprefix --noexport --verbose failed.'
+Fri Jun  2 10:06:49 2023 - ERROR - Check ipsec addconn --config --varprefix --noexport --verbose failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_libreswan_ipsec_addconn.sh line 34'
++ message='oe_test_libreswan_ipsec_addconn.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_libreswan_ipsec_addconn.sh line 34'
+Fri Jun  2 10:06:50 2023 - ERROR - oe_test_libreswan_ipsec_addconn.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ ipsec addconn --autoall
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --autoall failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --autoall failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --listall
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --listall failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --listall failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --listroute
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --listroute failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --listroute failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --liststart
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --liststart failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --liststart failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --liststack
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --liststack failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --liststack failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --listignore
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --listignore failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --listignore failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --configsetup test-vm-test
+conn 'test-vm-test': not found (tried aliases)
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --configsetup failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --configsetup failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun  2 10:06:53 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun  2 10:06:53 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun  2 10:06:54 2023 - INFO  - Start to restore the test environment.
++ REVERT_CONF
++ rm -f /etc/ipsec.d/test-vm.secrets
++ SSH_CMD 'systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets'
++ cmd='systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets'
++ remoteip=
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets' -i '' -u root -p 'openEuler12#$' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Fri Jun  2 10:06:55 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmppac0yrdo ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmppac0yrdo
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun  2 10:07:14 2023 - INFO  - End to restore the test environment.

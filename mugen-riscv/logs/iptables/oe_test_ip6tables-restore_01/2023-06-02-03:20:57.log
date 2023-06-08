@@ -1,0 +1,135 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Jun  2 03:21:00 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL iptables
++ pkgs=iptables
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iptables --node 1 --tempfile ''
++ tmpfile2=/tmp/tmps_rwodm7
++ '[' -z '' ']'
++ tmpfile=/tmp/tmps_rwodm7
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Jun  2 03:21:34 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Fri Jun  2 03:21:35 2023 - INFO  - Start testing...
++ ip6tables-restore --help
++ grep 'Usage: ip6tables-restore' ip6tables_help
+Usage: ip6tables-restore [-c] [-v] [-V] [-t] [-h] [-n] [-w secs] [-W usecs] [-T table] [-M command] [file]
++ CHECK_RESULT 0 0 0 'ip6tables-restore --help command exec fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ip6tables-restore --help command exec fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ip6tables-save
++ echo '*filter
+-A INPUT -p icmp -j DROP
+COMMIT'
++ ip6tables-restore -t ip6tables_rule
++ CHECK_RESULT 0 0 0 'ip6tables-restore -t exec fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ip6tables-restore -t exec fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ip6tables-restore -n ip6tables_rule
++ ip6tables -nvL
++ grep 'DROP       icmp'
++ CHECK_RESULT 1 0 0 'ip6tables-restore -n exec fail'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='ip6tables-restore -n exec fail'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'ip6tables-restore -n exec fail'
++ LOG_ERROR 'ip6tables-restore -n exec fail'
++ message='ip6tables-restore -n exec fail'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'ip6tables-restore -n exec fail'
+Fri Jun  2 03:21:36 2023 - ERROR - ip6tables-restore -n exec fail
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ip6tables-restore_01.sh line 40'
++ message='oe_test_ip6tables-restore_01.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ip6tables-restore_01.sh line 40'
+Fri Jun  2 03:21:37 2023 - ERROR - oe_test_ip6tables-restore_01.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Fri Jun  2 03:21:37 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun  2 03:21:38 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Fri Jun  2 03:21:39 2023 - INFO  - start environment cleanup.
++ ip6tables-restore -n ip6tables_bak
++ CHECK_RESULT 0 0 0 'Failed to restore environment'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to restore environment'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -fr ip6tables_bak ip6tables_help ip6tables_rule
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmps_rwodm7 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmps_rwodm7
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Fri Jun  2 03:21:54 2023 - INFO  - Finish environment cleanup!

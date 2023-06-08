@@ -1,0 +1,367 @@
++ source ./common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Jun  7 09:44:45 2023 - INFO  - Start to prepare the database config.
++ SET_CONF
++ DNF_INSTALL libreswan
++ pkgs=libreswan
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpise6husb
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpise6husb
++ DNF_INSTALL libreswan 2
++ pkgs=libreswan
++ node=2
++ '[' -z /tmp/tmpise6husb ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 2 --tempfile /tmp/tmpise6husb
+Wed Jun  7 09:45:16 2023 - INFO  - pkgs:(libreswan) is already installed
++ tmpfile2=
++ '[' -z /tmp/tmpise6husb ']'
++ cp ./common/test-vm.secrets /etc/ipsec.d/test-vm.secrets
++ sed -i s/left=left/left=10.198.114.2/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/right=right/right=10.198.114.4/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/leftid=testA/leftid=10.198.114.2/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/rightid=testB/rightid=10.198.114.4/g /etc/ipsec.d/test-vm.secrets
++ SSH_SCP ./common/test-vm.secrets root@10.198.114.4:/etc/ipsec.d 'openEuler12#$'
++ src=./common/test-vm.secrets
++ dest=root@10.198.114.4:/etc/ipsec.d
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s ./common/test-vm.secrets -d root@10.198.114.4:/etc/ipsec.d
+Wed Jun  7 09:45:16 2023 - WARN  - the remote password uses the default configuration.
+Wed Jun  7 09:45:17 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r ./common/test-vm.secrets root@10.198.114.4:/etc/ipsec.d
+
+Authorized users only. All activities may be monitored and reported.
+root@10.198.114.4's password: 
+test-vm.secrets                                 0%    0     0.0KB/s   --:-- ETAtest-vm.secrets                               100%  368   110.1KB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
++ SSH_CMD 'sed -i '\''s/left=left/left=10.198.114.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.198.114.2/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.198.114.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.198.114.2/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart' 10.198.114.4 'openEuler12#$' root
++ cmd='sed -i '\''s/left=left/left=10.198.114.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.198.114.2/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.198.114.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.198.114.2/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart'
++ remoteip=10.198.114.4
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sed -i '\''s/left=left/left=10.198.114.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.198.114.2/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.198.114.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.198.114.2/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart' -i 10.198.114.4 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Jun  7 09:45:18 2023 - WARN  - the remote user uses the default configuration.
+Wed Jun  7 09:45:19 2023 - WARN  - the remote password uses the default configuration.
+Wed Jun  7 09:45:19 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.198.114.4 sed -i 's/left=left/left=10.198.114.4/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/right=right/right=10.198.114.2/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/leftid=testA/leftid=10.198.114.4/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/rightid=testB/rightid=10.198.114.2/g' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart
+
+Authorized users only. All activities may be monitored and reported.
+root@10.198.114.4's password: 
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
+Redirecting to: systemctl restart ipsec.service
++ ret=0
++ test 0 -ne 0
++ return 0
++ ipsec restart
+Redirecting to: systemctl restart ipsec.service
++ ADD_CONN
++ ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test
++ SSH_CMD 'ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test' 10.198.114.4 'openEuler12#$' root
++ cmd='ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test'
++ remoteip=10.198.114.4
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test' -i 10.198.114.4 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Jun  7 09:45:28 2023 - WARN  - the remote user uses the default configuration.
+Wed Jun  7 09:45:28 2023 - WARN  - the remote password uses the default configuration.
+Wed Jun  7 09:45:29 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.198.114.4 ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test
+
+Authorized users only. All activities may be monitored and reported.
+root@10.198.114.4's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ipsec auto --up test-vm-test
++ ipsec auto --up test-vm-test
++ ipsec rsasigkey
+++ tail -n 1 getkey
+++ awk '{print $12}'
++ ckaid=
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Wed Jun  7 09:45:31 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Jun  7 09:45:31 2023 - INFO  - Start to run test.
++ ipsec showhostkey --version
++ CHECK_RESULT 0 0 0 'Check ipsec pluto --version failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec pluto --version failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec showhostkey --dump
+ipsec showhostkey: authentication of "NSS Certificate DB" failed
+FATAL ERROR: ipsec showhostkey: NSS: could not authenticate slot
++ CHECK_RESULT 1 0 0 'Check ipsec pluto --dump failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check ipsec pluto --dump failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check ipsec pluto --dump failed.'
++ LOG_ERROR 'Check ipsec pluto --dump failed.'
++ message='Check ipsec pluto --dump failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check ipsec pluto --dump failed.'
+Wed Jun  7 09:45:32 2023 - ERROR - Check ipsec pluto --dump failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_libreswan_ipsec_showhostkey_nss.sh line 39'
++ message='oe_test_libreswan_ipsec_showhostkey_nss.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_libreswan_ipsec_showhostkey_nss.sh line 39'
+Wed Jun  7 09:45:32 2023 - ERROR - oe_test_libreswan_ipsec_showhostkey_nss.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ ipsec showhostkey --list
+ipsec showhostkey: authentication of "NSS Certificate DB" failed
+FATAL ERROR: ipsec showhostkey: NSS: could not authenticate slot
++ CHECK_RESULT 1 0 0 'Check ipsec pluto --list failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check ipsec pluto --list failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check ipsec pluto --list failed.'
++ LOG_ERROR 'Check ipsec pluto --list failed.'
++ message='Check ipsec pluto --list failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check ipsec pluto --list failed.'
+Wed Jun  7 09:45:33 2023 - ERROR - Check ipsec pluto --list failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_libreswan_ipsec_showhostkey_nss.sh line 41'
++ message='oe_test_libreswan_ipsec_showhostkey_nss.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_libreswan_ipsec_showhostkey_nss.sh line 41'
+Wed Jun  7 09:45:33 2023 - ERROR - oe_test_libreswan_ipsec_showhostkey_nss.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ ipsec showhostkey --left --ckaid --nssdir /var/lib/ipsec/nss
+ipsec showhostkey: authentication of "NSS Certificate DB" failed
+FATAL ERROR: ipsec showhostkey: NSS: could not authenticate slot
++ CHECK_RESULT 1 0 0 'Check ipsec pluto --left failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check ipsec pluto --left failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check ipsec pluto --left failed.'
++ LOG_ERROR 'Check ipsec pluto --left failed.'
++ message='Check ipsec pluto --left failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check ipsec pluto --left failed.'
+Wed Jun  7 09:45:34 2023 - ERROR - Check ipsec pluto --left failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_libreswan_ipsec_showhostkey_nss.sh line 46'
++ message='oe_test_libreswan_ipsec_showhostkey_nss.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_libreswan_ipsec_showhostkey_nss.sh line 46'
+Wed Jun  7 09:45:34 2023 - ERROR - oe_test_libreswan_ipsec_showhostkey_nss.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ ipsec showhostkey --ipseckey --ckaid
+/usr/libexec/ipsec/showhostkey: option '--ckaid' requires an argument
+Usage: showhostkey [ --verbose ] [ --debug ]
+        { --version | --dump | --list | --left | --right |
+                --ipseckey [ --precedence <precedence> ] 
+                [ --gateway <gateway> ] }
+        [ --rsaid <rsaid> | --ckaid <ckaid> ]
+        [ --nssdir <nssdir> ] [ --password <password> ]
++ CHECK_RESULT 1 0 0 'Check ipsec pluto --ipseckey failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check ipsec pluto --ipseckey failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check ipsec pluto --ipseckey failed.'
++ LOG_ERROR 'Check ipsec pluto --ipseckey failed.'
++ message='Check ipsec pluto --ipseckey failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check ipsec pluto --ipseckey failed.'
+Wed Jun  7 09:45:34 2023 - ERROR - Check ipsec pluto --ipseckey failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_libreswan_ipsec_showhostkey_nss.sh line 48'
++ message='oe_test_libreswan_ipsec_showhostkey_nss.sh line 48'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_libreswan_ipsec_showhostkey_nss.sh line 48'
+Wed Jun  7 09:45:35 2023 - ERROR - oe_test_libreswan_ipsec_showhostkey_nss.sh line 48
++ '[' 0 -eq 1 ']'
++ return 0
++ ipsec checknss --nssdir /var/lib/ipsec/nss
++ CHECK_RESULT 0 0 0 'Check ipsec checknss failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec checknss failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ls /var/lib/ipsec/nss
++ grep key4.db
+key4.db
++ CHECK_RESULT 0 0 0 'Create db file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Create db file failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec import --nssdir /var/lib/ipsec/nss
+Error opening input terminal for read
+pk12util: File Open failed: : PR_FILE_NOT_FOUND_ERROR: File not found
++ CHECK_RESULT 0 0 0 'Check ipsec import failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec import failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -f /var/lib/ipsec/nss/cert9.db /var/lib/ipsec/nss/key4.db
++ ipsec initnss
++ CHECK_RESULT 0 0 0 'Check ipsec initnss failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec initnss failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec cavp -h
++ CHECK_RESULT 0 0 0 'Check ipsec cavp help message failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec cavp help message failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Jun  7 09:45:36 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Jun  7 09:45:36 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Jun  7 09:45:37 2023 - INFO  - Start to restore the test environment.
++ rm -f getkey
++ REVERT_CONF
++ rm -f /etc/ipsec.d/test-vm.secrets
++ SSH_CMD 'systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets' 10.198.114.4 'openEuler12#$' root
++ cmd='systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets'
++ remoteip=10.198.114.4
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets' -i 10.198.114.4 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Jun  7 09:45:37 2023 - WARN  - the remote user uses the default configuration.
+Wed Jun  7 09:45:37 2023 - WARN  - the remote password uses the default configuration.
+Wed Jun  7 09:45:38 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.198.114.4 systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets
+
+Authorized users only. All activities may be monitored and reported.
+root@10.198.114.4's password: 
+Failed to restart firewalld.service: Unit firewalld.service not found.
++ ret=0
++ test 0 -ne 0
++ return 0
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpise6husb ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpise6husb
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Jun  7 09:45:49 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,489 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Fri Jun  2 10:29:09 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL 'libreswan net-tools'
++ pkgs='libreswan net-tools'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'libreswan net-tools' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp4c2upgt1
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp4c2upgt1
++ DNF_INSTALL 'libreswan net-tools' 2
++ pkgs='libreswan net-tools'
++ node=2
++ '[' -z /tmp/tmp4c2upgt1 ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'libreswan net-tools' --node 2 --tempfile /tmp/tmp4c2upgt1
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 168, in <module>
+    exitcode, output = rpm_install(args.pkgs, args.node, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 66, in rpm_install
+    conn = ssh_cmd.pssh_conn(
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 340, in connect
+    to_try = list(self._families_and_addresses(hostname, port))
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 203, in _families_and_addresses
+    addrinfos = socket.getaddrinfo(
+  File "/usr/lib64/python3.10/socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
++ tmpfile2=
++ '[' -z /tmp/tmp4c2upgt1 ']'
++ systemctl start firewalld
+Failed to start firewalld.service: Unit firewalld.service not found.
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Jun  2 10:29:54 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Fri Jun  2 10:29:55 2023 - INFO  - Start executing testcase.
++ systemctl enable ipsec --now
+Created symlink /etc/systemd/system/multi-user.target.wants/ipsec.service → /usr/lib/systemd/system/ipsec.service.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep success
++ firewall-cmd --add-service=ipsec
+oe_test_site_to_site_vpn.sh: line 34: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 35'
++ message='oe_test_site_to_site_vpn.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 35'
+Fri Jun  2 10:30:06 2023 - ERROR - oe_test_site_to_site_vpn.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
++ firewall-cmd --runtime-to-permanent
++ grep success
+oe_test_site_to_site_vpn.sh: line 36: firewall-cmd: command not found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 37'
++ message='oe_test_site_to_site_vpn.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 37'
+Fri Jun  2 10:30:07 2023 - ERROR - oe_test_site_to_site_vpn.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
+++ ipsec newhostkey --nssdir /etc/ipsec.d/
+++ awk '/Generated/{print $7}'
++ left_ckaid=b2a9afc738fd4d8807183dcf7259f7ffbefef2fe
+++ grep netmask
+++ ifconfig 10.198.114.191
+++ awk '{print $4}'
+++ tr -s ' '
+10.198.114.191: error fetching interface information: Device not found
++ left_mask=
+++ ip -6 route show dev 10.198.114.191
+++ head -n 1
+++ awk '{print $1}'
+Cannot find device "10.198.114.191"
++ left6_mask=
+++ ipsec showhostkey --left --ckaid b2a9afc738fd4d8807183dcf7259f7ffbefef2fe --nssdir /etc/ipsec.d/
+++ grep leftrsasigkey
+++ sed 's/^[ \t]*//g'
+++ awk -F leftrsasigkey= '{print $2}'
++ left_rsa=0sAwEAAblYfl48YmPZgmmPr4JwcbnvtrNmILiqpomZPRdpAlcQ1piFlegmxsJV0J5etfMEq7AeT7c9F66tsUzqBWzr4mre+YWTeM0X4ZxErhLyHvsH+2P5cweFH+nHkYgLPm46HhSAq4Jfa80Knz/zi01cAsbaadSYjJlA2wjFzsv5zHH81RUphP6jwt/HS5X0ger8I6+6Vw+Mi7r65Dk7jW0stCsJxMkwF2jzSal/JzRcJbGEKw8j52I6LL95xjpvprCXIMrk9aslSV9bPebuxt4rqs2qVCKaPStJCrmG9wDhXEulXbmV1sUZGrUTjllsuG+8X4K1govgCttUC9dYvHWkhT9pvaLuc5Z2HGiX3S8LTQctpWQW98fCjij4n3sJzN2umrp95QeeFqd7BgfWMtsy08fqr4UiGfTgFPjgcKHRC4BAQurqOu1inKroDkR7KGzZb18sl6vh6QOzDMEppxKaSYZ5otRX8Qc3HdVqHxi84d+aC7ze7JjZ8YWHLcbryFLgT3utJ9Lp098Ng6cJeNvL/uRKVOwc1Z6pbG8ObNkOMjWIPtS5G8NNGvCg8rGIKpg7rVwmHUSza5KN6zfanxqvvb5Y6h/CDyjrmjv4PkxiPDHu/P0begCcnGdxnJtAc5LfRnTPa3LaEL1e7Anv/boEtGHcCw==
++ P_SSH_CMD --cmd 'systemctl start firewalld;systemctl enable ipsec --now' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'systemctl start firewalld;systemctl enable ipsec --now' --node 2
+Fri Jun  2 10:30:17 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 44'
++ message='oe_test_site_to_site_vpn.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 44'
+Fri Jun  2 10:30:18 2023 - ERROR - oe_test_site_to_site_vpn.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'firewall-cmd --add-service=\"ipsec\";firewall-cmd --runtime-to-permanent' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'firewall-cmd --add-service=\"ipsec\";firewall-cmd --runtime-to-permanent' --node 2
+Fri Jun  2 10:30:20 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 46'
++ message='oe_test_site_to_site_vpn.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 46'
+Fri Jun  2 10:30:21 2023 - ERROR - oe_test_site_to_site_vpn.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'ipsec newhostkey --nssdir /etc/ipsec.d/ 2>&1 | grep Generated | cut -d '\'' '\'' -f 7 >/tmp/key.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec newhostkey --nssdir /etc/ipsec.d/ 2>&1 | grep Generated | cut -d '\'' '\'' -f 7 >/tmp/key.txt' --node 2
+Fri Jun  2 10:30:24 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ SSH_SCP @:/tmp/key.txt /tmp
++ src=@:/tmp/key.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s @:/tmp/key.txt -d /tmp
+Fri Jun  2 10:30:25 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun  2 10:30:25 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r @:/tmp/key.txt /tmp
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Fri Jun  2 10:30:26 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
+++ cat /tmp/key.txt
+cat: /tmp/key.txt: No such file or directory
++ right_ckaid=
++ P_SSH_CMD --cmd 'ipsec showhostkey --right --ckaid  --nssdir /etc/ipsec.d/  | grep rightrsasigkey > /tmp/rsa.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec showhostkey --right --ckaid  --nssdir /etc/ipsec.d/  | grep rightrsasigkey > /tmp/rsa.txt' --node 2
+Fri Jun  2 10:30:29 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 52'
++ message='oe_test_site_to_site_vpn.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 52'
+Fri Jun  2 10:30:30 2023 - ERROR - oe_test_site_to_site_vpn.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ SSH_SCP @:/tmp/rsa.txt /tmp
++ src=@:/tmp/rsa.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s @:/tmp/rsa.txt -d /tmp
+Fri Jun  2 10:30:30 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun  2 10:30:31 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r @:/tmp/rsa.txt /tmp
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Fri Jun  2 10:30:32 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
+++ cat /tmp/rsa.txt
+++ awk -F rightrsasigkey= '{print $2}'
+++ sed 's/^[ \t]*//g'
+cat: /tmp/rsa.txt: No such file or directory
++ right_rsa=
++ P_SSH_CMD --cmd 'ifconfig  | grep netmask >/tmp/right_mask.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ifconfig  | grep netmask >/tmp/right_mask.txt' --node 2
+Fri Jun  2 10:30:35 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 57'
++ message='oe_test_site_to_site_vpn.sh line 57'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 57'
+Fri Jun  2 10:30:35 2023 - ERROR - oe_test_site_to_site_vpn.sh line 57
++ '[' 0 -eq 1 ']'
++ return 0
++ SSH_SCP @:/tmp/right_mask.txt /tmp
++ src=@:/tmp/right_mask.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s @:/tmp/right_mask.txt -d /tmp
+Fri Jun  2 10:30:36 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun  2 10:30:37 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r @:/tmp/right_mask.txt /tmp
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Fri Jun  2 10:30:38 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ P_SSH_CMD --cmd 'ip -6 route show dev 10.198.114.191>/tmp/right6_mask.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ip -6 route show dev 10.198.114.191>/tmp/right6_mask.txt' --node 2
+Fri Jun  2 10:30:41 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 60'
++ message='oe_test_site_to_site_vpn.sh line 60'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 60'
+Fri Jun  2 10:30:42 2023 - ERROR - oe_test_site_to_site_vpn.sh line 60
++ '[' 0 -eq 1 ']'
++ return 0
++ SSH_SCP @:/tmp/right6_mask.txt /tmp
++ src=@:/tmp/right6_mask.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s @:/tmp/right6_mask.txt -d /tmp
+Fri Jun  2 10:30:42 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun  2 10:30:43 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r @:/tmp/right6_mask.txt /tmp
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Fri Jun  2 10:30:44 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
+++ cat /tmp/right_mask.txt
+++ awk '{print $4}'
+cat: /tmp/right_mask.txt: No such file or directory
++ right_mask=
+++ cat /tmp/right6_mask.txt
+++ awk '{print $1}'
+cat: /tmp/right6_mask.txt: No such file or directory
++ right6_mask=
++ echo -e 'conn mysubnet\n     also=mytunnel\n     leftsubnet=/24\n     rightsubnet=/24\n     
+    auto=start\n\nconn mysubnet6\n     also=mytunnel\n     leftsubnet=\n     rightsubnet=\n     
+    auto=start\n\n\nconn mytunnel\n    leftid=@west\n    left=10.198.114.1\n    leftrsasigkey=0sAwEAAblYfl48YmPZgmmPr4JwcbnvtrNmILiqpomZPRdpAlcQ1piFlegmxsJV0J5etfMEq7AeT7c9F66tsUzqBWzr4mre+YWTeM0X4ZxErhLyHvsH+2P5cweFH+nHkYgLPm46HhSAq4Jfa80Knz/zi01cAsbaadSYjJlA2wjFzsv5zHH81RUphP6jwt/HS5X0ger8I6+6Vw+Mi7r65Dk7jW0stCsJxMkwF2jzSal/JzRcJbGEKw8j52I6LL95xjpvprCXIMrk9aslSV9bPebuxt4rqs2qVCKaPStJCrmG9wDhXEulXbmV1sUZGrUTjllsuG+8X4K1govgCttUC9dYvHWkhT9pvaLuc5Z2HGiX3S8LTQctpWQW98fCjij4n3sJzN2umrp95QeeFqd7BgfWMtsy08fqr4UiGfTgFPjgcKHRC4BAQurqOu1inKroDkR7KGzZb18sl6vh6QOzDMEppxKaSYZ5otRX8Qc3HdVqHxi84d+aC7ze7JjZ8YWHLcbryFLgT3utJ9Lp098Ng6cJeNvL/uRKVOwc1Z6pbG8ObNkOMjWIPtS5G8NNGvCg8rGIKpg7rVwmHUSza5KN6zfanxqvvb5Y6h/CDyjrmjv4PkxiPDHu/P0begCcnGdxnJtAc5LfRnTPa3LaEL1e7Anv/boEtGHcCw==\n    
+    rightid=@east\n    right=\n    rightrsasigkey=\n    authby=rsasig'
++ SSH_SCP /etc/ipsec.d/my_site-to-site.conf @:/etc/ipsec.d/
++ src=/etc/ipsec.d/my_site-to-site.conf
++ dest=@:/etc/ipsec.d/
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s /etc/ipsec.d/my_site-to-site.conf -d @:/etc/ipsec.d/
+Fri Jun  2 10:30:45 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun  2 10:30:46 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/ipsec.d/my_site-to-site.conf @:/etc/ipsec.d/
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Fri Jun  2 10:30:47 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ ipsec auto --add mysubnet
+while loading 'mysubnet': bad subnet leftsubnet=/24 [empty string]
+bad subnet rightsubnet=/24 [empty string]
+addconn, in config '/etc/ipsec.conf', bad subnet leftsubnet=/24 [empty string]
+bad subnet rightsubnet=/24 [empty string]
+Failed to load connection right= is not set
++ CHECK_RESULT 255 0 0 'add mysubnet failed'
++ actual_result=255
++ expect_result=0
++ mode=0
++ error_log='add mysubnet failed'
++ exit_mode=0
++ '[' -z 255 ']'
++ '[' 0 -eq 0 ']'
++ test 255x '!=' 0x
++ test -n 'add mysubnet failed'
++ LOG_ERROR 'add mysubnet failed'
++ message='add mysubnet failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'add mysubnet failed'
+Fri Jun  2 10:30:48 2023 - ERROR - add mysubnet failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 71'
++ message='oe_test_site_to_site_vpn.sh line 71'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 71'
+Fri Jun  2 10:30:49 2023 - ERROR - oe_test_site_to_site_vpn.sh line 71
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl restart ipsec
++ ipsec setup start
+Redirecting to: systemctl start ipsec.service
++ P_SSH_CMD --cmd 'ipsec auto --add mysubnet;systemctl restart ipsec;ipsec setup start' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec auto --add mysubnet;systemctl restart ipsec;ipsec setup start' --node 2
+Fri Jun  2 10:30:58 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ ipsec auto --up mysubnet
+000 initiating all conns with alias='mysubnet'
+021 no connection named "mysubnet"
++ CHECK_RESULT 21 0 0 'up mysubnet failed'
++ actual_result=21
++ expect_result=0
++ mode=0
++ error_log='up mysubnet failed'
++ exit_mode=0
++ '[' -z 21 ']'
++ '[' 0 -eq 0 ']'
++ test 21x '!=' 0x
++ test -n 'up mysubnet failed'
++ LOG_ERROR 'up mysubnet failed'
++ message='up mysubnet failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'up mysubnet failed'
+Fri Jun  2 10:30:59 2023 - ERROR - up mysubnet failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 77'
++ message='oe_test_site_to_site_vpn.sh line 77'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 77'
+Fri Jun  2 10:30:59 2023 - ERROR - oe_test_site_to_site_vpn.sh line 77
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'ipsec auto --up mysubnet' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec auto --up mysubnet' --node 2
+Fri Jun  2 10:31:02 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 79'
++ message='oe_test_site_to_site_vpn.sh line 79'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 79'
+Fri Jun  2 10:31:03 2023 - ERROR - oe_test_site_to_site_vpn.sh line 79
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'Finish testcase execution.'
++ message='Finish testcase execution.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish testcase execution.'
+Fri Jun  2 10:31:03 2023 - INFO  - Finish testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z 10
++ test 10 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun  2 10:31:04 2023 - ERROR - failed to execute the case.
++ exit 10
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Fri Jun  2 10:31:05 2023 - INFO  - start environment cleanup.
++ systemctl stop ipsec
++ firewall-cmd --remove-service=ipsec
+oe_test_site_to_site_vpn.sh: line 86: firewall-cmd: command not found
++ firewall-cmd --runtime-to-permanent
+oe_test_site_to_site_vpn.sh: line 87: firewall-cmd: command not found
++ P_SSH_CMD --cmd 'systemctl stop ipsec;firewall-cmd --remove-service=ipsec;firewall-cmd --runtime-to-permanent' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'systemctl stop ipsec;firewall-cmd --remove-service=ipsec;firewall-cmd --runtime-to-permanent' --node 2
+Fri Jun  2 10:31:08 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp4c2upgt1 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp4c2upgt1
++ '[' 0 -ne 0 ']'
++ DNF_REMOVE 2 'net-tools libreswan'
++ node=2
++ pkg_list='net-tools libreswan'
++ mode=0
++ [[ -z /tmp/tmp4c2upgt1 ]]
++ '[' 0 -ne 0 ']'
++ '[' 2 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 2 --pkgs 'net-tools libreswan' --tempfile /tmp/tmp4c2upgt1
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 173, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 134, in rpm_remove
+    conn = ssh_cmd.pssh_conn(
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 340, in connect
+    to_try = list(self._families_and_addresses(hostname, port))
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 203, in _families_and_addresses
+    addrinfos = socket.getaddrinfo(
+  File "/usr/lib64/python3.10/socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
++ '[' 0 -ne 0 ']'
++ rm -rf '/tmp/*.txt' /etc/ipsec.d/cert9.db /etc/ipsec.d/key4.db /etc/ipsec.d/my_site-to-site.conf /etc/ipsec.d/pkcs11.txt '/var/lib/ipsec/nss/*.db'
++ P_SSH_CMD --cmd 'rm -rf /tmp/*.txt /etc/ipsec.d/* /var/lib/ipsec/nss/*.db' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'rm -rf /tmp/*.txt /etc/ipsec.d/* /var/lib/ipsec/nss/*.db' --node 2
+Fri Jun  2 10:31:30 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Fri Jun  2 10:31:31 2023 - INFO  - Finish environment cleanup!

@@ -1,0 +1,687 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Jun  7 10:51:23 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL lksctp-tools
++ pkgs=lksctp-tools
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs lksctp-tools --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp4da_onhd
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp4da_onhd
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Jun  7 10:51:40 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Jun  7 10:51:40 2023 - INFO  - Start to run test.
++ server_pid=5156
++ sctp_test -H ::1 -P 6000 -l -d 1 -x 1 -i lo
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ cat server_output
++ grep 'Server: Receiving packets.'
+Server: Receiving packets.
++ CHECK_RESULT 0 0 0 'sctp_test: failed to test server'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_test: failed to test server'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 5156
++ server_pid=5160
++ sctp_test -H ::1 -P 6010 -h ::1 -p 7000 -l -L 2 -S 2 -a 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  5156 Killed                  sctp_test -H ::1 -P 6000 -l -d 1 -x 1 -i "lo" > server_output 2>&1
++ cat server_output
++ grep 'Starting tests...'
+Starting tests...
++ CHECK_RESULT 0 0 0 'sctp_test: failed to test server options: -L, -S, -a'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_test: failed to test server options: -L, -S, -a'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 5160
++ server_pid=5164
++ unbuffer sctp_darn -H ::1 -P 6000 -l
++ client_pid=5165
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ sctp_test -H ::1 -P 7000 -h ::1 -p 6000 -s -c 0 -o 0 -d 1
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  5160 Killed                  sctp_test -H ::1 -P 6010 -h ::1 -p 7000 -l -L 2 -S 2 -a 0 > server_output 2>&1
++ kill -9 5165
+oe_test_lksctp-tools_sctp_test.sh: line 49: kill: (5165) - No such process
++ cat client_output
++ grep 'Client: Sending packets'
+Client: Sending packets.(1/10)
+Client: Sending packets.(2/10)
+Client: Sending packets.(3/10)
+Client: Sending packets.(4/10)
+Client: Sending packets.(5/10)
+Client: Sending packets.(6/10)
+Client: Sending packets.(7/10)
+Client: Sending packets.(8/10)
+Client: Sending packets.(9/10)
+Client: Sending packets.(10/10)
++ CHECK_RESULT 0 0 0 'sctp_test: failed to test client options: -c, -o, -d'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_test: failed to test client options: -c, -o, -d'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ client_pid=5175
++ SLEEP_WAIT 2
++ wait_time=2
++ sctp_test -H ::1 -P 7000 -h ::1 -p 6000 -L 2 -S 2 -a 0
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ kill -9 5175
++ cat client_output
++ grep sendmsg
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+	sendmsg(sk=3, assoc=1)    1 bytes.
+	sendmsg(sk=4, assoc=1)    1 bytes.
+	sendmsg(sk=3, assoc=0)    1 bytes.
+	sendmsg(sk=4, assoc=0)    1 bytes.
+oe_test_lksctp-tools_sctp_test.sh: line 30:  5175 Killed                  sctp_test -H ::1 -P 7000 -h ::1 -p 6000 -L 2 -S 2 -a 0 > client_output 2>&1
++ CHECK_RESULT 0 0 0 'sctp_test: failed to test client options: -L, -S, -a'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_test: failed to test client options: -L, -S, -a'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ client_pid=5179
++ SLEEP_WAIT 2
++ sctp_test -H ::1 -P 7000 -h ::1 -p 6000 -s -m 1500 -t 0 -M 0
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ kill -9 5179
+oe_test_lksctp-tools_sctp_test.sh: line 61: kill: (5179) - No such process
++ cat client_output
++ grep 'Client: Sending packets'
+Client: Sending packets.(1/10)
+Client: Sending packets.(2/10)
+Client: Sending packets.(3/10)
+Client: Sending packets.(4/10)
+Client: Sending packets.(5/10)
+Client: Sending packets.(6/10)
+Client: Sending packets.(7/10)
+Client: Sending packets.(8/10)
+Client: Sending packets.(9/10)
+Client: Sending packets.(10/10)
++ CHECK_RESULT 0 0 0 'sctp_test: failed to test client options: -m, -t, -M'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_test: failed to test client options: -m, -t, -M'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ client_pid=5183
++ SLEEP_WAIT 2
++ sctp_test -H ::1 -P 7000 -h ::1 -p 6000 -s -r -D -T
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ kill -9 5183
+oe_test_lksctp-tools_sctp_test.sh: line 67: kill: (5183) - No such process
++ cat client_output
++ grep 'Client: Sending packets'
+Client: Sending packets.(1/10)
+Client: Sending packets.(2/10)
+Client: Sending packets.(3/10)
+Client: Sending packets.(4/10)
+Client: Sending packets.(5/10)
+Client: Sending packets.(6/10)
+Client: Sending packets.(7/10)
+Client: Sending packets.(8/10)
+Client: Sending packets.(9/10)
+Client: Sending packets.(10/10)
++ CHECK_RESULT 0 0 0 'sctp_test: failed to test client options: -r, -D, -T'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_test: failed to test client options: -r, -D, -T'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ client_pid=5187
++ SLEEP_WAIT 2
++ sctp_test -H ::1 -P 7000 -h ::1 -p 6000 -s -B 127.0.0.2 -O 0 -i lo
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ kill -9 5187
+oe_test_lksctp-tools_sctp_test.sh: line 73: kill: (5187) - No such process
++ cat client_output
++ grep 'Client: Sending packets'
+Client: Sending packets.(1/10)
+Client: Sending packets.(2/10)
+Client: Sending packets.(3/10)
+Client: Sending packets.(4/10)
+Client: Sending packets.(5/10)
+Client: Sending packets.(6/10)
+Client: Sending packets.(7/10)
+Client: Sending packets.(8/10)
+Client: Sending packets.(9/10)
+Client: Sending packets.(10/10)
++ CHECK_RESULT 0 0 0 'sctp_test: failed to test client options: -B, -O, -i'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_test: failed to test client options: -B, -O, -i'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ client_pid=5191
++ SLEEP_WAIT 2
++ sctp_test -H ::1 -P 7000 -h ::1 -p 6000 -s -x 1
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ kill -9 5191
+oe_test_lksctp-tools_sctp_test.sh: line 79: kill: (5191) - No such process
++ cat client_output
++ grep '(1/1)'
+Client: Sending packets.(1/1)
++ CHECK_RESULT 0 0 0 'sctp_test: failed to test client option: -x'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_test: failed to test client option: -x'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 5164
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Jun  7 10:52:00 2023 - INFO  - End to run test.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 19:  5164 Killed                  unbuffer sctp_darn -H ::1 -P 6000 -l > server_output 2>&1
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Jun  7 10:52:00 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Jun  7 10:52:00 2023 - INFO  - Start to restore the test environment.
++ rm -f server_output client_output
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp4da_onhd ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp4da_onhd
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Jun  7 10:52:06 2023 - INFO  - End to restore the test environment.

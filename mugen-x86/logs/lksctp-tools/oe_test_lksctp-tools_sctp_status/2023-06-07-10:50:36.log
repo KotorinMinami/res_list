@@ -1,0 +1,227 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Jun  7 10:50:38 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL lksctp-tools
++ pkgs=lksctp-tools
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs lksctp-tools --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpo8np9vr0
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpo8np9vr0
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Jun  7 10:50:54 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Jun  7 10:50:55 2023 - INFO  - Start to run test.
++ server_pid=5019
++ SLEEP_WAIT 2
++ sctp_status -H ::1 -P 6000 -l -i 0 -d 1 -f server_output
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+
+Starting tests...
+	socket(SOCK_STREAM, IPPROTO_SCTP)  ->  sk=3
+	bind(sk=3, [a:::1,p:x11])  --  attempt 1/10
+	listen(sk=3,backlog=1)
+	accept(sk=3)
++ echo hello
++ cat
++ client_pid=5024
++ sctp_darn -H ::1 -P 7000 -h ::1 -p 6000 -s
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+sctp_darn ready to send...
+::1:7000-::1:6000> Received SCTP_COMM_UP
+New connection, peer addresses
+0000:0000:0000:0000:0000:0000:0000:0001:6000
+::1:7000-::1:6000> Server: Receiving packets.(1/10)
+	recvmsg(sk=4) count 1
+	recvmsg(sk=4) + cat server_output
++ grep ESTABLISHED
+1   14       ESTABLISHED       106496   0         0        10      10       65468      ACTIVE       131072      0           3000       65536
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test options: -i, -d, -f'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test options: -i, -d, -f'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 5019
++ kill -9 5024
++ server_pid=5030
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ sctp_darn -H ::1 -P 6010 -l
+Error getting status: Invalid argument.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  5019 Killed                  sctp_status -H ::1 -P 6000 -l -i 0 -d 1 -f server_output
++ client_pid=5032
++ SLEEP_WAIT 2
++ sctp_status -H ::1 -P 7010 -h ::1 -p 6010 -s -c 0 -o 0 -f client_output
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+
+Starting tests...
+     Client: Sending packets.(1/10)
+Client: Sending packets.(2/10)
+Client: Sending packets.(3/10)
+Client: Sending packets.(4/10)
+Client: Sending packets.(5/10)
+Client: Sending packets.(6/10)
+Client: Sending packets.(7/10)
+Client: Sending packets.(8/10)
+Client: Sending packets.(9/10)
+Client: Sending packets.(10/10)
++ cat client_output
++ grep ESTABLISHED
+1   15       ESTABLISHED       106496   0         0        10      10       65468      ACTIVE       131072      0           3000       65536
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test options: -c, -o, -f'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test options: -c, -o, -f'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 5032
+oe_test_lksctp-tools_sctp_status.sh: line 50: kill: (5032) - No such process
++ client_pid=5037
++ SLEEP_WAIT 2
++ sctp_status -H ::1 -P 7020 -h ::1 -p 6010 -s -x 1
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ cat client_output
++ grep '(1/1)'
+     Client: Sending packets.(1/1)
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test option: -x'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test option: -x'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 5037
+oe_test_lksctp-tools_sctp_status.sh: line 56: kill: (5037) - No such process
++ client_pid=5042
++ SLEEP_WAIT 2
++ sctp_status -H ::1 -P 7030 -h ::1 -p 6010 -s -M 0 -m 1500 -D
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ grep 'Starting tests...'
++ cat client_output
+Starting tests...
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test options: -M, -m, -o'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test options: -M, -m, -o'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 5042
++ client_pid=5047
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ sctp_status -H ::1 -P 7040 -h ::1 -p 6010 -s -I 1 -i 0 -d 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  5042 Killed                  sctp_status -H ::1 -P 7030 -h ::1 -p 6010 -s -M 0 -m 1500 -D > client_output 2>&1
++ cat client_output
++ grep 'Starting tests...'
+Starting tests...
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test options: -I, -i, -d'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test options: -I, -i, -d'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 5047
+oe_test_lksctp-tools_sctp_status.sh: line 68: kill: (5047) - No such process
++ kill -9 5030
+Error getting status: Invalid argument.
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Jun  7 10:51:12 2023 - INFO  - End to run test.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 19:  5030 Killed                  sctp_darn -H ::1 -P 6010 -l > /dev/null 2>&1
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Jun  7 10:51:13 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Jun  7 10:51:13 2023 - INFO  - Start to restore the test environment.
++ rm -rf server_output client_output
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpo8np9vr0 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpo8np9vr0
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Jun  7 10:51:19 2023 - INFO  - End to restore the test environment.

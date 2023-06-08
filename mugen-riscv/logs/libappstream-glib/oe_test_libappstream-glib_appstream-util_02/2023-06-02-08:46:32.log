@@ -1,0 +1,226 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Fri Jun  2 08:46:34 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL libappstream-glib
++ pkgs=libappstream-glib
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libappstream-glib --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpql61z1v8
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpql61z1v8
++ cp -r ./common ./glibtest
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Jun  2 08:47:10 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun  2 08:47:10 2023 - INFO  - Start to run test.
++ appstream-util -v --profile --nonet check-component dejavu
++ grep 'Checking source: \/usr/share/metainfo/dejavu'
+grep: warning: stray \ before /
+
+• dejavu has no <description>
+Failed to check component, 1 problems detected
+Checking source: /usr/share/metainfo/dejavu.metainfo.xml
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet check-component failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet check-component failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet check-root
++ grep AsStore:load-installed
+###################################################################################### @0079ms appstream-util: check-root 79ms
+                ##################################################################     @0076ms AsStore:load 61ms
+                  ##############################################################       @0075ms AsStore:load{per-system} 57ms
+                    #############                                                      @0030ms AsStore:load-installed{/usr/local/share/applications} 12ms
+                                 #################                                     @0047ms AsStore:load-installed{/usr/share/appdata} 16ms
+                                                   ################                    @0062ms AsStore:load-installed{/usr/share/metainfo} 15ms
+                                                                     ###########       @0075ms AsStore:load-installed{/usr/share/applications} 11ms
+(appstream-util:1204): As-DEBUG: 08:47:12.008: run AsStore:load-installed{/usr/local/share/applications}
+(appstream-util:1204): As-DEBUG: 08:47:12.021: run AsStore:load-installed{/usr/share/appdata}
+(appstream-util:1204): As-DEBUG: 08:47:12.037: run AsStore:load-installed{/usr/share/metainfo}
+(appstream-util:1204): As-DEBUG: 08:47:12.053: run AsStore:load-installed{/usr/share/applications}
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet check-root failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet check-root failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet compare glibtest/example.xml glibtest/example_new.xml
++ grep dejavu1
+###################################################################################### @0050ms appstream-util: compare 50ms
+                        ##################################                             @0034ms AsStore:store-from-file{/root/mugen/testcases/cli-test/libappstream-glib/glibtest/example.xml} 20ms
+                                                               ##########              @0043ms AsStore:store-from-file{/root/mugen/testcases/cli-test/libappstream-glib/glibtest/example_new.xml} 6ms
+dejavu1                                            Added
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet compare failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet compare failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet convert glibtest/example.xml glibtest/example.xml 2.0
++ grep 'New API version'
+###################################################################################### @0050ms appstream-util: convert 50ms
+                            #############################                              @0034ms AsStore:store-from-file{/root/mugen/testcases/cli-test/libappstream-glib/glibtest/example.xml} 17ms
+New API version: 2.0
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet convert failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet convert failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet dump glibtest/dejavu.metainfo.xml
++ grep 'A set of sans-serif font faces'
+###################################################################################### @0025ms appstream-util: dump 25ms
+    <summary>A set of sans-serif font faces</summary>
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet dump failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet dump failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet generate-guid test
++ grep 4be0643f-1d98
+###################################################################################### @0007ms appstream-util: generate-guid 7ms
+4be0643f-1d98-573b-97cd-ca98a65347dd
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet generate-guid failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet generate-guid failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet incorporate glibtest/example.xml glibtest/help.xml glibtest/example_new.xml
++ grep dejavu
+###################################################################################### @0061ms appstream-util: incorporate 61ms
+                      #######################                                          @0033ms AsStore:store-from-file{/root/mugen/testcases/cli-test/libappstream-glib/glibtest/example.xml} 17ms
+                                                  #########                            @0043ms AsStore:store-from-file{/root/mugen/testcases/cli-test/libappstream-glib/glibtest/help.xml} 7ms
+dejavu                                             No source AppData
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet incorporate failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet incorporate failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet install glibtest/dejavu.metainfo.xml
++ grep 'appstream-util: install'
+###################################################################################### @0024ms appstream-util: install 24ms
+(appstream-util:1234): As-DEBUG: 08:47:15.278: run appstream-util: install
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet install failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet install failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet install-origin glibtest/example.xml glibtest/example_new.xml
++ grep 'appstream-util: install-origin'
+Error opening file “/var/cache/app-info/xmls/glibtest/example.xml.xml”: No such file or directory
+(appstream-util:1239): As-DEBUG: 08:47:15.821: run appstream-util: install-origin
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet install-origin failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet install-origin failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ appstream-util -v --profile --nonet markup-import simple glibtest/example.xml
++ grep 'xml version=&quot'
+###################################################################################### @0005ms appstream-util: markup-import 5ms
+<p>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;components origin=&quot;example&quot; version=&quot;2.0&quot;&gt;   &lt;component type=&quot;font&quot;&gt;     &lt;id&gt;dejavu&lt;/id&gt;     &lt;name&gt;DejaVu&lt;/name&gt;     &lt;summary&gt;A set of sans-serif font faces&lt;/summary&gt;   &lt;/component&gt; &lt;/components&gt;</p><p></p>
++ CHECK_RESULT 0 0 0 'Check appstream-util -v --profile --nonet markup-import simple failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-util -v --profile --nonet markup-import simple failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Jun  2 08:47:16 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun  2 08:47:17 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpql61z1v8 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpql61z1v8
++ '[' 0 -ne 0 ']'
++ rm -rf glibtest
++ LOG_INFO 'Finish restore the test environment.'
++ message='Finish restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restore the test environment.'
+Fri Jun  2 08:47:30 2023 - INFO  - Finish restore the test environment.

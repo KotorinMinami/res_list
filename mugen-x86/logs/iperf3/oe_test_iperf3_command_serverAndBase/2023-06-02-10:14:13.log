@@ -1,0 +1,303 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Jun  2 10:14:15 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'iperf3 net-tools'
++ pkgs='iperf3 net-tools'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'iperf3 net-tools' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpg8h4rdme
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpg8h4rdme
++ DNF_INSTALL iperf3 2
++ pkgs=iperf3
++ node=2
++ '[' -z /tmp/tmpg8h4rdme ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iperf3 --node 2 --tempfile /tmp/tmpg8h4rdme
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 168, in <module>
+    exitcode, output = rpm_install(args.pkgs, args.node, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 66, in rpm_install
+    conn = ssh_cmd.pssh_conn(
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 340, in connect
+    to_try = list(self._families_and_addresses(hostname, port))
+  File "/usr/lib/python3.10/site-packages/paramiko/client.py", line 203, in _families_and_addresses
+    addrinfos = socket.getaddrinfo(
+  File "/usr/lib64/python3.10/socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
++ tmpfile2=
++ '[' -z /tmp/tmpg8h4rdme ']'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Jun  2 10:14:31 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun  2 10:14:31 2023 - INFO  - Start to run test.
++ iperf3 -v
+++ rpm -q iperf3
+++ awk -F - '{print $2}'
++ grep 3.10.1
+iperf 3.10.1 (cJSON 1.7.13)
++ CHECK_RESULT 0 0 0 'iperf3 -v execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -v execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 --version
+++ rpm -q iperf3
+++ awk -F - '{print $2}'
++ grep 3.10.1
+iperf 3.10.1 (cJSON 1.7.13)
++ CHECK_RESULT 0 0 0 'iperf3 --version execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 --version execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 -h
++ grep Usage
+Usage: iperf3 [-s|-c host] [options]
++ CHECK_RESULT 0 0 0 'iperf3 -h execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -h execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 --help
++ grep Usage
+Usage: iperf3 [-s|-c host] [options]
++ CHECK_RESULT 0 0 0 'iperf3 --help execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 --help execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop firewalld
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ SLEEP_WAIT 2
++ iperf3 -s
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ netstat -lnp
++ grep 5201
++ grep iperf3
+tcp6       0      0 :::5201                 :::*                    LISTEN      6699/iperf3         
++ CHECK_RESULT 0 0 0 'iperf3 -s execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -s execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'iperf3 -c 10.198.114.1' '' '' ''
++ cmd='iperf3 -c 10.198.114.1'
++ remoteip=
++ remotepasswd=
++ remoteuser=
++ timeout=300
++ grep 'iperf Done'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'iperf3 -c 10.198.114.1' -i '' -u '' -p '' -t 300 -o 22
++ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Fri Jun  2 10:14:34 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ CHECK_RESULT 1 0 0 'iperf3 -c serverIP execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='iperf3 -c serverIP execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'iperf3 -c serverIP execution failed.'
++ LOG_ERROR 'iperf3 -c serverIP execution failed.'
++ message='iperf3 -c serverIP execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'iperf3 -c serverIP execution failed.'
+Fri Jun  2 10:14:34 2023 - ERROR - iperf3 -c serverIP execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iperf3_command_serverAndBase.sh line 46'
++ message='oe_test_iperf3_command_serverAndBase.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iperf3_command_serverAndBase.sh line 46'
+Fri Jun  2 10:14:35 2023 - ERROR - oe_test_iperf3_command_serverAndBase.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'iperf3 -s'
++ kill -9 6699
+++ GET_FREE_PORT 10.198.114.1
+++ ip=10.198.114.1
+++ start_port=1000
+++ end_port=10000
+++ python3 /root/mugen/libs/locallibs/free_port.py get --ip 10.198.114.1 --start 1000 --end 10000
++ rdport=7892
++ SLEEP_WAIT 2
++ wait_time=2
++ iperf3 -s -p 7892
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  6699 Killed                  iperf3 -s
++ netstat -lnp
++ grep 7892
++ grep iperf3
+tcp6       0      0 :::7892                 :::*                    LISTEN      6714/iperf3         
++ CHECK_RESULT 0 0 0 'iperf3 -s -p execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -s -p execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'iperf3 -s -p 7892'
++ kill -9 6714
++ SLEEP_WAIT 2
++ iperf3 -s -I /tmp/iperf3_pid
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  6714 Killed                  iperf3 -s -p "${rdport}"
+++ pgrep -f 'iperf3 -s -I'
++ result=6720
+++ cat /tmp/iperf3_pid
++ result1=6720
++ '[' 6720 -eq 6720 ']'
++ CHECK_RESULT 0 0 0 'iperf3 -s -I execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -s -I execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 6720
++ SSH_CMD 'iperf3 -c 10.198.114.1' '' '' ''
++ iperf3 -s -1
++ cmd='iperf3 -c 10.198.114.1'
++ remoteip=
++ remotepasswd=
++ remoteuser=
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'iperf3 -c 10.198.114.1' -i '' -u '' -p '' -t 300 -o 22
+Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]/root/mugen/libs/locallibs/common_lib_python.sh: line 39:  6720 Killed                  iperf3 -s -I /tmp/iperf3_pid
++ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Fri Jun  2 10:14:41 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
+++ pgrep -f 'iperf3 -s'
++ '[' -z 6724 ']'
++ CHECK_RESULT 1 0 0 'iperf3 -s -1 execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='iperf3 -s -1 execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'iperf3 -s -1 execution failed.'
++ LOG_ERROR 'iperf3 -s -1 execution failed.'
++ message='iperf3 -s -1 execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'iperf3 -s -1 execution failed.'
+Fri Jun  2 10:14:41 2023 - ERROR - iperf3 -s -1 execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iperf3_command_serverAndBase.sh line 64'
++ message='oe_test_iperf3_command_serverAndBase.sh line 64'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iperf3_command_serverAndBase.sh line 64'
+Fri Jun  2 10:14:41 2023 - ERROR - oe_test_iperf3_command_serverAndBase.sh line 64
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun  2 10:14:41 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun  2 10:14:42 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun  2 10:14:42 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpg8h4rdme ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpg8h4rdme
++ '[' 0 -ne 0 ']'
++ rm -rf /tmp/iperf3_pid
++ systemctl start firewalld
+Failed to start firewalld.service: Unit firewalld.service not found.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun  2 10:14:47 2023 - INFO  - End to restore the test environment.

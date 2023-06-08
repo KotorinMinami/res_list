@@ -1,0 +1,204 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Jun  2 14:01:21 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'ltrace gcc'
++ pkgs='ltrace gcc'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'ltrace gcc' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpto4ih9pf
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpto4ih9pf
++ gcc ./common/tstlib.c -shared -fPIC -o libtst.so
++ gcc -o tst ./common/tst.c -L. -Wl,-rpath=. -ltst
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Jun  2 14:01:50 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing.'
++ message='Start testing.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing.'
+Fri Jun  2 14:01:51 2023 - INFO  - Start testing.
++ ltrace -i ./tst
++ grep -m 1 '[0x[[:xdigit:]]'
+[0x1051c] __libc_start_main([ "./tst" ] <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -i'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -i'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ltrace -x 'func*' ./tst
++ grep func_f_main
+func_f_main(1, 0xffffffe49f2aa8, 0xffffffe49f2ab8, 0) = 1
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -x'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -x'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ltrace -e 'func*' ./tst
++ grep 'tst->func_f_lib'
+tst->func_f_lib(1, 0xffffffedd42aa8, 0xffffffedd42ab8, 0 <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -e'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -e'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ltrace -l libtst.so ./tst
++ grep 'tst->func_f_lib'
+tst->func_f_lib(1, 0xffffffc6335aa8, 0xffffffc6335ab8, 0 <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -l'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -l'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ltrace --library=libtst.so ./tst
++ grep 'tst->func_f_lib'
+tst->func_f_lib(1, 0xffffffd1266aa8, 0xffffffd1266ab8, 0 <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace --library'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace --library'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ltrace -r ./tst
++ grep -m 1 '[[:digit:]]*.[[:digit:]]*'
+  0.000000 __libc_start_main([ "./tst" ] <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -r'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -r'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ltrace -f ./tst
++ grep -m 1 pid
+[pid 652] __libc_start_main([ "./tst" ] <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -f'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -f'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ltrace -t ./tst
++ grep -m 1 '[[:digit:]]*:[[:digit:]]*:[[:digit:]]*'
+14:01:53 __libc_start_main([ "./tst" ] <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -t'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -t'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -m 1 '[[:digit:]]*:[[:digit:]]*:[[:digit:]]*.[[:digit:]]*'
++ ltrace -tt ./tst
+14:01:53.951537 __libc_start_main([ "./tst" ] <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -tt'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -tt'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -m 1 '[[:digit:]]*.[[:digit:]]*'
++ ltrace -ttt ./tst
+1685685714.295409 __libc_start_main([ "./tst" ] <unfinished ...>
++ CHECK_RESULT 0 0 0 'Failed to run command: ltrace -ttt'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to run command: ltrace -ttt'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun  2 14:01:55 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Jun  2 14:01:55 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun  2 14:01:56 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpto4ih9pf ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpto4ih9pf
++ '[' 0 -ne 0 ']'
++ rm -rf tst libtst.so
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun  2 14:02:05 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,110 @@
++ source ../common/lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Fri Jun  2 17:27:36 2023 - INFO  - Start environment preparation.
++ pre_junit5
++ DNF_INSTALL junit5
++ pkgs=junit5
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs junit5 --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp1l9vcuj5
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp1l9vcuj5
+++ rpm -qa 'java*'
+++ head -1
+++ grep 'java-.*-openjdk'
+++ awk -F - '{print $2}'
++ java_version=1.8.0
++ DNF_INSTALL java-1.8.0-devel
++ pkgs=java-1.8.0-devel
++ node=1
++ '[' -z /tmp/tmp1l9vcuj5 ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs java-1.8.0-devel --node 1 --tempfile /tmp/tmp1l9vcuj5
++ tmpfile2=/tmp/tmp1l9vcuj5
++ '[' -z /tmp/tmp1l9vcuj5 ']'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Jun  2 17:29:21 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Fri Jun  2 17:29:21 2023 - INFO  - Start testing...
++ javac -cp ../common/junit-platform-console-standalone-1.6.2.jar -d . TestJunit5.java
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ java -jar ../common/junit-platform-console-standalone-1.6.2.jar -cp ./ --class-path . --scan-class-path
+this BeforeAll
+this BeforeEach
+[showInfo]
+this AfterEach
+this BeforeEach
+this AfterEach
+this AfterAll
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+[36m╷[0m
+[36m├─[0m [36mJUnit Jupiter[0m [32m✔[0m
+[36m│  └─[0m [36mTestJunit5[0m [32m✔[0m
+[36m│     ├─[0m [34mTestA(TestInfo)[0m [32m✔[0m
+[36m│     └─[0m [34mfirsttest[0m [32m✔[0m
+[36m└─[0m [36mJUnit Vintage[0m [32m✔[0m
+
+Test run finished after 1242 ms
+[         3 containers found      ]
+[         0 containers skipped    ]
+[         3 containers started    ]
+[         0 containers aborted    ]
+[         3 containers successful ]
+[         0 containers failed     ]
+[         2 tests found           ]
+[         0 tests skipped         ]
+[         2 tests started         ]
+[         0 tests aborted         ]
+[         2 tests successful      ]
+[         0 tests failed          ]
+
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf com
++ sed -i 's/import org.junit.jupiter.api.*;/\/\/import org.junit.jupiter.api.*;/g' TestJunit5.java
++ javac -cp ../common/junit-platform-console-standalone-1.6.2.jar -d . TestJunit5.java
+Fri Jun  2 17:57:34 2023 - ERROR - Timeout : Command 'bash -x oe_test_junit5_noimport.sh' timed out after 1799.9995074800008 seconds
