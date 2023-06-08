@@ -1,0 +1,1249 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue Jun  6 16:08:32 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL 'cobbler httpd'
++ pkgs='cobbler httpd'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs 'cobbler httpd' --node 1 --tempfile ''
+Tue Jun  6 16:08:52 2023 - INFO  - pkgs:(cobbler httpd) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ mount /dev/cdrom /mnt
+mount: /mnt: no medium found on /dev/sr0.
++ systemctl start httpd
+Job for httpd.service failed because the control process exited with error code.
+See "systemctl status httpd.service" and "journalctl -xeu httpd.service" for details.
++ systemctl start cobblerd
++ cobbler distro add --name=OpenEuler --owners=root --boot-loader=grub --initrd=/mnt/images/pxeboot/initrd.img --kernel=/mnt/isolinux/vmlinuz
+cobblerd does not appear to be running/accessible: ConnectionRefusedError(111, 'Connection refused')
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Jun  6 16:09:10 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run testcase.'
++ message='Start to run testcase.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run testcase.'
+Tue Jun  6 16:09:12 2023 - INFO  - Start to run testcase.
++ cobbler profile add --name=OpenEuler1 --distro=OpenEuler
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile add'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile add'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile add'
++ LOG_ERROR 'Failed option: profile add'
++ message='Failed option: profile add'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile add'
+Tue Jun  6 16:09:25 2023 - ERROR - Failed option: profile add
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 35'
++ message='oe_test_cobbler_profile.sh line 35'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 35'
+Tue Jun  6 16:09:27 2023 - ERROR - oe_test_cobbler_profile.sh line 35
++ return 0
++ cobbler profile copy --name=OpenEuler1 --newname=OpenEuler2
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile copy'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile copy'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile copy'
++ LOG_ERROR 'Failed option: profile copy'
++ message='Failed option: profile copy'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile copy'
+Tue Jun  6 16:09:42 2023 - ERROR - Failed option: profile copy
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 37'
++ message='oe_test_cobbler_profile.sh line 37'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 37'
+Tue Jun  6 16:09:43 2023 - ERROR - oe_test_cobbler_profile.sh line 37
++ return 0
++ cobbler profile list
++ grep OpenEuler2
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile copy'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile copy'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile copy'
++ LOG_ERROR 'Failed option: profile copy'
++ message='Failed option: profile copy'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile copy'
+Tue Jun  6 16:09:56 2023 - ERROR - Failed option: profile copy
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 39'
++ message='oe_test_cobbler_profile.sh line 39'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 39'
+Tue Jun  6 16:09:58 2023 - ERROR - oe_test_cobbler_profile.sh line 39
++ return 0
++ cobbler profile dumpvars --name=OpenEuler1
++ grep allow_duplicate_hostnames
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile dumpvars'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile dumpvars'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile dumpvars'
++ LOG_ERROR 'Failed option: profile dumpvars'
++ message='Failed option: profile dumpvars'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile dumpvars'
+Tue Jun  6 16:10:11 2023 - ERROR - Failed option: profile dumpvars
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 41'
++ message='oe_test_cobbler_profile.sh line 41'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 41'
+Tue Jun  6 16:10:13 2023 - ERROR - oe_test_cobbler_profile.sh line 41
++ return 0
++ cobbler profile edit --name=openEuler1 --owners=tom
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile edit'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile edit'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile edit'
++ LOG_ERROR 'Failed option: profile edit'
++ message='Failed option: profile edit'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile edit'
+Tue Jun  6 16:10:24 2023 - ERROR - Failed option: profile edit
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 43'
++ message='oe_test_cobbler_profile.sh line 43'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 43'
+Tue Jun  6 16:10:25 2023 - ERROR - oe_test_cobbler_profile.sh line 43
++ return 0
++ cobbler profile report --name=openEuler1
++ grep tom
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile edit'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile edit'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile edit'
++ LOG_ERROR 'Failed option: profile edit'
++ message='Failed option: profile edit'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile edit'
+Tue Jun  6 16:10:37 2023 - ERROR - Failed option: profile edit
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 45'
++ message='oe_test_cobbler_profile.sh line 45'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 45'
+Tue Jun  6 16:10:39 2023 - ERROR - oe_test_cobbler_profile.sh line 45
++ return 0
++ grep OpenEuler
++ cobbler profile list
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile list'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile list'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile list'
++ LOG_ERROR 'Failed option: profile list'
++ message='Failed option: profile list'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile list'
+Tue Jun  6 16:10:51 2023 - ERROR - Failed option: profile list
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 47'
++ message='oe_test_cobbler_profile.sh line 47'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 47'
+Tue Jun  6 16:10:53 2023 - ERROR - oe_test_cobbler_profile.sh line 47
++ return 0
++ cobbler profile find
++ grep OpenEuler
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile find'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile find'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile find'
++ LOG_ERROR 'Failed option: profile find'
++ message='Failed option: profile find'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile find'
+Tue Jun  6 16:11:04 2023 - ERROR - Failed option: profile find
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 49'
++ message='oe_test_cobbler_profile.sh line 49'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 49'
+Tue Jun  6 16:11:06 2023 - ERROR - oe_test_cobbler_profile.sh line 49
++ return 0
++ cobbler profile remove --name=OpenEuler1
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile remove'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile remove'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile remove'
++ LOG_ERROR 'Failed option: profile remove'
++ message='Failed option: profile remove'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile remove'
+Tue Jun  6 16:11:17 2023 - ERROR - Failed option: profile remove
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 51'
++ message='oe_test_cobbler_profile.sh line 51'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 51'
+Tue Jun  6 16:11:19 2023 - ERROR - oe_test_cobbler_profile.sh line 51
++ return 0
++ cobbler profile list
++ grep OpenEuler1
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 1 'Failed option: profile remove'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='Failed option: profile remove'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ cobbler profile rename --name=OpenEuler2 --newname=OpenEuler3
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile rename'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile rename'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile rename'
++ LOG_ERROR 'Failed option: profile rename'
++ message='Failed option: profile rename'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile rename'
+Tue Jun  6 16:11:42 2023 - ERROR - Failed option: profile rename
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 55'
++ message='oe_test_cobbler_profile.sh line 55'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 55'
+Tue Jun  6 16:11:44 2023 - ERROR - oe_test_cobbler_profile.sh line 55
++ return 0
++ cobbler profile list
++ grep OpenEuler3
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile rename'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile rename'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile rename'
++ LOG_ERROR 'Failed option: profile rename'
++ message='Failed option: profile rename'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile rename'
+Tue Jun  6 16:11:55 2023 - ERROR - Failed option: profile rename
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 57'
++ message='oe_test_cobbler_profile.sh line 57'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 57'
+Tue Jun  6 16:11:56 2023 - ERROR - oe_test_cobbler_profile.sh line 57
++ return 0
++ cobbler profile report --name=OpenEuler3
++ grep Name
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile report'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile report'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile report'
++ LOG_ERROR 'Failed option: profile report'
++ message='Failed option: profile report'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile report'
+Tue Jun  6 16:12:07 2023 - ERROR - Failed option: profile report
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 59'
++ message='oe_test_cobbler_profile.sh line 59'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 59'
+Tue Jun  6 16:12:09 2023 - ERROR - oe_test_cobbler_profile.sh line 59
++ return 0
++ cobbler profile get-autoinstall --name=OpenEuler3
+httpd does not appear to be running and proxying Cobbler, or SELinux is in the way. Original traceback:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 397, in check_setup
+    s.ping()
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+Traceback (most recent call last):
+  File "/usr/bin/cobbler", line 35, in <module>
+    sys.exit(app.main())
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 852, in main
+    rc = cli.run(sys.argv)
+  File "/usr/lib/python3.10/site-packages/cobbler/cli.py", line 418, in run
+    self.token = self.remote.login("", self.shared_secret)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1464, in __request
+    response = self.__transport.request(
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib64/python3.10/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib64/python3.10/http/client.py", line 1277, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.10/http/client.py", line 1037, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.10/http/client.py", line 975, in send
+    self.connect()
+  File "/usr/lib64/python3.10/http/client.py", line 941, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib64/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib64/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
++ CHECK_RESULT 1 0 0 'Failed option: profile get-autoinstall'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed option: profile get-autoinstall'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed option: profile get-autoinstall'
++ LOG_ERROR 'Failed option: profile get-autoinstall'
++ message='Failed option: profile get-autoinstall'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed option: profile get-autoinstall'
+Tue Jun  6 16:12:20 2023 - ERROR - Failed option: profile get-autoinstall
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cobbler_profile.sh line 61'
++ message='oe_test_cobbler_profile.sh line 61'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_cobbler_profile.sh line 61'
+Tue Jun  6 16:12:21 2023 - ERROR - oe_test_cobbler_profile.sh line 61
++ return 0
++ LOG_INFO 'End to run testcase.'
++ message='End to run testcase.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run testcase.'
+Tue Jun  6 16:12:23 2023 - INFO  - End to run testcase.
++ CASE_RESULT 0
++ case_re=0
++ test -z 13
++ test 13 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Jun  6 16:12:24 2023 - ERROR - failed to execute the case.
++ exit 13
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Jun  6 16:12:26 2023 - INFO  - Start to restore the test environment.
++ umount /dev/cdrom
+umount: /dev/cdrom: not mounted.
++ systemctl stop httpd
++ systemctl stop cobblerd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Tue Jun  6 16:12:29 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Jun  6 16:12:30 2023 - INFO  - End to restore the test environment.

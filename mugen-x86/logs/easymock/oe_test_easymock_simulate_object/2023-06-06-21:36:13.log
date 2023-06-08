@@ -1,0 +1,136 @@
++ source ../common/common_easymock.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Jun  6 21:36:24 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'easymock junit'
++ pkgs='easymock junit'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs 'easymock junit' --node 1 --tempfile ''
+Tue Jun  6 21:36:48 2023 - INFO  - pkgs:(easymock junit) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
+++ rpm -qa 'java*'
+++ grep 'java-.*-openjdk'
+++ awk -F - '{print $2}'
++ java_version='1.8.0
+1.8.0
+1.8.0'
++ DNF_INSTALL java-1.8.0 1.8.0 1.8.0-devel
++ pkgs=java-1.8.0
++ node=1.8.0
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs java-1.8.0 --node 1.8.0 --tempfile ''
+usage: rpm_manage.py install|remove [-h] [--node NODE] [--pkgs PKG] [--tempfile TEPMFILE]
+rpm_manage.py: error: argument --node: invalid int value: '1.8.0'
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ DNF_INSTALL tomcat-servlet-4.0-api
++ pkgs=tomcat-servlet-4.0-api
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs tomcat-servlet-4.0-api --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpuis1342c
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpuis1342c
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Jun  6 21:38:50 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Jun  6 21:38:52 2023 - INFO  - Start to run test.
++ compile_java
+++ basename -a ./TestMockHttpServletRquest.java
++ params=TestMockHttpServletRquest.java
++ javac -classpath '/usr/share/java/*:/usr/share/java/hamcrest/*:' -d . TestMockHttpServletRquest.java
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ execute_java
++ grep '.landy
+landy:landy
+OK (1 test)'
+++ basename ./TestMockHttpServletRquest.class ./TestMockHttpServletRquest.java
++ testname=TestMockHttpServletRquest.class
++ java -classpath '/usr/share/java/*:/usr/share/java/hamcrest/*:' org.junit.runner.JUnitCore TestMockHttpServletRquest
+.landy
+landy:landy
+OK (1 test)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Jun  6 21:39:25 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Jun  6 21:39:27 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Jun  6 21:39:29 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpuis1342c ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpuis1342c
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE '.sh|.java|.xml|expect_result|main|test'
++ rm -rf TestMockHttpServletRquest.class
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Jun  6 21:40:16 2023 - INFO  - End to restore the test environment.

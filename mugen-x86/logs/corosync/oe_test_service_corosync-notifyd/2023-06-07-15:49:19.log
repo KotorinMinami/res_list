@@ -1,0 +1,502 @@
++ source ../common/ha.sh
+++ source ../common/common_lib.sh
++++ source /root/mugen/libs/locallibs/common_lib.sh
+++++ python3 --version
+++++ '[' 0 -eq 0 ']'
+++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Jun  7 15:49:28 2023 - INFO  - Start environmental preparation.
++ service=corosync-notifyd.service
++ ha_pre
++ systemctl stop firewalld
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ systemctl disable firewalld
+Failed to disable unit: Unit file firewalld.service does not exist.
++ flag=false
+++ getenforce
+++ grep Enforcing
++ '[' ']'
++ DNF_INSTALL 'corosync pacemaker pcs'
++ pkgs='corosync pacemaker pcs'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'corosync pacemaker pcs' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpl4zl4aiq
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpl4zl4aiq
+++ hostname
++ hostname=localhost.localdomain
++ hostnamectl set-hostname ha1
++ cp /etc/hosts /etc/hosts_bak
++ echo '127.0.0.1 ha1
+ ha2'
++ echo 'openEuler12#$'
++ passwd --stdin hacluster
+Changing password for user hacluster.
+passwd: all authentication tokens updated successfully.
++ echo 'totem {
+        version: 2
+        cluster_name: hacluster
+        crypto_cipher: none
+        crypto_hash: none
+}
+logging {         
+        fileline: off
+        to_stderr: yes
+        to_logfile: yes
+        logfile: /var/log/cluster/corosync.log
+        to_syslog: yes
+        debug: off
+        logger_subsys {
+               subsys: QUORUM
+               debug: off
+        }
+}
+quorum {
+        provider: corosync_votequorum
+        two_node: 1
+}
+nodelist {
+        node {
+               name: ha1
+               nodeid: 1
+               ring0_addr: 127.0.0.1
+        }
+        node {
+               name: ha2
+               nodeid: 2
+               ring0_addr:  
+        }
+}'
++ P_SSH_CMD --node 2 --cmd '
+    systemctl stop firewalld;
+    systemctl disable firewalld;
+    dnf install -y corosync pacemaker pcs;
+    hostnamectl set-hostname ha2;
+    echo openEuler12#$ | passwd --stdin hacluster;
+    mv /etc/hosts /etc/hosts_bak'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd '
+    systemctl stop firewalld;
+    systemctl disable firewalld;
+    dnf install -y corosync pacemaker pcs;
+    hostnamectl set-hostname ha2;
+    echo openEuler12#$ | passwd --stdin hacluster;
+    mv /etc/hosts /etc/hosts_bak'
+Wed Jun  7 15:52:58 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ SSH_SCP /etc/hosts @:/etc/ ''
++ src=/etc/hosts
++ dest=@:/etc/
++ remotepasswd=
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p '' -o 22 -s /etc/hosts -d @:/etc/
+Wed Jun  7 15:53:00 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/hosts @:/etc/
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Wed Jun  7 15:53:02 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ SSH_SCP /etc/corosync/corosync.conf @:/etc/corosync/ ''
++ src=/etc/corosync/corosync.conf
++ dest=@:/etc/corosync/
++ remotepasswd=
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p '' -o 22 -s /etc/corosync/corosync.conf -d @:/etc/corosync/
+Wed Jun  7 15:53:04 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/corosync/corosync.conf @:/etc/corosync/
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Wed Jun  7 15:53:07 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ systemctl start pcsd
++ systemctl start pacemaker
+A dependency job for pacemaker.service failed. See 'journalctl -xe' for details.
++ pcs property set stonith-enabled=false
+Error: unable to get cib
++ pcs property set no-quorum-policy=stop
+Error: unable to get cib
++ crm_verify -L
+crm_verify: CIB query failed: Transport endpoint is not connected
++ systemctl start corosync
+Job for corosync.service failed because the control process exited with error code.
+See "systemctl status corosync.service" and "journalctl -xeu corosync.service" for details.
++ P_SSH_CMD --node 2 --cmd '
+    systemctl start pcsd;
+    systemctl start pacemaker;
+    pcs property set stonith-enabled=false;
+    pcs property set no-quorum-policy=stop;
+    crm_verify -L;
+    systemctl start corosync'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd '
+    systemctl start pcsd;
+    systemctl start pacemaker;
+    pcs property set stonith-enabled=false;
+    pcs property set no-quorum-policy=stop;
+    crm_verify -L;
+    systemctl start corosync'
+Wed Jun  7 15:54:25 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ cat
++ pcs host auth ha1 ha2
+Username: Password: Error: Unable to communicate with ha2
+ha1: Authorized
++ systemctl restart pacemaker
+A dependency job for pacemaker.service failed. See 'journalctl -xe' for details.
++ systemctl restart corosync
+Job for corosync.service failed because the control process exited with error code.
+See "systemctl status corosync.service" and "journalctl -xeu corosync.service" for details.
++ systemctl restart pcsd
++ P_SSH_CMD --node 2 --cmd '
+    systemctl restart pacemaker;
+    systemctl restart corosync;
+    systemctl restart pcsd'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd '
+    systemctl restart pacemaker;
+    systemctl restart corosync;
+    systemctl restart pcsd'
+Wed Jun  7 15:55:39 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Jun  7 15:55:42 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Wed Jun  7 15:55:43 2023 - INFO  - Start testing...
++ test_execution corosync-notifyd.service
++ service=corosync-notifyd.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-06-07 15:55:43'
++ test_restart corosync-notifyd.service
++ service=corosync-notifyd.service
++ systemctl restart corosync-notifyd.service
+A dependency job for corosync-notifyd.service failed. See 'journalctl -xe' for details.
++ CHECK_RESULT 1 0 0 'corosync-notifyd.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='corosync-notifyd.service restart failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'corosync-notifyd.service restart failed'
++ LOG_ERROR 'corosync-notifyd.service restart failed'
++ message='corosync-notifyd.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'corosync-notifyd.service restart failed'
+Wed Jun  7 15:55:46 2023 - ERROR - corosync-notifyd.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 34'
++ message='../common/common_lib.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 34'
+Wed Jun  7 15:55:47 2023 - ERROR - ../common/common_lib.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status corosync-notifyd.service
++ grep 'Active: active'
++ CHECK_RESULT 1 0 0 'corosync-notifyd.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='corosync-notifyd.service restart failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'corosync-notifyd.service restart failed'
++ LOG_ERROR 'corosync-notifyd.service restart failed'
++ message='corosync-notifyd.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'corosync-notifyd.service restart failed'
+Wed Jun  7 15:55:55 2023 - ERROR - corosync-notifyd.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 37'
++ message='../common/common_lib.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 37'
+Wed Jun  7 15:55:57 2023 - ERROR - ../common/common_lib.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl stop corosync-notifyd.service
++ CHECK_RESULT 0 0 0 'corosync-notifyd.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-notifyd.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status corosync-notifyd.service
++ grep 'Active: inactive'
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'corosync-notifyd.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-notifyd.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start corosync-notifyd.service
+A dependency job for corosync-notifyd.service failed. See 'journalctl -xe' for details.
++ CHECK_RESULT 1 0 0 'corosync-notifyd.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='corosync-notifyd.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'corosync-notifyd.service start failed'
++ LOG_ERROR 'corosync-notifyd.service start failed'
++ message='corosync-notifyd.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'corosync-notifyd.service start failed'
+Wed Jun  7 15:56:06 2023 - ERROR - corosync-notifyd.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 44'
++ message='../common/common_lib.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 44'
+Wed Jun  7 15:56:08 2023 - ERROR - ../common/common_lib.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status corosync-notifyd.service
++ grep 'Active: active'
++ CHECK_RESULT 1 0 0 'corosync-notifyd.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='corosync-notifyd.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'corosync-notifyd.service start failed'
++ LOG_ERROR 'corosync-notifyd.service start failed'
++ message='corosync-notifyd.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'corosync-notifyd.service start failed'
+Wed Jun  7 15:56:16 2023 - ERROR - corosync-notifyd.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 47'
++ message='../common/common_lib.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 47'
+Wed Jun  7 15:56:18 2023 - ERROR - ../common/common_lib.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ test_enabled corosync-notifyd.service
++ service=corosync-notifyd.service
+++ systemctl is-enabled corosync-notifyd.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ systemctl enable corosync-notifyd.service
+++ grep 'Created symlink'
+++ awk '{print $3}'
++ symlink_file=/etc/systemd/system/multi-user.target.wants/corosync-notifyd.service
++ find /etc/systemd/system/multi-user.target.wants/corosync-notifyd.service
+/etc/systemd/system/multi-user.target.wants/corosync-notifyd.service
++ CHECK_RESULT 0 0 0 'corosync-notifyd.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='corosync-notifyd.service enable failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable corosync-notifyd.service
+Removed /etc/systemd/system/multi-user.target.wants/corosync-notifyd.service.
++ find /etc/systemd/system/multi-user.target.wants/corosync-notifyd.service
+find: ‘/etc/systemd/system/multi-user.target.wants/corosync-notifyd.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'corosync-notifyd.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='corosync-notifyd.service disable failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ journalctl --since '2023-06-07 15:55:43' -u corosync-notifyd.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
+Jun 07 15:55:44 ha1 systemd[1]: Dependency failed for Corosync Dbus and snmp notifier.
+Jun 07 15:55:44 ha1 systemd[1]: corosync-notifyd.service: Job corosync-notifyd.service/start failed with result 'dependency'.
+Jun 07 15:56:05 ha1 systemd[1]: Dependency failed for Corosync Dbus and snmp notifier.
+Jun 07 15:56:05 ha1 systemd[1]: corosync-notifyd.service: Job corosync-notifyd.service/start failed with result 'dependency'.
++ CHECK_RESULT 0 0 1 'There is an error message for the log of corosync-notifyd.service'
++ actual_result=0
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of corosync-notifyd.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 1 -eq 0 ']'
++ test 0x == 0x
++ test -n 'There is an error message for the log of corosync-notifyd.service'
++ LOG_ERROR 'There is an error message for the log of corosync-notifyd.service'
++ message='There is an error message for the log of corosync-notifyd.service'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'There is an error message for the log of corosync-notifyd.service'
+Wed Jun  7 15:56:29 2023 - ERROR - There is an error message for the log of corosync-notifyd.service
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 28'
++ message='../common/common_lib.sh line 28'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 28'
+Wed Jun  7 15:56:31 2023 - ERROR - ../common/common_lib.sh line 28
++ '[' 0 -eq 1 ']'
++ return 0
++ test_reload corosync-notifyd.service
++ service=corosync-notifyd.service
++ systemctl start corosync-notifyd.service
+A dependency job for corosync-notifyd.service failed. See 'journalctl -xe' for details.
++ systemctl reload corosync-notifyd.service
++ grep 'Job type reload is not applicable'
+Failed to reload corosync-notifyd.service: Job type reload is not applicable for unit corosync-notifyd.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit corosync-notifyd.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit corosync-notifyd.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status corosync-notifyd.service
++ grep 'Active: active'
++ systemctl status corosync-notifyd.service
++ grep 'inactive (dead)'
+     Active: inactive (dead)
++ systemctl status corosync-notifyd.service
++ grep 'Condition check'
++ grep skip
++ CHECK_RESULT 1 0 0 'corosync-notifyd.service reload causes the service status to change'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='corosync-notifyd.service reload causes the service status to change'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'corosync-notifyd.service reload causes the service status to change'
++ LOG_ERROR 'corosync-notifyd.service reload causes the service status to change'
++ message='corosync-notifyd.service reload causes the service status to change'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'corosync-notifyd.service reload causes the service status to change'
+Wed Jun  7 15:56:35 2023 - ERROR - corosync-notifyd.service reload causes the service status to change
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 95'
++ message='../common/common_lib.sh line 95'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 95'
+Wed Jun  7 15:56:36 2023 - ERROR - ../common/common_lib.sh line 95
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Wed Jun  7 15:56:38 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 6
++ test 6 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Jun  7 15:56:39 2023 - ERROR - failed to execute the case.
++ exit 6
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Jun  7 15:56:40 2023 - INFO  - start environment cleanup.
++ systemctl stop corosync-notifyd.service
++ ha_post
++ systemctl stop corosync
++ systemctl stop pacemaker
++ systemctl stop pcsd
++ rm -rf /etc/hosts /etc/corosync/corosync.conf
++ mv /etc/hosts_bak /etc/hosts
++ hostnamectl set-hostname localhost.localdomain
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpl4zl4aiq ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpl4zl4aiq
++ '[' 0 -ne 0 ']'
++ '[' false = true ']'
++ systemctl start firewalld
+Failed to start firewalld.service: Unit firewalld.service not found.
++ systemctl enable firewalld
+Failed to enable unit: Unit file firewalld.service does not exist.
++ P_SSH_CMD --node 2 --cmd '
+    systemctl stop corosync;
+    systemctl stop pacemaker;
+    systemctl stop pcsd;
+    rm -rf /etc/hosts /etc/corosync/corosync.conf;
+    mv /etc/hosts_bak /etc/hosts;
+    hostnamectl set-hostname localhost.localdomain;
+    dnf remove -y corosync pacemaker pcs;
+    systemctl start firewalld;
+    systemctl enable firewalld'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd '
+    systemctl stop corosync;
+    systemctl stop pacemaker;
+    systemctl stop pcsd;
+    rm -rf /etc/hosts /etc/corosync/corosync.conf;
+    mv /etc/hosts_bak /etc/hosts;
+    hostnamectl set-hostname localhost.localdomain;
+    dnf remove -y corosync pacemaker pcs;
+    systemctl start firewalld;
+    systemctl enable firewalld'
+Wed Jun  7 15:57:56 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Jun  7 15:57:58 2023 - INFO  - Finish environment cleanup!

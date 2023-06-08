@@ -1,0 +1,217 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue Jun  6 18:11:08 2023 - INFO  - Start environmental preparation.
++ cp /lib/systemd/system/dhcrelay.service /etc/systemd/system/
++ ip addr add 192.168.0.1 dev ''
+Cannot find device ""
++ sed -i 's\dhcrelay -d --no-pid\dhcrelay -d --no-pid 192.168.0.1 \g' /etc/systemd/system/dhcrelay.service
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Jun  6 18:11:10 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue Jun  6 18:11:12 2023 - INFO  - Start testing...
++ test_execution dhcrelay.service
++ service=dhcrelay.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-06-06 18:11:12'
++ test_restart dhcrelay.service
++ service=dhcrelay.service
++ systemctl restart dhcrelay.service
++ CHECK_RESULT 0 0 0 'dhcrelay.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dhcrelay.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status dhcrelay.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-06-06 18:11:12 UTC; 7s ago
++ CHECK_RESULT 0 0 0 'dhcrelay.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dhcrelay.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop dhcrelay.service
++ CHECK_RESULT 0 0 0 'dhcrelay.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dhcrelay.service stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status dhcrelay.service
++ grep 'Active: inactive'
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'dhcrelay.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dhcrelay.service stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start dhcrelay.service
++ CHECK_RESULT 0 0 0 'dhcrelay.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dhcrelay.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status dhcrelay.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-06-06 18:11:28 UTC; 6s ago
++ CHECK_RESULT 0 0 0 'dhcrelay.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dhcrelay.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled dhcrelay.service
++ service=dhcrelay.service
+++ systemctl is-enabled dhcrelay.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ systemctl enable dhcrelay.service
+++ grep 'Created symlink'
+++ awk '{print $3}'
++ symlink_file=/etc/systemd/system/multi-user.target.wants/dhcrelay.service
++ find /etc/systemd/system/multi-user.target.wants/dhcrelay.service
+/etc/systemd/system/multi-user.target.wants/dhcrelay.service
++ CHECK_RESULT 0 0 0 'dhcrelay.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dhcrelay.service enable failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable dhcrelay.service
+Removed /etc/systemd/system/multi-user.target.wants/dhcrelay.service.
++ find /etc/systemd/system/multi-user.target.wants/dhcrelay.service
+find: ‘/etc/systemd/system/multi-user.target.wants/dhcrelay.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'dhcrelay.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='dhcrelay.service disable failed'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ journalctl --since '2023-06-06 18:11:12' -u dhcrelay.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of dhcrelay.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of dhcrelay.service'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload dhcrelay.service
++ service=dhcrelay.service
++ systemctl start dhcrelay.service
++ systemctl reload dhcrelay.service
++ grep 'Job type reload is not applicable'
+Failed to reload dhcrelay.service: Job type reload is not applicable for unit dhcrelay.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit dhcrelay.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit dhcrelay.service'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status dhcrelay.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-06-06 18:11:28 UTC; 17s ago
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue Jun  6 18:11:46 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Jun  6 18:11:48 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Tue Jun  6 18:11:49 2023 - INFO  - start environment cleanup.
++ systemctl stop dhcrelay.service
++ rm -rf /etc/systemd/system/dhcrelay.service
++ ip addr del 192.168.0.1 dev ''
+Warning: Executing wildcard deletion to stay compatible with old scripts.
+         Explicitly specify the prefix length (192.168.0.1/32) to avoid this warning.
+         This special behaviour is likely to disappear in further releases,
+         fix your scripts!
+Cannot find device ""
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Tue Jun  6 18:11:51 2023 - INFO  - Finish environment cleanup!

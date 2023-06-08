@@ -1,0 +1,227 @@
++ source ./common/disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment!'
++ message='Start to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment!'
+Thu Jun  8 03:36:31 2023 - INFO  - Start to prepare the test environment!
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks=vdb
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=
++ local_disk2=
++ local_disk3=
++ DNF_INSTALL fio
++ pkgs=fio
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs fio --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp10orgojf
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp10orgojf
++ echo dsafdsfdddddddddddddddddddddddddddddddddddddddddd
++ LOG_INFO 'End to prepare the test environment!'
++ message='End to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment!'
+Thu Jun  8 03:37:55 2023 - INFO  - End to prepare the test environment!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Thu Jun  8 03:37:57 2023 - INFO  - Start executing testcase!
++ fio-dedupe -o 1 /dev/vdb
++ grep 'Will check </dev/vdb>'
+Will check </dev/vdb>, size <524288000>, using 4 threads
++ CHECK_RESULT 0 0 0 'check disk failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check disk failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -c 1 /dev/vdb
++ grep 'Will check </dev/vdb>'
+Will check </dev/vdb>, size <524288000>, using 4 threads
++ CHECK_RESULT 0 0 0 'check disk failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check disk failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -B 1 /dev/vdb
++ grep 'Will check </dev/vdb>'
+Will check </dev/vdb>, size <524288000>, using 4 threads
++ CHECK_RESULT 0 0 0 'check disk failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check disk failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -p 1 /dev/vdb
++ grep 'Will check </dev/vdb>'
+Will check </dev/vdb>, size <524288000>, using 4 threads
++ CHECK_RESULT 0 0 0 'check disk failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check disk failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio --filename=test_file --direct=1 --rw=randwrite --numjobs=1 --iodepth=16 --ioengine=libaio --bs=4k --group_reporting --name=zhangyi --log_avg_msec=500 --write_bw_log=test-fio --size=1G
++ grep 'Starting 1 process'
+Starting 1 process
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=959940/0, merge=0/0, ticks=1584392/0, in_queue=1584392, util=99.94%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=write -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=243/959786, merge=0/0, ticks=293/1467677, in_queue=1467970, util=99.87%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=randread -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=959258/0, merge=0/0, ticks=1592288/0, in_queue=1592289, util=99.91%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=randwrite -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=214/959800, merge=0/0, ticks=204/1707059, in_queue=1707263, util=99.92%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest --output test.txt
++ test -f ./test_file
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ genfio -d /dev/vdb,/dev/,/dev/ -a -b 4k,128k,1m -r 100 -a -x dellr720-day2/
+Generating dellr720-day2/openeuler-riscv64-4k,128k,1m-all-write,randwrite,read,randread-vdb,dev,dev.fio
+Estimated Time = 4800 seconds : 1 hour 20 minutes
++ test -d dellr720-day2
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Thu Jun  8 03:53:35 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun  8 03:53:36 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start environment cleanup.'
++ message='Start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment cleanup.'
+Thu Jun  8 03:53:37 2023 - INFO  - Start environment cleanup.
++ rm -rf test_file test.txt test-fio_bw.1.log dellr720-day2
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp10orgojf ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp10orgojf
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Thu Jun  8 03:53:55 2023 - INFO  - Finish environment cleanup.

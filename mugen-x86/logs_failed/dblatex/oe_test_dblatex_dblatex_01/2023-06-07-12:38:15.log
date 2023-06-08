@@ -1,0 +1,414 @@
++ source common/common.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start to config params of the case.'
++ message='Start to config params of the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to config params of the case.'
+Wed Jun  7 12:38:29 2023 - INFO  - Start to config params of the case.
++ common_config_params
++ TMP_DIR=./tmp
++ TMP_PATH_O1=/O1
++ TMP_PATH_O2=/O2
+++ mktemp -d -t dblatex.XXXXXXXXXXXX
++ TMP_PATH=/tmp/dblatex.0NNhVYrbRSPr
++ LOG_INFO 'End to config params of the case.'
++ message='End to config params of the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to config params of the case.'
+Wed Jun  7 12:38:30 2023 - INFO  - End to config params of the case.
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Jun  7 12:38:31 2023 - INFO  - Start to prepare the test environment.
++ common_pre
++ DNF_INSTALL 'dblatex opensp dejavu-fonts'
++ pkgs='dblatex opensp dejavu-fonts'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs 'dblatex opensp dejavu-fonts' --node 1 --tempfile ''
+Wed Jun  7 12:38:49 2023 - INFO  - pkgs:(dblatex opensp dejavu-fonts) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ mkdir -p ./tmp /O1 /O2
++ ln -s /usr/bin/python3 /usr/bin/python
+ln: failed to create symbolic link '/usr/bin/python': File exists
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#string.join(self.bib_path +#":".join(self.bib_path +#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#\[os.getenv("BIBINPUTS", "")\], ":")#\[os.getenv("BIBINPUTS", "")\])#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#string.join(self.bst_path +#":".join(self.bst_path +#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#\[os.getenv("BSTINPUTS", "")\], ":")#\[os.getenv("BSTINPUTS", "")\])#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#list.sort()#sorted(list)#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql texlive-base
+++ grep texmf-dist/web2c
++ sed -i 's#openout_any = p#openout_any = a#g' /usr/share/texlive/texmf-dist/web2c/texmf.cnf
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i '271s#self.doc.must_compile = 1#self.doc.must_compile = 0#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Jun  7 12:38:56 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Jun  7 12:38:57 2023 - INFO  - Start to run test.
++ dblatex -h
++ grep Usage
+Usage: dblatex [options] file
++ CHECK_RESULT 0 0 0 'option: -h error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: -h error'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dblatex --help
++ grep Usage
+Usage: dblatex [options] file
++ CHECK_RESULT 0 0 0 'option: --help error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: --help error'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dblatex -v
++ grep -E 'version|[0-9]'
+dblatex version 0.3.11py3
++ CHECK_RESULT 0 0 0 'option: -v error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: -v error'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'version|[0-9]'
++ dblatex --version
+dblatex version 0.3.11py3
++ CHECK_RESULT 0 0 0 'option: --version error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: --version error'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dblatex -o ./tmp/test1.pdf common/test-1/test.xml
++ grep 'successfully built'
++ CHECK_RESULT 1 0 0 'option: -o error'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='option: -o error'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'option: -o error'
++ LOG_ERROR 'option: -o error'
++ message='option: -o error'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'option: -o error'
+Wed Jun  7 12:39:51 2023 - ERROR - option: -o error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dblatex_dblatex_01.sh line 50'
++ message='oe_test_dblatex_dblatex_01.sh line 50'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_dblatex_dblatex_01.sh line 50'
+Wed Jun  7 12:39:53 2023 - ERROR - oe_test_dblatex_dblatex_01.sh line 50
++ return 0
++ dblatex --output=./tmp/test2.pdf common/test-1/test.xml
++ grep 'successfully built'
++ CHECK_RESULT 1 0 0 'option: --output=OUTPUT error'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='option: --output=OUTPUT error'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'option: --output=OUTPUT error'
++ LOG_ERROR 'option: --output=OUTPUT error'
++ message='option: --output=OUTPUT error'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'option: --output=OUTPUT error'
+Wed Jun  7 12:40:29 2023 - ERROR - option: --output=OUTPUT error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dblatex_dblatex_01.sh line 53'
++ message='oe_test_dblatex_dblatex_01.sh line 53'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_dblatex_dblatex_01.sh line 53'
+Wed Jun  7 12:40:31 2023 - ERROR - oe_test_dblatex_dblatex_01.sh line 53
++ return 0
++ dblatex -O /O1 -P set.book.num=all -P use.id.as.filename=1 common/test-2/test.xml
+Build the book set list...
+Build the listings...
+XSLT stylesheets DocBook - LaTeX 2e (0.3.11py3)
+===================================================
+Output all the books from the set
+No template matches genre in book.
+No template matches price in book.
+No template matches publish_date in book.
+No template matches description in book.
+Writing bk101.rtex for book(bk101)
+No template matches genre in book.
+No template matches price in book.
+No template matches publish_date in book.
+No template matches description in book.
+Writing bk102.rtex for book(bk102)
+Build bk101.pdf
+
+kpathsea: Running mktexpk --mfmode / --bdpi 600 --mag 2+144/600 --dpi 1344 phvb8r
+gsftopk: fatal: map file `psfonts.map' not found.
+mktexpk: don't know how to create bitmap font for phvb8r.
+mktexpk: perhaps phvb8r is missing from the map file.
+kpathsea: Appending font creation commands to missfont.log.
+pdflatex failed
+Unexpected error occured
+Error: pdflatex compilation failed
+FIXME: cyclic make
++ test -f /O1/bk101.pdf -a -f /O1/bk102.pdf
++ CHECK_RESULT 1 0 0 'option: -O error'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='option: -O error'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'option: -O error'
++ LOG_ERROR 'option: -O error'
++ message='option: -O error'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'option: -O error'
+Wed Jun  7 12:40:59 2023 - ERROR - option: -O error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dblatex_dblatex_01.sh line 57'
++ message='oe_test_dblatex_dblatex_01.sh line 57'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_dblatex_dblatex_01.sh line 57'
+Wed Jun  7 12:41:00 2023 - ERROR - oe_test_dblatex_dblatex_01.sh line 57
++ return 0
++ dblatex --output-dir=/O2 -P set.book.num=all -P use.id.as.filename=1 common/test-2/test.xml
+Build the book set list...
+Build the listings...
+XSLT stylesheets DocBook - LaTeX 2e (0.3.11py3)
+===================================================
+Output all the books from the set
+No template matches genre in book.
+No template matches price in book.
+No template matches publish_date in book.
+No template matches description in book.
+Writing bk101.rtex for book(bk101)
+No template matches genre in book.
+No template matches price in book.
+No template matches publish_date in book.
+No template matches description in book.
+Writing bk102.rtex for book(bk102)
+Build bk101.pdf
+
+kpathsea: Running mktexpk --mfmode / --bdpi 600 --mag 2+144/600 --dpi 1344 phvb8r
+gsftopk: fatal: map file `psfonts.map' not found.
+mktexpk: don't know how to create bitmap font for phvb8r.
+mktexpk: perhaps phvb8r is missing from the map file.
+kpathsea: Appending font creation commands to missfont.log.
+pdflatex failed
+Unexpected error occured
+Error: pdflatex compilation failed
+FIXME: cyclic make
++ test -f /O2/bk101.pdf -a -f /O2/bk102.pdf
++ CHECK_RESULT 1 0 0 'option: --output-dir error'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='option: --output-dir error'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'option: --output-dir error'
++ LOG_ERROR 'option: --output-dir error'
++ message='option: --output-dir error'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'option: --output-dir error'
+Wed Jun  7 12:41:27 2023 - ERROR - option: --output-dir error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dblatex_dblatex_01.sh line 60'
++ message='oe_test_dblatex_dblatex_01.sh line 60'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_dblatex_dblatex_01.sh line 60'
+Wed Jun  7 12:41:28 2023 - ERROR - oe_test_dblatex_dblatex_01.sh line 60
++ return 0
++ for backend in "pdftex" "dvips" "xetex"
++ dblatex -b pdftex -o ./tmp/test3.pdf common/test-1/test.xml
++ grep 'successfully built'
++ CHECK_RESULT 1 0 0 'option: -b pdftex error'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='option: -b pdftex error'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'option: -b pdftex error'
++ LOG_ERROR 'option: -b pdftex error'
++ message='option: -b pdftex error'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'option: -b pdftex error'
+Wed Jun  7 12:42:02 2023 - ERROR - option: -b pdftex error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dblatex_dblatex_01.sh line 64'
++ message='oe_test_dblatex_dblatex_01.sh line 64'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_dblatex_dblatex_01.sh line 64'
+Wed Jun  7 12:42:03 2023 - ERROR - oe_test_dblatex_dblatex_01.sh line 64
++ return 0
++ dblatex --backend=pdftex -o ./tmp/test4.pdf common/test-1/test.xml
++ grep 'successfully built'
++ CHECK_RESULT 1 0 0 'option: --backend=pdftex error'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='option: --backend=pdftex error'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'option: --backend=pdftex error'
++ LOG_ERROR 'option: --backend=pdftex error'
++ message='option: --backend=pdftex error'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'option: --backend=pdftex error'
+Wed Jun  7 12:42:47 2023 - ERROR - option: --backend=pdftex error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dblatex_dblatex_01.sh line 66'
++ message='oe_test_dblatex_dblatex_01.sh line 66'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_dblatex_dblatex_01.sh line 66'
+Wed Jun  7 12:42:49 2023 - ERROR - oe_test_dblatex_dblatex_01.sh line 66
++ return 0
++ for backend in "pdftex" "dvips" "xetex"
++ dblatex -b dvips -o ./tmp/test3.pdf common/test-1/test.xml
++ grep 'successfully built'
+'test3.pdf' successfully built
++ CHECK_RESULT 0 0 0 'option: -b dvips error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: -b dvips error'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dblatex --backend=dvips -o ./tmp/test4.pdf common/test-1/test.xml
++ grep 'successfully built'
+'test4.pdf' successfully built
++ CHECK_RESULT 0 0 0 'option: --backend=dvips error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: --backend=dvips error'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for backend in "pdftex" "dvips" "xetex"
++ dblatex -b xetex -o ./tmp/test3.pdf common/test-1/test.xml
++ grep 'successfully built'
+'test3.pdf' successfully built
++ CHECK_RESULT 0 0 0 'option: -b xetex error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: -b xetex error'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dblatex --backend=xetex -o ./tmp/test4.pdf common/test-1/test.xml
++ grep 'successfully built'
+'test4.pdf' successfully built
++ CHECK_RESULT 0 0 0 'option: --backend=xetex error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: --backend=xetex error'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Jun  7 12:49:21 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 6
++ test 6 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Jun  7 12:49:22 2023 - ERROR - failed to execute the case.
++ exit 6
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Jun  7 12:49:24 2023 - INFO  - Start to restore the test environment.
++ common_post
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#":".join(self.bib_path +#string.join(self.bib_path +#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#\[os.getenv("BIBINPUTS", "")\])#\[os.getenv("BIBINPUTS", "")\], ":")#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#":".join(self.bst_path +#string.join(self.bst_path +#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#\[os.getenv("BSTINPUTS", "")\])#\[os.getenv("BSTINPUTS", "")\], ":")#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i 's#sorted(list)#list.sort()#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
+++ rpm -ql texlive-base
+++ grep texmf-dist/web2c
++ sed -i 's#openout_any = a#openout_any = p#g' /usr/share/texlive/texmf-dist/web2c/texmf.cnf
+++ rpm -ql dblatex
+++ grep bibtex.py
++ sed -i '271s#self.doc.must_compile = 0#self.doc.must_compile = 1#g' /usr/lib/python3.10/site-packages/dbtexmf/dblatex/grubber/bibtex.py
++ rm -rf ./tmp /O1 /O2
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Jun  7 12:49:30 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Jun  7 12:49:31 2023 - INFO  - End to restore the test environment.

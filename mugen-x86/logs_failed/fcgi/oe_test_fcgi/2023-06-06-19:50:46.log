@@ -1,0 +1,231 @@
++ source ./common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ main
++++ type -t post_test
+++ '[' -n '' ']'
+++ trap POST_TEST_DEFAULT EXIT INT HUP TERM
+++ rpm -qa
+++ grep expect
++++ type -t config_params
+++ '[' -n '' ']'
++++ type -t pre_test
+++ '[' -n '' ']'
++++ type -t run_test
+++ '[' -n '' ']'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start to config params of the case.'
++ message='Start to config params of the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to config params of the case.'
+Tue Jun  6 19:51:06 2023 - INFO  - Start to config params of the case.
+++ GET_FREE_PORT
+++ ip=
+++ start_port=1000
+++ end_port=10000
+++ python3 /root/mugen-riscv/libs/locallibs/free_port.py get --ip '' --start 1000 --end 10000
++ connName1=1290
+++ GET_FREE_PORT
+++ ip=
+++ start_port=1000
+++ end_port=10000
+++ python3 /root/mugen-riscv/libs/locallibs/free_port.py get --ip '' --start 1000 --end 10000
++ connName2=3717
++ appPath=./fcgi2-2.4.2/examples/echo
++ serverNum1=1
++ serverNum2=2
++ cmdPath=./cmdFile
++ LOG_INFO 'End to config params of the case.'
++ message='End to config params of the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to config params of the case.'
+Tue Jun  6 19:51:12 2023 - INFO  - End to config params of the case.
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Jun  6 19:51:13 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'fcgi libtool tar'
++ pkgs='fcgi libtool tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs 'fcgi libtool tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp7iue7yu1
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp7iue7yu1
++ pre_fcgi
++++ dirname oe_test_fcgi.sh
+++ cd .
+++ pwd
++ CRTDIR1=/root/mugen-riscv/testcases/cli-test/fcgi
++ wget https://gitee.com/src-openeuler/fcgi/raw/master/2.4.2.tar.gz
+./common/common_lib.sh: line 26: wget: command not found
++ tar xzvf 2.4.2.tar.gz -C .
+tar (child): 2.4.2.tar.gz: Cannot open: No such file or directory
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
++ cd ./fcgi2-2.4.2
+./common/common_lib.sh: line 29: cd: ./fcgi2-2.4.2: No such file or directory
++ echo '#include "fcgi_stdio.h"
+#include <stdlib.h>
+
+void main(void)
+{
+    int count = 0;
+    while(FCGI_Accept() >= 0)
+        printf("hello, it is a fast cgi application\n"); 
+}'
+./common/common_lib.sh: line 38: examples/echo.c: No such file or directory
++ ./autogen.sh
+./common/common_lib.sh: line 40: ./autogen.sh: No such file or directory
++ ./configure
+./common/common_lib.sh: line 41: ./configure: No such file or directory
++ make
+make: *** No targets specified and no makefile found.  Stop.
++ make install
+make: *** No rule to make target 'install'.  Stop.
++ cd /root/mugen-riscv/testcases/cli-test/fcgi
++ echo '#! /bin/cgi-fcgi -f
+-connect :9006 ./fcgi2-2.4.2/examples/echo 1'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Jun  6 19:53:50 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Jun  6 19:53:52 2023 - INFO  - Start to run test.
++ grep 'hello, it is a fast cgi application'
++ cgi-fcgi -connect 1290 ./fcgi2-2.4.2/examples/echo 1
+./fcgi2-2.4.2/examples/echo is not executable
++ CHECK_RESULT 1 0 0 'cgi-fcgi execute connect command unsuccessfully'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='cgi-fcgi execute connect command unsuccessfully'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'cgi-fcgi execute connect command unsuccessfully'
++ LOG_ERROR 'cgi-fcgi execute connect command unsuccessfully'
++ message='cgi-fcgi execute connect command unsuccessfully'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'cgi-fcgi execute connect command unsuccessfully'
+Tue Jun  6 19:53:54 2023 - ERROR - cgi-fcgi execute connect command unsuccessfully
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fcgi.sh line 43'
++ message='oe_test_fcgi.sh line 43'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_fcgi.sh line 43'
+Tue Jun  6 19:53:56 2023 - ERROR - oe_test_fcgi.sh line 43
++ return 0
++ cgi-fcgi -start -connect 3717 ./fcgi2-2.4.2/examples/echo 2
+./fcgi2-2.4.2/examples/echo is not executable
++ CHECK_RESULT 1 0 0 'cgi-fcgi execute start command unsuccessfully, maybe the address connName is already in use'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='cgi-fcgi execute start command unsuccessfully, maybe the address connName is already in use'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'cgi-fcgi execute start command unsuccessfully, maybe the address connName is already in use'
++ LOG_ERROR 'cgi-fcgi execute start command unsuccessfully, maybe the address connName is already in use'
++ message='cgi-fcgi execute start command unsuccessfully, maybe the address connName is already in use'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'cgi-fcgi execute start command unsuccessfully, maybe the address connName is already in use'
+Tue Jun  6 19:53:57 2023 - ERROR - cgi-fcgi execute start command unsuccessfully, maybe the address connName is already in use
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fcgi.sh line 46'
++ message='oe_test_fcgi.sh line 46'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_fcgi.sh line 46'
+Tue Jun  6 19:53:59 2023 - ERROR - oe_test_fcgi.sh line 46
++ return 0
++ grep 'hello, it is a fast cgi application'
++ cgi-fcgi -bind -connect 3717
+Could not connect to 3717
++ CHECK_RESULT 1 0 0 'cgi-fcgi execute bind command unsuccessfully'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='cgi-fcgi execute bind command unsuccessfully'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'cgi-fcgi execute bind command unsuccessfully'
++ LOG_ERROR 'cgi-fcgi execute bind command unsuccessfully'
++ message='cgi-fcgi execute bind command unsuccessfully'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'cgi-fcgi execute bind command unsuccessfully'
+Tue Jun  6 19:54:01 2023 - ERROR - cgi-fcgi execute bind command unsuccessfully
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fcgi.sh line 49'
++ message='oe_test_fcgi.sh line 49'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_fcgi.sh line 49'
+Tue Jun  6 19:54:03 2023 - ERROR - oe_test_fcgi.sh line 49
++ return 0
++ cgi-fcgi -f ./cmdFile
++ grep 'hello, it is a fast cgi application'
+./fcgi2-2.4.2/examples/echo is not executable
++ CHECK_RESULT 1 0 0 'cgi-fcgi execute cmdFile command unsuccessfully'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='cgi-fcgi execute cmdFile command unsuccessfully'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'cgi-fcgi execute cmdFile command unsuccessfully'
++ LOG_ERROR 'cgi-fcgi execute cmdFile command unsuccessfully'
++ message='cgi-fcgi execute cmdFile command unsuccessfully'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'cgi-fcgi execute cmdFile command unsuccessfully'
+Tue Jun  6 19:54:04 2023 - ERROR - cgi-fcgi execute cmdFile command unsuccessfully
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fcgi.sh line 52'
++ message='oe_test_fcgi.sh line 52'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_fcgi.sh line 52'
+Tue Jun  6 19:54:06 2023 - ERROR - oe_test_fcgi.sh line 52
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Jun  6 19:54:08 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Jun  6 19:54:10 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Jun  6 19:54:12 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp7iue7yu1 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp7iue7yu1
++ '[' 0 -ne 0 ']'
++ rm -rf fcgi2-2.4.2 2.4.2.tar.gz cmdFile
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Jun  6 19:54:48 2023 - INFO  - End to restore the test environment.
