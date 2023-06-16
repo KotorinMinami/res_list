@@ -1,0 +1,226 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Fri Jun 16 04:09:22 2023 - INFO  - Start environmental preparation.
++ SSH_CMD '
+    mkdir /root/.ssh 
+    chmod 700 /root/.ssh 
+    ' 10.198.114.4 'openEuler12#$' root
++ cmd='
+    mkdir /root/.ssh 
+    chmod 700 /root/.ssh 
+    '
++ remoteip=10.198.114.4
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c '
+    mkdir /root/.ssh 
+    chmod 700 /root/.ssh 
+    ' -i 10.198.114.4 -u root -p 'openEuler12#$' -t 300 -o 22
+Fri Jun 16 04:09:22 2023 - WARN  - the remote user uses the default configuration.
+Fri Jun 16 04:09:22 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun 16 04:09:23 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.198.114.4 
+    mkdir /root/.ssh 
+    chmod 700 /root/.ssh 
+    
+
+Authorized users only. All activities may be monitored and reported.
+root@10.198.114.4's password: 
+mkdir: cannot create directory ‘/root/.ssh’: File exists
++ ret=0
++ test 0 -ne 0
++ return 0
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Jun 16 04:09:24 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 16 04:09:24 2023 - INFO  - Start to run test.
++ expect
+spawn ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/.ssh/id_rsa
+Your public key has been saved in /root/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:tR9YDsLVjEf19VRnp3BfRhq23THguVlNaDs0EhQUBng root@localhost.localdomain
+The key's randomart image is:
++---[RSA 3072]----+
+|         .oOX**=&|
+|       ...E.*+*&@|
+|        o.o..*++B|
+|         o *  *  |
+|        S o oo . |
+|           . .   |
+|            .    |
+|                 |
+|                 |
++----[SHA256]-----+
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_SCP /root/.ssh/id_rsa.pub root@10.198.114.4:/root/.ssh/authorized_keys 'openEuler12#$'
++ src=/root/.ssh/id_rsa.pub
++ dest=root@10.198.114.4:/root/.ssh/authorized_keys
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s /root/.ssh/id_rsa.pub -d root@10.198.114.4:/root/.ssh/authorized_keys
+Fri Jun 16 04:09:33 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun 16 04:09:33 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /root/.ssh/id_rsa.pub root@10.198.114.4:/root/.ssh/authorized_keys
+
+Authorized users only. All activities may be monitored and reported.
+root@10.198.114.4's password: 
+id_rsa.pub                                      0%    0     0.0KB/s   --:-- ETAid_rsa.pub                                    100%  580   104.2KB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn ssh root@10.198.114.4
+
+Authorized users only. All activities may be monitored and reported.
+
+Authorized users only. All activities may be monitored and reported.
+Last login: Fri Jun 16 04:08:30 2023 from 10.198.114.2
+
+
+Welcome to 6.1.19-7.0.0.17.oe2303.x86_64
+
+System information as of time: 	Fri Jun 16 04:09:35 AM UTC 2023
+
+System load: 	[0;33;40m0.55[0m
+Processes: 	117
+Memory used: 	3.4%
+Swap used: 	0.0%
+Usage On: 	10%
+IP address: 	10.198.114.4
+IP address: 	10.0.2.15
+Users online: 	1
+
+
+[root@localhost ~]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:11:45:04 brd ff:ff:ff:ff:ff:ff
+    inet 10.198.114.4/24 brd 10.198.114.255 scope global noprefixroute ens4
+       valid_lft forever preferred_lft forever
+    inet6 fe80::3cd1:74b1:e0fe:d729/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+3: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 52:54:00:11:45:05 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute ens5
+       valid_lft 86232sec preferred_lft 86232sec
+    inet6 fec0::6262:e61f:c661:4f29/64 scope site dynamic noprefixroute 
+       valid_lft 86234sec preferred_lft 14234sec
+    inet6 fe80::6fe7:655:8fd9:c4fa/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+[root@localhost ~]# + CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'inet 10.198.114.4' /tmp/log
+    inet 10.198.114.4/24 brd 10.198.114.255 scope global noprefixroute ens4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun 16 04:09:51 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Jun 16 04:09:52 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 16 04:09:52 2023 - INFO  - Start to restore the test environment.
++ SSH_CMD 'rm -rf /root/.ssh/authorized_keys' 10.198.114.4 'openEuler12#$' root
++ cmd='rm -rf /root/.ssh/authorized_keys'
++ remoteip=10.198.114.4
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'rm -rf /root/.ssh/authorized_keys' -i 10.198.114.4 -u root -p 'openEuler12#$' -t 300 -o 22
+Fri Jun 16 04:09:52 2023 - WARN  - the remote user uses the default configuration.
+Fri Jun 16 04:09:53 2023 - WARN  - the remote password uses the default configuration.
+Fri Jun 16 04:09:53 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.198.114.4 rm -rf /root/.ssh/authorized_keys
+
+Authorized users only. All activities may be monitored and reported.
++ ret=0
++ test 0 -ne 0
++ return 0
++ rm -rf /root/.ssh/id_rsa /root/.ssh/id_rsa.pub /tmp/log
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun 16 04:09:54 2023 - INFO  - End to restore the test environment.

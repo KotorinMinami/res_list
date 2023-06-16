@@ -1,0 +1,233 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment!'
++ message='Start to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment!'
+Fri Jun 16 03:41:54 2023 - INFO  - Start to prepare the test environment!
++ DNF_INSTALL 'automake make'
++ pkgs='automake make'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'automake make' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp3h250i4l
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp3h250i4l
++ mkdir /tmp/main
++ LOG_INFO 'End to prepare the test environment!'
++ message='End to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment!'
+Fri Jun 16 03:42:28 2023 - INFO  - End to prepare the test environment!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Fri Jun 16 03:42:28 2023 - INFO  - Start executing testcase!
++ cd /tmp/main
++ echo '#include <stdio.h>
+int main(int argc, char** argv)
+{
+	printf("Hello, Auto Makefile!\n");
+	return 0;
+}'
++ autoscan
++ test -e autoscan.log
++ CHECK_RESULT 0 0 0 'autoscan.log fails to run'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='autoscan.log fails to run'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -e configure.scan
++ CHECK_RESULT 0 0 0 'autoscan.scan fails to run'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='autoscan.scan fails to run'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv configure.scan configure.in
++ sed -i 's/^AC_INIT.*/AC_INIT(main,1.0, pgpxc@163.com)/g' configure.in
++ sed -i 's/^AC_OUTPUT.*/AC_OUTPUT([Makefile])/g' configure.in
++ sed -i '6i AM_INIT_AUTOMAKE(main,1.0)' configure.in
++ aclocal
+aclocal: warning: autoconf input should be named 'configure.ac', not 'configure.in'
++ test -e aclocal.m4
++ CHECK_RESULT 0 0 0 'aclocal.m4 is not generated'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='aclocal.m4 is not generated'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ autoconf
+configure.in:6: warning: AM_INIT_AUTOMAKE: two- and three-arguments forms are deprecated.
+./lib/autoconf/general.m4:2434: AC_DIAGNOSE is expanded from...
+aclocal.m4:429: AM_INIT_AUTOMAKE is expanded from...
+configure.in:6: the top level
+configure.in:21: warning: AC_OUTPUT should be used without arguments.
+configure.in:21: You should run autoupdate.
++ test -e configure
++ CHECK_RESULT 0 0 0 'configure is not generated'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='configure is not generated'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ autoheader
+autoheader: warning: autoconf input should be named 'configure.ac', not 'configure.in'
++ test -e config.h.in
++ CHECK_RESULT 0 0 0 'config.h.in is not generated'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='config.h.in is not generated'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo 'AUTOMAKE_OPTIONS=foreign
+bin_PROGRAMS=main
+main_SOURCES=main.c'
++ automake --add-missing
+automake: warning: autoconf input should be named 'configure.ac', not 'configure.in'
+configure.in:6: warning: AM_INIT_AUTOMAKE: two- and three-arguments forms are deprecated.  For more info, see:
+configure.in:6: https://www.gnu.org/software/automake/manual/automake.html#Modernize-AM_005fINIT_005fAUTOMAKE-invocation
+configure.in:11: installing './compile'
+configure.in:6: installing './install-sh'
+configure.in:6: installing './missing'
+Makefile.am: installing './depcomp'
+automake: warning: autoconf input should be named 'configure.ac', not 'configure.in'
++ CHECK_RESULT 0 0 0 'Failed to add script files using automake --add-missing'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to add script files using automake --add-missing'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ./configure
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a race-free mkdir -p... /usr/bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether the compiler supports GNU C... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to enable C11 features... none needed
+checking whether gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of gcc... gcc3
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
++ CHECK_RESULT 0 0 0 './configure fails to run'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='./configure fails to run'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ make
+make  all-am
+make[1]: Entering directory '/tmp/main'
+gcc -DHAVE_CONFIG_H -I.     -g -O2 -MT main.o -MD -MP -MF .deps/main.Tpo -c -o main.o main.c
+mv -f .deps/main.Tpo .deps/main.Po
+gcc  -g -O2   -o main main.o  
+make[1]: Leaving directory '/tmp/main'
++ CHECK_RESULT 0 0 0 'Makefile test fails'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Makefile test fails'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ./main
++ grep 'Hello, Auto Makefile!'
+Hello, Auto Makefile!
++ CHECK_RESULT 0 0 0 'main fails to run'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='main fails to run'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Jun 16 03:43:09 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start environment cleanup.'
++ message='Start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment cleanup.'
+Fri Jun 16 03:43:09 2023 - INFO  - Start environment cleanup.
++ rm -rf /tmp/main
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp3h250i4l ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp3h250i4l
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Fri Jun 16 03:43:20 2023 - INFO  - Finish environment cleanup.

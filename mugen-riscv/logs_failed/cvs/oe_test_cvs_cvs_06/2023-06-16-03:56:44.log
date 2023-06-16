@@ -1,0 +1,351 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Jun 16 03:56:46 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'cvs tar'
++ pkgs='cvs tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'cvs tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpn2w9939n
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpn2w9939n
++ tar -zxvf common/test.tar.gz
+cvs_test/
+cvs_test/cvs_project/
+cvs_test/cvs_project/1.txt
+init/
+init/cvs_remote_make.sh
+init/cvs_common.sh
+init/cvs_remote_clean.sh
+init/cvs_complex.sh
+init/ext.sh
++ source ./init/cvs_remote_make.sh
+++ cd /CVSROOT/
+./init/cvs_remote_make.sh: line 20: cd: /CVSROOT/: No such file or directory
+++ htpasswd -c -b passwd cvsuser cvs
+./init/cvs_remote_make.sh: line 21: htpasswd: command not found
+++ sed -i 's/$/&:cvsroot/g' passwd
+sed: can't read passwd: No such file or directory
+++ cat passwd
+cat: passwd: No such file or directory
+++ touch /etc/xinetd.d/cvspserver
+++ echo 'service cvspserver
+
+{
+disable = no
+port = 2401
+socket_type = stream
+protocol = tcp
+wait = no
+user = root
+passenv = PATH
+server = /usr/bin/cvs
+env = HOME=
+server_args = -f --allow-root= pserver
+# bind = 127.0.0.1
+}'
+++ systemctl restart xinetd.service
+++ sleep 3
+++ grep cvspserver
+++ grep '.**:cvspserver *:* LISTEN'
+++ netstat -l
+++ firewall-cmd --permanent --add-port=2401/tcp
+++ grep success
+++ firewall-cmd --reload
+++ grep success
+++ firewall-cmd --permanent --query-port=2401/tcp
+++ grep yes
++ source ./init/cvs_complex.sh
+++++ dirname oe_test_cvs_cvs_06.sh
++++ cd .
++++ pwd
+++ run_dir=/root/mugen/testcases/cli-test/cvs
+++++ dirname oe_test_cvs_cvs_06.sh
++++ cd .
++++ pwd
+++ cvs_dir=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++++ dirname oe_test_cvs_cvs_06.sh
++++ cd .
++++ pwd
+++ testd_cvs_dir=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_testd_dir
++++ date '+%a %B %d %H:%M:%S %Y'
+++ DATE='Fri June 16 03:57:25 2023'
+++ export CVSROOT=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ CVSROOT=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ groupadd cvs
+++ mkdir -p /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_testd_dir
+++ useradd -g cvs -G cvs -d /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir cvsroot
+useradd: warning: the home directory /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir already exists.
+useradd: Not copying any file from skel directory into it.
+++ passwd cvsroot
+New password: BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: Changing password for user cvsroot.
+passwd: all authentication tokens updated successfully.
+++ chown -R cvsroot.cvs /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ chmod -R 775 /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ su cvsroot
+cvs init: cannot open /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT/config: Permission denied
+cvs [init aborted]: cannot make directory /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir: Permission denied
+cvs [import aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+++ cvs -d /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir checkout myProject
+cvs [checkout aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: No such file or directory
+++ chown -R cvsroot.cvs myProject
+chown: cannot access 'myProject': No such file or directory
+++ chmod -R 775 myProject
+chmod: cannot access 'myProject': No such file or directory
+++ cd myProject
+./init/cvs_complex.sh: line 37: cd: myProject: No such file or directory
+++ chown -R cvsroot.cvs tmp.txt
+++ su cvsroot
+cvs [commit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+bash: line 3: 1.txt: Permission denied
+mkdir: cannot create directory ‘dir’: Permission denied
+touch: cannot touch 'dir/2.txt': No such file or directory
+bash: line 4: dir/2.txt: No such file or directory
+cvs [add aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [add aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [commit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Jun 16 03:57:28 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 16 03:57:29 2023 - INFO  - Start to run test.
++ su cvsroot -c 'echo y | cvs release -d dir && ! test -d dir'
+cvs [release aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs release failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs release failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs release failed'
++ LOG_ERROR 'test cvs release failed'
++ message='test cvs release failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs release failed'
+Fri Jun 16 03:57:30 2023 - ERROR - test cvs release failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_06.sh line 34'
++ message='oe_test_cvs_cvs_06.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_06.sh line 34'
+Fri Jun 16 03:57:30 2023 - ERROR - oe_test_cvs_cvs_06.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'yum install cvs -y;export CVSROOT=:pserver:cvsroot@:2401/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir;echo cvs | cvs login;cvs -z 1 log; unset CVSROOT' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'yum install cvs -y;export CVSROOT=:pserver:cvsroot@:2401/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir;echo cvs | cvs login;cvs -z 1 log; unset CVSROOT' --node 2
+Fri Jun 16 03:57:33 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 0 'test cvs login failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs login failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs login failed'
++ LOG_ERROR 'test cvs login failed'
++ message='test cvs login failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs login failed'
+Fri Jun 16 03:57:34 2023 - ERROR - test cvs login failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_06.sh line 36'
++ message='oe_test_cvs_cvs_06.sh line 36'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_06.sh line 36'
+Fri Jun 16 03:57:34 2023 - ERROR - oe_test_cvs_cvs_06.sh line 36
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'export CVSROOT=:pserver:cvsroot@:2401/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir;echo cvs | cvs login;cvs -z 1 log; unset CVSROOT' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'export CVSROOT=:pserver:cvsroot@:2401/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir;echo cvs | cvs login;cvs -z 1 log; unset CVSROOT' --node 2
+Fri Jun 16 03:57:37 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 0 'test cvs -z failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs -z failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs -z failed'
++ LOG_ERROR 'test cvs -z failed'
++ message='test cvs -z failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs -z failed'
+Fri Jun 16 03:57:38 2023 - ERROR - test cvs -z failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_06.sh line 38'
++ message='oe_test_cvs_cvs_06.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_06.sh line 38'
+Fri Jun 16 03:57:39 2023 - ERROR - oe_test_cvs_cvs_06.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'export CVSROOT=:pserver:cvsroot@:2401/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir;echo cvs | cvs login;cvs logout;unset CVSROOT' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'export CVSROOT=:pserver:cvsroot@:2401/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir;echo cvs | cvs login;cvs logout;unset CVSROOT' --node 2
+Fri Jun 16 03:57:41 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 0 'test cvs logout failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs logout failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs logout failed'
++ LOG_ERROR 'test cvs logout failed'
++ message='test cvs logout failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs logout failed'
+Fri Jun 16 03:57:42 2023 - ERROR - test cvs logout failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_06.sh line 40'
++ message='oe_test_cvs_cvs_06.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_06.sh line 40'
+Fri Jun 16 03:57:43 2023 - ERROR - oe_test_cvs_cvs_06.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'export CVSROOT=:pserver:cvsroot@:2401/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir;echo cvs | cvs login;unset CVSROOT' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'export CVSROOT=:pserver:cvsroot@:2401/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir;echo cvs | cvs login;unset CVSROOT' --node 2
+Fri Jun 16 03:57:45 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 0 'test cvs pserver failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs pserver failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs pserver failed'
++ LOG_ERROR 'test cvs pserver failed'
++ message='test cvs pserver failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs pserver failed'
+Fri Jun 16 03:57:46 2023 - ERROR - test cvs pserver failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_06.sh line 42'
++ message='oe_test_cvs_cvs_06.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_06.sh line 42'
+Fri Jun 16 03:57:47 2023 - ERROR - oe_test_cvs_cvs_06.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ SSH_SCP /root/mugen/testcases/cli-test/cvs/init/ext.sh root@:/root '=*W5FTY3em'
++ src=/root/mugen/testcases/cli-test/cvs/init/ext.sh
++ dest=root@:/root
++ remotepasswd='=*W5FTY3em'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p '=*W5FTY3em' -o 22 -s /root/mugen/testcases/cli-test/cvs/init/ext.sh -d root@:/root
+Fri Jun 16 03:57:48 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /root/mugen/testcases/cli-test/cvs/init/ext.sh root@:/root
+ssh: Could not resolve hostname : Name or service not known
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Fri Jun 16 03:57:49 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
+++ expect ext.sh
+++ grep 'U myProject/1.txt'
++ P_SSH_CMD --cmd '' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd '' --node 2
+Fri Jun 16 03:57:52 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ P_SSH_CMD --cmd 'rm -rf ext.sh myProject;yum remove cvd -y' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'rm -rf ext.sh myProject;yum remove cvd -y' --node 2
+Fri Jun 16 03:57:55 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 0 'test cvs server failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs server failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs server failed'
++ LOG_ERROR 'test cvs server failed'
++ message='test cvs server failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs server failed'
+Fri Jun 16 03:57:55 2023 - ERROR - test cvs server failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_06.sh line 46'
++ message='oe_test_cvs_cvs_06.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_06.sh line 46'
+Fri Jun 16 03:57:56 2023 - ERROR - oe_test_cvs_cvs_06.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun 16 03:57:57 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 6
++ test 6 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun 16 03:57:58 2023 - ERROR - failed to execute the case.
++ exit 6
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 16 03:57:58 2023 - INFO  - Start to restore the test environment.
++ source ./init/cvs_remote_clean.sh
+++ systemctl stop xinetd.service
+++ netstat -l
+++ grep cvspserver
+++ firewall-cmd --permanent --remove-port=2401/tcp
+++ grep success
+++ firewall-cmd --reload
+++ grep success
+++ firewall-cmd --permanent --query-port=2401/tcp
+++ grep no
+./init/cvs_remote_clean.sh: line 23: firewall-cmd: command not found
+++ rm -rf /etc/xinetd.d/cvspserver
++ unset CVSROOT cvs_dir testd_cvs_dir
++ userdel -rf cvsroot
++ groupdel cvs
++ pushd /root/mugen/testcases/cli-test/cvs
+~/mugen/testcases/cli-test/cvs ~/mugen/testcases/cli-test/cvs
++ rm -rf myProject/ cvs_test/ init/ passwd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpn2w9939n ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpn2w9939n
++ '[' 0 -ne 0 ']'
++ popd
+~/mugen/testcases/cli-test/cvs
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun 16 03:58:15 2023 - INFO  - End to restore the test environment.

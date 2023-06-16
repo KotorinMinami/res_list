@@ -1,0 +1,329 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Jun 16 03:52:47 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'cvs tar'
++ pkgs='cvs tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'cvs tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp97j3l433
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp97j3l433
++ tar -zxvf common/test.tar.gz
+cvs_test/
+cvs_test/cvs_project/
+cvs_test/cvs_project/1.txt
+init/
+init/cvs_remote_make.sh
+init/cvs_common.sh
+init/cvs_remote_clean.sh
+init/cvs_complex.sh
+init/ext.sh
++ source ./init/cvs_complex.sh
+++++ dirname oe_test_cvs_cvs_03.sh
++++ cd .
++++ pwd
+++ run_dir=/root/mugen/testcases/cli-test/cvs
+++++ dirname oe_test_cvs_cvs_03.sh
++++ cd .
++++ pwd
+++ cvs_dir=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++++ dirname oe_test_cvs_cvs_03.sh
++++ cd .
++++ pwd
+++ testd_cvs_dir=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_testd_dir
++++ date '+%a %B %d %H:%M:%S %Y'
+++ DATE='Fri June 16 03:53:22 2023'
+++ export CVSROOT=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ CVSROOT=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ groupadd cvs
+++ mkdir -p /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_testd_dir
+++ useradd -g cvs -G cvs -d /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir cvsroot
+useradd: warning: the home directory /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir already exists.
+useradd: Not copying any file from skel directory into it.
+++ passwd cvsroot
+New password: BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: Changing password for user cvsroot.
+passwd: all authentication tokens updated successfully.
+++ chown -R cvsroot.cvs /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ chmod -R 775 /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ su cvsroot
+cvs init: cannot open /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT/config: Permission denied
+cvs [init aborted]: cannot make directory /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir: Permission denied
+cvs [import aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+++ cvs -d /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir checkout myProject
+cvs [checkout aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: No such file or directory
+++ chown -R cvsroot.cvs myProject
+chown: cannot access 'myProject': No such file or directory
+++ chmod -R 775 myProject
+chmod: cannot access 'myProject': No such file or directory
+++ cd myProject
+./init/cvs_complex.sh: line 37: cd: myProject: No such file or directory
+++ chown -R cvsroot.cvs tmp.txt
+chown: cannot access 'tmp.txt': No such file or directory
+++ su cvsroot
+cvs [commit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+bash: line 2: tmp.txt: Permission denied
+bash: line 3: 1.txt: Permission denied
+mkdir: cannot create directory ‘dir’: Permission denied
+touch: cannot touch 'dir/2.txt': No such file or directory
+bash: line 4: dir/2.txt: No such file or directory
+cvs [add aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [add aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [commit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Jun 16 03:53:25 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 16 03:53:26 2023 - INFO  - Start to run test.
++ echo abc
++ su cvsroot -c 'cvs tag rel-1-0 | grep '\''T tmp.txt'\'''
+cvs [tag aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs tag failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs tag failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs tag failed'
++ LOG_ERROR 'test cvs tag failed'
++ message='test cvs tag failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs tag failed'
+Fri Jun 16 03:53:27 2023 - ERROR - test cvs tag failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_03.sh line 33'
++ message='oe_test_cvs_cvs_03.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_03.sh line 33'
+Fri Jun 16 03:53:28 2023 - ERROR - oe_test_cvs_cvs_03.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs export -r rel-1-0 myProject | grep '\''U myProject/tmp.txt'\'''
+cvs [export aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs export failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs export failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs export failed'
++ LOG_ERROR 'test cvs export failed'
++ message='test cvs export failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs export failed'
+Fri Jun 16 03:53:28 2023 - ERROR - test cvs export failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_03.sh line 35'
++ message='oe_test_cvs_cvs_03.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_03.sh line 35'
+Fri Jun 16 03:53:29 2023 - ERROR - oe_test_cvs_cvs_03.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs checkout myProject;cvs watch on tmp.txt;cvs add tmp.txt;cvs commit -m '\''commit change'\'';ls -la tmp.txt | grep '\''\-r--r--r--.*tmp.txt'\'''
+cvs [checkout aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [watch aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [add aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [commit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs watch failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs watch failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs watch failed'
++ LOG_ERROR 'test cvs watch failed'
++ message='test cvs watch failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs watch failed'
+Fri Jun 16 03:53:30 2023 - ERROR - test cvs watch failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_03.sh line 37'
++ message='oe_test_cvs_cvs_03.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_03.sh line 37'
+Fri Jun 16 03:53:31 2023 - ERROR - oe_test_cvs_cvs_03.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs edit -a edit tmp.txt 1.txt;cvs watchers tmp.txt | grep '\''tmp.txt	cvsroot	tedit'\'''
+cvs [edit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [watchers aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs edit failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs edit failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs edit failed'
++ LOG_ERROR 'test cvs edit failed'
++ message='test cvs edit failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs edit failed'
+Fri Jun 16 03:53:32 2023 - ERROR - test cvs edit failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_03.sh line 39'
++ message='oe_test_cvs_cvs_03.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_03.sh line 39'
+Fri Jun 16 03:53:33 2023 - ERROR - oe_test_cvs_cvs_03.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs watchers tmp.txt | grep '\''tmp.txt	cvsroot	tedit'\'''
+cvs [watchers aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs watchers failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs watchers failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs watchers failed'
++ LOG_ERROR 'test cvs watchers failed'
++ message='test cvs watchers failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs watchers failed'
+Fri Jun 16 03:53:34 2023 - ERROR - test cvs watchers failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_03.sh line 41'
++ message='oe_test_cvs_cvs_03.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_03.sh line 41'
+Fri Jun 16 03:53:35 2023 - ERROR - oe_test_cvs_cvs_03.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs editors tmp.txt | grep '\''tmp.txt	cvsroot'\'''
+cvs [editors aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs editors failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs editors failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs editors failed'
++ LOG_ERROR 'test cvs editors failed'
++ message='test cvs editors failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs editors failed'
+Fri Jun 16 03:53:36 2023 - ERROR - test cvs editors failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_03.sh line 43'
++ message='oe_test_cvs_cvs_03.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_03.sh line 43'
+Fri Jun 16 03:53:36 2023 - ERROR - oe_test_cvs_cvs_03.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs unedit tmp.txt;cvs watchers tmp.txt 1.txt | grep '\''1.txt	cvsroot	tedit'\'''
+cvs [unedit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [watchers aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs unedit failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs unedit failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs unedit failed'
++ LOG_ERROR 'test cvs unedit failed'
++ message='test cvs unedit failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs unedit failed'
+Fri Jun 16 03:53:37 2023 - ERROR - test cvs unedit failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_03.sh line 45'
++ message='oe_test_cvs_cvs_03.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_03.sh line 45'
+Fri Jun 16 03:53:38 2023 - ERROR - oe_test_cvs_cvs_03.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs history tmp.txt 2>&1 | grep '\''O .* +0000 cvsroot myProject =myProject=.*'\'''
++ CHECK_RESULT 1 0 0 'test cvs history failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs history failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs history failed'
++ LOG_ERROR 'test cvs history failed'
++ message='test cvs history failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs history failed'
+Fri Jun 16 03:53:39 2023 - ERROR - test cvs history failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_03.sh line 47'
++ message='oe_test_cvs_cvs_03.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_03.sh line 47'
+Fri Jun 16 03:53:40 2023 - ERROR - oe_test_cvs_cvs_03.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun 16 03:53:41 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 8
++ test 8 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun 16 03:53:41 2023 - ERROR - failed to execute the case.
++ exit 8
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 16 03:53:42 2023 - INFO  - Start to restore the test environment.
++ unset CVSROOT cvs_dir testd_cvs_dir
++ userdel -rf cvsroot
++ groupdel cvs
++ pushd /root/mugen/testcases/cli-test/cvs
+~/mugen/testcases/cli-test/cvs ~/mugen/testcases/cli-test/cvs
++ rm -rf myProject cvs_test/ init/ passwd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp97j3l433 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp97j3l433
++ '[' 0 -ne 0 ']'
++ popd
+~/mugen/testcases/cli-test/cvs
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun 16 03:53:58 2023 - INFO  - End to restore the test environment.

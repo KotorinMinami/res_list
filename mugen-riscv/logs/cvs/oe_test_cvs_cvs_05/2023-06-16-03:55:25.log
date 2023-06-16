@@ -1,0 +1,293 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Jun 16 03:55:28 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'cvs tar'
++ pkgs='cvs tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'cvs tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp9vnfx712
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp9vnfx712
++ tar -zxvf common/test.tar.gz
+cvs_test/
+cvs_test/cvs_project/
+cvs_test/cvs_project/1.txt
+init/
+init/cvs_remote_make.sh
+init/cvs_common.sh
+init/cvs_remote_clean.sh
+init/cvs_complex.sh
+init/ext.sh
++ source ./init/cvs_complex.sh
+++++ dirname oe_test_cvs_cvs_05.sh
++++ cd .
++++ pwd
+++ run_dir=/root/mugen/testcases/cli-test/cvs
+++++ dirname oe_test_cvs_cvs_05.sh
++++ cd .
++++ pwd
+++ cvs_dir=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++++ dirname oe_test_cvs_cvs_05.sh
++++ cd .
++++ pwd
+++ testd_cvs_dir=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_testd_dir
++++ date '+%a %B %d %H:%M:%S %Y'
+++ DATE='Fri June 16 03:56:03 2023'
+++ export CVSROOT=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ CVSROOT=/root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ groupadd cvs
+++ mkdir -p /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_testd_dir
+++ useradd -g cvs -G cvs -d /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir cvsroot
+useradd: warning: the home directory /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir already exists.
+useradd: Not copying any file from skel directory into it.
+++ passwd cvsroot
+New password: BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: Changing password for user cvsroot.
+passwd: all authentication tokens updated successfully.
+++ chown -R cvsroot.cvs /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ chmod -R 775 /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir
+++ su cvsroot
+cvs init: cannot open /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT/config: Permission denied
+cvs [init aborted]: cannot make directory /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir: Permission denied
+cvs [import aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+++ cvs -d /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir checkout myProject
+cvs [checkout aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: No such file or directory
+++ chown -R cvsroot.cvs myProject
+chown: cannot access 'myProject': No such file or directory
+++ chmod -R 775 myProject
+chmod: cannot access 'myProject': No such file or directory
+++ cd myProject
+./init/cvs_complex.sh: line 37: cd: myProject: No such file or directory
+++ chown -R cvsroot.cvs tmp.txt
+++ su cvsroot
+cvs [commit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+bash: line 3: 1.txt: Permission denied
+mkdir: cannot create directory ‘dir’: Permission denied
+touch: cannot touch 'dir/2.txt': No such file or directory
+bash: line 4: dir/2.txt: No such file or directory
+cvs [add aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [add aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
+cvs [commit aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Jun 16 03:56:06 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 16 03:56:07 2023 - INFO  - Start to run test.
++ su cvsroot -c 'cvs rtag rel-1-0 myProject 2>&1 | grep '\''cvs rtag: Tagging myProject'\'''
++ CHECK_RESULT 1 0 0 'test cvs rtag failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs rtag failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs rtag failed'
++ LOG_ERROR 'test cvs rtag failed'
++ message='test cvs rtag failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs rtag failed'
+Fri Jun 16 03:56:08 2023 - ERROR - test cvs rtag failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_05.sh line 32'
++ message='oe_test_cvs_cvs_05.sh line 32'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_05.sh line 32'
+Fri Jun 16 03:56:09 2023 - ERROR - oe_test_cvs_cvs_05.sh line 32
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs -f rtag rel-1-0 myProject 2>&1 | grep '\''cvs rtag: Tagging myProject'\'''
++ CHECK_RESULT 1 0 0 'test cvs -f failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs -f failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs -f failed'
++ LOG_ERROR 'test cvs -f failed'
++ message='test cvs -f failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs -f failed'
+Fri Jun 16 03:56:10 2023 - ERROR - test cvs -f failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_05.sh line 34'
++ message='oe_test_cvs_cvs_05.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_05.sh line 34'
+Fri Jun 16 03:56:10 2023 - ERROR - oe_test_cvs_cvs_05.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs -x rtag rel-1-0 myProject 2>&1 | grep '\''cvs rtag: Tagging myProject'\'''
++ CHECK_RESULT 1 0 0 'test cvs -x failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs -x failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs -x failed'
++ LOG_ERROR 'test cvs -x failed'
++ message='test cvs -x failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs -x failed'
+Fri Jun 16 03:56:11 2023 - ERROR - test cvs -x failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_05.sh line 36'
++ message='oe_test_cvs_cvs_05.sh line 36'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_05.sh line 36'
+Fri Jun 16 03:56:12 2023 - ERROR - oe_test_cvs_cvs_05.sh line 36
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs -a rtag rel-1-0 myProject 2>&1 | grep '\''cvs rtag: Tagging myProject'\'''
++ CHECK_RESULT 1 0 0 'test cvs -a failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs -a failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs -a failed'
++ LOG_ERROR 'test cvs -a failed'
++ message='test cvs -a failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs -a failed'
+Fri Jun 16 03:56:13 2023 - ERROR - test cvs -a failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_05.sh line 38'
++ message='oe_test_cvs_cvs_05.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_05.sh line 38'
+Fri Jun 16 03:56:13 2023 - ERROR - oe_test_cvs_cvs_05.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs remove tmp.txt 2>&1 | grep '\''cvs remove: 1 file exists; remove it first'\'''
++ CHECK_RESULT 1 0 0 'test cvs remove failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs remove failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs remove failed'
++ LOG_ERROR 'test cvs remove failed'
++ message='test cvs remove failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs remove failed'
+Fri Jun 16 03:56:15 2023 - ERROR - test cvs remove failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_05.sh line 40'
++ message='oe_test_cvs_cvs_05.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_05.sh line 40'
+Fri Jun 16 03:56:15 2023 - ERROR - oe_test_cvs_cvs_05.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs update tmp.txt;cvs status tmp.txt 2>&1 | grep '\''Sticky Tag:.*(none)'\'''
+cvs [update aborted]: /root/mugen/testcases/cli-test/cvs/cvs_test/cvs_init_dir/CVSROOT: Permission denied
++ CHECK_RESULT 1 0 0 'test cvs update failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs update failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs update failed'
++ LOG_ERROR 'test cvs update failed'
++ message='test cvs update failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs update failed'
+Fri Jun 16 03:56:16 2023 - ERROR - test cvs update failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_05.sh line 42'
++ message='oe_test_cvs_cvs_05.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_05.sh line 42'
+Fri Jun 16 03:56:17 2023 - ERROR - oe_test_cvs_cvs_05.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ su cvsroot -c 'cvs status tmp.txt 2>&1 | grep '\''Sticky Tag:.*(none)'\'''
++ CHECK_RESULT 1 0 0 'test cvs status failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test cvs status failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test cvs status failed'
++ LOG_ERROR 'test cvs status failed'
++ message='test cvs status failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test cvs status failed'
+Fri Jun 16 03:56:18 2023 - ERROR - test cvs status failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_cvs_cvs_05.sh line 44'
++ message='oe_test_cvs_cvs_05.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_cvs_cvs_05.sh line 44'
+Fri Jun 16 03:56:19 2023 - ERROR - oe_test_cvs_cvs_05.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun 16 03:56:19 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun 16 03:56:20 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 16 03:56:21 2023 - INFO  - Start to restore the test environment.
++ unset CVSROOT cvs_dir testd_cvs_dir
++ userdel -rf cvsroot
++ groupdel cvs
++ pushd /root/mugen/testcases/cli-test/cvs
+~/mugen/testcases/cli-test/cvs ~/mugen/testcases/cli-test/cvs
++ rm -rf myProject/ cvs_test/ init/ passwd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp9vnfx712 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp9vnfx712
++ '[' 0 -ne 0 ']'
++ popd
+~/mugen/testcases/cli-test/cvs
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun 16 03:56:37 2023 - INFO  - End to restore the test environment.
