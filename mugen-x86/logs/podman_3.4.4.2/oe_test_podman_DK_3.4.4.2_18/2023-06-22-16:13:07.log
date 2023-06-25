@@ -1,0 +1,265 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 16:13:09 2023 - INFO  - Start to prepare the test environment.
++ echo '"auth":{}'
+oe_test_podman_DK_3.4.4.2_18.sh: line 23: authdir/yauths.json: No such file or directory
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
+Thu Jun 22 16:13:14 2023 - INFO  - pkgs:(podman podman-docker) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ docker pull registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ docker run --name postgres -p 256:456 registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T16:13:48Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 16:13:48 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 16:13:49 2023 - INFO  - Start to run test.
++ docker ps --all
++ grep 0.0.0.0:256
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+2511754e9740  registry.access.redhat.com/ubi8-minimal:latest  /bin/bash   3 seconds ago  Exited (0) 2 seconds ago  0.0.0.0:256->456/tcp  postgres
++ CHECK_RESULT 0 0 0 'check docker ps --all | grep "0.0.0.0:256" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker ps --all | grep "0.0.0.0:256" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker port --latest
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 0 0 0 'check docker port --latest failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker port --latest failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn docker login a74l47xi.mirror.aliyuncs.com
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Username: umohnani
+Password: 
++ grep -i 'Login Succeeded' testlog
++ CHECK_RESULT 1 0 0 'check grep -i "Login Succeeded" testlog failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check grep -i "Login Succeeded" testlog failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check grep -i "Login Succeeded" testlog failed'
++ LOG_ERROR 'check grep -i "Login Succeeded" testlog failed'
++ message='check grep -i "Login Succeeded" testlog failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check grep -i "Login Succeeded" testlog failed'
+Thu Jun 22 16:14:01 2023 - ERROR - check grep -i "Login Succeeded" testlog failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_18.sh line 47'
++ message='oe_test_podman_DK_3.4.4.2_18.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_18.sh line 47'
+Thu Jun 22 16:14:02 2023 - ERROR - oe_test_podman_DK_3.4.4.2_18.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ rm -rf testlog
++ docker logout a74l47xi.mirror.aliyuncs.com
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Error: Not logged into a74l47xi.mirror.aliyuncs.com
+
++ CHECK_RESULT 125 0 0 'check docker logout a74l47xi.mirror.aliyuncs.com failed'
++ actual_result=125
++ expect_result=0
++ mode=0
++ error_log='check docker logout a74l47xi.mirror.aliyuncs.com failed'
++ exit_mode=0
++ '[' -z 125 ']'
++ '[' 0 -eq 0 ']'
++ test 125x '!=' 0x
++ test -n 'check docker logout a74l47xi.mirror.aliyuncs.com failed'
++ LOG_ERROR 'check docker logout a74l47xi.mirror.aliyuncs.com failed'
++ message='check docker logout a74l47xi.mirror.aliyuncs.com failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check docker logout a74l47xi.mirror.aliyuncs.com failed'
+Thu Jun 22 16:14:03 2023 - ERROR - check docker logout a74l47xi.mirror.aliyuncs.com failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_18.sh line 50'
++ message='oe_test_podman_DK_3.4.4.2_18.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_18.sh line 50'
+Thu Jun 22 16:14:03 2023 - ERROR - oe_test_podman_DK_3.4.4.2_18.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+spawn docker login --authfile authdir/myauths.json a74l47xi.mirror.aliyuncs.com
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Username: umohnani
+Password: 
+Login Succeeded!
++ grep -i 'Login Succeeded' testlog
+Login Succeeded!
++ CHECK_RESULT 0 0 0 'check grep -i "Login Succeeded" testlog failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check grep -i "Login Succeeded" testlog failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf testlog
++ docker logout --authfile authdir/myauths.json a74l47xi.mirror.aliyuncs.com
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Removed login credentials for a74l47xi.mirror.aliyuncs.com
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn docker login -u umohnani a74l47xi.mirror.aliyuncs.com
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Password: 
++ grep -i Username testlog
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ rm -rf testlog
++ expect
+spawn docker login --tls-verify=false a74l47xi.mirror.aliyuncs.com
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Username: umohnani
+Password: 
++ grep -i umohnani testlog
+Username: umohnani
++ CHECK_RESULT 0 0 0 'check grep -i "umohnani" testlog failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check grep -i "umohnani" testlog failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker logout --all
++ grep Remove
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Removed login credentials for all registries
++ CHECK_RESULT 0 0 0 'check docker logout --all | grep "Remove" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker logout --all | grep "Remove" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 16:14:26 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 16:14:27 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 16:14:27 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+2511754e974059cc3998ac1211977391d4f62601fd6543500d379b04ae444c62
++ podman rm --all
+2511754e974059cc3998ac1211977391d4f62601fd6543500d379b04ae444c62
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Jun 22 16:14:29 2023 - WARN  - no thing to do.
++ return 0
+++ ls
+++ grep -vE .sh
++ rm -rf authdir testlog
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 16:14:30 2023 - INFO  - End to restore the test environment.

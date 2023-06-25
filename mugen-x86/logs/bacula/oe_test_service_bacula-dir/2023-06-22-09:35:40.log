@@ -1,0 +1,158 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 09:35:42 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'bacula-client mysql5-server'
++ pkgs='bacula-client mysql5-server'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'bacula-client mysql5-server' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:00:09 ago on Thu 22 Jun 2023 09:35:49 AM UTC.
+No match for argument: mysql5-server
+Error: Unable to find a match: mysql5-server'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:00:09 ago on Thu 22 Jun 2023 09:35:49 AM UTC.
+No match for argument: mysql5-server
+Error: Unable to find a match: mysql5-server'
++ systemctl restart mysqld
+Failed to restart mysqld.service: Unit mysqld.service not found.
++ /usr/libexec/bacula/create_mysql_database
+oe_test_service_bacula-dir.sh: line 26: /usr/libexec/bacula/create_mysql_database: No such file or directory
++ /usr/libexec/bacula/make_mysql_tables
+oe_test_service_bacula-dir.sh: line 27: /usr/libexec/bacula/make_mysql_tables: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-mysql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ sed -i 's\dbuser = "bacula"\dbuser = "root"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 09:35:59 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 09:36:00 2023 - INFO  - Start to run test.
++ test_execution bacula-dir.service
+oe_test_service_bacula-dir.sh: line 35: test_execution: command not found
++ systemctl start bacula-dir.service
+Failed to start bacula-dir.service: Unit bacula-dir.service not found.
++ systemctl reload bacula-dir.service
++ grep 'Job type reload is not applicable'
++ CHECK_RESULT 1 0 0 'Job type reload is not applicable for unit bacula-dir.service'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit bacula-dir.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Job type reload is not applicable for unit bacula-dir.service'
++ LOG_ERROR 'Job type reload is not applicable for unit bacula-dir.service'
++ message='Job type reload is not applicable for unit bacula-dir.service'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Job type reload is not applicable for unit bacula-dir.service'
+Thu Jun 22 09:36:00 2023 - ERROR - Job type reload is not applicable for unit bacula-dir.service
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_bacula-dir.sh line 38'
++ message='oe_test_service_bacula-dir.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_bacula-dir.sh line 38'
+Thu Jun 22 09:36:00 2023 - ERROR - oe_test_service_bacula-dir.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl status bacula-dir.service
++ grep 'Active: active'
+Unit bacula-dir.service could not be found.
++ CHECK_RESULT 1 0 0 'bacula-dir.service reload causes the service status to change'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='bacula-dir.service reload causes the service status to change'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'bacula-dir.service reload causes the service status to change'
++ LOG_ERROR 'bacula-dir.service reload causes the service status to change'
++ message='bacula-dir.service reload causes the service status to change'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'bacula-dir.service reload causes the service status to change'
+Thu Jun 22 09:36:01 2023 - ERROR - bacula-dir.service reload causes the service status to change
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_bacula-dir.sh line 40'
++ message='oe_test_service_bacula-dir.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_bacula-dir.sh line 40'
+Thu Jun 22 09:36:01 2023 - ERROR - oe_test_service_bacula-dir.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 09:36:01 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 09:36:02 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 09:36:02 2023 - INFO  - Start to restore the test environment.
++ systemctl stop bacula-dir.service
+Failed to stop bacula-dir.service: Unit bacula-dir.service not loaded.
++ sed -i 's\dbuser = "root"\dbuser = "bacula"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-postgresql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ /usr/libexec/bacula/drop_mysql_tables
+oe_test_service_bacula-dir.sh: line 49: /usr/libexec/bacula/drop_mysql_tables: No such file or directory
++ /usr/libexec/bacula/drop_mysql_database
+oe_test_service_bacula-dir.sh: line 50: /usr/libexec/bacula/drop_mysql_database: No such file or directory
++ systemctl stop mysqld
+Failed to stop mysqld.service: Unit mysqld.service not loaded.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:00:09 ago on Thu 22 Jun 2023 09:35:49 AM UTC.
+No match for argument: mysql5-server
+Error: Unable to find a match: mysql5-server ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:00:09 ago on Thu 22 Jun 2023 09:35:49 AM UTC.
+No match for argument: mysql5-server
+Error: Unable to find a match: mysql5-server'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 173, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 144, in rpm_remove
+    with open(tmpfile, "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Last metadata expiration check: 0:00:09 ago on Thu 22 Jun 2023 09:35:49 AM UTC.\nNo match for argument: mysql5-server\nError: Unable to find a match: mysql5-server'
++ '[' 0 -ne 0 ']'
++ rm -rf '/var/lib/mysql/*'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 09:36:04 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,282 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 16:50:37 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
+Thu Jun 22 16:50:41 2023 - INFO  - pkgs:(podman podman-docker) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ touch /tmp/host
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 16:50:42 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 16:50:42 2023 - INFO  - Start to run test.
+++ docker create --log-driver=k8s-file alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying config sha256:c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Writing manifest to image destination
+Storing signatures
++ ID=7d42c55e9bac445f05e1f2daba979cd46af26320e6d29fe1ace1709c947bfeb2
++ docker inspect 7d42c55e9bac445f05e1f2daba979cd46af26320e6d29fe1ace1709c947bfeb2
++ grep -i driver
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+        "Driver": "overlay",
+        "GraphDriver": {
+                    "DriverOpts": null,
+            "--storage-driver",
+                "--log-driver=k8s-file",
+            "VolumeDriver": "",
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep -i driver failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep -i driver failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --log-opt max-size=10mb alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=a17ed7acae6bcd01169dc8c80188d07d924d54a201ba15584c7d2ef3d2206f68
++ docker inspect a17ed7acae6bcd01169dc8c80188d07d924d54a201ba15584c7d2ef3d2206f68
++ grep -i log
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+                "Log": null
+            "--log-level",
+                "--log-opt",
+            "LogConfig": {
+                "Path": "/var/lib/containers/storage/overlay-containers/a17ed7acae6bcd01169dc8c80188d07d924d54a201ba15584c7d2ef3d2206f68/userdata/ctr.log",
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep -i log failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep -i log failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --memory 5MB alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=b343e66c4d89fcee508618a0185244edfbb5fea4c27eb7ac26cba836c11384ac
++ docker inspect b343e66c4d89fcee508618a0185244edfbb5fea4c27eb7ac26cba836c11384ac
++ grep '"Memory": 5242880'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "Memory": 5242880,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep Memory failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep Memory failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --memory-reservation 5g alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=20af8f0a20cb3d410a5f80a5a783ebee5a1d1b0beecff4b62dafa44fb1b47198
++ docker inspect 20af8f0a20cb3d410a5f80a5a783ebee5a1d1b0beecff4b62dafa44fb1b47198
++ grep '"MemoryReservation": 5368709120'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "MemoryReservation": 5368709120,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep Memory failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep Memory failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --memory 2g --memory-swap 4g alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=a441b3a319a0188d98a3f3ed1b78088b9e04efc8ee1574c9cb1d68fbfe088195
++ docker inspect a441b3a319a0188d98a3f3ed1b78088b9e04efc8ee1574c9cb1d68fbfe088195
++ grep '"MemorySwap": 4294967296'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "MemorySwap": 4294967296,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep MemorySwap failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep MemorySwap failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --memory-swappiness 4 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=c9fd612de698bf02fc6c28672cdc6a114e0821415b5b84da4beba2e34f0c32b2
++ docker inspect c9fd612de698bf02fc6c28672cdc6a114e0821415b5b84da4beba2e34f0c32b2
++ grep '"MemorySwappiness": 4'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "MemorySwappiness": 4,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep MemorySwappiness failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep MemorySwappiness failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --mount type=bind,source=/tmp/host,destination=/tmp/container alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=4e47db4c87e6dde5bbf998d21bfb3e073a02380f77f872b5ecda63774169d918
++ docker inspect 4e47db4c87e6dde5bbf998d21bfb3e073a02380f77f872b5ecda63774169d918
++ grep /tmp/host
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+                "Source": "/tmp/host",
+                "type=bind,source=/tmp/host,destination=/tmp/container",
+                "/tmp/host:/tmp/container:rw,rprivate,nosuid,nodev,rbind"
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep /tmp/host failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep /tmp/host failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --name example alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=3ff462e098ac672076f73337176a60634e02df2a55b8d1bb989c6525e0c06df4
++ docker inspect 3ff462e098ac672076f73337176a60634e02df2a55b8d1bb989c6525e0c06df4
++ grep '"Name": "example"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+        "Name": "example",
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep Name example failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep Name example failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --net bridge alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=2fd604f8d5229bc4bb3934b82acf0d9ae3e0c124e2493ddc634e549593f2952c
++ docker inspect 2fd604f8d5229bc4bb3934b82acf0d9ae3e0c124e2493ddc634e549593f2952c
++ grep '"NetworkMode": "bridge"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "NetworkMode": "bridge",
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep Nameexample failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep Nameexample failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 16:51:10 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 16:51:10 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 16:51:11 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+a17ed7acae6bcd01169dc8c80188d07d924d54a201ba15584c7d2ef3d2206f68
+20af8f0a20cb3d410a5f80a5a783ebee5a1d1b0beecff4b62dafa44fb1b47198
+4e47db4c87e6dde5bbf998d21bfb3e073a02380f77f872b5ecda63774169d918
+7d42c55e9bac445f05e1f2daba979cd46af26320e6d29fe1ace1709c947bfeb2
+b343e66c4d89fcee508618a0185244edfbb5fea4c27eb7ac26cba836c11384ac
+c9fd612de698bf02fc6c28672cdc6a114e0821415b5b84da4beba2e34f0c32b2
+2fd604f8d5229bc4bb3934b82acf0d9ae3e0c124e2493ddc634e549593f2952c
+3ff462e098ac672076f73337176a60634e02df2a55b8d1bb989c6525e0c06df4
+a441b3a319a0188d98a3f3ed1b78088b9e04efc8ee1574c9cb1d68fbfe088195
++ podman rm --all
+a17ed7acae6bcd01169dc8c80188d07d924d54a201ba15584c7d2ef3d2206f68
+a441b3a319a0188d98a3f3ed1b78088b9e04efc8ee1574c9cb1d68fbfe088195
+20af8f0a20cb3d410a5f80a5a783ebee5a1d1b0beecff4b62dafa44fb1b47198
+3ff462e098ac672076f73337176a60634e02df2a55b8d1bb989c6525e0c06df4
+4e47db4c87e6dde5bbf998d21bfb3e073a02380f77f872b5ecda63774169d918
+7d42c55e9bac445f05e1f2daba979cd46af26320e6d29fe1ace1709c947bfeb2
+2fd604f8d5229bc4bb3934b82acf0d9ae3e0c124e2493ddc634e549593f2952c
+b343e66c4d89fcee508618a0185244edfbb5fea4c27eb7ac26cba836c11384ac
+c9fd612de698bf02fc6c28672cdc6a114e0821415b5b84da4beba2e34f0c32b2
++ podman rmi --all
+Untagged: docker.io/library/alpine:latest
+Deleted: c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Jun 22 16:51:12 2023 - WARN  - no thing to do.
++ return 0
+++ ls
+++ grep -vE .sh
++ rm -rf /tmp/host
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 16:51:13 2023 - INFO  - End to restore the test environment.

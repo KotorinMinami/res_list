@@ -1,0 +1,238 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ source ./conmon_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 09:35:43 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'conmon podman docker-runc podman-docker tar'
++ pkgs='conmon podman docker-runc podman-docker tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'conmon podman docker-runc podman-docker tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpr95wq1w4
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpr95wq1w4
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ podman load
+Getting image source signatures
+Copying blob sha256:107c05280400cae50fcb9a03a2cd9e895e64c2f919cabf403f65b4967737e623
+Copying config sha256:2d0d8216f525405eec5284066d6d371456026e0bdb088ea813b300481d9a6b05
+Writing manifest to image destination
+Storing signatures
+Loaded image(s): docker.io/library/busybox:latest
++ podman run --name busybox2 -dti docker.io/library/busybox:latest
+time="2023-06-22T09:38:00Z" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+time="2023-06-22T09:38:01Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33
+++ podman ps -a --no-trunc
+++ grep busybox2
+++ awk '{print $1}'
++ podman_build_id=8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 09:38:03 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 09:38:03 2023 - INFO  - Start to run test.
++ conmon --help
++ grep 'conmon \[OPTION?\]'
++ CHECK_RESULT 1 0 0 'Failed to check the --help'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --help'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --help'
++ LOG_ERROR 'Failed to check the --help'
++ message='Failed to check the --help'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --help'
+Thu Jun 22 09:38:03 2023 - ERROR - Failed to check the --help
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_conmon_01.sh line 33'
++ message='oe_test_conmon_01.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_conmon_01.sh line 33'
+Thu Jun 22 09:38:03 2023 - ERROR - oe_test_conmon_01.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ conmon --version
++ grep 'conmon version'
+conmon version 2.1.2
++ CHECK_RESULT 0 0 0 'Failed to check the --version'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --version'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -u 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33/userdata/ctr.log
++ CHECK_RESULT 0 0 0 'Failed to check the -c'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the -c'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -u 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -n busybox2 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33/userdata/ctr.log
++ CHECK_RESULT 0 0 0 'Failed to check the -n'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the -n'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -u 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -n busybox2 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33/userdata/ctr.log -i
++ CHECK_RESULT 0 0 0 'Failed to check the -i'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the -i'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -u 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33/userdata/ctr.log
++ CHECK_RESULT 0 0 0 'Failed to check the -u'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the -u'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -u 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33/userdata/ctr.log
++ CHECK_RESULT 0 0 0 'Failed to check the --runtime'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --runtime'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -u 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33/userdata/ctr.log
++ CHECK_RESULT 0 0 0 'Failed to check the -l'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the -l'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 -u 8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33/userdata/ctr.log -p /var/run/containers/storage/overlay-containers/8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33/userdata/pidfile
++ CHECK_RESULT 0 0 0 'Failed to check the -p'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the -p'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 09:38:04 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 09:38:04 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 09:38:04 2023 - INFO  - Start to restore the test environment.
++ podman stop busybox2
+busybox2
++ grep busybox:latest
++ podman ps -a
++ awk '{print $1}'
++ xargs podman rm
+8b847496c31cb38450ac384b21094a4da76f71a2c81666d10fca8e47a9956f33
++ podman rmi docker.io/library/busybox
+Untagged: docker.io/library/busybox:latest
+Deleted: 2d0d8216f525405eec5284066d6d371456026e0bdb088ea813b300481d9a6b05
++ clear_env
++ podman rm -all
+Error: --all and --latest cannot be used together
++ podman rmi -f -all
+Error: unknown shorthand flag: 'l' in -ll
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpr95wq1w4 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpr95wq1w4
++ '[' 0 -ne 0 ']'
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpr95wq1w4 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpr95wq1w4
++ '[' 0 -ne 0 ']'
++ rm -rf attach ctl uuid_file
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Thu Jun 22 09:38:52 2023 - INFO  - Finish restoring the test environment.

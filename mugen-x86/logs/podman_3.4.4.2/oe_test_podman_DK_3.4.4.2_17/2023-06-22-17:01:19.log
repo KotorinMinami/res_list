@@ -1,0 +1,273 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 17:01:20 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
+Thu Jun 22 17:01:25 2023 - INFO  - pkgs:(podman podman-docker) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ docker pull registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ docker run --name postgres registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T17:01:42Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 17:01:43 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 17:01:43 2023 - INFO  - Start to run test.
++ docker image history --format=json registry.access.redhat.com/ubi8-minimal
++ grep created
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+[{"id":"f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4","created":"2023-05-03T15:11:40.449573474Z","CreatedBy":"/bin/sh -c mv -fZ /tmp/ubi.repo /etc/yum.repos.d/ubi.repo || :","size":94434816,"Created":"2023-05-03T15:11:40Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:39.133904553Z","CreatedBy":"/bin/sh -c rm -f /tmp/tls-ca-bundle.pem","size":0,"Created":"2023-05-03T15:11:39Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:38.372071538Z","CreatedBy":"/bin/sh -c rm -f '/etc/yum.repos.d/repo-700b5.repo' '/etc/yum.repos.d/repo-cb269.repo'","size":0,"Created":"2023-05-03T15:11:38Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:37.483931803Z","CreatedBy":"/bin/sh -c #(nop) LABEL \"distribution-scope\"=\"public\" \"vendor\"=\"Red Hat, Inc.\" \"build-date\"=\"2023-05-03T15:02:09\" \"architecture\"=\"x86_64\" \"vcs-type\"=\"git\" \"vcs-ref\"=\"dee8029ddcc7ecbfbebb0905d2b15e134338616c\" \"io.k8s.description\"=\"The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.\" \"url\"=\"https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8-minimal/images/8.8-860\"","size":0,"Created":"2023-05-03T15:11:37Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:37.483719703Z","CreatedBy":"/bin/sh -c #(nop) ADD file:fcaeea1e052139bcd93a719356f6d30b0bd66243e25ccb0a8ed0e3b2013b5804 in /root/buildinfo/Dockerfile-ubi8-minimal-8.8-860 ","size":0,"Created":"2023-05-03T15:11:37Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:37.162156379Z","CreatedBy":"/bin/sh -c #(nop) ADD file:13e13737bf27853f3a47e1f55b843236868d5521b05c5fed54688856d11bd33f in /root/buildinfo/content_manifests/ubi8-minimal-container-8.8-860.json ","size":0,"Created":"2023-05-03T15:11:37Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.839715515Z","CreatedBy":"/bin/sh -c #(nop) LABEL release=860","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.839672973Z","CreatedBy":"/bin/sh -c rm -rf /var/log/*","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.049276537Z","CreatedBy":"/bin/sh -c #(nop) CMD [\"/bin/bash\"]","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.04927083Z","CreatedBy":"/bin/sh -c #(nop) ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.049236736Z","CreatedBy":"/bin/sh -c #(nop) ENV container oci","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.049226015Z","CreatedBy":"/bin/sh -c #(nop) LABEL io.openshift.tags=\"minimal rhel8\"","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.049204216Z","CreatedBy":"/bin/sh -c #(nop) LABEL io.openshift.expose-services=\"\"","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.049189508Z","CreatedBy":"/bin/sh -c #(nop) LABEL io.k8s.display-name=\"Red Hat Universal Base Image 8 Minimal\"","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.049150843Z","CreatedBy":"/bin/sh -c #(nop) LABEL description=\"The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.\"","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.049086884Z","CreatedBy":"/bin/sh -c #(nop) LABEL summary=\"Provides the latest release of the minimal Red Hat Universal Base Image 8.\"","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.04905918Z","CreatedBy":"/bin/sh -c #(nop) LABEL com.redhat.license_terms=\"https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI\"","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.049032361Z","CreatedBy":"/bin/sh -c #(nop) LABEL com.redhat.component=\"ubi8-minimal-container\"       name=\"ubi8-minimal\"       version=\"8.8\"","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.048943613Z","CreatedBy":"/bin/sh -c #(nop) LABEL maintainer=\"Red Hat, Inc.\"","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:36.048905442Z","CreatedBy":"/bin/sh -c #(nop) ADD multi:62a5ed918ba581cb28e63a96c95a2291910a696c57ec0a22b415b43695503828 in /etc/yum.repos.d/ ","size":0,"Created":"2023-05-03T15:11:36Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:35.641532591Z","CreatedBy":"/bin/sh -c #(nop) ADD file:214c1de395c24e4a86ef9a706069ef30a9e804c63f851c37c35655e16fea3ced in /tmp/tls-ca-bundle.pem ","size":0,"Created":"2023-05-03T15:11:35Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:35.309685973Z","CreatedBy":"/bin/sh -c mv -f /etc/yum.repos.d/ubi.repo /tmp || :","size":0,"Created":"2023-05-03T15:11:35Z"},{"id":"\u003cmissing\u003e","created":"2023-05-03T15:11:34.385765807Z","CreatedBy":"/bin/sh -c #(nop) ADD file:84dff5b0f84a1086a0a07b28849d08a18f2d658869173d376845a20a2cb34541 in / ","size":0,"Created":"2023-05-03T15:11:34Z"}]
++ CHECK_RESULT 0 0 0 'check docker image history --format=json registry.access.redhat.com/ubi8-minimal | grep "created" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image history --format=json registry.access.redhat.com/ubi8-minimal | grep "created" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image history --human registry.access.redhat.com/ubi8-minimal
++ grep B
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+ID            CREATED      CREATED BY                                     SIZE        COMMENT
+f4fb65011c56  7 weeks ago  /bin/sh -c mv -fZ /tmp/ubi.repo /etc/yum.r...  94.4 MB     
+<missing>     7 weeks ago  /bin/sh -c rm -f /tmp/tls-ca-bundle.pem        0 B         
+<missing>     7 weeks ago  /bin/sh -c rm -f '/etc/yum.repos.d/repo-70...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL "distribution-scop...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) ADD file:fcaeea1e052139b...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) ADD file:13e13737bf27853...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL release=860            0 B         
+<missing>     7 weeks ago  /bin/sh -c rm -rf /var/log/*                   0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) CMD ["/bin/bash"]            0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) ENV PATH /usr/local/sbin...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) ENV container oci            0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL io.openshift.tags=...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL io.openshift.expos...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL io.k8s.display-nam...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL description="The U...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL summary="Provides ...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL com.redhat.license...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL com.redhat.compone...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) LABEL maintainer="Red Ha...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) ADD multi:62a5ed918ba581...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) ADD file:214c1de395c24e4...  0 B         
+<missing>     7 weeks ago  /bin/sh -c mv -f /etc/yum.repos.d/ubi.repo...  0 B         
+<missing>     7 weeks ago  /bin/sh -c #(nop) ADD file:84dff5b0f84a108...  0 B         
++ CHECK_RESULT 0 0 0 'check docker image history --human registry.access.redhat.com/ubi8-minimal | grep "B" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image history --human registry.access.redhat.com/ubi8-minimal | grep "B" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image history --no-trunc registry.access.redhat.com/ubi8-minimal
+++ docker images -aq
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ grep f4fb65011c56
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4  7 weeks ago  /bin/sh -c mv -fZ /tmp/ubi.repo /etc/yum.repos.d/ubi.repo || :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    94.4 MB     
++ CHECK_RESULT 0 0 0 'check docker image history --no-trunc registry.access.redhat.com/ubi8-minimal | grep "$(docker images -aq)" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image history --no-trunc registry.access.redhat.com/ubi8-minimal | grep "$(docker images -aq)" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image history -q registry.access.redhat.com/ubi8-minimal
+++ docker images -aq
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ grep f4fb65011c56
+f4fb65011c56
++ CHECK_RESULT 0 0 0 'check docker image history -q registry.access.redhat.com/ubi8-minimal | grep "$(docker images -aq)" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image history -q registry.access.redhat.com/ubi8-minimal | grep "$(docker images -aq)" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image ls --filter after=registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+REPOSITORY  TAG         IMAGE ID    CREATED     SIZE
++ CHECK_RESULT 0 0 0 'check docker image ls --filter after=registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image ls --filter after=registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image ls --all
++ grep registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check docker image ls --all | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image ls --all | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image ls --digests
++ grep DIGEST
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+REPOSITORY                               TAG         DIGEST                                                                   IMAGE ID      CREATED      SIZE
++ CHECK_RESULT 0 0 0 'check docker image ls --digests | grep "DIGEST" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image ls --digests | grep "DIGEST" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image ls --format json
++ grep registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "url": "https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8-minimal/images/8.8-860",
+            "registry.access.redhat.com/ubi8-minimal:latest"
+            "registry.access.redhat.com/ubi8-minimal:latest"
++ CHECK_RESULT 0 0 0 'check docker image ls --format json | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image ls --format json | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image ls --no-trunc
++ grep sha256
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+registry.access.redhat.com/ubi8-minimal  latest      sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check docker image ls --no-trunc | grep "sha256" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image ls --no-trunc | grep "sha256" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image ls --noheading
++ grep TAG
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 1 1 0 'check docker image ls --noheading | grep "TAG" failed'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='check docker image ls --noheading | grep "TAG" failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 17:01:47 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 17:01:47 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 17:01:47 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+0ef7588ab8e06afa85a7fcb3b9b1c5d041ddeae69c6e9964e9d4112577edb16d
++ podman rm --all
+0ef7588ab8e06afa85a7fcb3b9b1c5d041ddeae69c6e9964e9d4112577edb16d
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Jun 22 17:01:49 2023 - WARN  - no thing to do.
++ return 0
+++ ls
+++ grep -vE .sh
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 17:01:50 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,376 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 09:15:29 2023 - INFO  - Start to prepare the test environment.
++ OLD_LANG=en_US.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL 'bacula-client mysql5-server bacula-common tar'
++ pkgs='bacula-client mysql5-server bacula-common tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'bacula-client mysql5-server bacula-common tar' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:06:12 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:06:12 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
++ tar -zxvf common/test.tar.gz
+config/
+config/a.config
+config/4.conf
+config/3.conf
+config/2.conf
+config/6.conf
+config/5.conf
+config/1.conf
+config/e.conf
++ mkdir tmp
++ systemctl restart mysqld
+Failed to restart mysqld.service: Unit mysqld.service not found.
++ /usr/libexec/bacula/create_mysql_database
+oe_test_bacula_bconsole_01.sh: line 30: /usr/libexec/bacula/create_mysql_database: No such file or directory
++ /usr/libexec/bacula/make_mysql_tables
+oe_test_bacula_bconsole_01.sh: line 31: /usr/libexec/bacula/make_mysql_tables: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-mysql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ sed -i 's\dbuser = "bacula"\dbuser = "root"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ systemctl daemon-reload
++ systemctl start bacula-dir.service
+Failed to start bacula-dir.service: Unit bacula-dir.service not found.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 09:15:56 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 09:15:57 2023 - INFO  - Start to run test.
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole -D bacula-dir"
++ grep 'Enter a period to cancel a command' tmp/1.txt
++ CHECK_RESULT 1 0 0 'test bconsole -D failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bconsole -D failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bconsole -D failed'
++ LOG_ERROR 'test bconsole -D failed'
++ message='test bconsole -D failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -D failed'
+Thu Jun 22 09:15:58 2023 - ERROR - test bconsole -D failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 49'
++ message='oe_test_bacula_bconsole_01.sh line 49'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 49'
+Thu Jun 22 09:15:58 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 49
++ '[' 0 -eq 1 ']'
++ return 0
++ bconsole -l
++ grep bacula-dir
+oe_test_bacula_bconsole_01.sh: line 50: bconsole: command not found
++ CHECK_RESULT 1 0 0 'test bconsole -l failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bconsole -l failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bconsole -l failed'
++ LOG_ERROR 'test bconsole -l failed'
++ message='test bconsole -l failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -l failed'
+Thu Jun 22 09:15:59 2023 - ERROR - test bconsole -l failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 51'
++ message='oe_test_bacula_bconsole_01.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 51'
+Thu Jun 22 09:15:59 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
++ bconsole -L
+oe_test_bacula_bconsole_01.sh: line 52: bconsole: command not found
++ CHECK_RESULT 127 0 0 'test bconsole -L failed'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='test bconsole -L failed'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'test bconsole -L failed'
++ LOG_ERROR 'test bconsole -L failed'
++ message='test bconsole -L failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -L failed'
+Thu Jun 22 09:16:00 2023 - ERROR - test bconsole -L failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 53'
++ message='oe_test_bacula_bconsole_01.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 53'
+Thu Jun 22 09:16:01 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
++ bconsole -C DDS-4
++ grep DDS-4
+oe_test_bacula_bconsole_01.sh: line 54: bconsole: command not found
++ CHECK_RESULT 1 0 0 'test bconsole -C failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bconsole -C failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bconsole -C failed'
++ LOG_ERROR 'test bconsole -C failed'
++ message='test bconsole -C failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -C failed'
+Thu Jun 22 09:16:01 2023 - ERROR - test bconsole -C failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 55'
++ message='oe_test_bacula_bconsole_01.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 55'
+Thu Jun 22 09:16:02 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole -c /etc/bacula/bconsole.conf"
++ grep 'Enter a period to cancel a command.' tmp/2.txt
++ CHECK_RESULT 1 0 0 'test bconsole -c failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bconsole -c failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bconsole -c failed'
++ LOG_ERROR 'test bconsole -c failed'
++ message='test bconsole -c failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -c failed'
+Thu Jun 22 09:16:03 2023 - ERROR - test bconsole -c failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 63'
++ message='oe_test_bacula_bconsole_01.sh line 63'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 63'
+Thu Jun 22 09:16:04 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 63
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole -d 11"
++ grep 'Enter a period to cancel a command.' tmp/3.txt
++ CHECK_RESULT 1 0 0 'test bconsole -d failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bconsole -d failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bconsole -d failed'
++ LOG_ERROR 'test bconsole -d failed'
++ message='test bconsole -d failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -d failed'
+Thu Jun 22 09:16:04 2023 - ERROR - test bconsole -d failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 71'
++ message='oe_test_bacula_bconsole_01.sh line 71'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 71'
+Thu Jun 22 09:16:05 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 71
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole -dt -d 11"
++ grep '.*-.*-.* .*:.*:.* bconsole: ' tmp/4.txt
++ CHECK_RESULT 1 0 0 'test bconsole -dt failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bconsole -dt failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bconsole -dt failed'
++ LOG_ERROR 'test bconsole -dt failed'
++ message='test bconsole -dt failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -dt failed'
+Thu Jun 22 09:16:06 2023 - ERROR - test bconsole -dt failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 79'
++ message='oe_test_bacula_bconsole_01.sh line 79'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 79'
+Thu Jun 22 09:16:07 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 79
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole -n"
++ grep '1000 OK:' tmp/5.txt
++ CHECK_RESULT 1 0 0 'test bconsole -n failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bconsole -n failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bconsole -n failed'
++ LOG_ERROR 'test bconsole -n failed'
++ message='test bconsole -n failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -n failed'
+Thu Jun 22 09:16:08 2023 - ERROR - test bconsole -n failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 87'
++ message='oe_test_bacula_bconsole_01.sh line 87'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 87'
+Thu Jun 22 09:16:08 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 87
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole -s"
++ grep '1000 OK' tmp/6.txt
++ CHECK_RESULT 1 0 0 'test bconsole -s failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bconsole -s failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bconsole -s failed'
++ LOG_ERROR 'test bconsole -s failed'
++ message='test bconsole -s failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bconsole -s failed'
+Thu Jun 22 09:16:09 2023 - ERROR - test bconsole -s failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bconsole_01.sh line 95'
++ message='oe_test_bacula_bconsole_01.sh line 95'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bconsole_01.sh line 95'
+Thu Jun 22 09:16:10 2023 - ERROR - oe_test_bacula_bconsole_01.sh line 95
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 09:16:10 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 9
++ test 9 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 09:16:11 2023 - ERROR - failed to execute the case.
++ exit 9
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 09:16:12 2023 - INFO  - Start to restore the test environment.
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ systemctl stop bacula-dir.service
+Failed to stop bacula-dir.service: Unit bacula-dir.service not loaded.
++ sed -i 's\dbuser = "root"\dbuser = "bacula"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-postgresql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ /usr/libexec/bacula/drop_mysql_tables
+oe_test_bacula_bconsole_01.sh: line 105: /usr/libexec/bacula/drop_mysql_tables: No such file or directory
++ /usr/libexec/bacula/drop_mysql_database
+oe_test_bacula_bconsole_01.sh: line 106: /usr/libexec/bacula/drop_mysql_database: No such file or directory
++ systemctl stop mysqld
+Failed to stop mysqld.service: Unit mysqld.service not loaded.
++ systemctl daemon-reload
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:06:12 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:06:12 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 173, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 144, in rpm_remove
+    with open(tmpfile, "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Last metadata expiration check: 0:06:12 ago on Thu 22 Jun 2023 09:09:38 AM CST.\nNo match for argument: mysql5-server\nPackage tar-2:1.34-4.oe2303.riscv64 is already installed.\nError: Unable to find a match: mysql5-server'
++ '[' 0 -ne 0 ']'
++ rm -rf config/ '/var/lib/mysql/*' '/var/spool/bacula/*' tmp/
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 09:16:19 2023 - INFO  - End to restore the test environment.

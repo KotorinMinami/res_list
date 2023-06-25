@@ -1,0 +1,554 @@
++ source ../common/common_tpm-tools.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 16:52:08 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'tpm-tools trousers cmake make gcc-c++ gmp-devel'
++ pkgs='tpm-tools trousers cmake make gcc-c++ gmp-devel'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'tpm-tools trousers cmake make gcc-c++ gmp-devel' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpce5xw7i0
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpce5xw7i0
++ wget https://github.com/PeterHuewe/tpm-emulator/archive/v0.7.5.zip
+../common/common_tpm-tools.sh: line 24: wget: command not found
++ unzip v0.7.5.zip
+../common/common_tpm-tools.sh: line 25: unzip: command not found
++ test -d tpm-emulator-0.7.5
++ '[' x86_64x == aarch64x ']'
++ sed -i 's/$(shell uname -m)/x86/g' tpmd_dev/linux/Makefile
+sed: can't read tpmd_dev/linux/Makefile: No such file or directory
++ sed -i 's/-Wall -Werror/-Wall -Wno-error/g' tpmd_dev/linux/Makefile
+sed: can't read tpmd_dev/linux/Makefile: No such file or directory
++ mkdir build
++ cd build
++ cmake ..
+CMake Warning:
+  Ignoring extra path from command line:
+
+   ".."
+
+
+CMake Error: The source directory "/root/mugen/testcases/cli-test/tpm-tools/oe_test_tpm-tools_01" does not appear to contain CMakeLists.txt.
+Specify --help for usage, or press the help button on the CMake GUI.
++ tpmd deactivated
+../common/common_tpm-tools.sh: line 35: tpmd: command not found
++ tpmd clear
+../common/common_tpm-tools.sh: line 36: tpmd: command not found
++ modprobe tpmd_dev
+modprobe: FATAL: Module tpmd_dev not found in directory /lib/modules/6.1.19-7.0.0.17.oe2303.x86_64
++ SLEEP_WAIT 10
++ nohup tpmd -d -f clear
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
+++ pgrep -f 'tpmd -d'
++ '[' -z '' ']'
++ rm -rf /var/run/tpm/tpmd_socket:0
++ SLEEP_WAIT 10
++ nohup tpmd -d -f clear
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ pgrep -f 'tpmd -d'
+++ pgrep -f 'tcsd -e'
++ '[' -n '' ']'
++ SLEEP_WAIT 10
++ nohup tcsd -e -f
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ pgrep -f 'tcsd -e'
++ tpm_version
++ grep -i '[0-9a-z]'
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
++ tpm_getpubek
++ grep -i '[0-9a-z\!():,_]'
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Thu Jun 22 16:53:53 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 16:53:53 2023 - INFO  - Start to run test.
++ expect
+spawn tpm_takeownership
+Enter owner password: 
+Confirm password: 
+Enter SRK password: 
+Confirm password: 
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
++ tpm_version --help
++ grep -iE 'Usage: tpm_version|[0-9a-z]'
+Usage: tpm_version [options]
+	-h, --help
+		Display command usage info.
+	-v, --version
+		Display command version info.
+	-l, --log [none|error|info|debug]
+		Set logging level.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_version -v
++ grep -E 'tpm_version version|[0-9]'
+tpm_version version: 1.3.9
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_version -l debug
++ grep success
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+Tspi_Context_Create success
+Tspi_Context_FreeMemory success
+Tspi_Context_Close success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_takeownership --help
++ grep -iE 'Usage: tpm_takeownership|[a-z]'
+Usage: tpm_takeownership [options]
+	-h, --help
+		Display command usage info.
+	-v, --version
+		Display command version info.
+	-l, --log [none|error|info|debug]
+		Set logging level.
+	-u, --unicode
+		Use TSS UNICODE encoding for passwords to comply with applications using TSS popup boxes
+	-y, --owner-well-known
+		Set the owner secret to all zeros (20 bytes of zeros).
+	-z, --srk-well-known
+		Set the SRK secret to all zeros (20 bytes of zeros).
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_takeownership --version
++ grep -i '[0-9a-z]'
+tpm_takeownership version: 1.3.9
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn tpm_getpubek
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp4 not open
+    while executing
+"expect eof"
++ grep -i '[0-9a-z]' log_getpubek1
+spawn tpm_getpubek
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp4 not open
+    while executing
+"expect eof"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_getpubek --help
++ grep -E '\-|Usage: tpm_getpubek'
+Usage: tpm_getpubek [options]
+	-h, --help
+	-v, --version
+	-l, --log [none|error|info|debug]
+	-u, --unicode
+	-z, --well-known
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_getpubek --version
++ grep -E 'tpm_getpubek version:|[0-9]'
+tpm_getpubek version: 1.3.9
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn tpm_getpubek -l debug
+Tspi_Context_Create success
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+Tspi_Context_FreeMemory success
+Tspi_Context_Close success
+expect: spawn id exp4 not open
+    while executing
+"expect eof"
++ grep -iE '[0-9a-z]|success' log_getpubek2
+spawn tpm_getpubek -l debug
+Tspi_Context_Create success
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+Tspi_Context_FreeMemory success
+Tspi_Context_Close success
+expect: spawn id exp4 not open
+    while executing
+"expect eof"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_sealdata --help
++ grep -E '\-|Usage: tpm_sealdata'
+Usage: tpm_sealdata [options]
+	-h, --help
+	-v, --version
+	-l, --log [none|error|info|debug]
+	-i, --infile FILE
+	-o, --outfile FILE
+	-p, --pcr NUMBER
+	-z, --well-known
+	-u, --unicode
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_sealdata --version
++ grep -E 'tpm_sealdata version:|[0-9]'
+tpm_sealdata version: 1.3.9
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn tpm_sealdata -l debug
+Tspi_Context_Create success
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+Tspi_Context_FreeMemory success
+Tspi_Context_Close success
+expect: spawn id exp4 not open
+    while executing
+"expect " " {send "\03"}"
++ grep -E 'success|KEY|ENC' log_sealdata1
+Tspi_Context_Create success
+Tspi_Context_FreeMemory success
+Tspi_Context_Close success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo 'hello,world!'
++ expect
+spawn tpm_sealdata -i testfile
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp4 not open
+    while executing
+"expect eof"
++ grep -iE 'ENC|KEY|TSS|[0-9a-z]' log_sealdata2
+spawn tpm_sealdata -i testfile
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp4 not open
+    while executing
+"expect eof"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn tpm_sealdata -i testfile -o result
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp3 not open
+    while executing
+"expect eof"
++ grep -i '[0-9a-z\+/=:-]' result
+grep: result: No such file or directory
++ CHECK_RESULT 2
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_tpm-tools_01.sh line 97'
++ message='oe_test_tpm-tools_01.sh line 97'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_tpm-tools_01.sh line 97'
+Thu Jun 22 16:53:54 2023 - ERROR - oe_test_tpm-tools_01.sh line 97
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+spawn tpm_sealdata --pcr 16
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp4 not open
+    while executing
+"expect " " {send "\03"}"
++ grep -i '[0-9a-z\+/=:-]' log_sealdata3
+spawn tpm_sealdata --pcr 16
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp4 not open
+    while executing
+"expect " " {send "\03"}"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn tpm_sealdata -u
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp4 not open
+    while executing
+"expect " " {send "\03"}"
++ grep -i '[0-9a-z\+/=:-]' log_sealdata4
+spawn tpm_sealdata -u
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp4 not open
+    while executing
+"expect " " {send "\03"}"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_unsealdata --help
++ grep -E '\-|Usage: tpm_unsealdata'
+Usage: tpm_unsealdata [options]
+	-h, --help
+	-v, --version
+	-l, --log [none|error|info|debug]
+	-i, --infile FILE
+	-o, --outfile FILE
+	-z, --srk-well-known
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_unsealdata --version
++ grep -E 'tpm_unsealdata version:|[0-9]'
+tpm_unsealdata version: 1.3.9
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo 'hello shell'
++ expect
+spawn tpm_sealdata -i infile -p 4 -p 8 -p 9 -p 12 -p 14 -o outresult
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
+expect: spawn id exp3 not open
+    while executing
+"expect eof"
++ grep -i '[0-9a-z\+/=:-]' outresult
+grep: outresult: No such file or directory
++ CHECK_RESULT 2
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_tpm-tools_01.sh line 127'
++ message='oe_test_tpm-tools_01.sh line 127'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_tpm-tools_01.sh line 127'
+Thu Jun 22 16:53:55 2023 - ERROR - oe_test_tpm-tools_01.sh line 127
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+spawn tpm_unsealdata -i outresult -o outfile
+Unable to write output file
+expect: spawn id exp3 not open
+    while executing
+"expect eof"
++ grep 'hello shell' outfile
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_tpm-tools_01.sh line 134'
++ message='oe_test_tpm-tools_01.sh line 134'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_tpm-tools_01.sh line 134'
+Thu Jun 22 16:53:55 2023 - ERROR - oe_test_tpm-tools_01.sh line 134
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Thu Jun 22 16:53:56 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 16:53:56 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 16:53:56 2023 - INFO  - Start to restore the test environment.
++ clear_env
+++ pgrep -f 'tpmd -d'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
+++ pgrep -f 'tcsd -e'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++++ dirname oe_test_tpm-tools_01.sh
+++ cd .
+++ pwd
++ currentDir=/root/mugen/testcases/cli-test/tpm-tools/oe_test_tpm-tools_01/build
+++ echo /root/mugen/testcases/cli-test/tpm-tools/oe_test_tpm-tools_01/build
+++ awk -F / '{print $NF}'
++ currentName=build
++ test buildx = buildx
++ cd ../../
+++ ls
+++ grep -v .sh
++ rm -rf common oe_test_tpm-tools_01 oe_test_tpm-tools_02 oe_test_tpm-tools_03 oe_test_tpm-tools_04
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpce5xw7i0 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpce5xw7i0
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Thu Jun 22 16:54:06 2023 - INFO  - Finish restoring the test environment.

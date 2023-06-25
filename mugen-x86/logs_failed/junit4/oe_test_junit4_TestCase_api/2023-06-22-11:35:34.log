@@ -1,0 +1,166 @@
++ source ../common/common_junit.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 11:35:38 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL junit
++ pkgs=junit
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs junit --node 1 --tempfile ''
+Thu Jun 22 11:35:46 2023 - INFO  - pkgs:(junit) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
+++ grep 'java-.*-openjdk'
+++ rpm -qa 'java*'
+++ awk -F - '{print $2}'
++ java_version='1.8.0
+1.8.0
+1.8.0'
++ DNF_INSTALL java-1.8.0 1.8.0 1.8.0-devel
++ pkgs=java-1.8.0
++ node=1.8.0
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs java-1.8.0 --node 1.8.0 --tempfile ''
+usage: rpm_manage.py install|remove [-h] [--node NODE] [--pkgs PKG] [--tempfile TEPMFILE]
+rpm_manage.py: error: argument --node: invalid int value: '1.8.0'
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Thu Jun 22 11:35:52 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 11:35:53 2023 - INFO  - Start to run test.
++ compile_java
+++ grep .java
+++ ls
++ params='TestJunit.java
+TestRunner.java'
++ javac -classpath '/usr/share/java/*:/usr/share/java/hamcrest/*:' -d . TestJunit.java TestRunner.java
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f816506eb38, pid=7056, tid=0x00007f81661ff6c0
+#
+# JRE version: OpenJDK Runtime Environment (8.0_362-b09) (build 1.8.0_362-b09)
+# Java VM: OpenJDK 64-Bit Server VM (25.362-b09 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  0x00007f816506eb38
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /root/mugen/testcases/cli-test/junit4/oe_test_junit4_TestCase_api/hs_err_pid7056.log
+[thread 140193371059904 also had an error]
+#
+# If you would like to submit a bug report, please visit:
+#   https://gitee.com/src-openeuler/openjdk-1.8.0/issues/
+#
+../common/common_junit.sh: line 33:  7056 Aborted                 (core dumped) javac -classpath /usr/share/java/*:/usr/share/java/hamcrest/*: -d . $params
++ CHECK_RESULT 134
++ actual_result=134
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 134 ']'
++ '[' 0 -eq 0 ']'
++ test 134x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_junit4_TestCase_api.sh line 31'
++ message='oe_test_junit4_TestCase_api.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_junit4_TestCase_api.sh line 31'
+Thu Jun 22 11:36:02 2023 - ERROR - oe_test_junit4_TestCase_api.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
++ execute_java
++ java_script=TestRunner
++ java -classpath '/usr/share/java/*:/usr/share/java/hamcrest/*:' TestRunner
+Error: Could not find or load main class TestRunner
++ diff actual_result expect_result
+0a1,4
+> No of Test Case = 1
+> Test Case Name = testAdd
+> Updated Test Case Name = testNewAdd
+> true
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_junit4_TestCase_api.sh line 34'
++ message='oe_test_junit4_TestCase_api.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_junit4_TestCase_api.sh line 34'
+Thu Jun 22 11:36:05 2023 - ERROR - oe_test_junit4_TestCase_api.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Thu Jun 22 11:36:06 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 11:36:06 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 11:36:07 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Jun 22 11:36:08 2023 - WARN  - no thing to do.
++ return 0
+++ grep -vE '.xml|.java|.sh|expect_result*'
+++ ls
++ rm -rf actual_result hs_err_pid7056.log
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Thu Jun 22 11:36:09 2023 - INFO  - Finish restoring the test environment.

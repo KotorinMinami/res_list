@@ -64,6 +64,7 @@ class testRes():
             logPath = self.logsDir+'/'+suite+'/'+self.testResult[i]['case name']+'/'+logfile
             row.append([suiteName , self.testResult[i]['case name'] , self.testResult[i]['status'] , logPath , reason])
         cw.writerows(row)
+        csvfile.close()
 
     def exportToMarkdown(self):
         with open("table.md", "w") as md_file:

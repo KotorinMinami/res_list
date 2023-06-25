@@ -1,0 +1,278 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 11:43:15 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpuhpxnt0l
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpuhpxnt0l
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman run --name postgres -dt -p 80:80/tcp docker.io/library/nginx
+Trying to pull docker.io/library/nginx:latest...
+Getting image source signatures
+Copying blob sha256:a0bcbecc962ed2552e817f45127ffb3d14be31642ef3548997f58ae054deb5b2
+Copying blob sha256:a9edb18cadd1336142d6567ebee31be2a03c0905eeefe26cb150de7b0fbc520b
+Copying blob sha256:a2abf6c4d29d43a4bf9fbb769f524d0fb36a2edab49819c1bf3e76f409f953ea
+Copying blob sha256:186b1aaa4aa6c480e92fbd982ee7c08037ef85114fbed73dbb62503f24c1dd7d
+Copying blob sha256:b4df32aa5a72e2a4316aad3414508ccd907d87b4ad177abd7cbd62fa4dab2a2f
+Copying blob sha256:589b7251471a3d5fe4daccdddfefa02bdc32ffcba0a6d6a2768bf2c401faf115
+Copying blob sha256:589b7251471a3d5fe4daccdddfefa02bdc32ffcba0a6d6a2768bf2c401faf115
+Copying blob sha256:a0bcbecc962ed2552e817f45127ffb3d14be31642ef3548997f58ae054deb5b2
+Copying blob sha256:b4df32aa5a72e2a4316aad3414508ccd907d87b4ad177abd7cbd62fa4dab2a2f
+Copying blob sha256:186b1aaa4aa6c480e92fbd982ee7c08037ef85114fbed73dbb62503f24c1dd7d
+Copying blob sha256:a9edb18cadd1336142d6567ebee31be2a03c0905eeefe26cb150de7b0fbc520b
+Copying blob sha256:a2abf6c4d29d43a4bf9fbb769f524d0fb36a2edab49819c1bf3e76f409f953ea
+Copying config sha256:605c77e624ddb75e6110f997c58876baa13f8754486b461117934b24a9dc3a85
+Writing manifest to image destination
+Storing signatures
+time="2023-06-22T11:46:51Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+b4d5a7978c0372db6dcd927b2a7679c56fc4f56a44218751446cd95737442f25
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 11:46:52 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 11:46:52 2023 - INFO  - Start to run test.
++ podman stop postgres
+postgres
++ podman wait --latest
++ grep '[0-9]'
+0
++ CHECK_RESULT 0 0 0 'check podman wait --latest | grep [0-9] failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman wait --latest | grep [0-9] failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman wait --interval 250 postgres
++ grep '[0-9]'
+0
++ CHECK_RESULT 0 0 0 'check podman wait --interval 250 postgres | grep [0-9] failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman wait --interval 250 postgres | grep [0-9] failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman start postgres
+time="2023-06-22T11:46:58Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+postgres
++ podman kill -l
+b4d5a7978c0372db6dcd927b2a7679c56fc4f56a44218751446cd95737442f25
++ CHECK_RESULT 0 0 0 'check podman kill -l failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman kill -l failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a
++ grep Exited
+b4d5a7978c03  docker.io/library/nginx:latest  nginx -g daemon o...  11 seconds ago  Exited (137) 2 seconds ago  0.0.0.0:80->80/tcp  postgres
++ CHECK_RESULT 0 0 0 'check podman ps -a | grep "Exited" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -a | grep "Exited" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman start postgres
+time="2023-06-22T11:47:01Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+postgres
++ podman kill -a
+
++ CHECK_RESULT 0 0 0 'check podman kill -a failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman kill -a failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a
++ grep Exited
+b4d5a7978c03  docker.io/library/nginx:latest  nginx -g daemon o...  15 seconds ago  Exited (137) 2 seconds ago  0.0.0.0:80->80/tcp  postgres
++ CHECK_RESULT 0 0 0 'check podman ps -a | grep "Exited" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -a | grep "Exited" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman start postgres
+time="2023-06-22T11:47:05Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+postgres
+++ podman ps -q
++ podman kill -s KILL b4d5a7978c03
+b4d5a7978c03
++ CHECK_RESULT 0 0 0 'check podman kill -s KILL failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman kill -s KILL failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a
++ grep Exited
+b4d5a7978c03  docker.io/library/nginx:latest  nginx -g daemon o...  19 seconds ago  Exited (137) 2 seconds ago  0.0.0.0:80->80/tcp  postgres
++ CHECK_RESULT 0 0 0 'check podman ps -a | grep "Exited" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -a | grep "Exited" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman start postgres
+time="2023-06-22T11:47:09Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+postgres
++ podman diff postgres
++ grep -E 'C|A'
+C /etc
+C /etc/nginx
+C /etc/nginx/conf.d
+C /etc/nginx/conf.d/default.conf
+A /run/nginx.pid
+C /var
+C /var/cache
+C /var/cache/nginx
+A /var/cache/nginx/uwsgi_temp
+A /var/cache/nginx/client_temp
+A /var/cache/nginx/fastcgi_temp
+A /var/cache/nginx/proxy_temp
+A /var/cache/nginx/scgi_temp
++ CHECK_RESULT 0 0 0 'check podman diff postgres | grep -E "C|A" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman diff postgres | grep -E "C|A" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman diff --format json postgres
++ grep -E 'changed|added'
+     "changed": [
+     "added": [
++ CHECK_RESULT 0 0 0 'check podman diff --format json postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman diff --format json postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman version
+++ rpm -qa podman
+++ awk -F - '{print $2}'
++ grep 3.4.4
+Version:      3.4.4
+API Version:  3.4.4
++ CHECK_RESULT 0 0 0 'check podman version failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman version failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 11:47:17 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 11:47:17 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 11:47:17 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+b4d5a7978c0372db6dcd927b2a7679c56fc4f56a44218751446cd95737442f25
++ podman rm --all
+b4d5a7978c0372db6dcd927b2a7679c56fc4f56a44218751446cd95737442f25
++ podman rmi --all
+Untagged: docker.io/library/nginx:latest
+Deleted: 605c77e624ddb75e6110f997c58876baa13f8754486b461117934b24a9dc3a85
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpuhpxnt0l ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpuhpxnt0l
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 11:48:15 2023 - INFO  - End to restore the test environment.

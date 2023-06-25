@@ -1,0 +1,165 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start loading data!'
++ message='Start loading data!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start loading data!'
+Thu Jun 22 12:59:06 2023 - INFO  - Start loading data!
++ name=postgres
++ LOG_INFO 'Loading data is complete!'
++ message='Loading data is complete!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Loading data is complete!'
+Thu Jun 22 12:59:07 2023 - INFO  - Loading data is complete!
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Thu Jun 22 12:59:07 2023 - INFO  - Start environment preparation.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp01d0aiik
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp01d0aiik
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman rm --all
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Thu Jun 22 13:02:06 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Thu Jun 22 13:02:07 2023 - INFO  - Start executing testcase.
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ CHECK_RESULT 0 0 0 'check podman pull registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pull registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T13:02:31Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ CHECK_RESULT 0 0 0 'check podman run --name ${name} registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman run --name ${name} registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a
++ grep postgres
+14047765f966  registry.access.redhat.com/ubi8-minimal:latest  /bin/bash   3 seconds ago  Exited (0) 1 second ago              postgres
++ CHECK_RESULT 0 0 0 'check podman ps -a | grep ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -a | grep ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman stop postgres
++ grep postgres
+postgres
++ CHECK_RESULT 0 0 0 'check podman stop ${name} | grep ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman stop ${name} | grep ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman rm postgres
+14047765f966ddad1206720a48cab0c2b0625d03980dc765dcaf56ab1da95b89
++ CHECK_RESULT 0 0 0 'check podman rm ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman rm ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End executing testcase.'
++ message='End executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End executing testcase.'
+Thu Jun 22 13:02:35 2023 - INFO  - End executing testcase.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 13:02:35 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu Jun 22 13:02:36 2023 - INFO  - start environment cleanup.
++ clear_env
++ podman stop --all
++ podman rm --all
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp01d0aiik ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp01d0aiik
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Thu Jun 22 13:03:29 2023 - INFO  - Finish environment cleanup.

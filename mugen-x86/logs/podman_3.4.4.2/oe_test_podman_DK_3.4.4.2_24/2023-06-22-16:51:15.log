@@ -1,0 +1,276 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Thu Jun 22 16:51:17 2023 - INFO  - Start environment preparation.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
+Thu Jun 22 16:51:21 2023 - INFO  - pkgs:(podman podman-docker) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ docker rm --all
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker rmi --all
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Thu Jun 22 16:51:22 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Thu Jun 22 16:51:22 2023 - INFO  - Start executing testcase.
+++ docker create --name postgres docker.io/library/nginx
+++ sed -n '$p'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull docker.io/library/nginx:latest...
+Getting image source signatures
+Copying blob sha256:5b5fe70539cd6989aa19f25826309f9715a9489cf1c057982d6a84c1ad8975c7
+Copying blob sha256:4b98867cde79486d55399cb95957331018b849a2bf04ee9a6dcae9b8bc482d76
+Copying blob sha256:3b9543f2b5005b74aae0ffaa779803f2b162ec3bd461c9e10a21671512718c87
+Copying blob sha256:ca89ed5461a9f2c681ebd39ed6583a7405d82f51b42177b7388c99eb6869e780
+Copying blob sha256:441a1b46536703aec84bf2cabdd2524d4cc7dad9c6772491e01ff8ffe15b5507
+Copying blob sha256:b0e1283145af839c63923f671b4ab6c5d9e22826ab4372c6660db5a5556446c8
+Copying blob sha256:5b5fe70539cd6989aa19f25826309f9715a9489cf1c057982d6a84c1ad8975c7
+Copying blob sha256:b0e1283145af839c63923f671b4ab6c5d9e22826ab4372c6660db5a5556446c8
+Copying blob sha256:4a85ce26214d83c77b5464631a67c71e1c2793b655261befe52ba0e20ffc3bd1
+Copying blob sha256:3b9543f2b5005b74aae0ffaa779803f2b162ec3bd461c9e10a21671512718c87
+Copying blob sha256:4b98867cde79486d55399cb95957331018b849a2bf04ee9a6dcae9b8bc482d76
+Copying blob sha256:ca89ed5461a9f2c681ebd39ed6583a7405d82f51b42177b7388c99eb6869e780
+Copying blob sha256:4a85ce26214d83c77b5464631a67c71e1c2793b655261befe52ba0e20ffc3bd1
+Copying blob sha256:441a1b46536703aec84bf2cabdd2524d4cc7dad9c6772491e01ff8ffe15b5507
+Copying config sha256:eb4a57159180767450cb8426e6367f11b999653d8f185b5e3b78a9ca30c2c31d
+Writing manifest to image destination
+Storing signatures
++ id=3fe8d0920a536d2643dd468cb884488fa03f38bebfc3ce7f3f537f8bcdcc9238
++ test -z 3fe8d0920a536d2643dd468cb884488fa03f38bebfc3ce7f3f537f8bcdcc9238
++ CHECK_RESULT 1 1 0 'check ${id} failed'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='check ${id} failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ docker container stop postgres
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+postgres
++ CHECK_RESULT 0 0 0 'check docker container stop postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker container stop postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker container rm postgres
++ grep 3fe8d0920a536d2643dd468cb884488fa03f38bebfc3ce7f3f537f8bcdcc9238
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+3fe8d0920a536d2643dd468cb884488fa03f38bebfc3ce7f3f537f8bcdcc9238
++ CHECK_RESULT 0 0 0 'check docker container rm postgres | grep ${id} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker container rm postgres | grep ${id} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker container ls
++ grep postgres
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 1 1 0 'check docker container ls | grep postgres failed'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='check docker container ls | grep postgres failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ docker create --name postgres1 docker.io/library/nginx
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+9f77f183fb4276f01eca3f322789a3ef30a6aa97c30b345a2747cc699177026f
++ docker container stop postgres1
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+postgres1
++ CHECK_RESULT 0 0 0 'check docker container stop postgres1 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker container stop postgres1 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker container cleanup postgres1
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+9f77f183fb4276f01eca3f322789a3ef30a6aa97c30b345a2747cc699177026f
++ CHECK_RESULT 0 0 0 'check docker container cleanup postgres1 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker container cleanup postgres1 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker create --name postgres2 docker.io/library/nginx
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+0b9ec7def88a877d84e70e5aaf74fe0942e9f821fcce7e405e099a3611737e09
++ CHECK_RESULT 0 0 0 'check docker create --name postgres2 docker.io/library/nginx failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker create --name postgres2 docker.io/library/nginx failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker start postgres2
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T17:00:30Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+postgres2
++ docker exec -it postgres2 ls
++ grep bin
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+bin   docker-entrypoint.d   home   lib64   mnt	 root  srv  usr
+dev   etc		    lib32  media   proc  sbin  tmp
++ CHECK_RESULT 0 0 0 'check docker exec -it postgres2 ls | grep "bin" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker exec -it postgres2 ls | grep "bin" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep docker-entrypoint.d
++ docker exec --privileged postgres2 ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+docker-entrypoint.d
++ CHECK_RESULT 0 0 0 'check docker exec --privileged postgres2 ls failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker exec --privileged postgres2 ls failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker exec --user root postgres2 ls
++ grep home
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+home
++ docker stop postgres2
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+postgres2
++ CHECK_RESULT 0 0 0 'check docker stop postgres2 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker stop postgres2 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker rm postgres2 postgres1
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+9f77f183fb4276f01eca3f322789a3ef30a6aa97c30b345a2747cc699177026f
+0b9ec7def88a877d84e70e5aaf74fe0942e9f821fcce7e405e099a3611737e09
++ CHECK_RESULT 0 0 0 'check docker rm postgres2 postgres1 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker rm postgres2 postgres1 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End executing testcase.'
++ message='End executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End executing testcase.'
+Thu Jun 22 17:00:35 2023 - INFO  - End executing testcase.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 17:00:35 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu Jun 22 17:00:35 2023 - INFO  - start environment cleanup.
++ clear_env
++ podman stop postgres
+Error: no container with name or ID "postgres" found: no such container
++ podman rm --all
++ podman rmi -f --all
+Untagged: docker.io/library/nginx:latest
+Deleted: eb4a57159180767450cb8426e6367f11b999653d8f185b5e3b78a9ca30c2c31d
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Jun 22 17:00:38 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Thu Jun 22 17:00:38 2023 - INFO  - Finish environment cleanup.

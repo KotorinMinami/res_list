@@ -1,0 +1,344 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 12:06:26 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpftwe_l1h
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpftwe_l1h
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T12:09:29Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 12:09:30 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 12:09:31 2023 - INFO  - Start to run test.
++ podman help
++ grep -E 'podman|help'
+  podman [options] [command]
+  events      Show podman events
+  help        Help about any command
+  info        Display podman system information
+  system      Manage podman
+      --help                       Help for podman
+      --url string                 URL to access Podman service (CONTAINER_HOST) (default "unix:/run/podman/podman.sock")
++ CHECK_RESULT 0 0 0 'check podman --help test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman --help test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman create alpine
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying config sha256:c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Writing manifest to image destination
+Storing signatures
+5eb229bc24a56b5d65551c6e164b8ff59936247b54b189c9793dd40a7433931f
++ CHECK_RESULT 0 0 0 'check create alpine failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check create alpine failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a
++ grep -i Created
+CONTAINER ID  IMAGE                                           COMMAND     CREATED                 STATUS                     PORTS       NAMES
+5eb229bc24a5  docker.io/library/alpine:latest                 /bin/sh     Less than a second ago  Created                                romantic_antonelli
++ CHECK_RESULT 0 0 0 'check ps -a test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check ps -a test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --annotation HELLO=WORLD alpine
++ ID=578cc96517ed4733032268412ea333b987781ba58fe3ab0fbc7947fda7ddaa99
++ podman inspect 578cc96517ed4733032268412ea333b987781ba58fe3ab0fbc7947fda7ddaa99
++ grep '"HELLO": "WORLD"'
+                "HELLO": "WORLD",
++ CHECK_RESULT 0 0 0 'check grep hello world failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check grep hello world failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman create --attach STDIN alpine ls
+affae163fe170f08b36868854e604df3496325b56d495fcc2908e33704ae4539
++ CHECK_RESULT 0 0 0 'check podman create --attach STDIN alpine ls failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman create --attach STDIN alpine ls failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a
++ grep ls
+affae163fe17  docker.io/library/alpine:latest                 ls          Less than a second ago  Created                                great_payne
++ CHECK_RESULT 0 0 0 'check podman ps -a | grep ls failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -a | grep ls failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --blkio-weight 15 alpine ls
+Your kernel does not support Block I/O weight or the cgroup is not mounted. Weight discarded.
++ ID=a2d84da291c708d80ece3171b21b4c1654ca286ff97d3801cedeb28c6a2d8614
++ podman inspect a2d84da291c708d80ece3171b21b4c1654ca286ff97d3801cedeb28c6a2d8614
++ grep '"BlkioWeight": 15'
++ CHECK_RESULT 1 0 0 'check "BlkioWeight": 15 test failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check "BlkioWeight": 15 test failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check "BlkioWeight": 15 test failed'
++ LOG_ERROR 'check "BlkioWeight": 15 test failed'
++ message='check "BlkioWeight": 15 test failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check "BlkioWeight": 15 test failed'
+Thu Jun 22 12:09:57 2023 - ERROR - check "BlkioWeight": 15 test failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_08.sh line 46'
++ message='oe_test_podman_3.4.4.2_08.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_08.sh line 46'
+Thu Jun 22 12:09:57 2023 - ERROR - oe_test_podman_3.4.4.2_08.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
+++ podman create --blkio-weight-device /dev/:15 fedora ls
+Resolved "fedora" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull registry.fedoraproject.org/fedora:latest...
+Getting image source signatures
+Copying blob sha256:9c86172b66b31d7bf3d9f28325b7fcf737db2adad6d551b31dd213185f0435c6
+Copying blob sha256:9c86172b66b31d7bf3d9f28325b7fcf737db2adad6d551b31dd213185f0435c6
+Copying config sha256:0e79e93fc530998e29e00eeea134f53002d000be3f24c7716e2eb3ed2b35162f
+Writing manifest to image destination
+Storing signatures
+panic: assignment to entry in nil map
+
+goroutine 1 [running]:
+github.com/containers/podman/pkg/specgenutil.parseWeightDevices(0xc000510e00, {0xc00035e230?, 0x1, 0x0?})
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/pkg/specgenutil/specgen.go:794 +0x150
+github.com/containers/podman/pkg/specgenutil.getIOLimits(0xc000510e00, 0x5654df62d080)
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/pkg/specgenutil/specgen.go:87 +0xdd
+github.com/containers/podman/pkg/specgenutil.FillOutSpecGen(0xc000510e00, 0x5654df62d080, {0xc00007e3c0, 0x2, 0x4})
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/pkg/specgenutil/specgen.go:465 +0x15a7
+github.com/containers/podman/cmd/podman/containers.create(0x5654df58f3c0?, {0xc00007e3c0?, 0x2, 0x4})
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:138 +0x458
+github.com/containers/podman/vendor/github.com/spf13/cobra.(*Command).execute(0x5654df58f3c0, {0xc000040200, 0x4, 0x4})
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/cobra/command.go:856 +0x67c
+github.com/containers/podman/vendor/github.com/spf13/cobra.(*Command).ExecuteC(0x5654df5a2c40)
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/cobra/command.go:974 +0x3bd
+github.com/containers/podman/vendor/github.com/spf13/cobra.(*Command).Execute(...)
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/cobra/command.go:902
+github.com/containers/podman/vendor/github.com/spf13/cobra.(*Command).ExecuteContext(...)
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/cobra/command.go:895
+main.Execute()
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/root.go:91 +0xc5
+main.main()
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/main.go:39 +0x74
++ ID=
++ podman inspect
++ grep '"weight": 15'
+Error: no names or ids specified
++ CHECK_RESULT 1 0 0 'check "weight": 15 test failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check "weight": 15 test failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check "weight": 15 test failed'
++ LOG_ERROR 'check "weight": 15 test failed'
++ message='check "weight": 15 test failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check "weight": 15 test failed'
+Thu Jun 22 12:10:39 2023 - ERROR - check "weight": 15 test failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_08.sh line 49'
++ message='oe_test_podman_3.4.4.2_08.sh line 49'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_08.sh line 49'
+Thu Jun 22 12:10:39 2023 - ERROR - oe_test_podman_3.4.4.2_08.sh line 49
++ '[' 0 -eq 1 ']'
++ return 0
+++ podman create --cap-add net_admin alpine ls
++ ID=cb64aaa05c9e7fae6d346fd4a1372104c09d5261bde3ca37dd6d1a884615ccf3
++ podman inspect cb64aaa05c9e7fae6d346fd4a1372104c09d5261bde3ca37dd6d1a884615ccf3
++ grep -A 1 CapAdd
++ grep net_admin
++ CHECK_RESULT 1 0 0 'check net_admin test failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check net_admin test failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check net_admin test failed'
++ LOG_ERROR 'check net_admin test failed'
++ message='check net_admin test failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check net_admin test failed'
+Thu Jun 22 12:10:41 2023 - ERROR - check net_admin test failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_08.sh line 52'
++ message='oe_test_podman_3.4.4.2_08.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_08.sh line 52'
+Thu Jun 22 12:10:41 2023 - ERROR - oe_test_podman_3.4.4.2_08.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
+++ podman create --cap-drop net_admin alpine ls
++ ID=6210d95167e65e8b728daf0b71640134f2ae4cee7ac5b2304fb3ba9c60f20275
++ podman inspect 6210d95167e65e8b728daf0b71640134f2ae4cee7ac5b2304fb3ba9c60f20275
++ grep -A 1 CapDrop
++ grep net_admin
++ CHECK_RESULT 1 0 0 'check CapDrop test failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check CapDrop test failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check CapDrop test failed'
++ LOG_ERROR 'check CapDrop test failed'
++ message='check CapDrop test failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check CapDrop test failed'
+Thu Jun 22 12:10:43 2023 - ERROR - check CapDrop test failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_08.sh line 55'
++ message='oe_test_podman_3.4.4.2_08.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_08.sh line 55'
+Thu Jun 22 12:10:43 2023 - ERROR - oe_test_podman_3.4.4.2_08.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 12:10:44 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 12:10:44 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 12:10:44 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+6210d95167e65e8b728daf0b71640134f2ae4cee7ac5b2304fb3ba9c60f20275
+a2d84da291c708d80ece3171b21b4c1654ca286ff97d3801cedeb28c6a2d8614
+affae163fe170f08b36868854e604df3496325b56d495fcc2908e33704ae4539
+cb64aaa05c9e7fae6d346fd4a1372104c09d5261bde3ca37dd6d1a884615ccf3
+f4ae9d8fde595307748686c8d6ab3109381e65b3edfa3642c9882702e63a8b42
+578cc96517ed4733032268412ea333b987781ba58fe3ab0fbc7947fda7ddaa99
+5eb229bc24a56b5d65551c6e164b8ff59936247b54b189c9793dd40a7433931f
++ podman rm --all
+6210d95167e65e8b728daf0b71640134f2ae4cee7ac5b2304fb3ba9c60f20275
+a2d84da291c708d80ece3171b21b4c1654ca286ff97d3801cedeb28c6a2d8614
+affae163fe170f08b36868854e604df3496325b56d495fcc2908e33704ae4539
+cb64aaa05c9e7fae6d346fd4a1372104c09d5261bde3ca37dd6d1a884615ccf3
+f4ae9d8fde595307748686c8d6ab3109381e65b3edfa3642c9882702e63a8b42
+578cc96517ed4733032268412ea333b987781ba58fe3ab0fbc7947fda7ddaa99
+5eb229bc24a56b5d65551c6e164b8ff59936247b54b189c9793dd40a7433931f
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: docker.io/library/alpine:latest
+Untagged: registry.fedoraproject.org/fedora:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Deleted: c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Deleted: 0e79e93fc530998e29e00eeea134f53002d000be3f24c7716e2eb3ed2b35162f
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpftwe_l1h ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpftwe_l1h
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 12:11:42 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,340 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ source ./common/lib/util.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 12:02:08 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'rubygem-fluentd tar'
++ pkgs='rubygem-fluentd tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'rubygem-fluentd tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmplvdy0qvk
++ '[' -z '' ']'
++ tmpfile=/tmp/tmplvdy0qvk
++ extract_data
++ [[ -f ./common/data.tar.gz ]]
++ tar -xvf ./common/data.tar.gz
++ useradd demo
++ chown -R demo:demo ./data
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 12:02:55 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 12:02:56 2023 - INFO  - Start to run test.
++ SLEEP_WAIT 5
++ fluentd -c ./data/in_forward.conf -v -o log.file
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep debug log.file
+grep: log.file: No such file or directory
++ CHECK_RESULT 2 0 0 'Check fluentd -v failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Check fluentd -v failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Check fluentd -v failed'
++ LOG_ERROR 'Check fluentd -v failed'
++ message='Check fluentd -v failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check fluentd -v failed'
+Thu Jun 22 12:03:02 2023 - ERROR - Check fluentd -v failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fluentd_04.sh line 32'
++ message='oe_test_fluentd_04.sh line 32'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fluentd_04.sh line 32'
+Thu Jun 22 12:03:02 2023 - ERROR - oe_test_fluentd_04.sh line 32
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 6151
++ rm -f log.file
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ fluentd -c ./data/in_forward.conf --verbose -o log.file
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  6151 Killed                  fluentd -c ./data/in_forward.conf -v -o log.file
++ grep debug log.file
++ CHECK_RESULT 1 0 0 'Check fluentd --verbose failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --verbose failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check fluentd --verbose failed'
++ LOG_ERROR 'Check fluentd --verbose failed'
++ message='Check fluentd --verbose failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check fluentd --verbose failed'
+Thu Jun 22 12:03:08 2023 - ERROR - Check fluentd --verbose failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fluentd_04.sh line 38'
++ message='oe_test_fluentd_04.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fluentd_04.sh line 38'
+Thu Jun 22 12:03:09 2023 - ERROR - oe_test_fluentd_04.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 6162 6170
++ rm -f log.file
++ SLEEP_WAIT 5
++ fluentd -c ./data/in_forward.conf -q -o log.file
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  6162 Killed                  fluentd -c ./data/in_forward.conf --verbose -o log.file
++ grep info log.file
+grep: log.file: No such file or directory
++ CHECK_RESULT 2 1 0 'Check fluentd -q failed'
++ actual_result=2
++ expect_result=1
++ mode=0
++ error_log='Check fluentd -q failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 1x
++ test -n 'Check fluentd -q failed'
++ LOG_ERROR 'Check fluentd -q failed'
++ message='Check fluentd -q failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check fluentd -q failed'
+Thu Jun 22 12:03:15 2023 - ERROR - Check fluentd -q failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fluentd_04.sh line 44'
++ message='oe_test_fluentd_04.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fluentd_04.sh line 44'
+Thu Jun 22 12:03:15 2023 - ERROR - oe_test_fluentd_04.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 6174 6183
++ rm -f log.file
++ SLEEP_WAIT 5
++ fluentd -c ./data/in_forward.conf --quiet -o log.file
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  6174 Killed                  fluentd -c ./data/in_forward.conf -q -o log.file
++ grep info log.file
++ CHECK_RESULT 1 1 0 'Check fluentd --quiet failed'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='Check fluentd --quiet failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 6186
++ rm -f log.file
++ SLEEP_WAIT 5
++ fluentd -c ./data/v1_config.conf --suppress-config-dump -o log.file
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  6186 Killed                  fluentd -c ./data/in_forward.conf --quiet -o log.file
++ grep 'type monitor_agent' log.file
++ CHECK_RESULT 1 1 0 'Check fluentd --suppress-config-dump failed'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='Check fluentd --suppress-config-dump failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 6191 6197
++ rm -f log.file
++ su demo -c 'fluentd --gemfile ./data/Gemfile &'
+oe_test_fluentd_04.sh: line 27:  6191 Killed                  fluentd -c ./data/v1_config.conf --suppress-config-dump -o log.file
++ SLEEP_WAIT 30
++ wait_time=30
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 30 --cmd '' --mode 1
+
+[!] There was an error parsing `Gemfile`: No such file or directory @ rb_sysopen - /data/Gemfile. Bundler cannot continue.
++ ls -al ./data
++ grep vendor
++ CHECK_RESULT 1 0 0 'Check fluentd --gemfile failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --gemfile failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check fluentd --gemfile failed'
++ LOG_ERROR 'Check fluentd --gemfile failed'
++ message='Check fluentd --gemfile failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check fluentd --gemfile failed'
+Thu Jun 22 12:03:58 2023 - ERROR - Check fluentd --gemfile failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fluentd_04.sh line 62'
++ message='oe_test_fluentd_04.sh line 62'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fluentd_04.sh line 62'
+Thu Jun 22 12:03:58 2023 - ERROR - oe_test_fluentd_04.sh line 62
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'fluentd --gemfile'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ rm -rf ./data/vendor Gemfile.lock
++ exit
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 12:03:59 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmplvdy0qvk ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmplvdy0qvk
++ '[' 0 -ne 0 ']'
++ clean_dir
+++ ls
++ filelist='common
+data
+example
+lib
+loki
+oe_test_fluent_binlog_reader.sh
+oe_test_fluent_ca_generate.sh
+oe_test_fluent_cap_ctl.sh
+oe_test_fluent_cat_01.sh
+oe_test_fluent_cat_02_2003.sh
+oe_test_fluent_cat_02.sh
+oe_test_fluent_ctl.sh
+oe_test_fluentd_01_2003.sh
+oe_test_fluentd_01.sh
+oe_test_fluentd_02.sh
+oe_test_fluentd_03_2003.sh
+oe_test_fluentd_03.sh
+oe_test_fluentd_04.sh
+oe_test_fluent_debug.sh
+oe_test_fluent_gem_01_2003.sh
+oe_test_fluent_gem_01.sh
+oe_test_fluent_gem_02_2003.sh
+oe_test_fluent_gem_02.sh
+oe_test_fluent_gem_03_2003.sh
+oe_test_fluent_gem_03.sh
+oe_test_fluent_plugin_config_format_2003.sh
+oe_test_fluent_plugin_config_format.sh
+oe_test_fluent_plugin_generate.sh
+rubygem-fluentd.md'
++ for filename in ${filelist[@]}
++ [[ -d common ]]
++ [[ ! commonx == \c\o\m\m\o\n\x ]]
++ for filename in ${filelist[@]}
++ [[ -d data ]]
++ [[ ! datax == \c\o\m\m\o\n\x ]]
++ rm -rf data
++ for filename in ${filelist[@]}
++ [[ -d example ]]
++ [[ ! examplex == \c\o\m\m\o\n\x ]]
++ rm -rf example
++ for filename in ${filelist[@]}
++ [[ -d lib ]]
++ [[ ! libx == \c\o\m\m\o\n\x ]]
++ rm -rf lib
++ for filename in ${filelist[@]}
++ [[ -d loki ]]
++ [[ ! lokix == \c\o\m\m\o\n\x ]]
++ rm -rf loki
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_binlog_reader.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_ca_generate.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cap_ctl.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_02_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_ctl.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_01_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_03_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_03.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_04.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_debug.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_01_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_02_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_03_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_03.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_config_format_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_config_format.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_generate.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d rubygem-fluentd.md ]]
++ userdel -r demo
++ chown -R root:root ./data
+chown: cannot access './data': No such file or directory
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 12:04:16 2023 - INFO  - End to restore the test environment.

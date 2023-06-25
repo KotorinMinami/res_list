@@ -1,0 +1,283 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 15:30:41 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
+Thu Jun 22 15:30:46 2023 - INFO  - pkgs:(podman podman-docker) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ docker pull registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ docker run --name postgres registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T15:31:11Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 15:31:12 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 15:31:13 2023 - INFO  - Start to run test.
+++ docker create --cgroup-parent /tmp alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3
+Copying blob sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3
+Copying config sha256:c1aabb73d2339c5ebaa3681de2e9d9c18d57485045a4e311d9f8004bec208d67
+Writing manifest to image destination
+Storing signatures
++ ID=d981f698a9ccae668fd06b88ce8799cea1b89e864751aa5efa6cad505a2ef1ff
++ docker inspect d981f698a9ccae668fd06b88ce8799cea1b89e864751aa5efa6cad505a2ef1ff
++ grep '"CgroupParent"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "CgroupParent": "/tmp",
++ CHECK_RESULT 0 0 0 'check docker inspect $ID failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --cidfile cidfile alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=2c4ec840ae608b86a082554caa90b9a537418f9f78ce057bff597b55aa8b9935
++ grep 2c4ec840ae608b86a082554caa90b9a537418f9f78ce057bff597b55aa8b9935 cidfile
+2c4ec840ae608b86a082554caa90b9a537418f9f78ce057bff597b55aa8b9935
++ CHECK_RESULT 0 0 0 'check grep $ID cidfile failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check grep $ID cidfile failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --conmon-pidfile ./ alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5
++ grep 023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5
++ docker inspect 023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+        "Id": "023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5",
+        "StaticDir": "/var/lib/containers/storage/overlay-containers/023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5/userdata",
+        "PidFile": "/run/containers/storage/overlay-containers/023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5/userdata/pidfile",
+            "023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5"
+                "Path": "/var/lib/containers/storage/overlay-containers/023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5/userdata/ctr.log",
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep $ID failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep $ID failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --cpu-period 10000 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=f8a19201af8d822f7c0d6bfba8b0ef80b516d5a7c0f623045d018cbe8fc41609
++ docker inspect f8a19201af8d822f7c0d6bfba8b0ef80b516d5a7c0f623045d018cbe8fc41609
++ grep '"CpuPeriod": 10000'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "CpuPeriod": 10000,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID CpuPeriod failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID CpuPeriod failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --cpu-quota 1001 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=f6a8f791deef6981779f2a7990ec83adacb241c02ac6f4bbda83396632aa9adc
++ docker inspect f6a8f791deef6981779f2a7990ec83adacb241c02ac6f4bbda83396632aa9adc
++ grep '"CpuQuota": 1001'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "CpuQuota": 1001,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID CpuQuota failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID CpuQuota failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --cpu-rt-period 1 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=2250f2d20a3019814149e1bd7a283d3cea15c8c8b8d041eea3a4868611354dd2
++ grep '"CpuRealtimePeriod": 1'
++ docker inspect 2250f2d20a3019814149e1bd7a283d3cea15c8c8b8d041eea3a4868611354dd2
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "CpuRealtimePeriod": 1,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID CpuRealtimePeriod failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID CpuRealtimePeriod failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --cpu-rt-runtime 2 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=385f3099c730bbda18f1d3126f9281f6bcb71e76d43ba38aae2363ca37a33644
++ docker inspect 385f3099c730bbda18f1d3126f9281f6bcb71e76d43ba38aae2363ca37a33644
++ grep '"CpuRealtimeRuntime": 2'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "CpuRealtimeRuntime": 2,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID CpuRealtimeRuntime failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID CpuRealtimeRuntime failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --cpu-shares 3 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=27612e7c71ed713c7151237bfbe3a2e5321bd682a0d911f6f64e6506eee9645a
++ docker inspect 27612e7c71ed713c7151237bfbe3a2e5321bd682a0d911f6f64e6506eee9645a
++ grep '"CpuShares": 3'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "CpuShares": 3,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID CpuShares failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID CpuShares failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --cpus 4 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=804f0cc2cccc4d7dfece8175ee1c15491b1fd6dab3d7f6193cfeb20b215ca7d8
++ docker inspect 804f0cc2cccc4d7dfece8175ee1c15491b1fd6dab3d7f6193cfeb20b215ca7d8
++ grep '"CpuQuota": 400000'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "CpuQuota": 400000,
++ CHECK_RESULT 0 0 0 'check docker inspect $ID failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 15:32:33 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 15:32:34 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 15:32:34 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop postgres
+postgres
++ podman rm --all
+023a0ff132bd356717a0cbc08b0b4a1640327896b362c77f8f39937977211be5
+80f3869fb0341d003888ad56b9f1d170bec1668c6e6977ace7badbcb0a37ac34
+f6a8f791deef6981779f2a7990ec83adacb241c02ac6f4bbda83396632aa9adc
+f8a19201af8d822f7c0d6bfba8b0ef80b516d5a7c0f623045d018cbe8fc41609
+2250f2d20a3019814149e1bd7a283d3cea15c8c8b8d041eea3a4868611354dd2
+385f3099c730bbda18f1d3126f9281f6bcb71e76d43ba38aae2363ca37a33644
+804f0cc2cccc4d7dfece8175ee1c15491b1fd6dab3d7f6193cfeb20b215ca7d8
+27612e7c71ed713c7151237bfbe3a2e5321bd682a0d911f6f64e6506eee9645a
+2c4ec840ae608b86a082554caa90b9a537418f9f78ce057bff597b55aa8b9935
+d981f698a9ccae668fd06b88ce8799cea1b89e864751aa5efa6cad505a2ef1ff
++ podman rmi -f --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: docker.io/library/alpine:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Deleted: c1aabb73d2339c5ebaa3681de2e9d9c18d57485045a4e311d9f8004bec208d67
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Jun 22 15:32:37 2023 - WARN  - no thing to do.
++ return 0
+++ ls
+++ grep -vE .sh
++ rm -rf cidfile
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 15:32:37 2023 - INFO  - End to restore the test environment.

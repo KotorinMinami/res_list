@@ -1,0 +1,209 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Thu Jun 22 15:43:05 2023 - INFO  - Start environment preparation.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
+Thu Jun 22 15:43:10 2023 - INFO  - pkgs:(podman podman-docker) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ docker rm --all
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ cp ../common/test.json .
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Thu Jun 22 15:43:11 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Thu Jun 22 15:43:11 2023 - INFO  - Start executing testcase.
++ docker search --limit 5 term
++ wc -l
++ grep 6
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+6
++ CHECK_RESULT 0 0 0 'check docker search --limit 5 term | wc -l | grep 6 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker search --limit 5 term | wc -l | grep 6 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker search --no-trunc term
++ grep docker.io
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+docker.io   docker.io/kasmweb/terminal                        xfce4-terminal for Kasm Workspaces                                                                10                      
+docker.io   docker.io/okteto/terminal                                                                                                                           1                       
+docker.io   docker.io/alvearie/term-services-prep                                                                                                               0                       
+docker.io   docker.io/cortexproject/cortex                    Cortex: horizontally scalable, highly available, multi-tenant, long term storage for Prometheus.  4                       
+docker.io   docker.io/virtualflybrain/docker-vfb-solr         SOLR search server loaded with FBBT ontology and VFB image terms                                  0                       [OK]
+docker.io   docker.io/wrenchproject/eduwrench-slurm-terminal  Interactive terminal to interact with a simulated Slurm                                           0                       
+docker.io   docker.io/eucm/nginx-ssl-proxy                    Nginx used as an ssl termination proxy                                                            0                       [OK]
+docker.io   docker.io/terminusdb/terminusdb-server            TerminusDB server                                                                                 2                       
+docker.io   docker.io/termux/package-builder                  Image for building termux packages                                                                18                      
+docker.io   docker.io/terminusdb/terminus-server              DEPRECATED. See image repo: terminusdb/terminusdb-server                                          0                       
+docker.io   docker.io/termonello/weatherapi                                                                                                                     0                       
+docker.io   docker.io/terminus/herd                           Terminus herd.                                                                                    1                       [OK]
+docker.io   docker.io/terminusdb/terminus_store_prolog                                                                                                          0                       
+docker.io   docker.io/termit/training-apache                  Apache image for the Kubernetes training                                                          1                       
+docker.io   docker.io/alrmc/terminus-backup                   Rough container to fetch a backup from Pantheon and upload to Azure Blob storage.                 0                       
+docker.io   docker.io/terminalxtools/aws-ecr-docker                                                                                                             3                       
+docker.io   docker.io/terminalco/aws-cli                                                                                                                        1                       
+docker.io   docker.io/termbox/termbox                         Termbox                                                                                           0                       
+docker.io   docker.io/terminusdb/swipl                        SWI Prolog build                                                                                  0                       
+docker.io   docker.io/savaslabs/terminus-docker               Automated build of Terminus image.                                                                1                       [OK]
+docker.io   docker.io/terminus7/gitea-oauth2-setup                                                                                                              0                       
+docker.io   docker.io/terminalco/node-serverless                                                                                                                0                       
+docker.io   docker.io/termux/termux-docker                                                                                                                      7                       
+docker.io   docker.io/terminus7/deep-learning                 Collection of CUDA enabled containers for deep learning                                           4                       [OK]
+docker.io   docker.io/terminus7/gpu-py3                       CUDA enabled container with Python 3                                                              0                       [OK]
++ CHECK_RESULT 0 0 0 'check docker search --no-trunc term | grep "docker.io" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker search --no-trunc term | grep "docker.io" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker search --authfile test.json term
++ grep -i DESCRIPTION
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+INDEX       NAME                                              DESCRIPTION                                      STARS       OFFICIAL    AUTOMATED
++ CHECK_RESULT 0 0 0 'check docker search --authfile test.json term | grep -i "DESCRIPTION" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker search --authfile test.json term | grep -i "DESCRIPTION" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker search json --format json
++ grep json
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+        "Name": "docker.io/bitnami/jsonnet",
+        "Name": "docker.io/grafana/jsonnet-build",
+        "Name": "docker.io/pipelinecomponents/jsonlint",
+        "Name": "docker.io/blaseballsibr/json2csv",
+        "Name": "docker.io/leplusorg/json",
+        "Name": "docker.io/biocontainers/json2isatab",
+        "Description": "A container image definition for the json2is...",
+        "Name": "docker.io/islasgeci/json2csv",
+        "Name": "docker.io/pipelinecomponents/jsonlint-amd64",
+        "Name": "docker.io/redislabs/rejson",
+        "Name": "docker.io/fnndsc/pl-csv2json",
+        "Name": "docker.io/jsonfry/curl-cron",
+        "Name": "docker.io/jsong11111/fmg",
+        "Name": "docker.io/json0/opg-test",
+        "Name": "docker.io/jsonfry/android-sdk",
+        "Name": "docker.io/cilium/json-mock",
+        "Description": "Simple container image for json-server to mo...",
+        "Name": "docker.io/jsonnetlibs/docsonnet",
+        "Name": "docker.io/jsongo/certbot-nginx",
++ CHECK_RESULT 0 0 0 'check docker search json --format json | grep "json" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker search json --format json | grep "json" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker search --tls-verify true
++ grep -i docker.io
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+docker.io   docker.io/truehostcloud/truehostcloud-markeplace  truehostcloud marketplace script                 0                       
+docker.io   docker.io/truehostcloud/tsa-whmcs                 truehost africa                                  0                       
+docker.io   docker.io/trueworkeng/python                      Truework-updated python container                0                       
+docker.io   docker.io/truehostcloud/baddomains-whmcs          baddomains-whmcs                                 0                       
+docker.io   docker.io/truehostcloud/cloudoon-whmcs            cloudoon-whmcs                                   0                       
+docker.io   docker.io/truehostcloud/tn-whmcs                  tn-whmcs                                         0                       
+docker.io   docker.io/truevoly/oracle-12c                     Copy of sath89/oracle-12c image (https://git...  55                      
+docker.io   docker.io/truehostcloud/tk-whmcs                  TK WHMCS                                         0                       
+docker.io   docker.io/truemark/helloworld-java                                                                 0                       
+docker.io   docker.io/trueslu/logodot-generator                                                                0                       
+docker.io   docker.io/trueosiris/minecraft-skyfactory4        Skyfactory 4 dedicated server as a docker co...  2                       
+docker.io   docker.io/trueface/visionbox                                                                       1                       
+docker.io   docker.io/truehostcloud/hostbuddy-whmcs           host                                             0                       
+docker.io   docker.io/truehostcloud/cloudblue-whmcs           cloudblue-whmcs                                  0                       
+docker.io   docker.io/truehostcloud/zillah-whmcs              zillah                                           0                       
+docker.io   docker.io/truehostcloud/olitt-whmcs                                                                0                       
+docker.io   docker.io/trueaccord/dogpush                      Manager DataDog alerts using local files.        0                       [OK]
+docker.io   docker.io/truemark/sqlplus                                                                         1                       
+docker.io   docker.io/truecar/gluestick                       GlueStick Base Image                             5                       
+docker.io   docker.io/truehostcloud/supportpal                                                                 0                       
+docker.io   docker.io/trueability/guacamole-noauth            Guacamole With NoAuth Extension                  2                       
+docker.io   docker.io/trueability/guacd                       Guacd With FFMPEG/Guacenc Support                1                       
+docker.io   docker.io/truemail/truemail-rack                  Lightweight rack based web API dockerized im...  2                       
+docker.io   docker.io/trueface/agebox                                                                          0                       
+docker.io   docker.io/trueability/guacamole-webserver-nodb                                                     0                       
++ CHECK_RESULT 0 0 0 'check docker search --tls-verify true | grep -i "docker.io" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker search --tls-verify true | grep -i "docker.io" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker pull docker.io/library/nginx
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull docker.io/library/nginx:latest...
+Getting image source signatures
+Copying blob sha256:4b98867cde79486d55399cb95957331018b849a2bf04ee9a6dcae9b8bc482d76
+Copying blob sha256:3b9543f2b5005b74aae0ffaa779803f2b162ec3bd461c9e10a21671512718c87
+Copying blob sha256:5b5fe70539cd6989aa19f25826309f9715a9489cf1c057982d6a84c1ad8975c7
+Copying blob sha256:ca89ed5461a9f2c681ebd39ed6583a7405d82f51b42177b7388c99eb6869e780
+Copying blob sha256:441a1b46536703aec84bf2cabdd2524d4cc7dad9c6772491e01ff8ffe15b5507
+Copying blob sha256:b0e1283145af839c63923f671b4ab6c5d9e22826ab4372c6660db5a5556446c8
+Copying blob sha256:4a85ce26214d83c77b5464631a67c71e1c2793b655261befe52ba0e20ffc3bd1
+Copying blob sha256:3b9543f2b5005b74aae0ffaa779803f2b162ec3bd461c9e10a21671512718c87
+Copying blob sha256:4a85ce26214d83c77b5464631a67c71e1c2793b655261befe52ba0e20ffc3bd1
+Copying blob sha256:4b98867cde79486d55399cb95957331018b849a2bf04ee9a6dcae9b8bc482d76
+Copying blob sha256:441a1b46536703aec84bf2cabdd2524d4cc7dad9c6772491e01ff8ffe15b5507
+Copying blob sha256:b0e1283145af839c63923f671b4ab6c5d9e22826ab4372c6660db5a5556446c8
+Copying blob sha256:ca89ed5461a9f2c681ebd39ed6583a7405d82f51b42177b7388c99eb6869e780
+Thu Jun 22 16:13:04 2023 - ERROR - Timeout : Command 'bash -x oe_test_podman_DK_3.4.4.2_22.sh' timed out after 1799.9998070300007 seconds

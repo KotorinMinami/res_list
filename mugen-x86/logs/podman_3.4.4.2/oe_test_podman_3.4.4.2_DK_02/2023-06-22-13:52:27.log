@@ -1,0 +1,381 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 13:52:29 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpl1cv5ru1
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpl1cv5ru1
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 13:55:13 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 13:55:13 2023 - INFO  - Start to run test.
++ docker run --name postgres registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+time="2023-06-22T13:55:41Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ CHECK_RESULT 0 0 0 'check docker run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker pull registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ CHECK_RESULT 0 0 0 'check docker pull registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker pull registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep registry.access.redhat.com/ubi8-minimal
++ docker images --sort created
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check docker images --sort created failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker images --sort created failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker images
++ grep registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check docker images failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker images failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker stop postgres
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+postgres
++ CHECK_RESULT 0 0 0 'check docker stop postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker stop postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker commit postgres images1
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying blob sha256:29406098eea7d869121024a41416159b8e479685fb4a6f665509e72e8c83fde6
+Copying config sha256:1fd8a5654a84e6f091759a0bf2c9dbc3f5cc2c157c2aab512e043fc0ddc3b754
+Writing manifest to image destination
+Storing signatures
+1fd8a5654a84e6f091759a0bf2c9dbc3f5cc2c157c2aab512e043fc0ddc3b754
++ CHECK_RESULT 0 0 0 'check docker commit postgres images1 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker commit postgres images1 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep images1
++ docker images
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+localhost/images1                        latest      1fd8a5654a84  2 seconds ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check docker images | grep images1 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker images | grep images1 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker commit --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh postgres images2
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying blob sha256:29406098eea7d869121024a41416159b8e479685fb4a6f665509e72e8c83fde6
+Copying config sha256:db4bd1d35236d9d3395de93ad6574150e6e32f3baf9a7e381d721511a99f8e3a
+Writing manifest to image destination
+Storing signatures
+db4bd1d35236d9d3395de93ad6574150e6e32f3baf9a7e381d721511a99f8e3a
++ CHECK_RESULT 0 0 0 'check docker commit --change CMD=/bin/bash --change failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker commit --change CMD=/bin/bash --change failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker images
++ grep images2
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+localhost/images2                        latest      db4bd1d35236  2 seconds ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check docker images | grep images2 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker images | grep images2 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker commit -p postgres images3
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying blob sha256:29406098eea7d869121024a41416159b8e479685fb4a6f665509e72e8c83fde6
+Copying config sha256:8b7e3a0134fc6832e32290f2bc72ce3f532c1adab94c3af6481d4a2fcfe154bc
+Writing manifest to image destination
+Storing signatures
+8b7e3a0134fc6832e32290f2bc72ce3f532c1adab94c3af6481d4a2fcfe154bc
++ CHECK_RESULT 0 0 0 'check docker commit -p postgres images3 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker commit -p postgres images3 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker images
++ grep images3
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+localhost/images3                        latest      8b7e3a0134fc  2 seconds ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check docker images | grep images3 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker images | grep images3 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker commit -q postgres images4
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+45eb80b05537576825c2d7a049d8a0318df79f422906ae25f516bc4f265d5189
++ CHECK_RESULT 0 0 0 'check docker commit -q postgres images4 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker commit -q postgres images4 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker images
++ grep images4
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+localhost/images4                        latest      45eb80b05537  2 seconds ago   94.4 MB
++ CHECK_RESULT 0 0 0 'check docker images | grep images4 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker images | grep images4 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker commit -f docker -q --message 'committing container to image' postgres images5
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T13:55:58Z" level=warning msg="COMMENT is not supported for OCI image format, comment committing container to image will be ignored. Must use `docker` format"
+229b7f766571df5c6c43bff74a6a87c4663fef078592ae99a6aabc7582529e29
++ CHECK_RESULT 0 0 0 'check ocker commit -f docker -q --message failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check ocker commit -f docker -q --message failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker images
++ grep images5
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+localhost/images5                        latest      229b7f766571  2 seconds ago   94.4 MB
++ CHECK_RESULT 0 0 0 'check docker images | grep images5 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker images | grep images5 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image ls --quiet
+++ docker images -aq
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ grep '229b7f766571
+45eb80b05537
+8b7e3a0134fc
+db4bd1d35236
+1fd8a5654a84
+f4fb65011c56'
+229b7f766571
+45eb80b05537
+8b7e3a0134fc
+db4bd1d35236
+1fd8a5654a84
+f4fb65011c56
++ CHECK_RESULT 0 0 0 'check docker image ls --quiet failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image ls --quiet failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker image ls --sort size
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+REPOSITORY                               TAG         IMAGE ID      CREATED         SIZE
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago     94.4 MB
+localhost/images1                        latest      1fd8a5654a84  15 seconds ago  94.4 MB
+localhost/images3                        latest      8b7e3a0134fc  10 seconds ago  94.4 MB
+localhost/images4                        latest      45eb80b05537  7 seconds ago   94.4 MB
+localhost/images2                        latest      db4bd1d35236  12 seconds ago  94.4 MB
+localhost/images5                        latest      229b7f766571  4 seconds ago   94.4 MB
++ CHECK_RESULT 0 0 0 'check docker image ls --sort size failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker image ls --sort size failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 13:56:02 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 13:56:03 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 13:56:03 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop postgres
+postgres
++ podman rm --all
+43a52ffde4c20a61e2a9a160fadb5442d102d2513889f06b42bdda58ee51c82f
++ podman rmi -f --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: localhost/images1:latest
+Untagged: localhost/images2:latest
+Untagged: localhost/images3:latest
+Untagged: localhost/images4:latest
+Untagged: localhost/images5:latest
+Deleted: 1fd8a5654a84e6f091759a0bf2c9dbc3f5cc2c157c2aab512e043fc0ddc3b754
+Deleted: db4bd1d35236d9d3395de93ad6574150e6e32f3baf9a7e381d721511a99f8e3a
+Deleted: 8b7e3a0134fc6832e32290f2bc72ce3f532c1adab94c3af6481d4a2fcfe154bc
+Deleted: 45eb80b05537576825c2d7a049d8a0318df79f422906ae25f516bc4f265d5189
+Deleted: 229b7f766571df5c6c43bff74a6a87c4663fef078592ae99a6aabc7582529e29
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpl1cv5ru1 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpl1cv5ru1
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 13:57:10 2023 - INFO  - End to restore the test environment.

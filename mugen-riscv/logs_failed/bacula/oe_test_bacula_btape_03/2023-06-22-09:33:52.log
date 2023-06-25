@@ -1,0 +1,542 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 09:33:55 2023 - INFO  - Start to prepare the test environment.
++ OLD_LANG=en_US.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL 'bacula-client mysql5-server bacula-common tar'
++ pkgs='bacula-client mysql5-server bacula-common tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'bacula-client mysql5-server bacula-common tar' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:24:39 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:24:39 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
++ tar -zxvf common/test.tar.gz
+config/
+config/a.config
+config/4.conf
+config/3.conf
+config/2.conf
+config/6.conf
+config/5.conf
+config/1.conf
+config/e.conf
++ mkdir tmp
++ systemctl restart mysqld
+Failed to restart mysqld.service: Unit mysqld.service not found.
++ /usr/libexec/bacula/create_mysql_database
+oe_test_bacula_btape_03.sh: line 30: /usr/libexec/bacula/create_mysql_database: No such file or directory
++ /usr/libexec/bacula/make_mysql_tables
+oe_test_bacula_btape_03.sh: line 31: /usr/libexec/bacula/make_mysql_tables: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-mysql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ sed -i 's\dbuser = "bacula"\dbuser = "root"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ systemctl start bacula-dir.service bacula-sd.service bacula-fd.service
+Failed to start bacula-dir.service: Unit bacula-dir.service not found.
+Failed to start bacula-sd.service: Unit bacula-sd.service not found.
+Failed to start bacula-fd.service: Unit bacula-fd.service not found.
++ expect
+spawn bconsole
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole"
++ expect
+spawn bconsole
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole"
++ expect
+spawn bconsole
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole"
++ echo 'Device {
+  Name = Onstream
+  Media Type = "DDS-4"
+  Archive Device = /dev/nst0
+  LabelMedia = yes;                   # lets Bacula label unlabeled media
+  Random Access = Yes;
+  AutomaticMount = yes;               # when device opened, read it
+  RemovableMedia = no;
+  AlwaysOpen = no;
+  Maximum Concurrent Jobs = 5
+
+}'
+oe_test_bacula_btape_03.sh: line 88: /etc/bacula/bacula-sd.conf: No such file or directory
++ mt -f /dev/nst0 rewind
+oe_test_bacula_btape_03.sh: line 89: mt: command not found
++ tar cvf /dev/nst0 .
+./
+./oe_test_bacula_bacula_dir_01.sh
+./oe_test_bacula_btape_03.sh
+./oe_test_bacula_bfdjson_01.sh
+./oe_test_bacula_btape_01.sh
+./config/
+./config/a.config
+./config/4.conf
+./config/2.conf
+./config/5.conf
+./config/1.conf
+./config/e.conf
+./config/6.conf
+./config/3.conf
+./oe_test_bacula_dbcheck_01.sh
+./common/
+./common/test.tar.gz
+./oe_test_service_bacula-fd.sh
+./oe_test_bacula_bacula_sd_02.sh
+./oe_test_bacula_bwild_01.sh
+./oe_test_bacula_btape_04.sh
+./oe_test_bacula_bregex_01.sh
+./oe_test_bacula_bdirjson_02.sh
+./oe_test_service_bacula-dir.sh
+./oe_test_bacula_bls_02.sh
+./oe_test_bacula_bconsole_02.sh
+./oe_test_bacula_bacula_sd_01.sh
+./oe_test_bacula_bbconsjson_01.sh
+./oe_test_service_bacula-sd.sh
+./bacula.md
+./oe_test_bacula_bconsole_01.sh
+./oe_test_bacula_bextract_01.sh
+./oe_test_bacula_bdirjson_01.sh
+./oe_test_bacula_btape_02.sh
+./oe_test_bacula_bcopy_01.sh
+./oe_test_bacula_bacula_dir_02.sh
+./oe_test_bacula_bextract_02.sh
+./oe_test_bacula_bacula_fd_01.sh
+./oe_test_bacula_bsdjson_01.sh
+./oe_test_bacula_bls_01.sh
+./tmp/
+./oe_test_bacula_bscan_01.sh
+./oe_test_bacula_bscan_02.sh
++ mt -f /dev/nst0 rewind
+oe_test_bacula_btape_03.sh: line 91: mt: command not found
++ tar tvf /dev/nst0
+drwxr-xr-x root/root         0 2023-06-22 09:34 ./
+-rwxr-xr-x root/root      3198 2023-05-19 15:09 ./oe_test_bacula_bacula_dir_01.sh
+-rwxr-xr-x root/root      6953 2023-05-19 15:09 ./oe_test_bacula_btape_03.sh
+-rwxr-xr-x root/root      2560 2023-05-19 15:09 ./oe_test_bacula_bfdjson_01.sh
+-rwxr-xr-x root/root      6377 2023-05-19 15:09 ./oe_test_bacula_btape_01.sh
+dr-xr-x--- 1001/513          0 2023-04-12 03:22 ./config/
+-rw-r--r-- root/root      9807 2023-02-19 22:25 ./config/a.config
+-r-xr-x--- root/root        32 2023-04-05 00:44 ./config/4.conf
+-r-xr-x--- root/root        32 2023-04-04 20:55 ./config/2.conf
+-r-xr-x--- root/root        32 2023-04-12 03:22 ./config/5.conf
+-r-xr-x--- 1001/513         31 2023-03-21 23:15 ./config/1.conf
+-rw-r--r-- root/root         0 2022-11-19 22:41 ./config/e.conf
+-r-xr-x--- root/root        31 2023-04-12 03:22 ./config/6.conf
+-r-xr-x--- root/root        32 2023-04-05 00:44 ./config/3.conf
+-rwxr-xr-x root/root      3904 2023-05-19 15:09 ./oe_test_bacula_dbcheck_01.sh
+drwxr-xr-x root/root         0 2023-05-19 15:09 ./common/
+-rw-r--r-- root/root      3543 2023-05-19 15:09 ./common/test.tar.gz
+-rwxr-xr-x root/root      1305 2023-05-19 15:09 ./oe_test_service_bacula-fd.sh
+-rwxr-xr-x root/root      2303 2023-05-19 15:09 ./oe_test_bacula_bacula_sd_02.sh
+-rwxr-xr-x root/root      2459 2023-05-19 15:09 ./oe_test_bacula_bwild_01.sh
+-rwxr-xr-x root/root      6192 2023-05-19 15:09 ./oe_test_bacula_btape_04.sh
+-rwxr-xr-x root/root      2967 2023-05-19 15:09 ./oe_test_bacula_bregex_01.sh
+-rwxr-xr-x root/root      1728 2023-05-19 15:09 ./oe_test_bacula_bdirjson_02.sh
+-rwxr-xr-x root/root      2250 2023-05-19 15:09 ./oe_test_service_bacula-dir.sh
+-rwxr-xr-x root/root      3556 2023-05-19 15:09 ./oe_test_bacula_bls_02.sh
+-rwxr-xr-x root/root      2431 2023-05-19 15:09 ./oe_test_bacula_bconsole_02.sh
+-rwxr-xr-x root/root      3130 2023-05-19 15:09 ./oe_test_bacula_bacula_sd_01.sh
+-rwxr-xr-x root/root      2547 2023-05-19 15:09 ./oe_test_bacula_bbconsjson_01.sh
+-rwxr-xr-x root/root      1307 2023-05-19 15:09 ./oe_test_service_bacula-sd.sh
+-rw-r--r-- root/root     78176 2023-05-19 15:09 ./bacula.md
+-rwxr-xr-x root/root      3878 2023-05-19 15:09 ./oe_test_bacula_bconsole_01.sh
+-rwxr-xr-x root/root      4289 2023-05-19 15:09 ./oe_test_bacula_bextract_01.sh
+-rwxr-xr-x root/root      2416 2023-05-19 15:09 ./oe_test_bacula_bdirjson_01.sh
+-rwxr-xr-x root/root      7027 2023-05-19 15:09 ./oe_test_bacula_btape_02.sh
+-rwxr-xr-x root/root      5360 2023-05-19 15:09 ./oe_test_bacula_bcopy_01.sh
+-rwxr-xr-x root/root      2475 2023-05-19 15:09 ./oe_test_bacula_bacula_dir_02.sh
+-rwxr-xr-x root/root      3336 2023-05-19 15:09 ./oe_test_bacula_bextract_02.sh
+-rwxr-xr-x root/root      3507 2023-05-19 15:09 ./oe_test_bacula_bacula_fd_01.sh
+-rwxr-xr-x root/root      2558 2023-05-19 15:09 ./oe_test_bacula_bsdjson_01.sh
+-rwxr-xr-x root/root      3984 2023-05-19 15:09 ./oe_test_bacula_bls_01.sh
+drwxr-xr-x root/root         0 2023-06-22 09:34 ./tmp/
+-rwxr-xr-x root/root      3901 2023-05-19 15:09 ./oe_test_bacula_bscan_01.sh
+-rwxr-xr-x root/root      4140 2023-05-19 15:09 ./oe_test_bacula_bscan_02.sh
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 09:34:20 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 09:34:21 2023 - INFO  - Start to run test.
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep 'Moved to end of medium' tmp/1.txt
++ CHECK_RESULT 1 0 0 'test btape eom failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape eom failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape eom failed'
++ LOG_ERROR 'test btape eom failed'
++ message='test btape eom failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape eom failed'
+Thu Jun 22 09:34:22 2023 - ERROR - test btape eom failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 106'
++ message='oe_test_bacula_btape_03.sh line 106'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 106'
+Thu Jun 22 09:34:22 2023 - ERROR - oe_test_bacula_btape_03.sh line 106
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep 'Wrote block' tmp/2.txt
++ CHECK_RESULT 1 0 0 'test btape fill failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape fill failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape fill failed'
++ LOG_ERROR 'test btape fill failed'
++ message='test btape fill failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape fill failed'
+Thu Jun 22 09:34:23 2023 - ERROR - test btape fill failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 118'
++ message='oe_test_bacula_btape_03.sh line 118'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 118'
+Thu Jun 22 09:34:24 2023 - ERROR - oe_test_bacula_btape_03.sh line 118
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep 'Reading block' tmp/3.txt
++ CHECK_RESULT 1 0 0 'test btape unfill failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape unfill failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape unfill failed'
++ LOG_ERROR 'test btape unfill failed'
++ message='test btape unfill failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape unfill failed'
+Thu Jun 22 09:34:25 2023 - ERROR - test btape unfill failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 127'
++ message='oe_test_bacula_btape_03.sh line 127'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 127'
+Thu Jun 22 09:34:25 2023 - ERROR - oe_test_bacula_btape_03.sh line 127
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep Usage tmp/4.txt
++ CHECK_RESULT 1 0 0 'test btape help failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape help failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape help failed'
++ LOG_ERROR 'test btape help failed'
++ message='test btape help failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape help failed'
+Thu Jun 22 09:34:27 2023 - ERROR - test btape help failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 136'
++ message='oe_test_bacula_btape_03.sh line 136'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 136'
+Thu Jun 22 09:34:27 2023 - ERROR - oe_test_bacula_btape_03.sh line 136
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep Onstream tmp/5.txt
+spawn btape -v Onstream
++ CHECK_RESULT 0 0 0 'test btape clear failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='test btape clear failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep 'Wrote Volume label for volume "test1"' tmp/6.txt
++ CHECK_RESULT 1 0 0 'test btape label failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape label failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape label failed'
++ LOG_ERROR 'test btape label failed'
++ message='test btape label failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape label failed'
+Thu Jun 22 09:34:29 2023 - ERROR - test btape label failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 155'
++ message='oe_test_bacula_btape_03.sh line 155'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 155'
+Thu Jun 22 09:34:29 2023 - ERROR - oe_test_bacula_btape_03.sh line 155
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep OK tmp/7.txt
++ CHECK_RESULT 1 0 0 'test btape quit failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape quit failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape quit failed'
++ LOG_ERROR 'test btape quit failed'
++ message='test btape quit failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape quit failed'
+Thu Jun 22 09:34:30 2023 - ERROR - test btape quit failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 163'
++ message='oe_test_bacula_btape_03.sh line 163'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 163'
+Thu Jun 22 09:34:31 2023 - ERROR - oe_test_bacula_btape_03.sh line 163
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep 'Loaded "Onstream"' tmp/8.txt
++ CHECK_RESULT 1 0 0 'test btape load failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape load failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape load failed'
++ LOG_ERROR 'test btape load failed'
++ message='test btape load failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape load failed'
+Thu Jun 22 09:34:32 2023 - ERROR - test btape load failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 172'
++ message='oe_test_bacula_btape_03.sh line 172'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 172'
+Thu Jun 22 09:34:32 2023 - ERROR - oe_test_bacula_btape_03.sh line 172
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep 'Wrote 1 EOF to' tmp/9.txt
++ CHECK_RESULT 1 0 0 'test btape rawfill failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape rawfill failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape rawfill failed'
++ LOG_ERROR 'test btape rawfill failed'
++ message='test btape rawfill failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape rawfill failed'
+Thu Jun 22 09:34:33 2023 - ERROR - test btape rawfill failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 181'
++ message='oe_test_bacula_btape_03.sh line 181'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 181'
+Thu Jun 22 09:34:34 2023 - ERROR - oe_test_bacula_btape_03.sh line 181
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "btape": no such file or directory
+    while executing
+"spawn btape -v Onstream"
++ grep 'Volume Label' tmp/10.txt
++ CHECK_RESULT 1 0 0 'test btape readlabel failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test btape readlabel failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test btape readlabel failed'
++ LOG_ERROR 'test btape readlabel failed'
++ message='test btape readlabel failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test btape readlabel failed'
+Thu Jun 22 09:34:35 2023 - ERROR - test btape readlabel failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_btape_03.sh line 192'
++ message='oe_test_bacula_btape_03.sh line 192'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_btape_03.sh line 192'
+Thu Jun 22 09:34:36 2023 - ERROR - oe_test_bacula_btape_03.sh line 192
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 09:34:36 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 9
++ test 9 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 09:34:37 2023 - ERROR - failed to execute the case.
++ exit 9
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 09:34:38 2023 - INFO  - Start to restore the test environment.
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ systemctl stop bacula-dir.service bacula-sd.service bacula-fd.service
+Failed to stop bacula-dir.service: Unit bacula-dir.service not loaded.
+Failed to stop bacula-sd.service: Unit bacula-sd.service not loaded.
+Failed to stop bacula-fd.service: Unit bacula-fd.service not loaded.
++ sed -i 's\dbuser = "root"\dbuser = "bacula"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-postgresql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ /usr/libexec/bacula/drop_mysql_tables
+oe_test_bacula_btape_03.sh: line 202: /usr/libexec/bacula/drop_mysql_tables: No such file or directory
++ /usr/libexec/bacula/drop_mysql_database
+oe_test_bacula_btape_03.sh: line 203: /usr/libexec/bacula/drop_mysql_database: No such file or directory
++ systemctl stop mysqld
+Failed to stop mysqld.service: Unit mysqld.service not loaded.
++ rm -rf config/ '/var/lib/mysql/*' /tmp/test1 /tmp/test2 tmp/ '/var/spool/bacula/*'
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:24:39 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:24:39 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 173, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 144, in rpm_remove
+    with open(tmpfile, "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Last metadata expiration check: 0:24:39 ago on Thu 22 Jun 2023 09:09:38 AM CST.\nNo match for argument: mysql5-server\nPackage tar-2:1.34-4.oe2303.riscv64 is already installed.\nError: Unable to find a match: mysql5-server'
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 09:34:41 2023 - INFO  - End to restore the test environment.

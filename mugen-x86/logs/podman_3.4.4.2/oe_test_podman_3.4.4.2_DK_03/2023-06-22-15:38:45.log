@@ -1,0 +1,300 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 15:38:47 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
+Thu Jun 22 15:38:53 2023 - INFO  - pkgs:(podman podman-docker) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ docker pull registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ docker run --name postgres registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T15:39:15Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ echo '"auths": {}'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 15:39:16 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 15:39:16 2023 - INFO  - Start to run test.
++ docker push registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
++ grep 'Storing signatures'
+Storing signatures
++ CHECK_RESULT 0 0 0 'check docker push registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker push --authfile myauths.json registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
++ CHECK_RESULT 0 0 0 'check docker push --authfile myauths.json registry.access.redhat.com/ubi8-minimal faield'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push --authfile myauths.json registry.access.redhat.com/ubi8-minimal faield'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f /tmp/myimage/manifest.json
++ rm -rf /tmp/myimage/manifest.json
++ CHECK_RESULT 0 0 0 'check test -f /tmp/myimage/manifest.json && rm -rf /tmp/myimage/manifest.json failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check test -f /tmp/myimage/manifest.json && rm -rf /tmp/myimage/manifest.json failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker push --format oci registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
++ CHECK_RESULT 0 0 0 'check docker push --format oci registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push --format oci registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep oci /tmp/myimage/manifest.json
+{"schemaVersion":2,"config":{"mediaType":"application/vnd.oci.image.config.v1+json","digest":"sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4","size":6244},"layers":[{"mediaType":"application/vnd.oci.image.layer.v1.tar+gzip","digest":"sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7","size":94434816}]}
++ rm -rf /tmp/myimage/manifest.json
++ CHECK_RESULT 0 0 0 'check grep "oci" /tmp/myimage/manifest.json && rm -rf /tmp/myimage/manifest.json failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check grep "oci" /tmp/myimage/manifest.json && rm -rf /tmp/myimage/manifest.json failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker push --compress registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
++ CHECK_RESULT 0 0 0 'check docker push --compress registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push --compress registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep image.rootfs.diff.tar.gzip /tmp/myimage/manifest.json
+{"schemaVersion":2,"mediaType":"application/vnd.docker.distribution.manifest.v2+json","config":{"mediaType":"application/vnd.docker.container.image.v1+json","size":6244,"digest":"sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4"},"layers":[{"mediaType":"application/vnd.docker.image.rootfs.diff.tar.gzip","size":39304699,"digest":"sha256:5c038532c5c56e660657e98e777357f72dae7ffa54127e360b7c53a8ac2de3ba"}]}
++ CHECK_RESULT 0 0 0 'check grep "image.rootfs.diff.tar.gzip" /tmp/myimage/manifest.json failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check grep "image.rootfs.diff.tar.gzip" /tmp/myimage/manifest.json failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker push -q registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 0 0 0 'check docker push -q registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push -q registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f /tmp/myimage/manifest.json
++ CHECK_RESULT 0 0 0 'check test -f /tmp/myimage/manifest.json failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check test -f /tmp/myimage/manifest.json failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker push --remove-signatures registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
++ grep 'Writing manifest'
+Writing manifest to image destination
++ CHECK_RESULT 0 0 0 'check docker push --remove-signatures registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push --remove-signatures registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker push --tls-verify registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
++ grep 'Copying blob'
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
++ CHECK_RESULT 0 0 0 'check docker push --tls-verify registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push --tls-verify registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker push --creds postgres:screte registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
++ grep 'Writing manifest'
+Writing manifest to image destination
++ CHECK_RESULT 0 0 0 'check docker push --creds postgres:screte failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push --creds postgres:screte failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf /tmp/myimage
++ docker push --cert-dir /tmp registry.access.redhat.com/ubi8-minimal dir:/tmp/myimage
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
++ CHECK_RESULT 0 0 0 'check docker push --cert-dir /tmp failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker push --cert-dir /tmp failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -d /tmp/myimage
++ CHECK_RESULT 0 0 0 'check test -d /tmp/myimage failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check test -d /tmp/myimage failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 15:40:06 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 15:40:06 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 15:40:07 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop postgres
+postgres
++ podman rm --all
+0b3ccc3392a6b9918b6602e947bbe53aee619132bdc8fec8fe1bed1a1127750b
++ podman rmi -f --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Jun 22 15:40:09 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf /tmp/myimage myauths.json
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 15:40:10 2023 - INFO  - End to restore the test environment.

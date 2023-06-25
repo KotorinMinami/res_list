@@ -1,0 +1,360 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 12:17:02 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpv5w0h9fg
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpv5w0h9fg
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 12:19:49 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 12:19:50 2023 - INFO  - Start to run test.
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+time="2023-06-22T12:20:22Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ CHECK_RESULT 0 0 0 'check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ CHECK_RESULT 0 0 0 'check pull registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check pull registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images --sort created
++ grep registry.access.redhat.com/ubi8-minimal
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images --sort created failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images --sort created failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images
++ grep registry.access.redhat.com/ubi8-minimal
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman stop postgres
+postgres
++ CHECK_RESULT 0 0 0 'check podman stop postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman stop postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman commit postgres images1
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying blob sha256:ae25afd46a0c838e99cc3b8df02ede9127ae5259f5a11f9da0d40fc99365c656
+Copying config sha256:474ed9ff474c89d91f13897f41432c9a473d86cb52b40ba08adbce0149999f5e
+Writing manifest to image destination
+Storing signatures
+474ed9ff474c89d91f13897f41432c9a473d86cb52b40ba08adbce0149999f5e
++ CHECK_RESULT 0 0 0 'check podman commit postgres images1 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman commit postgres images1 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images
++ grep images1
+localhost/images1                        latest      474ed9ff474c  2 seconds ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images | grep images1 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images | grep images1 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman commit --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh postgres images2
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying blob sha256:ae25afd46a0c838e99cc3b8df02ede9127ae5259f5a11f9da0d40fc99365c656
+Copying config sha256:821f156cfd69e0ce29dde0f57751e401d398bb9133e6e929e56dab2b81ddf706
+Writing manifest to image destination
+Storing signatures
+821f156cfd69e0ce29dde0f57751e401d398bb9133e6e929e56dab2b81ddf706
++ CHECK_RESULT 0 0 0 'check podman commit --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh postgres images2 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman commit --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh postgres images2 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep images2
++ podman images
+localhost/images2                        latest      821f156cfd69  2 seconds ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images | grep images2 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images | grep images2 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman commit -p postgres images3
+Getting image source signatures
+Copying blob sha256:14946186767bc29fcb3592d96f656b4e95dc5a6736fa696729a6c6f26f061bd7
+Copying blob sha256:ae25afd46a0c838e99cc3b8df02ede9127ae5259f5a11f9da0d40fc99365c656
+Copying config sha256:b2adf30d6875516e964fa3e9e6245b34992c3e3e1d69985dadfbdaf352d19ea4
+Writing manifest to image destination
+Storing signatures
+b2adf30d6875516e964fa3e9e6245b34992c3e3e1d69985dadfbdaf352d19ea4
++ CHECK_RESULT 0 0 0 'check podman commit -p postgres images3 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman commit -p postgres images3 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images
++ grep images3
+localhost/images3                        latest      b2adf30d6875  1 second ago   94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images | grep images3 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images | grep images3 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman commit -q postgres images4
+9dd73ff5397ce903dd05ac3dc347cef4ee464c2fd3ff3a597c7388a62d026991
++ CHECK_RESULT 0 0 0 'check podman commit -q postgres images4 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman commit -q postgres images4 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images
++ grep images4
+localhost/images4                        latest      9dd73ff5397c  2 seconds ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images | grep images4 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images | grep images4 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman commit -f docker -q --message 'committing container to image' postgres images5
+time="2023-06-22T12:20:46Z" level=warning msg="COMMENT is not supported for OCI image format, comment committing container to image will be ignored. Must use `docker` format"
+457999a24183fa8129feba4f33875db81009dc1fed805cf89c0d8ff5ffae7eec
++ CHECK_RESULT 0 0 0 'check podman commit -f docker -q --message faied'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman commit -f docker -q --message faied'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images
++ grep images5
+localhost/images5                        latest      457999a24183  2 seconds ago   94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images | grep images5 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images | grep images5 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman image ls --quiet
+++ podman images -aq
++ grep '457999a24183
+9dd73ff5397c
+b2adf30d6875
+821f156cfd69
+474ed9ff474c
+f4fb65011c56'
+457999a24183
+9dd73ff5397c
+b2adf30d6875
+821f156cfd69
+474ed9ff474c
+f4fb65011c56
++ CHECK_RESULT 0 0 0 'check podman image ls --quiet failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman image ls --quiet failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman image ls --sort size
+REPOSITORY                               TAG         IMAGE ID      CREATED         SIZE
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago     94.4 MB
+localhost/images1                        latest      474ed9ff474c  13 seconds ago  94.4 MB
+localhost/images3                        latest      b2adf30d6875  8 seconds ago   94.4 MB
+localhost/images4                        latest      9dd73ff5397c  6 seconds ago   94.4 MB
+localhost/images2                        latest      821f156cfd69  11 seconds ago  94.4 MB
+localhost/images5                        latest      457999a24183  4 seconds ago   94.4 MB
++ CHECK_RESULT 0 0 0 'check podman image ls --sort size failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman image ls --sort size failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 12:20:50 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 12:20:50 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 12:20:51 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+6e8d2b7b25c1fff236a54c61ac525f0eb02ce20cd2afe6daf824d29571cb8178
++ podman rm --all
+6e8d2b7b25c1fff236a54c61ac525f0eb02ce20cd2afe6daf824d29571cb8178
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: localhost/images1:latest
+Untagged: localhost/images2:latest
+Untagged: localhost/images3:latest
+Untagged: localhost/images4:latest
+Untagged: localhost/images5:latest
+Deleted: 474ed9ff474c89d91f13897f41432c9a473d86cb52b40ba08adbce0149999f5e
+Deleted: 821f156cfd69e0ce29dde0f57751e401d398bb9133e6e929e56dab2b81ddf706
+Deleted: b2adf30d6875516e964fa3e9e6245b34992c3e3e1d69985dadfbdaf352d19ea4
+Deleted: 9dd73ff5397ce903dd05ac3dc347cef4ee464c2fd3ff3a597c7388a62d026991
+Deleted: 457999a24183fa8129feba4f33875db81009dc1fed805cf89c0d8ff5ffae7eec
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpv5w0h9fg ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpv5w0h9fg
++ '[' 0 -ne 0 ']'
+++ grep -vE .sh
+++ ls
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 12:21:45 2023 - INFO  - End to restore the test environment.

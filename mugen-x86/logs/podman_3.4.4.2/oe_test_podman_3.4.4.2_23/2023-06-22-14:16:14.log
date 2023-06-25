@@ -1,0 +1,261 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Thu Jun 22 14:16:15 2023 - INFO  - Start environment preparation.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmppj_ilyye
++ '[' -z '' ']'
++ tmpfile=/tmp/tmppj_ilyye
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ podman rm --all
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Thu Jun 22 14:18:30 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Thu Jun 22 14:18:30 2023 - INFO  - Start executing testcase.
++ podman pull docker.io/library/nginx
+Trying to pull docker.io/library/nginx:latest...
+Getting image source signatures
+Copying blob sha256:4b98867cde79486d55399cb95957331018b849a2bf04ee9a6dcae9b8bc482d76
+Copying blob sha256:441a1b46536703aec84bf2cabdd2524d4cc7dad9c6772491e01ff8ffe15b5507
+Copying blob sha256:5b5fe70539cd6989aa19f25826309f9715a9489cf1c057982d6a84c1ad8975c7
+Copying blob sha256:ca89ed5461a9f2c681ebd39ed6583a7405d82f51b42177b7388c99eb6869e780
+Copying blob sha256:b0e1283145af839c63923f671b4ab6c5d9e22826ab4372c6660db5a5556446c8
+Copying blob sha256:3b9543f2b5005b74aae0ffaa779803f2b162ec3bd461c9e10a21671512718c87
+Copying blob sha256:b0e1283145af839c63923f671b4ab6c5d9e22826ab4372c6660db5a5556446c8
+Copying blob sha256:441a1b46536703aec84bf2cabdd2524d4cc7dad9c6772491e01ff8ffe15b5507
+Copying blob sha256:5b5fe70539cd6989aa19f25826309f9715a9489cf1c057982d6a84c1ad8975c7
+Copying blob sha256:3b9543f2b5005b74aae0ffaa779803f2b162ec3bd461c9e10a21671512718c87
+Copying blob sha256:4a85ce26214d83c77b5464631a67c71e1c2793b655261befe52ba0e20ffc3bd1
+Copying blob sha256:ca89ed5461a9f2c681ebd39ed6583a7405d82f51b42177b7388c99eb6869e780
+Copying blob sha256:4b98867cde79486d55399cb95957331018b849a2bf04ee9a6dcae9b8bc482d76
+Copying blob sha256:4a85ce26214d83c77b5464631a67c71e1c2793b655261befe52ba0e20ffc3bd1
+Copying config sha256:eb4a57159180767450cb8426e6367f11b999653d8f185b5e3b78a9ca30c2c31d
+Writing manifest to image destination
+Storing signatures
+eb4a57159180767450cb8426e6367f11b999653d8f185b5e3b78a9ca30c2c31d
++ CHECK_RESULT 0 0 0 'check podman pull docker.io/library/nginx failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pull docker.io/library/nginx failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --name postgres docker.io/library/nginx
++ id=ff0a23778bf91c84690d61b6bac97140aab8dc76665218dd01c21e6d9e82efbb
++ test -z ff0a23778bf91c84690d61b6bac97140aab8dc76665218dd01c21e6d9e82efbb
++ CHECK_RESULT 1 1 0 'check id=$(podman create --name postgres docker.io/library/nginx) failed'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='check id=$(podman create --name postgres docker.io/library/nginx) failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ podman start postgres
+time="2023-06-22T14:45:09Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+postgres
++ CHECK_RESULT 0 0 0 'check podman start postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman start postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman top -l
++ grep USER
+USER        PID         PPID        %CPU        ELAPSED      TTY         TIME        COMMAND
++ CHECK_RESULT 0 0 0 'check podman top -l | grep "USER" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman top -l | grep "USER" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman top postgres
++ grep USER
+USER        PID         PPID        %CPU        ELAPSED      TTY         TIME        COMMAND
++ CHECK_RESULT 0 0 0 'check podman top postgres | grep "USER" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman top postgres | grep "USER" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman mount --format json
++ grep id
+  "id": "ff0a23778bf91c84690d61b6bac97140aab8dc76665218dd01c21e6d9e82efbb",
++ CHECK_RESULT 0 0 0 'check podman mount --format json | grep "id" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman mount --format json | grep "id" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman mount --notruncate
++ grep merged
+ff0a23778bf91c84690d61b6bac97140aab8dc76665218dd01c21e6d9e82efbb  /var/lib/containers/storage/overlay/03e80200005581d2b842623d7fe202ed03e0a6636d698287fdd8d789caea3a51/merged
++ CHECK_RESULT 0 0 0 'check podman mount --notruncate | grep merged failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman mount --notruncate | grep merged failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman stop postgres
+postgres
++ CHECK_RESULT 0 0 0 'check podman stop postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman stop postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman unmount -f postgres
++ grep postgres
+postgres
++ CHECK_RESULT 0 0 0 'check podman unmount -f postgres | grep postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman unmount -f postgres | grep postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman mount postgres
+/var/lib/containers/storage/overlay/03e80200005581d2b842623d7fe202ed03e0a6636d698287fdd8d789caea3a51/merged
++ CHECK_RESULT 0 0 0 'check podman mount postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman mount postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman unmount --all
+ff0a23778bf91c84690d61b6bac97140aab8dc76665218dd01c21e6d9e82efbb
++ CHECK_RESULT 0 0 0 'check podman unmount --all failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman unmount --all failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman rm postgres
++ grep ff0a23778bf91c84690d61b6bac97140aab8dc76665218dd01c21e6d9e82efbb
+ff0a23778bf91c84690d61b6bac97140aab8dc76665218dd01c21e6d9e82efbb
++ CHECK_RESULT 0 0 0 'check podman rm postgres | grep ${id} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman rm postgres | grep ${id} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End executing testcase.'
++ message='End executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End executing testcase.'
+Thu Jun 22 14:45:15 2023 - INFO  - End executing testcase.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 14:45:15 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu Jun 22 14:45:15 2023 - INFO  - start environment cleanup.
++ clear_env
++ podman stop postgres
+Error: no container with name or ID "postgres" found: no such container
++ podman rm --all
++ podman rmi -f --all
+Untagged: docker.io/library/nginx:latest
+Deleted: eb4a57159180767450cb8426e6367f11b999653d8f185b5e3b78a9ca30c2c31d
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmppj_ilyye ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmppj_ilyye
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Thu Jun 22 14:46:05 2023 - INFO  - Finish environment cleanup.

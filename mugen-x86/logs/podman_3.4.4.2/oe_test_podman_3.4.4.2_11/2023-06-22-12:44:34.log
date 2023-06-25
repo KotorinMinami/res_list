@@ -1,0 +1,329 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 12:44:37 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpzr5yf31f
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpzr5yf31f
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T12:48:07Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 12:48:08 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 12:48:08 2023 - INFO  - Start to run test.
+++ podman create --dns 255.255.255.0 alpine ls
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying config sha256:c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Writing manifest to image destination
+Storing signatures
++ ID=536fe14b13b8badde83f7b3453c6433d9acc789763f1f67a7bf2e54da734a320
++ podman inspect 536fe14b13b8badde83f7b3453c6433d9acc789763f1f67a7bf2e54da734a320
++ grep 255.255.255.0
+                "255.255.255.0",
+                "255.255.255.0"
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep "255.255.255.0" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep "255.255.255.0" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --dns-opt 8.8.8.8 alpine ls
++ ID=c2aea1780f52ccd65919c76e4240440eed3a84e010ccceb76b8eeac763d53672
++ podman inspect c2aea1780f52ccd65919c76e4240440eed3a84e010ccceb76b8eeac763d53672
++ grep 8.8.8.8
+                "8.8.8.8",
+                "8.8.8.8"
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep "8.8.8.8" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep "8.8.8.8" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --dns-search domain alpine ls
++ ID=1c03390973608900025edaa96ba49b80e2f6eb759020f3a274d0037e70fba675
++ podman inspect 1c03390973608900025edaa96ba49b80e2f6eb759020f3a274d0037e70fba675
++ grep domain
+                "domain",
+                "domain"
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep "8.8.8.8" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep "8.8.8.8" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --name ctr --env 'ENV*****=b' alpine printenv 'ENV*****'
++ ID=602965020d01f167a2bba813f6c13eab5d3b0076582b2e61c2b53dee59042551
++ podman inspect 602965020d01f167a2bba813f6c13eab5d3b0076582b2e61c2b53dee59042551
++ grep 'ENV****'
+            "ENV*****"
+                "ENV*****=b"
+                "ENV*****"
+                "ENV*****=b",
+                "ENV*****"
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep "ENV****" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep "ENV****" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo 'ENV*****=b'
+++ podman create --env-file ./a alpine ls
++ ID=7be21c20469dc5fe27075e7ff2258c5e66ad699ab8c281d7f065dc9014fac214
++ podman inspect 7be21c20469dc5fe27075e7ff2258c5e66ad699ab8c281d7f065dc9014fac214
++ grep ENV
+                "ENV*****=b"
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep "ENV" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep "ENV" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --expose 1 alpine ls
++ ID=d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d
++ podman inspect d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d
++ grep 0
+        "Id": "d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d",
+        "Created": "2023-06-22T12:48:34.70646187Z",
+            "OciVersion": "1.0.2-dev",
+            "Pid": 0,
+            "ExitCode": 0,
+            "StartedAt": "0001-01-01T00:00:00Z",
+            "FinishedAt": "0001-01-01T00:00:00Z",
+                "FailingStreak": 0,
+        "Image": "c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18",
+        "StaticDir": "/var/lib/containers/storage/overlay-containers/d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d/userdata",
+        "ConmonPidFile": "/run/containers/storage/overlay-containers/d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d/userdata/conmon.pid",
+        "PidFile": "/run/containers/storage/overlay-containers/d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d/userdata/pidfile",
+        "RestartCount": 0,
+                "LowerDir": "/var/lib/containers/storage/overlay/8d3ac3489996423f53d6087c81180006263b79f206d3fdec9e66f0e27ceb8759/diff",
+                "UpperDir": "/var/lib/containers/storage/overlay/8e7e63accee8ea2f4ba27da44367100c5741ab0a52b02478983b98531fe51a29/diff",
+                "WorkDir": "/var/lib/containers/storage/overlay/8e7e63accee8ea2f4ba27da44367100c5741ab0a52b02478983b98531fe51a29/work"
+            "IPPrefixLen": 0,
+            "GlobalIPv6PrefixLen": 0,
+            "LinkLocalIPv6PrefixLen": 0,
+                    "IPPrefixLen": 0,
+                    "GlobalIPv6PrefixLen": 0,
+            "d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d"
+            "Umask": "0022",
+            "Timeout": 0,
+            "StopTimeout": 10
+                "Path": "/var/lib/containers/storage/overlay-containers/d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d/userdata/ctr.log",
+                "Size": "0B"
+                "MaximumRetryCount": 0
+            "OomScoreAdj": 0,
+            "ShmSize": 65536000,
+                0,
+                0
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "BlkioWeight": 0,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": 0,
+            "PidsLimit": 2048,
+                    "Soft": 1048576,
+                    "Hard": 1048576
+                    "Soft": 4194304,
+                    "Hard": 4194304
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep "0" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep "0" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --uidmap 0:30000:7000 --gidmap 0:30000:7000 fedora echo hello
+Resolved "fedora" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull registry.fedoraproject.org/fedora:latest...
+Getting image source signatures
+Copying blob sha256:9c86172b66b31d7bf3d9f28325b7fcf737db2adad6d551b31dd213185f0435c6
+Copying blob sha256:9c86172b66b31d7bf3d9f28325b7fcf737db2adad6d551b31dd213185f0435c6
+Copying config sha256:0e79e93fc530998e29e00eeea134f53002d000be3f24c7716e2eb3ed2b35162f
+Writing manifest to image destination
+Storing signatures
++ ID=4bdb65277ec965b044be03066bfb6e65bf70c5298a5a39f3cb0954c806935c52
++ podman inspect 4bdb65277ec965b044be03066bfb6e65bf70c5298a5a39f3cb0954c806935c52
++ grep gid
+                "--gidmap",
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep "gid" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep "gid" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --group-add groups alpine ls
++ ID=1033bd17e232900cbe081aa119eba157c87c837eee2e1abf82132bc9594acf36
++ podman inspect 1033bd17e232900cbe081aa119eba157c87c837eee2e1abf82132bc9594acf36
++ grep -i group
+            "--cgroup-manager",
+            "cgroupfs",
+                "--group-add",
+                "groups",
+            "CgroupManager": "cgroupfs",
+            "CgroupMode": "host",
+            "GroupAdd": [
+                "groups"
+            "Cgroup": "",
+            "Cgroups": "default",
+            "CgroupParent": "",
+            "CgroupConf": null
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep -i group failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep -i group failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 12:49:20 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 12:49:20 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 12:49:21 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+b909a8e1028e2716a680131dd1ddd6fb2054e922d2da7537a1232d3613680b22
+4bdb65277ec965b044be03066bfb6e65bf70c5298a5a39f3cb0954c806935c52
+536fe14b13b8badde83f7b3453c6433d9acc789763f1f67a7bf2e54da734a320
+1c03390973608900025edaa96ba49b80e2f6eb759020f3a274d0037e70fba675
+602965020d01f167a2bba813f6c13eab5d3b0076582b2e61c2b53dee59042551
+7be21c20469dc5fe27075e7ff2258c5e66ad699ab8c281d7f065dc9014fac214
+c2aea1780f52ccd65919c76e4240440eed3a84e010ccceb76b8eeac763d53672
+d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d
+1033bd17e232900cbe081aa119eba157c87c837eee2e1abf82132bc9594acf36
++ podman rm --all
+536fe14b13b8badde83f7b3453c6433d9acc789763f1f67a7bf2e54da734a320
+602965020d01f167a2bba813f6c13eab5d3b0076582b2e61c2b53dee59042551
+d1e4b9ae98cecf9d543c617afabf3080d94b57776d65b93f6a91079bc947378d
+1033bd17e232900cbe081aa119eba157c87c837eee2e1abf82132bc9594acf36
+7be21c20469dc5fe27075e7ff2258c5e66ad699ab8c281d7f065dc9014fac214
+b909a8e1028e2716a680131dd1ddd6fb2054e922d2da7537a1232d3613680b22
+c2aea1780f52ccd65919c76e4240440eed3a84e010ccceb76b8eeac763d53672
+1c03390973608900025edaa96ba49b80e2f6eb759020f3a274d0037e70fba675
+4bdb65277ec965b044be03066bfb6e65bf70c5298a5a39f3cb0954c806935c52
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: docker.io/library/alpine:latest
+Untagged: registry.fedoraproject.org/fedora:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Deleted: c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Deleted: 0e79e93fc530998e29e00eeea134f53002d000be3f24c7716e2eb3ed2b35162f
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpzr5yf31f ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpzr5yf31f
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf a
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 12:50:24 2023 - INFO  - End to restore the test environment.

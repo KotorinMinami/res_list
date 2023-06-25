@@ -1,0 +1,271 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 15:40:14 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
+Thu Jun 22 15:40:20 2023 - INFO  - pkgs:(podman podman-docker) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ docker pull registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ docker run --name postgres registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T15:41:34Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 15:41:35 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 15:41:36 2023 - INFO  - Start to run test.
++ docker stop postgres
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+postgres
+++ docker ps -aq
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker logs -f 48f579d0bec9
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 0 0 0 'check docker logs -f $(docker ps -aq) failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker logs -f $(docker ps -aq) failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker logs -l
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 0 0 0 'check docker logs -l failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker logs -l failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker ps -aq
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker logs --since 2020-12-31 48f579d0bec9
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 0 0 0 'check docker logs --since 2020-12-31 $(docker ps -aq) failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker logs --since 2020-12-31 $(docker ps -aq) failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker ps -aq
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker logs --tail 10 48f579d0bec9
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 0 0 0 'check docker logs --tail 10 $(docker ps -aq) failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker logs --tail 10 $(docker ps -aq) failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker ps -aq
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker logs -t 48f579d0bec9
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 0 0 0 'check docker logs -t $(docker ps -aq) failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker logs -t $(docker ps -aq) failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker start postgres
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T15:41:42Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+postgres
++ docker save -q -o alpine.tar registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker import --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh --change LABEL=blue=image alpine.tar image-imported
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Getting image source signatures
+Copying blob sha256:919221d36acec53dffb1fc85db23ea3f815b7a7113e60d890c3ae172eab35446
+Copying config sha256:b87228cbe6521715c9e3d40ccc5d4f7e1014c994f27f32a9b98dfd449a7a9500
+Writing manifest to image destination
+Storing signatures
+sha256:b87228cbe6521715c9e3d40ccc5d4f7e1014c994f27f32a9b98dfd449a7a9500
++ CHECK_RESULT 0 0 0 'check docker import --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker import --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ cat alpine.tar
++ docker import -q --message 'importing the alpine.tar tarball' - image-imported
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+sha256:74fc7484a2bfa5948b49ecd11d1aab5652f4765b8f11bb9ccc2e7e10ba55a113
++ CHECK_RESULT 0 0 0 'check cat alpine.tar | docker import -q --message failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check cat alpine.tar | docker import -q --message failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker ps -aq
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker export -o redis-container.tar 48f579d0bec9
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 0 0 0 'check docker export -o redis-container.tar $(docker ps -aq) failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker export -o redis-container.tar $(docker ps -aq) failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f redis-container.tar
++ CHECK_RESULT 0 0 0 'check test -f redis-container.tar failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check test -f redis-container.tar failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker images -q
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker tag 74fc7484a2bf b87228cbe652 f4fb65011c56 test
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ docker images
++ grep test
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+localhost/image-imported                 latest      74fc7484a2bf  8 seconds ago   94.5 MB
+localhost/b87228cbe652                   latest      74fc7484a2bf  8 seconds ago   94.5 MB
+localhost/f4fb65011c56                   latest      74fc7484a2bf  8 seconds ago   94.5 MB
+localhost/test                           latest      74fc7484a2bf  8 seconds ago   94.5 MB
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago     94.4 MB
++ CHECK_RESULT 0 0 0 'check docker tag $(docker images -q) test && docker images | grep test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker tag $(docker images -q) test && docker images | grep test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 15:42:06 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 15:42:07 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 15:42:07 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop postgres
+postgres
++ podman rm --all
+48f579d0bec99bea40da4e87d719677f032072ec450854fe02745c433d2698ce
++ podman rmi -f --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: localhost/image-imported:latest
+Untagged: localhost/b87228cbe652:latest
+Untagged: localhost/f4fb65011c56:latest
+Untagged: localhost/test:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Deleted: b87228cbe6521715c9e3d40ccc5d4f7e1014c994f27f32a9b98dfd449a7a9500
+Deleted: 74fc7484a2bfa5948b49ecd11d1aab5652f4765b8f11bb9ccc2e7e10ba55a113
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Jun 22 15:42:09 2023 - WARN  - no thing to do.
++ return 0
+++ ls
+++ grep -vE .sh
++ rm -rf alpine.tar redis-container.tar
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 15:42:10 2023 - INFO  - End to restore the test environment.

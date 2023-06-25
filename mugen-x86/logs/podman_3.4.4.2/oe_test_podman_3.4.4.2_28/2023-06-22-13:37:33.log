@@ -1,0 +1,246 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Thu Jun 22 13:37:36 2023 - INFO  - Start environment preparation.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpsoa6uk4t
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpsoa6uk4t
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ podman rm -all
+Error: --all and --latest cannot be used together
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Thu Jun 22 13:40:23 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Thu Jun 22 13:40:23 2023 - INFO  - Start executing testcase.
++ podman pod create --infra=false
+8de09b781d49f127556b7812f39c91a508180baae1a74d5fa1af49ec12c425a2
++ CHECK_RESULT 0 0 0 'check podman pod create --infra=false failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod create --infra=false failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman pod ls
+++ sed -n 2p
+++ awk '{print$2}'
++ name=infallible_noyce
++ test -z infallible_noyce
++ CHECK_RESULT 1 1 0 'check name failed'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='check name failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ podman pod ls
++ grep infallible_noyce
+8de09b781d49  infallible_noyce  Created     1 second ago              0
++ CHECK_RESULT 0 0 0 'check podman pod ls | grep ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod ls | grep ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pod ps
++ grep infallible_noyce
+8de09b781d49  infallible_noyce  Created     1 second ago              0
++ CHECK_RESULT 0 0 0 'check podman pod ps | grep ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod ps | grep ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pod list
++ grep infallible_noyce
+8de09b781d49  infallible_noyce  Created     2 seconds ago              0
++ CHECK_RESULT 0 0 0 'check podman pod list | grep ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod list | grep ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pod pause infallible_noyce
+8de09b781d49f127556b7812f39c91a508180baae1a74d5fa1af49ec12c425a2
++ CHECK_RESULT 0 0 0 'check podman pod pause ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod pause ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pod unpause infallible_noyce
+8de09b781d49f127556b7812f39c91a508180baae1a74d5fa1af49ec12c425a2
++ CHECK_RESULT 0 0 0 'check podman pod unpause ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod unpause ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pod inspect infallible_noyce
+{
+     "Id": "8de09b781d49f127556b7812f39c91a508180baae1a74d5fa1af49ec12c425a2",
+     "Name": "infallible_noyce",
+     "Created": "2023-06-22T13:40:24.1885694Z",
+     "CreateCommand": [
+          "podman",
+          "pod",
+          "create",
+          "--infra=false"
+     ],
+     "State": "Created",
+     "Hostname": "",
+     "CreateCgroup": false,
+     "CgroupParent": "/libpod_parent",
+     "CreateInfra": false,
+     "NumContainers": 0
+}
++ CHECK_RESULT 0 0 0 'check podman pod inspect ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod inspect ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ nohup openvpn podman pod stats infallible_noyce
+++ echo 31506
++ local_pid=31506
++ CHECK_RESULT 0 0 0 'check local_pid failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check local_pid failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pod stop infallible_noyce
+8de09b781d49f127556b7812f39c91a508180baae1a74d5fa1af49ec12c425a2
++ CHECK_RESULT 0 0 0 'check podman pod stop ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod stop ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pod rm infallible_noyce
+8de09b781d49f127556b7812f39c91a508180baae1a74d5fa1af49ec12c425a2
++ CHECK_RESULT 0 0 0 'check podman pod rm ${name} failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pod rm ${name} failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End executing testcase.'
++ message='End executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End executing testcase.'
+Thu Jun 22 13:40:29 2023 - INFO  - End executing testcase.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 13:40:29 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu Jun 22 13:40:30 2023 - INFO  - start environment cleanup.
++ clear_env
++ podman stop postgres
+Error: no container with name or ID "postgres" found: no such container
++ podman rm --all
++ podman rmi -f --all
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpsoa6uk4t ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpsoa6uk4t
++ '[' 0 -ne 0 ']'
++ kill -9 31506
+oe_test_podman_3.4.4.2_28.sh: line 60: kill: (31506) - No such process
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Thu Jun 22 13:41:29 2023 - INFO  - Finish environment cleanup.

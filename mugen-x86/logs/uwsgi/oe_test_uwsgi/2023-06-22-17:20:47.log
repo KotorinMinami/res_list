@@ -1,0 +1,393 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 17:20:49 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL python3-uWSGI
++ pkgs=python3-uWSGI
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs python3-uWSGI --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpp_rie8ez
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpp_rie8ez
++ pip3 install uwsgitop
+Collecting uwsgitop
+  Downloading uwsgitop-0.11.tar.gz (6.1 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Installing collected packages: uwsgitop
+  DEPRECATION: uwsgitop is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
+  Running setup.py install for uwsgitop: started
+  Running setup.py install for uwsgitop: finished with status 'done'
+Successfully installed uwsgitop-0.11
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Thu Jun 22 17:21:51 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 17:21:51 2023 - INFO  - Start to run test.
++ uwsgi --help
++ grep 'Usage: /usr/bin/uwsgi \[options...\]'
+Usage: /usr/bin/uwsgi [options...]
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pip3
++ grep -E 'Usage:|pip3 <command> \[options\]'
+Usage:   
+  pip3 <command> [options]
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ nohup uwsgi --http :9090 --wsgi-file test.py
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http://127.0.0.1:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0     49      0 --:--:-- --:--:-- --:--:--    50
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http://127.0.0.1:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0   1410      0 --:--:-- --:--:-- --:--:--  1833
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http:/0.0.0.0:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0   1468      0 --:--:-- --:--:-- --:--:--  1833
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'uwsgi --http'
++ kill -9 4558 4561
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  4558 Killed                  nohup uwsgi --http :9090 --wsgi-file test.py > /dev/null 2>&1
++ CHECK_RESULT 0
++ actual_result=0
++ nohup uwsgi --http :9090 --wsgi-file test.py --master --processes 4 --threads 2
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http://127.0.0.1:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0     43      0 --:--:-- --:--:-- --:--:--    44
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http://127.0.0.1:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0   1343      0 --:--:-- --:--:-- --:--:--  1571
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http:/0.0.0.0:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0   1352      0 --:--:-- --:--:-- --:--:--  1571
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'uwsgi --http'
++ kill -9 4568 4571 4572 4573 4574 4575
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  4568 Killed                  nohup uwsgi --http :9090 --wsgi-file test.py --master --processes 4 --threads 2 > /dev/null 2>&1
++ CHECK_RESULT 0
++ nohup uwsgi --http :9090 --wsgi-file test.py --master --processes 4 --threads 2 --stats 127.0.0.1:9191
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http://127.0.0.1:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0     42      0 --:--:-- --:--:-- --:--:--    43
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http://127.0.0.1:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0   1221      0 --:--:-- --:--:-- --:--:--  1571
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ curl http:/0.0.0.0:9090 -w '\n'
++ grep 'Hello World'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    11    0    11    0     0   1402      0 --:--:-- --:--:-- --:--:--  1571
+Hello World
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn uwsgitop 127.0.0.1:9191
+Traceback (most recent call last):
+  File "/usr/local/bin/uwsgitop", line 331, in <module>
+    main()
+  File "/usr/local/bin/uwsgitop", line 110, in main
+    screen = curses.initscr()
+  File "/usr/lib64/python3.10/curses/__init__.py", line 29, in initscr
+    setupterm(term=_os.environ.get("TERM", "unknown"),
+_curses.error: setupterm: could not find terminal
+++ pgrep -f 'uwsgi --http'
+++ head -n 1
++ pid=4586
++ grep 4586 log1
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_uwsgi.sh line 70'
++ message='oe_test_uwsgi.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_uwsgi.sh line 70'
+Thu Jun 22 17:22:09 2023 - ERROR - oe_test_uwsgi.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'uwsgi --http'
++ kill -9 4586 4589 4590 4591 4592 4593
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  4586 Killed                  nohup uwsgi --http :9090 --wsgi-file test.py --master --processes 4 --threads 2 --stats 127.0.0.1:9191 > /dev/null 2>&1
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ nohup uwsgi --socket 127.0.0.1:3031 --wsgi-file test.py --master --processes 4 --threads 2 --stats 127.0.0.1:9191
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'uwsgi --socket'
+++ head -n 1
++ pid=4614
++ expect
+spawn uwsgitop 127.0.0.1:9191
+Traceback (most recent call last):
+  File "/usr/local/bin/uwsgitop", line 331, in <module>
+    main()
+  File "/usr/local/bin/uwsgitop", line 110, in main
+    screen = curses.initscr()
+  File "/usr/lib64/python3.10/curses/__init__.py", line 29, in initscr
+    setupterm(term=_os.environ.get("TERM", "unknown"),
+_curses.error: setupterm: could not find terminal
++ grep 4614 log2
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_uwsgi.sh line 82'
++ message='oe_test_uwsgi.sh line 82'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_uwsgi.sh line 82'
+Thu Jun 22 17:22:16 2023 - ERROR - oe_test_uwsgi.sh line 82
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'uwsgi --socket'
++ kill -9 4614 4622 4623 4624 4626
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Thu Jun 22 17:22:17 2023 - INFO  - End of the test.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 19:  4614 Killed                  nohup uwsgi --socket 127.0.0.1:3031 --wsgi-file test.py --master --processes 4 --threads 2 --stats 127.0.0.1:9191 > /dev/null 2>&1
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 17:22:17 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 17:22:17 2023 - INFO  - Start to restore the test environment.
+++ ls
+++ grep -vE '.sh|.py'
++ rm -rf log1 log2
++ pip3 uninstall uwsgitop -y
+Found existing installation: uwsgitop 0.11
+Uninstalling uwsgitop-0.11:
+  Successfully uninstalled uwsgitop-0.11
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpp_rie8ez ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpp_rie8ez
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Thu Jun 22 17:22:28 2023 - INFO  - Finish restoring the test environment.

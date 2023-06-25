@@ -1,0 +1,320 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 09:49:57 2023 - INFO  - Start to prepare the test environment.
++ OLD_LANG=en_US.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL 'bacula-client mysql5-server bacula-common'
++ pkgs='bacula-client mysql5-server bacula-common'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'bacula-client mysql5-server bacula-common' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:03:13 ago on Thu 22 Jun 2023 09:46:56 AM UTC.
+No match for argument: mysql5-server
+Error: Unable to find a match: mysql5-server'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:03:13 ago on Thu 22 Jun 2023 09:46:56 AM UTC.
+No match for argument: mysql5-server
+Error: Unable to find a match: mysql5-server'
++ systemctl restart mysqld
+Failed to restart mysqld.service: Unit mysqld.service not found.
++ /usr/libexec/bacula/create_mysql_database
+oe_test_bacula_bacula_sd_01.sh: line 28: /usr/libexec/bacula/create_mysql_database: No such file or directory
++ /usr/libexec/bacula/make_mysql_tables
+oe_test_bacula_bacula_sd_01.sh: line 29: /usr/libexec/bacula/make_mysql_tables: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-mysql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ sed -i 's\dbuser = "bacula"\dbuser = "root"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 09:50:10 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 09:50:10 2023 - INFO  - Start to run test.
++ nohup bacula-sd -v -dt -d 21 -c /etc/bacula/bacula-sd.conf
+nohup: failed to run command 'bacula-sd': No such file or directory
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ ss -ntlp
++ grep bacula-sd
++ CHECK_RESULT 1 0 0 'test bacula-sd -c -v -d -dt failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bacula-sd -c -v -d -dt failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bacula-sd -c -v -d -dt failed'
++ LOG_ERROR 'test bacula-sd -c -v -d -dt failed'
++ message='test bacula-sd -c -v -d -dt failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bacula-sd -c -v -d -dt failed'
+Thu Jun 22 09:50:14 2023 - ERROR - test bacula-sd -c -v -d -dt failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bacula_sd_01.sh line 40'
++ message='oe_test_bacula_bacula_sd_01.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bacula_sd_01.sh line 40'
+Thu Jun 22 09:50:15 2023 - ERROR - oe_test_bacula_bacula_sd_01.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ pkill -f bacula-sd
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ timeout 5 bacula-sd -v -f -s -c /etc/bacula/bacula-sd.conf
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
+timeout: failed to run command ‘bacula-sd’: No such file or directory
++ ss -ntlp
++ grep bacula-sd
++ CHECK_RESULT 1 0 0 'test bacula-sd -f -s failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bacula-sd -f -s failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bacula-sd -f -s failed'
++ LOG_ERROR 'test bacula-sd -f -s failed'
++ message='test bacula-sd -f -s failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bacula-sd -f -s failed'
+Thu Jun 22 09:50:18 2023 - ERROR - test bacula-sd -f -s failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bacula_sd_01.sh line 45'
++ message='oe_test_bacula_bacula_sd_01.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bacula_sd_01.sh line 45'
+Thu Jun 22 09:50:19 2023 - ERROR - oe_test_bacula_bacula_sd_01.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ pkill -f bacula-sd
++ bacula-sd -v -g root -c /etc/bacula/bacula-sd.conf
+oe_test_bacula_bacula_sd_01.sh: line 47: bacula-sd: command not found
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ ss -ntlp
++ grep bacula-sd
++ CHECK_RESULT 1 0 0 'test bacula-sd -g failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bacula-sd -g failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bacula-sd -g failed'
++ LOG_ERROR 'test bacula-sd -g failed'
++ message='test bacula-sd -g failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bacula-sd -g failed'
+Thu Jun 22 09:50:22 2023 - ERROR - test bacula-sd -g failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bacula_sd_01.sh line 50'
++ message='oe_test_bacula_bacula_sd_01.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bacula_sd_01.sh line 50'
+Thu Jun 22 09:50:23 2023 - ERROR - oe_test_bacula_bacula_sd_01.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ pkill -f bacula-sd
++ bacula-sd -v -u root -P -c /etc/bacula/bacula-sd.conf
+oe_test_bacula_bacula_sd_01.sh: line 52: bacula-sd: command not found
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ ss -ntlp
++ grep bacula-sd
++ CHECK_RESULT 1 0 0 'test bacula-sd -P failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bacula-sd -P failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bacula-sd -P failed'
++ LOG_ERROR 'test bacula-sd -P failed'
++ message='test bacula-sd -P failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bacula-sd -P failed'
+Thu Jun 22 09:50:27 2023 - ERROR - test bacula-sd -P failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bacula_sd_01.sh line 55'
++ message='oe_test_bacula_bacula_sd_01.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bacula_sd_01.sh line 55'
+Thu Jun 22 09:50:27 2023 - ERROR - oe_test_bacula_bacula_sd_01.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ pkill -f bacula-sd
++ bacula-sd -v -u root -c /etc/bacula/bacula-sd.conf
+oe_test_bacula_bacula_sd_01.sh: line 57: bacula-sd: command not found
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ ss -ntlp
++ grep bacula-sd
++ CHECK_RESULT 1 0 0 'test bacula-sd -u failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bacula-sd -u failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bacula-sd -u failed'
++ LOG_ERROR 'test bacula-sd -u failed'
++ message='test bacula-sd -u failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bacula-sd -u failed'
+Thu Jun 22 09:50:30 2023 - ERROR - test bacula-sd -u failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bacula_sd_01.sh line 60'
++ message='oe_test_bacula_bacula_sd_01.sh line 60'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bacula_sd_01.sh line 60'
+Thu Jun 22 09:50:31 2023 - ERROR - oe_test_bacula_bacula_sd_01.sh line 60
++ '[' 0 -eq 1 ']'
++ return 0
++ pkill -f bacula-sd
++ bacula-sd -v -m -c /etc/bacula/bacula-sd.conf
+oe_test_bacula_bacula_sd_01.sh: line 62: bacula-sd: command not found
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ ss -ntlp
++ grep bacula-sd
++ CHECK_RESULT 1 0 0 'test bacula-sd -m failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bacula-sd -m failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bacula-sd -m failed'
++ LOG_ERROR 'test bacula-sd -m failed'
++ message='test bacula-sd -m failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bacula-sd -m failed'
+Thu Jun 22 09:50:35 2023 - ERROR - test bacula-sd -m failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bacula_sd_01.sh line 65'
++ message='oe_test_bacula_bacula_sd_01.sh line 65'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bacula_sd_01.sh line 65'
+Thu Jun 22 09:50:35 2023 - ERROR - oe_test_bacula_bacula_sd_01.sh line 65
++ '[' 0 -eq 1 ']'
++ return 0
++ pkill -f bacula-sd
++ bacula-sd -v -T -c /etc/bacula/bacula-sd.conf
+oe_test_bacula_bacula_sd_01.sh: line 67: bacula-sd: command not found
++ CHECK_RESULT 127 0 0 'test bacula-sd -T failed'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='test bacula-sd -T failed'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'test bacula-sd -T failed'
++ LOG_ERROR 'test bacula-sd -T failed'
++ message='test bacula-sd -T failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bacula-sd -T failed'
+Thu Jun 22 09:50:35 2023 - ERROR - test bacula-sd -T failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bacula_sd_01.sh line 68'
++ message='oe_test_bacula_bacula_sd_01.sh line 68'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bacula_sd_01.sh line 68'
+Thu Jun 22 09:50:35 2023 - ERROR - oe_test_bacula_bacula_sd_01.sh line 68
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 09:50:36 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 09:50:36 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 09:50:36 2023 - INFO  - Start to restore the test environment.
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ pkill -f bacula-sd
++ sed -i 's\dbuser = "root"\dbuser = "bacula"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-postgresql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ /usr/libexec/bacula/drop_mysql_tables
+oe_test_bacula_bacula_sd_01.sh: line 78: /usr/libexec/bacula/drop_mysql_tables: No such file or directory
++ /usr/libexec/bacula/drop_mysql_database
+oe_test_bacula_bacula_sd_01.sh: line 79: /usr/libexec/bacula/drop_mysql_database: No such file or directory
++ systemctl stop mysqld
+Failed to stop mysqld.service: Unit mysqld.service not loaded.
++ rm -rf '*.log' bacula-sd.trace 'var/lib/mysql/*' '/var/spool/bacula/*'
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:03:13 ago on Thu 22 Jun 2023 09:46:56 AM UTC.
+No match for argument: mysql5-server
+Error: Unable to find a match: mysql5-server ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:03:13 ago on Thu 22 Jun 2023 09:46:56 AM UTC.
+No match for argument: mysql5-server
+Error: Unable to find a match: mysql5-server'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 173, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 144, in rpm_remove
+    with open(tmpfile, "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Last metadata expiration check: 0:03:13 ago on Thu 22 Jun 2023 09:46:56 AM UTC.\nNo match for argument: mysql5-server\nError: Unable to find a match: mysql5-server'
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 09:50:38 2023 - INFO  - End to restore the test environment.

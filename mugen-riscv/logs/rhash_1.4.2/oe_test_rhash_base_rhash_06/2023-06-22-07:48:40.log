@@ -1,0 +1,182 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 07:48:43 2023 - INFO  - Start to prepare the test environment.
++ cp -f ./common/test1K.data .
++ mkdir tmp_dir
++ cp -f test1K.data tmp_dir/
++ DNF_INSTALL rhash
++ pkgs=rhash
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs rhash --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpecsrbolf
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpecsrbolf
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 07:49:11 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 07:49:11 2023 - INFO  - Start to run test.
++ rhash --verbose --crc32 test1K.data
++ grep -E 'Config file: /etc/rhashrc|Config file:'
+Config file: /etc/rhashrc
++ CHECK_RESULT 0 0 0 'error --verbose'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='error --verbose'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rhash --hex test1K.data
++ grep 'test1K.data B70B4C26'
+test1K.data B70B4C26
++ CHECK_RESULT 0 0 0 'error --hex'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='error --hex'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rhash --base32 test1K.data
++ grep 'test1K.data W4FUYJQ'
+test1K.data W4FUYJQ
++ CHECK_RESULT 0 0 0 'error --base32'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='error --base32'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rhash --base64 test1K.data
++ grep 'test1K.data twtMJg=='
+test1K.data twtMJg==
++ CHECK_RESULT 0 0 0 'error --base64'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='error --base64'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rhash --magnet test1K.data
++ grep magnet
+magnet:?xl=1024&dn=test1K.data&xt=urn:tree:tiger:4oqy25un2xhidqpv5u6bxaz47inucygibk7lfni&xt=urn:ed2k:5ae257c47e9be1243ee32aabe408fb6b&xt=urn:aich:lmagnhcibvop7pp2rpn2tflbcyhs2g3x
++ CHECK_RESULT 0 0 0 'error --magnet'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='error --magnet'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rhash --torrent tmp_dir/test1K.data
+tmp_dir/test1K.data.torrent saved
+33e75b119aa12c75391d662b341ee0af8203ec13  tmp_dir/test1K.data
+++ ls /
+++ grep -cE tmp_dir/test1K.data.torrent
++ CHECK_RESULT 0 0 0 'error --torrent'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='error --torrent'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rhash -a test1K.data
++ grep test1K.data
++ rhash --template tmp_dir/file tmp_dir/file
+test1K.data  b70b4c26  5ae257c47e9be1243ee32aabe408fb6b  b2ea9f7fcea831a4a63b213f41a8855b  5b00669c480d5cffbdfa8bdba99561160f2d1b77  d25963c1686c96fb8881f6d10c439a7fe853c906e4eb3662  4oqy25un2xhidqpv5u6bxaz47inucygibk7lfni  33e75b119aa12c75391d662b341ee0af8203ec13  5ae257c47e9be1243ee32aabe408fb6b  lmagnhcibvop7pp2rpn2tflbcyhs2g3x  d606b7f44bd288759f8869d880d9d4a2f159d739005e72d00f93b814e8c04e657f40c838e4d6f9030a8c9e0308a4e3b450246250243b2f09e09fa5a24761e26b  29ea7f13cac242905ae2dc1a36d5985815b30356  890bb3ee5dbe4da22d6719a14efd9109b220607e1086c1abbb51eeac2b044cbb  d9c92e33ab144bbb2262a5221739600062831664d16716d03751fba7d952cc06  1a3ff10095b61f4ce0cbde76f615284e52133b99  7a6682133082a49c37db7b008394aeb9c184d5fb2a8d2a6251dd4bba5f6744b4  fc44df1ffe41f70a41915b90380d458bdc149302576208d4cadee7c694e5a169812a52ea2b746b9c2c4d3e0808eb723afadabf6f795e60c9367269a8d3f6fbf8  6290817f6001432cd441058d2bb82d88b3f32425ade4c93d56207838  785b0751fc2c53dc14a4ce3d800e69ef9ce1009eb327ccf458afe09c242c26c9  55fd17eeb1611f9193f6ac600238ce63aa298c2e332f042b80c8f691f800e4c7505af20c1a86a31f08504587395f081f  37f652be867f28ed033269cbba201af2112c2b3fd334a89fd2f757938ddee815787cc61d6e24a8a33340d0f7e86ffc058816b88530766ba6e231620a130b566c  069744670fd47d89f59489a45ee0d6b8f597c7c74895914997dedde4c60396f1  9052ac32582d303e8220b7b1d3b187b2b7a43239bbb708222346db056c852be989d4ffe00df31fe80789a568096a0c4ff6dabcf77419b66bc28db871b49386e2  5b37c09e5b5cf21b0d8097e9479fe6982003b617d41ab2293d77bf22  b6c70631c6ff932b9f380d9cde8750eb9bea393817a9aea410c2119eb7b9b870  bfdb44fcb75b4a02db0487b0c607630283ae792bbef4797bd993009a2fd15cf2425b1a9f82f25f6cdc7cac15be3d572e  b052fd4a09f988bbe4112d9a3eca8ccc517e56da866c1609504c37871146da80731bb681674a2000a41bcb78230b3d9069eb42820293ce23cba294550a1d4d3b  2cdf6e8f  7479ed8c193a23af522f1b8c1a853758  4c2f2a13ac7745d117838b0be8ebb39bedd5d44b332ae8c973ac07efb50abac0  a049455add68f38d48845e25a52ba3100c4d0899178c202aec07364fecacf650  6b490f42e902f61b1ee12d3c85e34152e37c94d07ab9ea577cad6a6eb4690fad38064f53a19c225703a5c52cdc9a85add71b339d327e1630ee3432b920240e8a
++ CHECK_RESULT 0 0 0 'error --template'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='error --template'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rhash --printf '%f %C %M %H %E %G %T %A %W\n' test1K.data
++ grep -E '^test1K.data'
+test1K.data B70B4C26 B2EA9F7FCEA831A4A63B213F41A8855B 5B00669C480D5CFFBDFA8BDBA99561160F2D1B77 5AE257C47E9BE1243EE32AABE408FB6B 7A6682133082A49C37DB7B008394AEB9C184D5FB2A8D2A6251DD4BBA5F6744B4 4OQY25UN2XHIDQPV5U6BXAZ47INUCYGIBK7LFNI LMAGNHCIBVOP7PP2RPN2TFLBCYHS2G3X D606B7F44BD288759F8869D880D9D4A2F159D739005E72D00F93B814E8C04E657F40C838E4D6F9030A8C9E0308A4E3B450246250243B2F09E09FA5A24761E26B
++ CHECK_RESULT 0 0 0 'error --test1K.data'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='error --test1K.data'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 07:49:13 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 07:49:13 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 07:49:14 2023 - INFO  - Start to restore the test environment.
++ rm -rf test1K.data tmp_dir
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpecsrbolf ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpecsrbolf
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 07:49:24 2023 - INFO  - End to restore the test environment.

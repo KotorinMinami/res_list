@@ -1,0 +1,131 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 08:09:31 2023 - INFO  - Start to prepare the test environment.
++ pre_env
++ java -version
+../common/common_lib.sh: line 22: java: command not found
+++ dnf list
+++ grep 'java-1.8.*-openjdk'
+++ awk -F - '{print $2}'
+++ sed -n 1p
++ java_version=1.8.0
++ DNF_INSTALL 'java-1.8.0-openjdk java-1.8.0-openjdk-devel testng beust-jcommander'
++ pkgs='java-1.8.0-openjdk java-1.8.0-openjdk-devel testng beust-jcommander'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'java-1.8.0-openjdk java-1.8.0-openjdk-devel testng beust-jcommander' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpgiiafqfe
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpgiiafqfe
+++ rpm -ql testng
+++ grep testng.jar
++ testng_jar=/usr/share/java/testng.jar
+++ rpm -ql beust-jcommander
+++ grep beust-jcommander.jar
++ jcommander_jar=/usr/share/java/beust-jcommander.jar
++ export CLASSPATH=/usr/share/java/testng.jar:/usr/share/java/beust-jcommander.jar:.
++ CLASSPATH=/usr/share/java/testng.jar:/usr/share/java/beust-jcommander.jar:.
++ DNF_INSTALL 'junit hamcrest'
++ pkgs='junit hamcrest'
++ node=1
++ '[' -z /tmp/tmpgiiafqfe ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'junit hamcrest' --node 1 --tempfile /tmp/tmpgiiafqfe
++ tmpfile2=/tmp/tmpgiiafqfe
++ '[' -z /tmp/tmpgiiafqfe ']'
+++ grep junit.jar
+++ rpm -ql junit
++ junit_jar=/usr/share/java/junit.jar
+++ rpm -ql hamcrest
+++ grep core.jar
++ hamcrestcore_jar=/usr/share/java/hamcrest/core.jar
++ export CLASSPATH=/usr/share/java/testng.jar:/usr/share/java/beust-jcommander.jar:.:/usr/share/java/junit.jar:/usr/share/java/hamcrest/core.jar
++ CLASSPATH=/usr/share/java/testng.jar:/usr/share/java/beust-jcommander.jar:.:/usr/share/java/junit.jar:/usr/share/java/hamcrest/core.jar
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 08:12:05 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 08:12:05 2023 - INFO  - Start to run test.
++ javac JunitTestNG.java
++ CHECK_RESULT 0 0 0 'java source code compilation failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='java source code compilation failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ java -cp /usr/share/java/testng.jar:/usr/share/java/beust-jcommander.jar:.:/usr/share/java/junit.jar:/usr/share/java/hamcrest/core.jar org.testng.TestNG testng_junit.xml
++ grep 'run: 1, Failures: 0, Skips: 0'
+Total tests run: 1, Failures: 0, Skips: 0
++ CHECK_RESULT 0 0 0 'testng execution use case failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='testng execution use case failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 08:12:26 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 08:12:27 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 08:12:27 2023 - INFO  - Start to restore the test environment.
++ clean_env
++ unset CLASSPATH
++ rm -rf ./JunitTestNG.class
++ rm -rf ./test-output
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpgiiafqfe ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpgiiafqfe
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 08:12:47 2023 - INFO  - End to restore the test environment.

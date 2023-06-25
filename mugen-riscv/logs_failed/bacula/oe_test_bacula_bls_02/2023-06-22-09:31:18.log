@@ -1,0 +1,243 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 09:31:21 2023 - INFO  - Start to prepare the test environment.
++ OLD_LANG=en_US.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL 'bacula-client bacula-common mysql5-server tar'
++ pkgs='bacula-client bacula-common mysql5-server tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'bacula-client bacula-common mysql5-server tar' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:22:05 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:22:05 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
++ tar -zxvf common/test.tar.gz
+config/
+config/a.config
+config/4.conf
+config/3.conf
+config/2.conf
+config/6.conf
+config/5.conf
+config/1.conf
+config/e.conf
++ systemctl restart mysqld
+Failed to restart mysqld.service: Unit mysqld.service not found.
++ /usr/libexec/bacula/create_mysql_database
+oe_test_bacula_bls_02.sh: line 29: /usr/libexec/bacula/create_mysql_database: No such file or directory
++ /usr/libexec/bacula/make_mysql_tables
+oe_test_bacula_bls_02.sh: line 30: /usr/libexec/bacula/make_mysql_tables: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-mysql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ sed -i 's\dbuser = "bacula"\dbuser = "root"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ systemctl start bacula-dir.service bacula-sd.service bacula-fd.service
+Failed to start bacula-dir.service: Unit bacula-dir.service not found.
+Failed to start bacula-sd.service: Unit bacula-sd.service not found.
+Failed to start bacula-fd.service: Unit bacula-fd.service not found.
++ expect
+spawn bconsole
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 09:31:45 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 09:31:46 2023 - INFO  - Start to run test.
++ expect
+spawn bconsole
+parent: waiting for sync byte
+parent: telling child to go ahead
+parent: now unsynchronized from child
+couldn't execute "bconsole": no such file or directory
+    while executing
+"spawn bconsole"
++ bls -V testl1 -b ./config/3.conf FileChgr1-Dev1
++ grep 'on device "FileChgr1-Dev1"'
+oe_test_bacula_bls_02.sh: line 65: bls: command not found
++ CHECK_RESULT 1 0 0 'test bls -b failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bls -b failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bls -b failed'
++ LOG_ERROR 'test bls -b failed'
++ message='test bls -b failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bls -b failed'
+Thu Jun 22 09:31:47 2023 - ERROR - test bls -b failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bls_02.sh line 66'
++ message='oe_test_bacula_bls_02.sh line 66'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bls_02.sh line 66'
+Thu Jun 22 09:31:48 2023 - ERROR - oe_test_bacula_bls_02.sh line 66
++ '[' 0 -eq 1 ']'
++ return 0
++ bls -v -V testl1 -b ./config/3.conf FileChgr1-Dev1
++ grep 'on device "FileChgr1-Dev1"'
+oe_test_bacula_bls_02.sh: line 67: bls: command not found
++ CHECK_RESULT 1 0 0 'test bls -v failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bls -v failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bls -v failed'
++ LOG_ERROR 'test bls -v failed'
++ message='test bls -v failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bls -v failed'
+Thu Jun 22 09:31:48 2023 - ERROR - test bls -v failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bls_02.sh line 68'
++ message='oe_test_bacula_bls_02.sh line 68'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bls_02.sh line 68'
+Thu Jun 22 09:31:49 2023 - ERROR - oe_test_bacula_bls_02.sh line 68
++ '[' 0 -eq 1 ']'
++ return 0
++ grep Usage:
++ bls '-?'
++ CHECK_RESULT 1 0 0 'test bls -? failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bls -? failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bls -? failed'
++ LOG_ERROR 'test bls -? failed'
++ message='test bls -? failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bls -? failed'
+Thu Jun 22 09:31:50 2023 - ERROR - test bls -? failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bls_02.sh line 70'
++ message='oe_test_bacula_bls_02.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bls_02.sh line 70'
+Thu Jun 22 09:31:50 2023 - ERROR - oe_test_bacula_bls_02.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
++ bls -V testl1 -c /etc/bacula/bacula-sd.conf FileChgr1-Dev1
++ grep 'Ready to read from volume "testl1" '
+oe_test_bacula_bls_02.sh: line 71: bls: command not found
++ CHECK_RESULT 1 0 0 'test bls -c failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='test bls -c failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'test bls -c failed'
++ LOG_ERROR 'test bls -c failed'
++ message='test bls -c failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'test bls -c failed'
+Thu Jun 22 09:31:51 2023 - ERROR - test bls -c failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_bacula_bls_02.sh line 72'
++ message='oe_test_bacula_bls_02.sh line 72'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_bacula_bls_02.sh line 72'
+Thu Jun 22 09:31:52 2023 - ERROR - oe_test_bacula_bls_02.sh line 72
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 09:31:52 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 09:31:53 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 09:31:53 2023 - INFO  - Start to restore the test environment.
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ systemctl stop bacula-dir.service bacula-sd.service bacula-fd.service
+Failed to stop bacula-dir.service: Unit bacula-dir.service not loaded.
+Failed to stop bacula-sd.service: Unit bacula-sd.service not loaded.
+Failed to stop bacula-fd.service: Unit bacula-fd.service not loaded.
++ sed -i 's\dbuser = "root"\dbuser = "bacula"\g' /etc/bacula/bacula-dir.conf
+sed: can't read /etc/bacula/bacula-dir.conf: No such file or directory
++ alternatives --set libbaccats.so /usr/lib64/libbaccats-postgresql.so
+cannot access /var/lib/alternatives/libbaccats.so: No such file or directory
++ /usr/libexec/bacula/drop_mysql_tables
+oe_test_bacula_bls_02.sh: line 82: /usr/libexec/bacula/drop_mysql_tables: No such file or directory
++ /usr/libexec/bacula/drop_mysql_database
+oe_test_bacula_bls_02.sh: line 83: /usr/libexec/bacula/drop_mysql_database: No such file or directory
++ systemctl stop mysqld
+Failed to stop mysqld.service: Unit mysqld.service not loaded.
++ rm -rf config/ '/var/lib/mysql/*' '/tmp/test*' '/var/spool/bacula/*'
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:22:05 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:22:05 ago on Thu 22 Jun 2023 09:09:38 AM CST.
+No match for argument: mysql5-server
+Package tar-2:1.34-4.oe2303.riscv64 is already installed.
+Error: Unable to find a match: mysql5-server'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 173, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 144, in rpm_remove
+    with open(tmpfile, "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Last metadata expiration check: 0:22:05 ago on Thu 22 Jun 2023 09:09:38 AM CST.\nNo match for argument: mysql5-server\nPackage tar-2:1.34-4.oe2303.riscv64 is already installed.\nError: Unable to find a match: mysql5-server'
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 09:31:57 2023 - INFO  - End to restore the test environment.

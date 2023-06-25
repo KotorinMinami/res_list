@@ -1,0 +1,2596 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 06:13:00 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpa59t2djw
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpa59t2djw
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman pull registry.access.redhat.com/ubi8-minimal
+runtime: lfstack.push invalid packing: node=0xffffffa533c520 cnt=0x1 packed=0xffffa533c5200001 -> node=0xffffa533c520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaacffad310?, 0xaaaaaacf0abf40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffc71df7c8 sp=0xffffffc71df7a0 pc=0xaaaaaacf0a71ec
+runtime.(*lfstack).push(0xc000052f00?, 0xffffffa533c520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffc71df7f8 sp=0xffffffc71df7c8 pc=0xaaaaaacf07ad98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaad135aff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffc71df828 sp=0xffffffc71df7f8 pc=0xaaaaaacf0a1010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffc71df860 sp=0xffffffc71df828 pc=0xaaaaaacf094a58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffc71df868 sp=0xffffffc71df860 pc=0xaaaaaacf089908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffc71df870 sp=0xffffffc71df868 pc=0xaaaaaacf0d5484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00059f8f0 sp=0xc00059f8e8 pc=0xaaaaaacf0d5418
+runtime.gcStart({0xffffffa532d108?, 0x59?, 0xcf07c7e0?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00059f980 sp=0xc00059f8f0 pc=0xaaaaaacf089c80
+runtime.mallocgc(0x1000, 0xaaaaaad0388240, 0x1)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00059f9f8 sp=0xc00059f980 pc=0xaaaaaacf07c9b0
+runtime.makeslice(0x3000?, 0xc0003bf7e2?, 0xc0003bf7e3?)
+	/usr/lib/golang/src/runtime/slice.go:103 +0x70 fp=0xc00059fa18 sp=0xc00059f9f8 pc=0xaaaaaacf0bf4c0
+bufio.NewWriterSize(...)
+	/usr/lib/golang/src/bufio/bufio.go:593
+bufio.NewWriter(...)
+	/usr/lib/golang/src/bufio/bufio.go:602
+encoding/csv.NewWriter(...)
+	/usr/lib/golang/src/encoding/csv/writer.go:40
+github.com/containers/podman/vendor/github.com/spf13/pflag.writeAsCSV({0xaaaaaad1361d20, 0x0, 0x0})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:33 +0x70 fp=0xc00059faa8 sp=0xc00059fa18 pc=0xaaaaaacf5a5898
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*stringSliceValue).String(0xaaaaaad1331140?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:61 +0x3c fp=0xc00059fae8 sp=0xc00059faa8 pc=0xaaaaaacf5a5bfc
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarPF(0xaaaaaacfecc914?, {0xaaaaaad0610ce8, 0xc000468110}, {0xaaaaaacffb6401, 0x11}, {0x0, 0x0}, {0xaaaaaad00406fb, 0x55})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go:829 +0x94 fp=0xc00059fb28 sp=0xc00059fae8 pc=0xaaaaaacf5996e4
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarP(...)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go:837
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).StringSliceVar(0x0?, 0xaaaaaad1331b70, {0xaaaaaacffb6401, 0x11}, {0xaaaaaad1361d20, 0x0, 0x0}, {0xaaaaaad00406fb, 0x55})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:105 +0x120 fp=0xc00059fb80 sp=0xc00059fb28 pc=0xaaaaaacf5a6078
+github.com/containers/podman/cmd/podman/common.DefineCreateFlags(0xaaaaaad12951e0?, 0xaaaaaad13319c0, 0x0)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/common/create.go:205 +0x824 fp=0xc00059fc68 sp=0xc00059fb80 pc=0xaaaaaacfeccb3c
+github.com/containers/podman/cmd/podman/containers.createFlags(0xaaaaaad0478100?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:71 +0x7c fp=0xc00059fcc0 sp=0xc00059fc68 pc=0xaaaaaacfedcfac
+github.com/containers/podman/cmd/podman/containers.init.6()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:93 +0xd8 fp=0xc00059fd20 sp=0xc00059fcc0 pc=0xaaaaaacfedd130
+runtime.doInit(0xaaaaaad12d8840)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00059fe50 sp=0xc00059fd20 pc=0xaaaaaacf0b708c
+runtime.doInit(0xaaaaaad12d3c40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059ff80 sp=0xc00059fe50 pc=0xaaaaaacf0b6fcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00059ffd8 sp=0xc00059ff80 pc=0xaaaaaacf0a97d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00059ffd8 sp=0xc00059ffd8 pc=0xaaaaaacf0d7694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaacf0a9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaacf0a9a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaacf0d7694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 3 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005f798 sp=0xc00005f780 pc=0xaaaaaacf0a9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005f7c8 sp=0xc00005f798 pc=0xaaaaaacf094c04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005f7d8 sp=0xc00005f7c8 pc=0xaaaaaacf0893d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005f7d8 sp=0xc00005f7d8 pc=0xaaaaaacf0d7694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 4 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ff80 sp=0xc00005ff68 pc=0xaaaaaacf0a9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaad132f6a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005ffa8 sp=0xc00005ff80 pc=0xaaaaaacf092b30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005ffc8 sp=0xc00005ffa8 pc=0xaaaaaacf09309c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005ffd8 sp=0xc00005ffc8 pc=0xaaaaaacf089374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005ffd8 sp=0xc00005ffd8 pc=0xaaaaaacf0d7694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 18 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaacf0a9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaacf0885c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaacf0d7694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 19 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a748 sp=0xc00005a730 pc=0xaaaaaacf0a9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005a7d8 sp=0xc00005a748 pc=0xaaaaaacf08b5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaacf0d7694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 20 [GC worker (idle)]:
+runtime.gopark(0x10ffff814ef?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005af48 sp=0xc00005af30 pc=0xaaaaaacf0a9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005afd8 sp=0xc00005af48 pc=0xaaaaaacf08b5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaacf0d7694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 34 [GC worker (idle)]:
+runtime.gopark(0x10fffe6c1c6?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000514748 sp=0xc000514730 pc=0xaaaaaacf0a9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0005147d8 sp=0xc000514748 pc=0xaaaaaacf08b5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0005147d8 sp=0xc0005147d8 pc=0xaaaaaacf0d7694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 35 [GC worker (idle)]:
+runtime.gopark(0x10ffff854ff?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000514f48 sp=0xc000514f30 pc=0xaaaaaacf0a9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc000514fd8 sp=0xc000514f48 pc=0xaaaaaacf08b5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000514fd8 sp=0xc000514fd8 pc=0xaaaaaacf0d7694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 6 [chan receive]:
+runtime.gopark(0xc000062800?, 0xaaaaaacf0aff0c?, 0x0?, 0x0?, 0xc000502e01?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0000616d8 sp=0xc0000616c0 pc=0xaaaaaacf0a9c08
+runtime.chanrecv(0xc0004e4000, 0xc0000617b0, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc000061768 sp=0xc0000616d8 pc=0xaaaaaacf076af0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc000061788 sp=0xc000061768 pc=0xaaaaaacf076644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc0000bc120?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc0000617c8 sp=0xc000061788 pc=0xaaaaaacfac68b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc0000617d8 sp=0xc0000617c8 pc=0xaaaaaacfac46bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000617d8 sp=0xc0000617d8 pc=0xaaaaaacf0d7694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 06:16:20 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 06:16:21 2023 - INFO  - Start to run test.
++ podman images
++ grep registry.access.redhat.com/ubi8-minimal
++ CHECK_RESULT 1 0 0 'check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ LOG_ERROR 'check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ message='check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed'
+Thu Jun 22 06:16:22 2023 - ERROR - check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_01.sh line 31'
++ message='oe_test_podman_3.4.4.2_01.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_01.sh line 31'
+Thu Jun 22 06:16:23 2023 - ERROR - oe_test_podman_3.4.4.2_01.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
++ podman pull -q registry.access.redhat.com/ubi8-minimal
+++ podman images -q
+runtime: lfstack.push invalid packing: node=0xfffffface60520 cnt=0x1 packed=0xfffface605200001 -> node=0xfffface60520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaadcd81310?, 0xaaaaaadbe7ff40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffd2d007e8 sp=0xffffffd2d007c0 pc=0xaaaaaadbe7b1ec
+runtime.(*lfstack).push(0xc000052f00?, 0xfffffface60520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffd2d00818 sp=0xffffffd2d007e8 pc=0xaaaaaadbe4ed98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaade12eff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffd2d00848 sp=0xffffffd2d00818 pc=0xaaaaaadbe75010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffd2d00880 sp=0xffffffd2d00848 pc=0xaaaaaadbe68a58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffd2d00888 sp=0xffffffd2d00880 pc=0xaaaaaadbe5d908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffd2d00890 sp=0xffffffd2d00888 pc=0xaaaaaadbea9484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00059edc8 sp=0xc00059edc0 pc=0xaaaaaadbea9418
+runtime.gcStart({0xfffffface515b8?, 0x5f?, 0xb1?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00059ee58 sp=0xc00059edc8 pc=0xaaaaaadbe5dc80
+runtime.mallocgc(0x1800, 0x0, 0x0)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00059eed0 sp=0xc00059ee58 pc=0xaaaaaadbe509b0
+runtime.growslice(0x0?, {0xaaaaaade135d20?, 0xffffff85b38e00?, 0x3?}, 0xffffff85d1ffff?)
+	/usr/lib/golang/src/runtime/slice.go:284 +0x4e8 fp=0xc00059ef28 sp=0xc00059eed0 pc=0xaaaaaadbe93a80
+regexp.makeOnePass.func1(0x8404cf58?, {0xc0002f5920?, 0xe, 0xaaaaaade12f8a0?})
+	/usr/lib/golang/src/regexp/onepass.go:388 +0x828 fp=0xc00059f050 sp=0xc00059ef28 pc=0xaaaaaadbf76b98
+regexp.makeOnePass.func1(0x20bb60?, {0xc0002f5920?, 0xe, 0xe})
+	/usr/lib/golang/src/regexp/onepass.go:324 +0x1cc fp=0xc00059f178 sp=0xc00059f050 pc=0xaaaaaadbf7653c
+regexp.makeOnePass(0xc00020bb60)
+	/usr/lib/golang/src/regexp/onepass.go:449 +0x284 fp=0xc00059f280 sp=0xc00059f178 pc=0xaaaaaadbf7627c
+regexp.compileOnePass(0xc00020bb00)
+	/usr/lib/golang/src/regexp/onepass.go:501 +0x150 fp=0xc00059f350 sp=0xc00059f280 pc=0xaaaaaadbf778d8
+regexp.compile({0xaaaaaadcde6127, 0x33}, 0x3?, 0x0)
+	/usr/lib/golang/src/regexp/regexp.go:193 +0xa4 fp=0xc00059f3d0 sp=0xc00059f350 pc=0xaaaaaadbf77bec
+regexp.Compile(...)
+	/usr/lib/golang/src/regexp/regexp.go:137
+regexp.MustCompile({0xaaaaaadcde6127, 0x33})
+	/usr/lib/golang/src/regexp/regexp.go:317 +0x44 fp=0xc00059f440 sp=0xc00059f3d0 pc=0xaaaaaadbf786e4
+github.com/containers/podman/vendor/github.com/google/go-cmp/cmp.init()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/google/go-cmp/cmp/options.go:253 +0x30 fp=0xc00059f4d0 sp=0xc00059f440 pc=0xaaaaaadc8927c8
+runtime.doInit(0xaaaaaade099340)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00059f600 sp=0xc00059f4d0 pc=0xaaaaaadbe8b08c
+runtime.doInit(0xaaaaaade096e40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059f730 sp=0xc00059f600 pc=0xaaaaaadbe8afcc
+runtime.doInit(0xaaaaaade0a0d20)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059f860 sp=0xc00059f730 pc=0xaaaaaadbe8afcc
+runtime.doInit(0xaaaaaade09a400)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059f990 sp=0xc00059f860 pc=0xaaaaaadbe8afcc
+runtime.doInit(0xaaaaaade0b4380)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fac0 sp=0xc00059f990 pc=0xaaaaaadbe8afcc
+runtime.doInit(0xaaaaaade09d400)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fbf0 sp=0xc00059fac0 pc=0xaaaaaadbe8afcc
+runtime.doInit(0xaaaaaade09c8c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fd20 sp=0xc00059fbf0 pc=0xaaaaaadbe8afcc
+runtime.doInit(0xaaaaaade0a33c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fe50 sp=0xc00059fd20 pc=0xaaaaaadbe8afcc
+runtime.doInit(0xaaaaaade0a7c40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059ff80 sp=0xc00059fe50 pc=0xaaaaaadbe8afcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00059ffd8 sp=0xc00059ff80 pc=0xaaaaaadbe7d7d0
+runtime: lfstack.push invalid packing: node=runtime.goexit(0xffffffbdb6e520)
+ cnt=	0x1/usr/lib/golang/src/runtime/asm_riscv64.s packed=:0xffffbdb6e5200001516 -> node= +0xffffbdb6e5200x4
+ fp=fatal error: 0xc00059ffd8lfstack.push sp=
+0xc00059ffd8 pc=0xaaaaaadbeab694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaadbe7dc08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaadbe7da90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaadbeab694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +
+runtime stack:
+0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, runtime.throw0x0(?, 0x0{?, 0x00xaaaaaad4c0a310??, , 0x00xaaaaaad3d08f40??)
+}	)
+/usr/lib/golang/src/runtime/proc.go	:/usr/lib/golang/src/runtime/panic.go363: +0x1101047 fp= +0xc00005a7980x44 sp= fp=0xc00005a7800xfffffff067f7b8 pc= sp=0xaaaaaadbe7dc080xfffffff067f790
+ pc=0xaaaaaad3d041ec
+runtime.goparkunlock(...)
+runtime.(*lfstack).push	(/usr/lib/golang/src/runtime/proc.go0xc000052f00:?369, 
+0xffffffbdb6e520runtime.bgsweep)
+(	0x0/usr/lib/golang/src/runtime/lfstack.go?:)
+30	 +/usr/lib/golang/src/runtime/mgcsweep.go0x120: fp=2970xfffffff067f7e8 + sp=0x1140xfffffff067f7b8 fp= pc=0xc00005a7c80xaaaaaad3cd7d98 sp=
+0xc00005a798 pc=runtime.(*spanSetBlockAlloc).free0xaaaaaadbe68c04(...)
+
+	runtime.gcenable.func1/usr/lib/golang/src/runtime/mspanset.go(:)
+292	
+/usr/lib/golang/src/runtime/mgc.goruntime.(*spanSet).reset:(1780xaaaaaad5fb7ff8 +)
+0x2c	 fp=/usr/lib/golang/src/runtime/mspanset.go0xc00005a7d8: sp=2650xc00005a7c8 + pc=0xb00xaaaaaadbe5d3d4 fp=
+0xfffffff067f818runtime.goexit sp=(0xfffffff067f7e8)
+ pc=	0xaaaaaad3cfe010/usr/lib/golang/src/runtime/asm_riscv64.s
+:runtime.finishsweep_m516( +)
+0x4	 fp=/usr/lib/golang/src/runtime/mgcsweep.go0xc00005a7d8: sp=2600xc00005a7d8 + pc=0xc00xaaaaaadbeab694 fp=
+0xfffffff067f850created by  sp=runtime.gcenable0xfffffff067f818
+ pc=	0xaaaaaad3cf1a58/usr/lib/golang/src/runtime/mgc.go
+:runtime.gcStart.func1178( +)
+0x70	
+/usr/lib/golang/src/runtime/mgc.go
+:goroutine 66819 + [0x20GC scavenge wait fp=]:
+0xfffffff067f858runtime.gopark sp=(0xfffffff067f8500x0 pc=?0xaaaaaad3ce6908, 
+0x0runtime.systemstack?(, )
+0x0	?/usr/lib/golang/src/runtime/asm_riscv64.s, :0x0133? +, 0x540x412e848000000000 fp=?0xfffffff067f860)
+ sp=	0xfffffff067f858/usr/lib/golang/src/runtime/proc.go pc=:0xaaaaaad3d32484363
+ +0x110 fp=
+0xc00005af80goroutine  sp=10xc00005af68 [ pc=running0xaaaaaadbe7dc08, locked to thread
+]:
+runtime.goparkunlockruntime.systemstack_switch(...)
+(	)
+/usr/lib/golang/src/runtime/proc.go	:/usr/lib/golang/src/runtime/asm_riscv64.s369:
+96runtime.(*scavengerState).park +(0x80xaaaaaade1036a0 fp=)
+0xc0005a6730	 sp=/usr/lib/golang/src/runtime/mgcscavenge.go0xc0005a6728: pc=3890xaaaaaad3d32418 +
+0x68 fp=runtime.gcStart0xc00005afa8( sp={0xc00005af800xc0003ac000 pc=?0xaaaaaadbe66b30, 
+0x280runtime.bgscavenge?(, 0x00x944f8548??)
+}	)
+/usr/lib/golang/src/runtime/mgcscavenge.go	:/usr/lib/golang/src/runtime/mgc.go622: +6670x6c + fp=0x3580xc00005afc8 fp= sp=0xc0005a67c00xc00005afa8 sp= pc=0xc0005a67300xaaaaaadbe6709c pc=
+0xaaaaaad3ce6c80runtime.gcenable.func2
+(runtime.mallocgc)
+(	0x280/usr/lib/golang/src/runtime/mgc.go, :0xaaaaaad5164240179,  +0x10x2c)
+ fp=	0xc00005afd8/usr/lib/golang/src/runtime/malloc.go sp=:0xc00005afc81148 pc= +0xaaaaaadbe5d3740x6a8
+ fp=runtime.goexit0xc0005a6838( sp=)
+0xc0005a67c0	 pc=/usr/lib/golang/src/runtime/asm_riscv64.s0xaaaaaad3cd99b0:
+516runtime.growslice +(0x40xaaaaaad5164240 fp=, 0xc00005afd8{ sp=0xc0002bc8c00xc00005afd8? pc=, 0xaaaaaadbeab6940x0
+?created by , runtime.gcenable0x0
+?	}/usr/lib/golang/src/runtime/mgc.go, :0x900000010179? +)
+0xb0	
+/usr/lib/golang/src/runtime/slice.go
+:goroutine 29020 + [0x524finalizer wait fp=]:
+0xc0005a6890runtime.gopark sp=(0xc0005a68380x3000 pc=?0xaaaaaad3d1cabc, 
+0x18000?, regexp/syntax.(*compiler).inst0x0(...)
+?	, /usr/lib/golang/src/regexp/syntax/compile.go0x30?:, 1640x3000
+?regexp/syntax.(*compiler).rune)
+(	0xc0005a75d8/usr/lib/golang/src/runtime/proc.go, :{3630xc000396dd0 +, 0x1100x2 fp=, 0xc00005e5a80x2 sp=}0xc00005e590,  pc=0xd40xaaaaaadbe7dc08)
+
+	runtime.goparkunlock/usr/lib/golang/src/regexp/syntax/compile.go(...)
+:	273/usr/lib/golang/src/runtime/proc.go +:0xb4369 fp=
+0xc0005a6920runtime.runfinq sp=(0xc0005a6890)
+ pc=	0xaaaaaad3ded8ac/usr/lib/golang/src/runtime/mfinal.go
+:regexp/syntax.(*compiler).compile180( +0xc0005a75d80x110,  fp=0xc000396d900xc00005e7d8)
+ sp=	0xc00005e5a8/usr/lib/golang/src/regexp/syntax/compile.go pc=:0xaaaaaadbe5c5c8110
+ +runtime.goexit0x174( fp=)
+0xc0005a6b98	 sp=/usr/lib/golang/src/runtime/asm_riscv64.s0xc0005a6920: pc=5160xaaaaaad3debdf4 +
+0x4regexp/syntax.(*compiler).compile fp=(0xc00005e7d80xc0005a75d8 sp=, 0xc00005e7d80xc000396e00 pc=)
+0xaaaaaadbeab694	
+/usr/lib/golang/src/regexp/syntax/compile.gocreated by :runtime.createfing137
+ +	0xdd0/usr/lib/golang/src/runtime/mfinal.go fp=:0xc0005a6e10157 sp= +0xc0005a6b980x64 pc=
+0xaaaaaad3deca50
+
+goroutine regexp/syntax.(*compiler).compile21( [0xc0005a75d8GC worker (idle), ]:
+0xc000396ee0runtime.gopark)
+(	0x0/usr/lib/golang/src/regexp/syntax/compile.go?:, 1470x0 +?0x1004,  fp=0x00xc0005a7088? sp=, 0xc0005a6e100x0 pc=?0xaaaaaad3decc84, 
+0x0regexp/syntax.(*compiler).compile?()
+0xc0005a75d8	, /usr/lib/golang/src/runtime/proc.go0xc000396f50:)
+363	 +/usr/lib/golang/src/regexp/syntax/compile.go0x110: fp=1350xc00005b748 + sp=0xe800xc00005b730 fp= pc=0xc0005a73000xaaaaaadbe7dc08 sp=
+0xc0005a7088runtime.gcBgMarkWorker pc=(0xaaaaaad3decb00)
+
+	regexp/syntax.(*compiler).compile/usr/lib/golang/src/runtime/mgc.go(:0xc0005a75d81235,  +0xc0003972d00x100)
+ fp=	0xc00005b7d8/usr/lib/golang/src/regexp/syntax/compile.go sp=:0xc00005b748147 pc= +0xaaaaaadbe5f5c00x1004
+ fp=runtime.goexit0xc0005a7578( sp=)
+0xc0005a7300	 pc=/usr/lib/golang/src/runtime/asm_riscv64.s0xaaaaaad3decc84:
+516regexp/syntax.Compile +(0x40xc0003972d0 fp=?0xc00005b7d8)
+ sp=	0xc00005b7d8/usr/lib/golang/src/regexp/syntax/compile.go pc=:0xaaaaaadbeab69474
+ +created by 0x108runtime.gcBgMarkStartWorkers fp=
+0xc0005a7640	 sp=/usr/lib/golang/src/runtime/mgc.go0xc0005a7578: pc=11590xaaaaaad3debb00 +
+0x2cregexp.compile
+(
+{goroutine 0xaaaaaad4c6bf5234,  [0x32GC worker (idle)}]:
+, runtime.gopark0xf108(?0x0, ?0x0, )
+0x0	?/usr/lib/golang/src/regexp/regexp.go, :0x0182? +, 0x840x0 fp=?0xc0005a76c0,  sp=0x00xc0005a7640? pc=)
+0xaaaaaad3e00bcc	
+/usr/lib/golang/src/runtime/proc.go:363regexp.Compile +(...)
+0x110	 fp=/usr/lib/golang/src/regexp/regexp.go0xc00048e748: sp=1370xc00048e730
+ pc=regexp.MustCompile0xaaaaaadbe7dc08(
+{runtime.gcBgMarkWorker0xaaaaaad4c6bf52(, )
+0x32	}/usr/lib/golang/src/runtime/mgc.go)
+:	1235/usr/lib/golang/src/regexp/regexp.go +:0x100317 fp= +0xc00048e7d80x44 sp= fp=0xc00048e7480xc0005a7730 pc= sp=0xaaaaaadbe5f5c00xc0005a76c0
+ pc=runtime.goexit0xaaaaaad3e016e4(
+)
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4github.com/containers/podman/vendor/gopkg.in/yaml%2ev3.init fp=(0xc00048e7d8)
+ sp=	0xc00048e7d8/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/gopkg.in/yaml.v3/encode.go pc=:0xaaaaaadbeab694307
+ +created by 0x2f4runtime.gcBgMarkStartWorkers fp=
+0xc0005a7860	 sp=/usr/lib/golang/src/runtime/mgc.go0xc0005a7730: pc=11590xaaaaaad4a7dd4c +
+0x2cruntime.doInit
+(
+0xaaaaaad5f25200goroutine )
+3	 [/usr/lib/golang/src/runtime/proc.goGC worker (idle):]:
+6329runtime.gopark +(0x1340x1110ede2a79 fp=?0xc0005a7990,  sp=0x00xc0005a7860? pc=, 0xaaaaaad3d1408c0x0
+?runtime.doInit, (0x00xaaaaaad5f333e0?)
+, 	0x0/usr/lib/golang/src/runtime/proc.go?:)
+6306	 +/usr/lib/golang/src/runtime/proc.go0x74: fp=3630xc0005a7ac0 + sp=0x1100xc0005a7990 fp= pc=0xc00005f7480xaaaaaad3d13fcc sp=
+0xc00005f730runtime.doInit pc=(0xaaaaaadbe7dc080xaaaaaad5f26400
+)
+runtime.gcBgMarkWorker	(/usr/lib/golang/src/runtime/proc.go)
+:	6306/usr/lib/golang/src/runtime/mgc.go +:0x741235 fp= +0xc0005a7bf00x100 sp= fp=0xc0005a7ac00xc00005f7d8 pc= sp=0xaaaaaad3d13fcc0xc00005f748
+ pc=runtime.doInit0xaaaaaadbe5f5c0(
+0xaaaaaad5f258c0runtime.goexit)
+(	)
+/usr/lib/golang/src/runtime/proc.go	:/usr/lib/golang/src/runtime/asm_riscv64.s6306: +5160x74 + fp=0x40xc0005a7d20 fp= sp=0xc00005f7d80xc0005a7bf0 sp= pc=0xc00005f7d80xaaaaaad3d13fcc pc=
+0xaaaaaadbeab694runtime.doInit
+(created by 0xaaaaaad5f2c3c0runtime.gcBgMarkStartWorkers)
+
+		/usr/lib/golang/src/runtime/proc.go/usr/lib/golang/src/runtime/mgc.go::63061159 + +0x740x2c fp=
+0xc0005a7e50
+ sp=goroutine 0xc0005a7d204 pc= [0xaaaaaad3d13fccGC worker (idle)
+]:
+runtime.doInitruntime.gopark((0xaaaaaad5f30c400xaaaaaadd3d5830)
+?	, /usr/lib/golang/src/runtime/proc.go0xc000040060:?6306,  +0x180x74? fp=, 0xc0005a7f800x14 sp=?0xc0005a7e50,  pc=0x00xaaaaaad3d13fcc?
+)
+runtime.main	(/usr/lib/golang/src/runtime/proc.go)
+:	363/usr/lib/golang/src/runtime/proc.go +:0x110233 fp= +0xc00005ff480x1d0 sp= fp=0xc00005ff300xc0005a7fd8 pc= sp=0xaaaaaadbe7dc080xc0005a7f80
+ pc=runtime.gcBgMarkWorker0xaaaaaad3d067d0(
+)
+runtime.goexit	(/usr/lib/golang/src/runtime/mgc.go)
+:	1235/usr/lib/golang/src/runtime/asm_riscv64.s +:0x100516 fp= +0xc00005ffd80x4 sp= fp=0xc00005ff480xc0005a7fd8 pc= sp=0xaaaaaadbe5f5c00xc0005a7fd8
+ pc=runtime.goexit0xaaaaaad3d34694(
+)
+	/usr/lib/golang/src/runtime/asm_riscv64.s
+:goroutine 5162 + [0x4force gc (idle) fp=]:
+0xc00005ffd8runtime.gopark sp=(0xc00005ffd80x0 pc=?0xaaaaaadbeab694, 
+0x0created by ?runtime.gcBgMarkStartWorkers, 
+0x0	?/usr/lib/golang/src/runtime/mgc.go, :0x01159? +, 0x2c0x0
+?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaad3d06c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaad3d06a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaad3d34694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a798 sp=0xc00005a780 pc=0xaaaaaad3d06c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005a7c8 sp=0xc00005a798 pc=0xaaaaaad3cf1c04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005a7d8 sp=0xc00005a7c8 pc=0xaaaaaad3ce63d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaad3d34694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005af80 sp=0xc00005af68+ grep ''
+ pc=0xaaaaaad3d06c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaad5f8c6a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005afa8 sp=0xc00005af80 pc=0xaaaaaad3cefb30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005afc8 sp=0xc00005afa8 pc=0xaaaaaad3cf009c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005afd8 sp=0xc00005afc8 pc=0xaaaaaad3ce6374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaad3d34694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 20 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaad3d06c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaad3ce55c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaad3d34694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 34 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004b2748 sp=0xc0004b2730 pc=0xaaaaaad3d06c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004b27d8 sp=0xc0004b2748 pc=0xaaaaaad3ce85c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004b27d8 sp=0xc0004b27d8 pc=0xaaaaaad3d34694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 50 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004ae748 sp=0xc0004ae730 pc=0xaaaaaad3d06c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004ae7d8 sp=0xc0004ae748 pc=0xaaaaaad3ce85c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004ae7d8 sp=0xc0004ae7d8 pc=0xaaaaaad3d34694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 51 [GC worker (idle)]:
+runtime.gopark(0x1110d0e02ef?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004aef48 sp=0xc0004aef30 pc=0xaaaaaad3d06c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004aefd8 sp=0xc0004aef48 pc=0xaaaaaad3ce85c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004aefd8 sp=0xc0004aefd8 pc=0xaaaaaad3d34694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 35 [GC worker (idle)]:
+runtime.gopark(0xaaaaaad525e830?, 0xc0003ec860?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004b2f48 sp=0xc0004b2f30 pc=0xaaaaaad3d06c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004b2fd8 sp=0xc0004b2f48 pc=0xaaaaaad3ce85c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004b2fd8 sp=0xc0004b2fd8 pc=0xaaaaaad3d34694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 22 [chan receive]:
+runtime.gopark(0xc000062c00?, 0xaaaaaad3d0cf0c?, 0x0?, 0x0?, 0xc00008b601?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004b56d8 sp=0xc0004b56c0 pc=0xaaaaaad3d06c08
+runtime.chanrecv(0xc0004b6000, 0xc0004b57b0, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc0004b5768 sp=0xc0004b56d8 pc=0xaaaaaad3cd3af0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc0004b5788 sp=0xc0004b5768 pc=0xaaaaaad3cd3644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc0001f0000?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc0004b57c8 sp=0xc0004b5788 pc=0xaaaaaad47238b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc0004b57d8 sp=0xc0004b57c8 pc=0xaaaaaad47216bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004b57d8 sp=0xc0004b57d8 pc=0xaaaaaad3d34694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ CHECK_RESULT 1 0 0 'check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ LOG_ERROR 'check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ message='check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
+Thu Jun 22 06:16:24 2023 - ERROR - check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_01.sh line 33'
++ message='oe_test_podman_3.4.4.2_01.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_01.sh line 33'
+Thu Jun 22 06:16:25 2023 - ERROR - oe_test_podman_3.4.4.2_01.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ podman pull --tls-verify registry.access.redhat.com/ubi8-minimal
+++ podman images -q
+runtime: lfstack.push invalid packing: node=0xffffffba4ba520 cnt=0x1 packed=0xffffba4ba5200001 -> node=0xffffba4ba520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaab4a6c310?, 0xaaaaaab3b6af40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffff8987b8 sp=0xffffffff898790 pc=0xaaaaaab3b661ec
+runtime.(*lfstack).push(0xc00004e500?, 0xffffffba4ba520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffff8987e8 sp=0xffffffff8987b8 pc=0xaaaaaab3b39d98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.goruntime: lfstack.push invalid packing: node=:2920xffffff9bed5520
+ cnt=runtime.(*spanSet).reset0x1( packed=0xaaaaaab5e19ff80xffff9bed55200001)
+ -> node=	0xffff9bed5520/usr/lib/golang/src/runtime/mspanset.go
+:fatal error: 265lfstack.push +
+0xb0 fp=0xffffffff898818 sp=0xffffffff8987e8 pc=0xaaaaaab3b60010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffff898850 sp=0xffffffff898818 pc=0xaaaaaab3b53a58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffff898858 sp=0xffffffff898850 pc=0xaaaaaab3b48908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffff898860 sp=0xffffffff898858 pc=0xaaaaaab3b94484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +
+runtime stack:
+0x8 fp=0xc00051f8f0 sp=0xc00051f8e8 pc=0xaaaaaab3b94418
+runtime.gcStart({0xffffffba4aba68runtime.throw?(, 0x59{?, 0xb3b3b7e00xaaaaaaba5c1310??}, )
+0xaaaaaab96bff40	?/usr/lib/golang/src/runtime/mgc.go}:)
+667	 +/usr/lib/golang/src/runtime/panic.go0x358: fp=0xc00051f9801047 sp= +0xc00051f8f00x44 pc= fp=0xaaaaaab3b48c800xffffffc49c47e8
+ sp=runtime.mallocgc0xffffffc49c47c0( pc=0x10000xaaaaaab96bb1ec, 
+0xaaaaaab4e47240, runtime.(*lfstack).push0x1()
+0xc000052f00	?/usr/lib/golang/src/runtime/malloc.go, :0xffffff9bed55201148)
+ +	0x6a8/usr/lib/golang/src/runtime/lfstack.go fp=:0xc00051f9f830 sp= +0xc00051f9800x120 pc= fp=0xaaaaaab3b3b9b00xffffffc49c4818
+ sp=runtime.makeslice0xffffffc49c47e8( pc=0x30000xaaaaaab968ed98?
+, 0xc0003af4a6?, 0xc0003af4a7?runtime.(*spanSetBlockAlloc).free)
+(...)
+		/usr/lib/golang/src/runtime/slice.go/usr/lib/golang/src/runtime/mspanset.go::103292 +
+0x70runtime.(*spanSet).reset fp=(0xc00051fa180xaaaaaabb96eff8 sp=)
+0xc00051f9f8	 pc=/usr/lib/golang/src/runtime/mspanset.go0xaaaaaab3b7e4c0:
+265 +0xb0bufio.NewWriterSize fp=(...)
+0xffffffc49c4848	 sp=/usr/lib/golang/src/bufio/bufio.go0xffffffc49c4818: pc=5930xaaaaaab96b5010
+
+runtime.finishsweep_m(bufio.NewWriter)
+(...)
+		/usr/lib/golang/src/runtime/mgcsweep.go/usr/lib/golang/src/bufio/bufio.go::260602 +
+0xc0 fp=0xffffffc49c4880 sp=encoding/csv.NewWriter0xffffffc49c4848(...)
+ pc=	0xaaaaaab96a8a58/usr/lib/golang/src/encoding/csv/writer.go
+:runtime.gcStart.func140(
+)
+github.com/containers/podman/vendor/github.com/spf13/pflag.writeAsCSV	(/usr/lib/golang/src/runtime/mgc.go{:0xaaaaaab5e20d20668,  +0x00x20,  fp=0x00xffffffc49c4888} sp=)
+0xffffffc49c4880	 pc=/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go0xaaaaaab969d908:
+33runtime.systemstack +(0x70)
+ fp=	0xc00051faa8/usr/lib/golang/src/runtime/asm_riscv64.s sp=:0xc00051fa18133 pc= +0xaaaaaab40648980x54
+ fp=github.com/containers/podman/vendor/github.com/spf13/pflag.(*stringSliceValue).String0xffffffc49c4890( sp=0xaaaaaab5df01400xffffffc49c4888? pc=)
+0xaaaaaab96e9484	
+/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:61
+ +goroutine 0x3c1 fp= [0xc00051fae8running sp=, locked to thread0xc00051faa8]:
+ pc=runtime.systemstack_switch0xaaaaaab4064bfc(
+)
+	/usr/lib/golang/src/runtime/asm_riscv64.s:github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarPF96( +0xaaaaaab498b4a80x8? fp=, 0xc00051f570{ sp=0xaaaaaab50cfce80xc00051f568,  pc=0xc0003840e00xaaaaaab96e9418}
+, runtime.gcStart{(0xaaaaaab4a64bba{, 0xffffff9bec65b80x8?}, , 0xc0000a505d{?0x0, , 0x3dac000x0?}}, )
+{	0xaaaaaab4aa4615/usr/lib/golang/src/runtime/mgc.go, :0x24667} +)
+0x358	 fp=/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go0xc00051f600: sp=8290xc00051f570 + pc=0x940xaaaaaab969dc80 fp=
+0xc00051fb28runtime.mallocgc sp=(0xc00051fae80x1500 pc=, 0xaaaaaab40586e40x0
+, github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarP0x0(...)
+)
+		/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go/usr/lib/golang/src/runtime/malloc.go::8371148
+ +github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).StringSliceVar0x6a8( fp=0x00xc00051f678? sp=, 0xc00051f6000xaaaaaab5df0a40 pc=, 0xaaaaaab96909b0{
+0xaaaaaab4a64bbaruntime.growslice, (0x80xc00000e928}?, , {{0xaaaaaab5e20d200xc0003da000, ?0x0, , 0x30000x0?}, , 0xaaaaaab96c5bac{?0xaaaaaab4aa4615}, , 0x240xaaaaaab96c5bb0}?)
+)
+		/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go/usr/lib/golang/src/runtime/slice.go::105284 + +0x1200x4e8 fp= fp=0xc00051fb800xc00051f6d0 sp= sp=0xc00051fb280xc00051f678 pc= pc=0xaaaaaab40650780xaaaaaab96d3a80
+
+io.ReadAll({0xaaaaaabac1d120, github.com/containers/podman/cmd/podman/common.DefineCreateFlags0xc00000e928(}0xaaaaaab5d541e0)
+?	, /usr/lib/golang/src/io/io.go0xaaaaaab5df09c0:, 6590x0 +)
+0xa4	 fp=/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/common/create.go0xc00051f750: sp=720xc00051f6d0 + pc=0x28c0xaaaaaab96f786c fp=
+0xc00051fc68 sp=0xc00051fb80 pc=0xaaaaaab498b5a4
+github.com/containers/podman/cmd/podman/containers.createFlags(0xaaaaaab4f37100?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.goio/ioutil.ReadAll:(...)
+71	 +/usr/lib/golang/src/io/ioutil/ioutil.go0x7c: fp=270xc00051fcc0
+ sp=github.com/containers/podman/vendor/github.com/BurntSushi/toml.(*Decoder).Decode0xc00051fc68( pc=0xaaaaaaba5fbee80xaaaaaab499bfac?
+, github.com/containers/podman/cmd/podman/containers.init.6{(0xaaaaaababd3fa0)
+?	, /home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go0xc0000e5180:?93} +)
+0xd8	 fp=/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/BurntSushi/toml/decode.go0xc00051fd20: sp=1150xc00051fcc0 + pc=0x2940xaaaaaab499c130 fp=
+0xc00051f910runtime.doInit sp=(0xc00051f7500xaaaaaab5d97840 pc=)
+0xaaaaaab9989c9c	
+/usr/lib/golang/src/runtime/proc.gogithub.com/containers/podman/vendor/github.com/BurntSushi/toml.DecodeFile:(6329{ +0xaaaaaaba5fbee80x134? fp=, 0xc00051fe500x25 sp=?0xc00051fd20} pc=, 0xaaaaaab3b7608c{
+0xaaaaaababd3fa0runtime.doInit, (0xc0000e51800xaaaaaab5d92c40})
+)
+		/usr/lib/golang/src/runtime/proc.go/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/BurntSushi/toml/decode.go::6306146 + +0x740x114 fp= fp=0xc00051ff800xc00051fa50 sp= sp=0xc00051fe500xc00051f910 pc= pc=0xaaaaaab3b75fcc0xaaaaaab9989f84
+
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233github.com/containers/podman/vendor/github.com/containers/common/pkg/config.readConfigFromFile +(0x1d0{ fp=0xaaaaaaba5fbee80xc00051ffd8,  sp=0x250xc00051ff80} pc=, 0xaaaaaab3b687d00xc0000d2d00
+?runtime.goexit)
+(	)
+/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/containers/common/pkg/config/config.go	:/usr/lib/golang/src/runtime/asm_riscv64.s558: +5160xa0 + fp=0x40xc00051fb78 fp= sp=0xc00051ffd80xc00051fa50 sp= pc=0xc00051ffd80xaaaaaab9c839d0 pc=
+0xaaaaaab3b96694github.com/containers/podman/vendor/github.com/containers/common/pkg/config.NewConfig
+({0x0
+, goroutine 0x02} [)
+force gc (idle)	]:
+/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/containers/common/pkg/config/config.goruntime.gopark:(5240x0 +?0x220,  fp=0x00xc00051fc58? sp=, 0xc00051fb780x0 pc=?0xaaaaaab9c837d0, 
+0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.gogithub.com/containers/podman/cmd/podman/registry.newPodmanConfig:(363)
+ +	0x110/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/registry/config.go fp=:0xc00005efb073 sp= +0xc00005ef980xbc pc= fp=0xaaaaaab3b68c080xc00051fcb8
+ sp=runtime.goparkunlock0xc00051fc58(...)
+ pc=	0xaaaaaaba4d62fc/usr/lib/golang/src/runtime/proc.go
+:sync.(*Once).doSlow369(
+0xaaaaaabb8dc958runtime.forcegchelper?(, )
+0x1	?/usr/lib/golang/src/runtime/proc.go)
+:	302/usr/lib/golang/src/sync/once.go +:0xb074 fp= +0xc00005efd80xf8 sp= fp=0xc00005efb00xc00051fd08 pc= sp=0xaaaaaab3b68a900xc00051fcb8
+ pc=runtime.goexit0xaaaaaab96f5178(
+)
+sync.(*Once).Do	(...)
+/usr/lib/golang/src/runtime/asm_riscv64.s	:/usr/lib/golang/src/sync/once.go516: +650x4
+ fp=github.com/containers/podman/cmd/podman/registry.PodmanConfig0xc00005efd8(...)
+ sp=	0xc00005efd8/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/registry/config.go pc=:0xaaaaaab3b9669445
+
+created by github.com/containers/podman/cmd/podman/common.initruntime.init.5(
+)
+		/usr/lib/golang/src/runtime/proc.go/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/common/create.go::29017 + +0x280x4c
+ fp=
+0xc00051fd20goroutine  sp=180xc00051fd08 [ pc=GC sweep wait0xaaaaaaba4e743c]:
+
+runtime.goparkruntime.doInit((0x10xaaaaaabb8e33c0?)
+, 	0x0/usr/lib/golang/src/runtime/proc.go?:, 63290x0 +?0x134,  fp=0x00xc00051fe50? sp=, 0xc00051fd200x0 pc=?0xaaaaaab96cb08c)
+
+	runtime.doInit/usr/lib/golang/src/runtime/proc.go(:0xaaaaaabb8e7c40363)
+ +	0x110/usr/lib/golang/src/runtime/proc.go fp=:0xc00005a7986306 sp= +0xc00005a7800x74 pc= fp=0xaaaaaab3b68c080xc00051ff80
+ sp=0xc00051fe50 pc=0xaaaaaab96cafccruntime.goparkunlock
+(...)
+runtime.main	(/usr/lib/golang/src/runtime/proc.go)
+:	369/usr/lib/golang/src/runtime/proc.go
+:runtime.bgsweep233( +0x00x1d0? fp=)
+0xc00051ffd8	 sp=/usr/lib/golang/src/runtime/mgcsweep.go0xc00051ff80: pc=2970xaaaaaab96bd7d0 +
+0x114runtime.goexit fp=(0xc00005a7c8)
+ sp=	0xc00005a798/usr/lib/golang/src/runtime/asm_riscv64.s pc=:0xaaaaaab3b53c04516
+ +runtime.gcenable.func10x4( fp=)
+0xc00051ffd8	 sp=/usr/lib/golang/src/runtime/mgc.go0xc00051ffd8: pc=1780xaaaaaab96eb694 +
+0x2c fp=
+0xc00005a7d8goroutine  sp=20xc00005a7c8 [ pc=force gc (idle)0xaaaaaab3b483d4]:
+
+runtime.goparkruntime.goexit((0x0)
+?	, /usr/lib/golang/src/runtime/asm_riscv64.s0x0:?516,  +0x00x4? fp=, 0xc00005a7d80x0 sp=?0xc00005a7d8,  pc=0x00xaaaaaab3b96694?
+)
+created by 	runtime.gcenable/usr/lib/golang/src/runtime/proc.go
+:	363/usr/lib/golang/src/runtime/mgc.go +:0x110178 fp= +0xc00005efb00x70 sp=
+0xc00005ef98
+ pc=goroutine 0xaaaaaab96bdc0819
+ [runtime.goparkunlockGC scavenge wait(...)
+]:
+	runtime.gopark/usr/lib/golang/src/runtime/proc.go(:0x0369?
+, runtime.forcegchelper0x0(?)
+, 	0x0/usr/lib/golang/src/runtime/proc.go?:, 3020x0 +?0xb0,  fp=0x412e8480000000000xc00005efd8? sp=)
+0xc00005efb0	 pc=/usr/lib/golang/src/runtime/proc.go0xaaaaaab96bda90:
+363runtime.goexit +(0x110)
+ fp=	0xc00005af80/usr/lib/golang/src/runtime/asm_riscv64.s sp=:0xc00005af68516 pc= +0xaaaaaab3b68c080x4
+ fp=runtime.goparkunlock0xc00005efd8(...)
+ sp=	0xc00005efd8/usr/lib/golang/src/runtime/proc.go pc=:0xaaaaaab96eb694369
+
+created by runtime.(*scavengerState).parkruntime.init.5(
+0xaaaaaab5dee6a0	)
+/usr/lib/golang/src/runtime/proc.go	:/usr/lib/golang/src/runtime/mgcscavenge.go290: +3890x28 +
+0x68
+ fp=goroutine 0xc00005afa818 sp= [0xc00005af80GC sweep wait pc=]:
+0xaaaaaab3b51b30runtime.gopark
+(runtime.bgscavenge0x1(?0x0, ?0x0)
+?	, /usr/lib/golang/src/runtime/mgcscavenge.go0x0:?622,  +0x00x6c? fp=, 0xc00005afc80x0 sp=?0xc00005afa8)
+ pc=	0xaaaaaab3b5209c/usr/lib/golang/src/runtime/proc.go
+:runtime.gcenable.func2363( +)
+0x110	 fp=/usr/lib/golang/src/runtime/mgc.go0xc00005a798: sp=1790xc00005a780 + pc=0x2c0xaaaaaab96bdc08 fp=
+0xc00005afd8 sp=0xc00005afc8 pc=runtime.goparkunlock0xaaaaaab3b48374(...)
+
+	runtime.goexit/usr/lib/golang/src/runtime/proc.go(:)
+369	
+/usr/lib/golang/src/runtime/asm_riscv64.sruntime.bgsweep:(5160x0 +?0x4)
+ fp=	0xc00005afd8/usr/lib/golang/src/runtime/mgcsweep.go sp=:0xc00005afd8297 pc= +0xaaaaaab3b966940x114
+ fp=created by 0xc00005a7c8runtime.gcenable sp=
+0xc00005a798	 pc=/usr/lib/golang/src/runtime/mgc.go0xaaaaaab96a8c04:
+179runtime.gcenable.func1 +(0xb0)
+
+	
+/usr/lib/golang/src/runtime/mgc.gogoroutine :34178 [ +finalizer wait0x2c]:
+ fp=runtime.gopark0xc00005a7d8( sp=0x30000xc00005a7c8? pc=, 0xaaaaaab969d3d40x18000
+?runtime.goexit, (0x0)
+?	, /usr/lib/golang/src/runtime/asm_riscv64.s0x30:?516,  +0x30000x4? fp=)
+0xc00005a7d8	 sp=/usr/lib/golang/src/runtime/proc.go0xc00005a7d8: pc=3630xaaaaaab96eb694 +
+0x110created by  fp=runtime.gcenable0xc00005e5a8
+ sp=	0xc00005e590/usr/lib/golang/src/runtime/mgc.go pc=:0xaaaaaab3b68c08178
+ +runtime.goparkunlock0x70(...)
+
+	
+/usr/lib/golang/src/runtime/proc.gogoroutine :19369 [
+GC scavenge waitruntime.runfinq]:
+(runtime.gopark)
+(	0x0/usr/lib/golang/src/runtime/mfinal.go?:, 1800x0 +?0x110,  fp=0x00xc00005e7d8? sp=, 0xc00005e5a80x0 pc=?0xaaaaaab3b475c8, 
+0x412e848000000000runtime.goexit?()
+)
+		/usr/lib/golang/src/runtime/proc.go/usr/lib/golang/src/runtime/asm_riscv64.s::363516 + +0x1100x4 fp= fp=0xc00005af800xc00005e7d8 sp= sp=0xc00005af680xc00005e7d8 pc= pc=0xaaaaaab96bdc080xaaaaaab3b96694
+
+runtime.goparkunlockcreated by (...)
+runtime.createfing	
+/usr/lib/golang/src/runtime/proc.go	:/usr/lib/golang/src/runtime/mfinal.go369:
+157runtime.(*scavengerState).park +(0x640xaaaaaabb9436a0
+)
+
+	goroutine /usr/lib/golang/src/runtime/mgcscavenge.go35: [389GC worker (idle) +]:
+0x68runtime.gopark fp=(0xc00005afa80x0 sp=?0xc00005af80,  pc=0x00xaaaaaab96a6b30?
+, runtime.bgscavenge0x0(?0x0, ?0x0)
+?	, /usr/lib/golang/src/runtime/mgcscavenge.go0x0:?622)
+ +	0x6c/usr/lib/golang/src/runtime/proc.go fp=:0xc00005afc8363 sp= +0xc00005afa80x110 pc= fp=0xaaaaaab96a709c0xc0004d0748
+ sp=runtime.gcenable.func20xc0004d0730( pc=)
+0xaaaaaab3b68c08	
+/usr/lib/golang/src/runtime/mgc.goruntime.gcBgMarkWorker:(179)
+ +	0x2c/usr/lib/golang/src/runtime/mgc.go fp=:0xc00005afd81235 sp= +0xc00005afc80x100 pc= fp=0xaaaaaab969d3740xc0004d07d8
+ sp=runtime.goexit0xc0004d0748( pc=)
+0xaaaaaab3b4a5c0	
+/usr/lib/golang/src/runtime/asm_riscv64.sruntime.goexit:(516)
+ +	0x4/usr/lib/golang/src/runtime/asm_riscv64.s fp=:0xc00005afd8516 sp= +0xc00005afd80x4 pc= fp=0xaaaaaab96eb6940xc0004d07d8
+ sp=created by 0xc0004d07d8runtime.gcenable pc=
+0xaaaaaab3b96694	
+/usr/lib/golang/src/runtime/mgc.gocreated by :runtime.gcBgMarkStartWorkers179
+ +	0xb0/usr/lib/golang/src/runtime/mgc.go
+:
+1159goroutine  +340x2c [
+finalizer wait
+]:
+goroutine runtime.gopark3( [0x3000GC worker (idle)?]:
+, runtime.gopark0x18000(?0xaaaaaab50c0830, ?0x0, ?0xc000040020, ?0x30, ?0x18, ?0x3000, ?0x14)
+?	, /usr/lib/golang/src/runtime/proc.go0x0:?363)
+ +	0x110/usr/lib/golang/src/runtime/proc.go fp=:0xc00005e5a8363 sp= +0xc00005e5900x110 pc= fp=0xaaaaaab96bdc080xc00005f748
+ sp=runtime.goparkunlock0xc00005f730(...)
+ pc=	0xaaaaaab3b68c08/usr/lib/golang/src/runtime/proc.go
+:runtime.gcBgMarkWorker369(
+)
+runtime.runfinq	(/usr/lib/golang/src/runtime/mgc.go)
+:	1235/usr/lib/golang/src/runtime/mfinal.go +:0x100180 fp= +0xc00005f7d80x110 sp= fp=0xc00005f7480xc00005e7d8 pc= sp=0xaaaaaab3b4a5c00xc00005e5a8
+ pc=runtime.goexit0xaaaaaab969c5c8(
+)
+runtime.goexit	(/usr/lib/golang/src/runtime/asm_riscv64.s)
+:	516/usr/lib/golang/src/runtime/asm_riscv64.s +:0x4516 fp= +0xc00005f7d80x4 sp= fp=0xc00005f7d80xc00005e7d8 pc= sp=0xaaaaaab3b966940xc00005e7d8
+ pc=created by 0xaaaaaab96eb694runtime.gcBgMarkStartWorkers
+
+created by 	runtime.createfing/usr/lib/golang/src/runtime/mgc.go
+:	1159/usr/lib/golang/src/runtime/mfinal.go +:0x2c157
+ +
+0x64goroutine 
+4
+ [goroutine GC worker (idle)35]:
+ [runtime.goparkGC worker (idle)(]:
+0xaaaaaab5e224c0runtime.gopark?(, 0x00x3??, , 0x00xc3??, , 0x00x89??, , 0x00x0??, )
+0x0	?/usr/lib/golang/src/runtime/proc.go)
+:	363/usr/lib/golang/src/runtime/proc.go +:0x110363 fp= +0xc00005ff480x110 sp= fp=0xc00005ff300xc0004c8748 pc= sp=0xaaaaaab3b68c080xc0004c8730
+ pc=runtime.gcBgMarkWorker0xaaaaaab96bdc08(
+)
+runtime.gcBgMarkWorker	(/usr/lib/golang/src/runtime/mgc.go)
+:	1235/usr/lib/golang/src/runtime/mgc.go +:0x1001235 fp= +0xc00005ffd80x100 sp= fp=0xc00005ff480xc0004c87d8 pc= sp=0xaaaaaab3b4a5c00xc0004c8748
+ pc=runtime.goexit0xaaaaaab969f5c0(
+)
+runtime.goexit	(/usr/lib/golang/src/runtime/asm_riscv64.s)
+:	516/usr/lib/golang/src/runtime/asm_riscv64.s +:0x4516 fp= +0xc00005ffd80x4 sp= fp=0xc00005ffd80xc0004c87d8 pc= sp=0xaaaaaab3b966940xc0004c87d8
+ pc=created by 0xaaaaaab96eb694runtime.gcBgMarkStartWorkers
+
+created by 	runtime.gcBgMarkStartWorkers/usr/lib/golang/src/runtime/mgc.go
+:	1159/usr/lib/golang/src/runtime/mgc.go +:0x2c1159
+ +
+0x2cgoroutine 
+5
+ [goroutine GC worker (idle)36]:
+ [runtime.goparkGC worker (idle)(]:
+0x11188b6f756runtime.gopark?(, 0x11189bbb2a90x0??, , 0x00x0??, , 0x00x0??, , 0x00x0??, )
+0x0	?/usr/lib/golang/src/runtime/proc.go)
+:	363/usr/lib/golang/src/runtime/proc.go +:0x110363 fp= +0xc0000607480x110 sp= fp=0xc0000607300xc0004c8f48 pc= sp=0xaaaaaab3b68c080xc0004c8f30
+ pc=runtime.gcBgMarkWorker0xaaaaaab96bdc08(
+)
+runtime.gcBgMarkWorker	(/usr/lib/golang/src/runtime/mgc.go)
+:	1235/usr/lib/golang/src/runtime/mgc.go +:0x1001235 fp= +0xc0000607d80x100 sp= fp=0xc0000607480xc0004c8fd8 pc= sp=0xaaaaaab3b4a5c00xc0004c8f48
+ pc=runtime.goexit0xaaaaaab969f5c0(
+)
+runtime.goexit	(/usr/lib/golang/src/runtime/asm_riscv64.s)
+:	516/usr/lib/golang/src/runtime/asm_riscv64.s +:0x4516 fp= +0xc0000607d80x4 sp= fp=0xc0000607d80xc0004c8fd8 pc= sp=0xaaaaaab3b966940xc0004c8fd8
+ pc=created by 0xaaaaaab96eb694runtime.gcBgMarkStartWorkers
+
+created by 	runtime.gcBgMarkStartWorkers/usr/lib/golang/src/runtime/mgc.go
+:	1159/usr/lib/golang/src/runtime/mgc.go +:0x2c1159
+ +
+0x2cgoroutine 
+37
+ [goroutine chan receive37]:
+ [runtime.goparkGC worker (idle)(]:
+0x50000001000e18runtime.gopark?(, 0xaaaaaabac158300xaaaaaab3b6ef0c??, , 0xc0003f09e00xd4??, , 0x180x54??, , 0x140xc00010d520??, )
+0x0	?/usr/lib/golang/src/runtime/proc.go)
+:	363/usr/lib/golang/src/runtime/proc.go +:0x110363 fp= +0xc00005bed80x110 sp= fp=0xc00005bec00xc0004c9748 pc= sp=0xaaaaaab3b68c080xc0004c9730
+ pc=0xaaaaaab96bdc08runtime.chanrecv
+(runtime.gcBgMarkWorker0xc00009c060(, )
+0xc00005bfb0	, /usr/lib/golang/src/runtime/mgc.go0x60:?1235)
+ +	0x100/usr/lib/golang/src/runtime/chan.go fp=:0xc0004c97d8583 sp= +0xc0004c97480x498 pc= fp=0xaaaaaab969f5c00xc00005bf68
+ sp=runtime.goexit0xc00005bed8( pc=)
+0xaaaaaab3b35af0	
+/usr/lib/golang/src/runtime/asm_riscv64.sruntime.chanrecv2:(5160x12a05f200 +?0x4,  fp=0x00xc0004c97d8? sp=)
+0xc0004c97d8	 pc=/usr/lib/golang/src/runtime/chan.go0xaaaaaab96eb694:
+447created by  +runtime.gcBgMarkStartWorkers0x14
+ fp=	0xc00005bf88/usr/lib/golang/src/runtime/mgc.go sp=:0xc00005bf681159 pc= +0xaaaaaab3b356440x2c
+
+
+goroutine github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon38( [0xc000520060GC worker (idle)?]:
+)
+runtime.gopark	(/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go0x11189b97985:?1169,  +0x00x6c? fp=, 0xc00005bfc80x0 sp=?0xc00005bf88,  pc=0x00xaaaaaab45858b4?
+, github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func10x0(?)
+)
+		/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go/usr/lib/golang/src/runtime/proc.go::420363 + +0x2c0x110 fp= fp=0xc00005bfd80xc0004c9f48 sp= sp=0xc00005bfc80xc0004c9f30 pc= pc=0xaaaaaab45836bc0xaaaaaab96bdc08
+
+runtime.goexitruntime.gcBgMarkWorker(()
+)
+		/usr/lib/golang/src/runtime/asm_riscv64.s/usr/lib/golang/src/runtime/mgc.go::5161235 + +0x40x100 fp= fp=0xc00005bfd80xc0004c9fd8 sp= sp=0xc00005bfd80xc0004c9f48 pc= pc=0xaaaaaab3b966940xaaaaaab969f5c0
+
+created by runtime.goexitgithub.com/containers/podman/vendor/k8s.io/klog/v2.init.0(
+)
+		/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go/usr/lib/golang/src/runtime/asm_riscv64.s::420516 + +0x1240x4
+ fp=0xc0004c9fd8 sp=0xc0004c9fd8 pc=0xaaaaaab96eb694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 20 [chan receive]:
+runtime.gopark(0xc000103400?, 0xaaaaaab96c3f0c?, 0x0?, 0x0?, 0xc000105a01?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0000616d8 sp=0xc0000616c0 pc=0xaaaaaab96bdc08
+runtime.chanrecv(0xc0001244e0, 0xc0000617b0, 0xe0?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc000061768 sp=0xc0000616d8 pc=0xaaaaaab968aaf0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc000061788 sp=0xc000061768 pc=0xaaaaaab968a644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc000124480?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc0000617c8 sp=0xc000061788 pc=0xaaaaaaba0da8b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc0000617d8 sp=0xc0000617c8 pc=0xaaaaaaba0d86bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000617d8 sp=0xc0000617d8 pc=0xaaaaaab96eb694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ grep ''
++ CHECK_RESULT 1 0 0 'check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ LOG_ERROR 'check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ message='check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
+Thu Jun 22 06:16:27 2023 - ERROR - check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_01.sh line 35'
++ message='oe_test_podman_3.4.4.2_01.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_01.sh line 35'
+Thu Jun 22 06:16:28 2023 - ERROR - oe_test_podman_3.4.4.2_01.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+runtime: lfstack.push invalid packing: node=0xffffff82a6e520 cnt=0x1 packed=0xffff82a6e5200001 -> node=0xffff82a6e520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaadab57310?, 0xaaaaaad9c55f40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffd95b37a8 sp=0xffffffd95b3780 pc=0xaaaaaad9c511ec
+runtime.(*lfstack).push(0xc000050a00?, 0xffffff82a6e520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffd95b37d8 sp=0xffffffd95b37a8 pc=0xaaaaaad9c24d98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaadbf04ff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffd95b3808 sp=0xffffffd95b37d8 pc=0xaaaaaad9c4b010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffd95b3840 sp=0xffffffd95b3808 pc=0xaaaaaad9c3ea58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffd95b3848 sp=0xffffffd95b3840 pc=0xaaaaaad9c33908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffd95b3850 sp=0xffffffd95b3848 pc=0xaaaaaad9c7f484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00051f8f0 sp=0xc00051f8e8 pc=0xaaaaaad9c7f418
+runtime.gcStart({0xffffff82a5f5b8?, 0x59?, 0xd9c267e0?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00051f980 sp=0xc00051f8f0 pc=0xaaaaaad9c33c80
+runtime.mallocgc(0x1000, 0xaaaaaadaf32240, 0x1)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00051f9f8 sp=0xc00051f980 pc=0xaaaaaad9c269b0
+runtime.makeslice(0x3000?, 0xc00033f7c6?, 0xc00033f7c7?)
+	/usr/lib/golang/src/runtime/slice.go:103 +0x70 fp=0xc00051fa18 sp=0xc00051f9f8 pc=0xaaaaaad9c694c0
+bufio.NewWriterSize(...)
+	/usr/lib/golang/src/bufio/bufio.go:593
+bufio.NewWriter(...)
+	/usr/lib/golang/src/bufio/bufio.go:602
+encoding/csv.NewWriter(...)
+	/usr/lib/golang/src/encoding/csv/writer.go:40
+github.com/containers/podman/vendor/github.com/spf13/pflag.writeAsCSV({0xaaaaaadbf0bd20, 0x0, 0x0})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:33 +0x70 fp=0xc00051faa8 sp=0xc00051fa18 pc=0xaaaaaada14f898
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*stringSliceValue).String(0xaaaaaadbedb140?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:61 +0x3c fp=0xc00051fae8 sp=0xc00051faa8 pc=0xaaaaaada14fbfc
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarPF(0xaaaaaadaa764a8?, {0xaaaaaadb1bace8, 0xc000315ea0}, {0xaaaaaadab4fbba, 0x8}, {0x0, 0x0}, {0xaaaaaadab8f615, 0x24})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go:829 +0x94 fp=0xc00051fb28 sp=0xc00051fae8 pc=0xaaaaaada1436e4
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarP(...)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go:837
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).StringSliceVar(0x0?, 0xaaaaaadbedba40, {0xaaaaaadab4fbba, 0x8}, {0xaaaaaadbf0bd20, 0x0, 0x0}, {0xaaaaaadab8f615, 0x24})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:105 +0x120 fp=0xc00051fb80 sp=0xc00051fb28 pc=0xaaaaaada150078
+github.com/containers/podman/cmd/podman/common.DefineCreateFlags(0xaaaaaadbe3f1e0?, 0xaaaaaadbedb9c0, 0x0)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/common/create.go:72 +0x28c fp=0xc00051fc68 sp=0xc00051fb80 pc=0xaaaaaadaa765a4
+github.com/containers/podman/cmd/podman/containers.createFlags(0xaaaaaadb022100?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:71 +0x7c fp=0xc00051fcc0 sp=0xc00051fc68 pc=0xaaaaaadaa86fac
+github.com/containers/podman/cmd/podman/containers.init.6()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:93 +0xd8 fp=0xc00051fd20 sp=0xc00051fcc0 pc=0xaaaaaadaa87130
+runtime.doInit(0xaaaaaadbe82840)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00051fe50 sp=0xc00051fd20 pc=0xaaaaaad9c6108c
+runtime.doInit(0xaaaaaadbe7dc40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00051ff80 sp=0xc00051fe50 pc=0xaaaaaad9c60fcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00051ffd8 sp=0xc00051ff80 pc=0xaaaaaad9c537d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00051ffd8 sp=0xc00051ffd8 pc=0xaaaaaad9c81694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaad9c53c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaad9c53a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaad9c81694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a798 sp=0xc00005a780 pc=0xaaaaaad9c53c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005a7c8 sp=0xc00005a798 pc=0xaaaaaad9c3ec04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005a7d8 sp=0xc00005a7c8 pc=0xaaaaaad9c333d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaad9c81694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005af80 sp=0xc00005af68 pc=0xaaaaaad9c53c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaadbed96a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005afa8 sp=0xc00005af80 pc=0xaaaaaad9c3cb30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005afc8 sp=0xc00005afa8 pc=0xaaaaaad9c3d09c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005afd8 sp=0xc00005afc8 pc=0xaaaaaad9c33374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaad9c81694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 20 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaad9c53c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaad9c325c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaad9c81694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 21 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005b748 sp=0xc00005b730 pc=0xaaaaaad9c53c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005b7d8 sp=0xc00005b748 pc=0xaaaaaad9c355c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005b7d8 sp=0xc00005b7d8 pc=0xaaaaaad9c81694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 3 [GC worker (idle)]:
+runtime.gopark(0x112250140f8?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005f748 sp=0xc00005f730 pc=0xaaaaaad9c53c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005f7d8 sp=0xc00005f748 pc=0xaaaaaad9c355c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005f7d8 sp=0xc00005f7d8 pc=0xaaaaaad9c81694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 4 [GC worker (idle)]:
+runtime.gopark(0xaaaaaadb1ab830?, 0xc000040060?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ff48 sp=0xc00005ff30 pc=0xaaaaaad9c53c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005ffd8 sp=0xc00005ff48 pc=0xaaaaaad9c355c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005ffd8 sp=0xc00005ffd8 pc=0xaaaaaad9c81694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 5 [GC worker (idle)]:
+runtime.gopark(0x1122501cff0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060748 sp=0xc000060730 pc=0xaaaaaad9c53c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000607d8 sp=0xc000060748 pc=0xaaaaaad9c355c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000607d8 sp=0xc0000607d8 pc=0xaaaaaad9c81694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 22 [chan receive]:
+runtime.gopark(0xc000063000?, 0xaaaaaad9c59f0c?, 0x0?, 0x0?, 0xc00008b501?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060ed8 sp=0xc000060ec0 pc=0xaaaaaad9c53c08
+runtime.chanrecv(0xc00009c5a0, 0xc000060fb0, 0xa0?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc000060f68 sp=0xc000060ed8 pc=0xaaaaaad9c20af0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc000060f88 sp=0xc000060f68 pc=0xaaaaaad9c20644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc00009c4e0?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc000060fc8 sp=0xc000060f88 pc=0xaaaaaada6708b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc000060fd8 sp=0xc000060fc8 pc=0xaaaaaada66e6bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000060fd8 sp=0xc000060fd8 pc=0xaaaaaad9c81694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ CHECK_RESULT 2 0 0 'check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ LOG_ERROR 'check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ message='check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
+Thu Jun 22 06:16:29 2023 - ERROR - check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_01.sh line 37'
++ message='oe_test_podman_3.4.4.2_01.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_01.sh line 37'
+Thu Jun 22 06:16:30 2023 - ERROR - oe_test_podman_3.4.4.2_01.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ podman images --all
+runtime: lfstack.push invalid packing: node=0xffffffb2c4f520 cnt=0x1 packed=0xffffb2c4f5200001 -> node=0xffffb2c4f520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaac1707310?, 0xaaaaaac0805f40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffe178f7e8 sp=0xffffffe178f7c0 pc=0xaaaaaac08011ec
+runtime.(*lfstack).push(0xc000052f00?, 0xffffffb2c4f520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffe178f818 sp=0xffffffe178f7e8 pc=0xaaaaaac07d4d98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaac2ab4ff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffe178f848 sp=0xffffffe178f818 pc=0xaaaaaac07fb010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffe178f880 sp=0xffffffe178f848 pc=0xaaaaaac07eea58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffe178f888 sp=0xffffffe178f880 pc=0xaaaaaac07e3908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffe178f890 sp=0xffffffe178f888 pc=0xaaaaaac082f484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00059f598 sp=0xc00059f590 pc=0xaaaaaac082f418
+runtime.gcStart({0xc000390000?, 0x120?, 0xc07dcecc?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00059f628 sp=0xc00059f598 pc=0xaaaaaac07e3c80
+runtime.mallocgc(0x110, 0xaaaaaac1c3d500, 0x1)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00059f6a0 sp=0xc00059f628 pc=0xaaaaaac07d69b0
+runtime.newobject(...)
+	/usr/lib/golang/src/runtime/malloc.go:1202
+runtime.mapassign_faststr(0xaaaaaac1b56400, 0xc0003514a0, {0x0, 0x0})
+	/usr/lib/golang/src/runtime/map_faststr.go:221 +0xc0 fp=0xc00059f708 sp=0xc00059f6a0 pc=0xaaaaaac07dcc40
+github.com/containers/podman/vendor/k8s.io/api/apps/v1.init()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/api/apps/v1/types_swagger_doc_generated.go:138 +0x112c fp=0xc00059f860 sp=0xc00059f708 pc=0xaaaaaac15a80a4
+runtime.doInit(0xaaaaaac2a1f8c0)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00059f990 sp=0xc00059f860 pc=0xaaaaaac081108c
+runtime.doInit(0xaaaaaac2a303e0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fac0 sp=0xc00059f990 pc=0xaaaaaac0810fcc
+runtime.doInit(0xaaaaaac2a23400)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fbf0 sp=0xc00059fac0 pc=0xaaaaaac0810fcc
+runtime.doInit(0xaaaaaac2a228c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fd20 sp=0xc00059fbf0 pc=0xaaaaaac0810fcc
+runtime.doInit(0xaaaaaac2a293c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fe50 sp=0xc00059fd20 pc=0xaaaaaac0810fcc
+runtime.doInit(0xaaaaaac2a2dc40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059ff80 sp=0xc00059fe50 pc=0xaaaaaac0810fcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00059ffd8 sp=0xc00059ff80 pc=0xaaaaaac08037d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00059ffd8 sp=0xc00059ffd8 pc=0xaaaaaac0831694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaac0803c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaac0803a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaac0831694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 3 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005f798 sp=0xc00005f780 pc=0xaaaaaac0803c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005f7c8 sp=0xc00005f798 pc=0xaaaaaac07eec04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005f7d8 sp=0xc00005f7c8 pc=0xaaaaaac07e33d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005f7d8 sp=0xc00005f7d8 pc=0xaaaaaac0831694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 4 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ff80 sp=0xc00005ff68 pc=0xaaaaaac0803c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaac2a896a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005ffa8 sp=0xc00005ff80 pc=0xaaaaaac07ecb30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005ffc8 sp=0xc00005ffa8 pc=0xaaaaaac07ed09c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005ffd8 sp=0xc00005ffc8 pc=0xaaaaaac07e3374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005ffd8 sp=0xc00005ffd8 pc=0xaaaaaac0831694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 18 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaac0803c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaac07e25c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaac0831694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 19 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a748 sp=0xc00005a730 pc=0xaaaaaac0803c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005a7d8 sp=0xc00005a748 pc=0xaaaaaac07e55c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaac0831694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 5 [GC worker (idle)]:
+runtime.gopark(0x112aaec72d7?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060748 sp=0xc000060730 pc=0xaaaaaac0803c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000607d8 sp=0xc000060748 pc=0xaaaaaac07e55c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000607d8 sp=0xc0000607d8 pc=0xaaaaaac0831694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 6 [GC worker (idle)]:
+runtime.gopark(0x112aae0e75e?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060f48 sp=0xc000060f30 pc=0xaaaaaac0803c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc000060fd8 sp=0xc000060f48 pc=0xaaaaaac07e55c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000060fd8 sp=0xc000060fd8 pc=0xaaaaaac0831694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 7 [GC worker (idle)]:
+runtime.gopark(0xaaaaaac1d5b830?, 0xc000040080?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000061748 sp=0xc000061730 pc=0xaaaaaac0803c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000617d8 sp=0xc000061748 pc=0xaaaaaac07e55c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000617d8 sp=0xc0000617d8 pc=0xaaaaaac0831694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 34 [chan receive]:
+runtime.gopark(0xc000062800?, 0xaaaaaac0809f0c?, 0x0?, 0x0?, 0xc000102b01?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000061ed8 sp=0xc000061ec0 pc=0xaaaaaac0803c08
+runtime.chanrecv(0xc00008a0c0, 0xc000061fb0, 0xc0?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc000061f68 sp=0xc000061ed8 pc=0xaaaaaac07d0af0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc000061f88 sp=0xc000061f68 pc=0xaaaaaac07d0644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc00008a060?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc000061fc8 sp=0xc000061f88 pc=0xaaaaaac12208b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc000061fd8 sp=0xc000061fc8 pc=0xaaaaaac121e6bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000061fd8 sp=0xc000061fd8 pc=0xaaaaaac0831694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ CHECK_RESULT 2 0 0 'check podman images --all failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='check podman images --all failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'check podman images --all failed'
++ LOG_ERROR 'check podman images --all failed'
++ message='check podman images --all failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check podman images --all failed'
+Thu Jun 22 06:16:31 2023 - ERROR - check podman images --all failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_01.sh line 39'
++ message='oe_test_podman_3.4.4.2_01.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_01.sh line 39'
+Thu Jun 22 06:16:32 2023 - ERROR - oe_test_podman_3.4.4.2_01.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ podman images --digests
++ grep -i DIGEST
+runtime: lfstack.push invalid packing: node=0xffffffaf411520 cnt=0x1 packed=0xffffaf4115200001 -> node=0xffffaf411520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaab4ae6310?, 0xaaaaaab3be4f40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffc6d457e8 sp=0xffffffc6d457c0 pc=0xaaaaaab3be01ec
+runtime.(*lfstack).push(0xc000052f00?, 0xffffffaf411520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffc6d45818 sp=0xffffffc6d457e8 pc=0xaaaaaab3bb3d98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaab5e93ff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffc6d45848 sp=0xffffffc6d45818 pc=0xaaaaaab3bda010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffc6d45880 sp=0xffffffc6d45848 pc=0xaaaaaab3bcda58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffc6d45888 sp=0xffffffc6d45880 pc=0xaaaaaab3bc2908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffc6d45890 sp=0xffffffc6d45888 pc=0xaaaaaab3c0e484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00059f570 sp=0xc00059f568 pc=0xaaaaaab3c0e418
+runtime.gcStart({0xffffffaf402a68?, 0xc00001ef59?, 0x135800?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00059f600 sp=0xc00059f570 pc=0xaaaaaab3bc2c80
+runtime.mallocgc(0x1000, 0x0, 0x0)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00059f678 sp=0xc00059f600 pc=0xaaaaaab3bb59b0
+runtime.growslice(0xc0004de920?, {0xc000135000?, 0x3000?, 0xaaaaaab3beabac?}, 0xaaaaaab3beabb0?)
+	/usr/lib/golang/src/runtime/slice.go:284 +0x4e8 fp=0xc00059f6d0 sp=0xc00059f678 pc=0xaaaaaab3bf8a80
+io.ReadAll({0xaaaaaab5142120, 0xc0004de920})
+	/usr/lib/golang/src/io/io.go:659 +0xa4 fp=0xc00059f750 sp=0xc00059f6d0 pc=0xaaaaaab3c1c86c
+io/ioutil.ReadAll(...)
+	/usr/lib/golang/src/io/ioutil/ioutil.go:27
+github.com/containers/podman/vendor/github.com/BurntSushi/toml.(*Decoder).Decode(0xaaaaaab4b20ee8?, {0xaaaaaab50f8fa0?, 0xc0004f7180?})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/BurntSushi/toml/decode.go:115 +0x294 fp=0xc00059f910 sp=0xc00059f750 pc=0xaaaaaab3eaec9c
+github.com/containers/podman/vendor/github.com/BurntSushi/toml.DecodeFile({0xaaaaaab4b20ee8?, 0x25?}, {0xaaaaaab50f8fa0, 0xc0004f7180})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/BurntSushi/toml/decode.go:146 +0x114 fp=0xc00059fa50 sp=0xc00059f910 pc=0xaaaaaab3eaef84
+github.com/containers/podman/vendor/github.com/containers/common/pkg/config.readConfigFromFile({0xaaaaaab4b20ee8, 0x25}, 0xc0004e0d00?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/containers/common/pkg/config/config.go:558 +0xa0 fp=0xc00059fb78 sp=0xc00059fa50 pc=0xaaaaaab41a89d0
+github.com/containers/podman/vendor/github.com/containers/common/pkg/config.NewConfig({0x0, 0x0})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/containers/common/pkg/config/config.go:524 +0x220 fp=0xc00059fc58 sp=0xc00059fb78 pc=0xaaaaaab41a87d0
+github.com/containers/podman/cmd/podman/registry.newPodmanConfig()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/registry/config.go:73 +0xbc fp=0xc00059fcb8 sp=0xc00059fc58 pc=0xaaaaaab49fb2fc
+sync.(*Once).doSlow(0xaaaaaab5e01958?, 0x1?)
+	/usr/lib/golang/src/sync/once.go:74 +0xf8 fp=0xc00059fd08 sp=0xc00059fcb8 pc=0xaaaaaab3c1a178
+sync.(*Once).Do(...)
+	/usr/lib/golang/src/sync/once.go:65
+github.com/containers/podman/cmd/podman/registry.PodmanConfig(...)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/registry/config.go:45
+github.com/containers/podman/cmd/podman/common.init()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/common/create.go:17 +0x4c fp=0xc00059fd20 sp=0xc00059fd08 pc=0xaaaaaab4a0c43c
+runtime.doInit(0xaaaaaab5e083c0)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00059fe50 sp=0xc00059fd20 pc=0xaaaaaab3bf008c
+runtime.doInit(0xaaaaaab5e0cc40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059ff80 sp=0xc00059fe50 pc=0xaaaaaab3beffcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00059ffd8 sp=0xc00059ff80 pc=0xaaaaaab3be27d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00059ffd8 sp=0xc00059ffd8 pc=0xaaaaaab3c10694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaab3be2c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaab3be2a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaab3c10694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a798 sp=0xc00005a780 pc=0xaaaaaab3be2c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005a7c8 sp=0xc00005a798 pc=0xaaaaaab3bcdc04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005a7d8 sp=0xc00005a7c8 pc=0xaaaaaab3bc23d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaab3c10694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005af80 sp=0xc00005af68 pc=0xaaaaaab3be2c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaab5e686a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005afa8 sp=0xc00005af80 pc=0xaaaaaab3bcbb30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005afc8 sp=0xc00005afa8 pc=0xaaaaaab3bcc09c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005afd8 sp=0xc00005afc8 pc=0xaaaaaab3bc2374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaab3c10694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 34 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaab3be2c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaab3bc15c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaab3c10694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 35 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004c8748 sp=0xc0004c8730 pc=0xaaaaaab3be2c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004c87d8 sp=0xc0004c8748 pc=0xaaaaaab3bc45c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004c87d8 sp=0xc0004c87d8 pc=0xaaaaaab3c10694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 3 [GC worker (idle)]:
+runtime.gopark(0x113315010ba?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005f748 sp=0xc00005f730 pc=0xaaaaaab3be2c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005f7d8 sp=0xc00005f748 pc=0xaaaaaab3bc45c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005f7d8 sp=0xc00005f7d8 pc=0xaaaaaab3c10694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 4 [GC worker (idle)]:
+runtime.gopark(0x113315007be?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ff48 sp=0xc00005ff30 pc=0xaaaaaab3be2c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005ffd8 sp=0xc00005ff48 pc=0xaaaaaab3bc45c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005ffd8 sp=0xc00005ffd8 pc=0xaaaaaab3c10694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 5 [GC worker (idle)]:
+runtime.gopark(0x1133152f29e?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060748 sp=0xc000060730 pc=0xaaaaaab3be2c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000607d8 sp=0xc000060748 pc=0xaaaaaab3bc45c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000607d8 sp=0xc0000607d8 pc=0xaaaaaab3c10694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 36 [chan receive]:
+runtime.gopark(0xc000062800?, 0xaaaaaab3be8f0c?, 0x0?, 0x0?, 0xc000092801?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0000616d8 sp=0xc0000616c0 pc=0xaaaaaab3be2c08
+runtime.chanrecv(0xc0000a4180, 0xc0000617b0, 0x80?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc000061768 sp=0xc0000616d8 pc=0xaaaaaab3bafaf0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc000061788 sp=0xc000061768 pc=0xaaaaaab3baf644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc000124120?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc0000617c8 sp=0xc000061788 pc=0xaaaaaab45ff8b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc0000617d8 sp=0xc0000617c8 pc=0xaaaaaab45fd6bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000617d8 sp=0xc0000617d8 pc=0xaaaaaab3c10694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ CHECK_RESULT 1 0 0 'check podman images --digests | grep -i "DIGEST" failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check podman images --digests | grep -i "DIGEST" failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check podman images --digests | grep -i "DIGEST" failed'
++ LOG_ERROR 'check podman images --digests | grep -i "DIGEST" failed'
++ message='check podman images --digests | grep -i "DIGEST" failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check podman images --digests | grep -i "DIGEST" failed'
+Thu Jun 22 06:16:34 2023 - ERROR - check podman images --digests | grep -i "DIGEST" failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_01.sh line 41'
++ message='oe_test_podman_3.4.4.2_01.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_01.sh line 41'
+Thu Jun 22 06:16:34 2023 - ERROR - oe_test_podman_3.4.4.2_01.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ podman images --format=json
++ grep -i '"digest":'
+runtime: lfstack.push invalid packing: node=0xffffffa997e520 cnt=0x1 packed=0xffffa997e5200001 -> node=0xffffa997e520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaad747c310?, 0xaaaaaad657af40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xfffffff37067e8 sp=0xfffffff37067c0 pc=0xaaaaaad65761ec
+runtime.(*lfstack).push(0xc000052f00?, 0xffffffa997e520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xfffffff3706818 sp=0xfffffff37067e8 pc=0xaaaaaad6549d98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaad8829ff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xfffffff3706848 sp=0xfffffff3706818 pc=0xaaaaaad6570010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xfffffff3706880 sp=0xfffffff3706848 pc=0xaaaaaad6563a58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xfffffff3706888 sp=0xfffffff3706880 pc=0xaaaaaad6558908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xfffffff3706890 sp=0xfffffff3706888 pc=0xaaaaaad65a4484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00059f460 sp=0xc00059f458 pc=0xaaaaaad65a4418
+runtime.gcStart({0xc00028a000?, 0x120?, 0xd654b998?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00059f4f0 sp=0xc00059f460 pc=0xaaaaaad6558c80
+runtime.mallocgc(0x110, 0xaaaaaad79b2500, 0x1)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00059f568 sp=0xc00059f4f0 pc=0xaaaaaad654b9b0
+runtime.newobject(...)
+	/usr/lib/golang/src/runtime/malloc.go:1202
+runtime.mapassign_faststr(0xaaaaaad78cb400, 0xc000288030, {0x0, 0x0})
+	/usr/lib/golang/src/runtime/map_faststr.go:221 +0xc0 fp=0xc00059f5d0 sp=0xc00059f568 pc=0xaaaaaad6551c40
+github.com/containers/podman/vendor/k8s.io/apimachinery/pkg/apis/meta/v1.init()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/apimachinery/pkg/apis/meta/v1/types_swagger_doc_generated.go:326 +0x2b10 fp=0xc00059f730 sp=0xc00059f5d0 pc=0xaaaaaad7005a40
+runtime.doInit(0xaaaaaad879bd20)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00059f860 sp=0xc00059f730 pc=0xaaaaaad658608c
+runtime.doInit(0xaaaaaad8795400)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059f990 sp=0xc00059f860 pc=0xaaaaaad6585fcc
+runtime.doInit(0xaaaaaad87af380)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fac0 sp=0xc00059f990 pc=0xaaaaaad6585fcc
+runtime.doInit(0xaaaaaad8798400)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fbf0 sp=0xc00059fac0 pc=0xaaaaaad6585fcc
+runtime.doInit(0xaaaaaad87978c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fd20 sp=0xc00059fbf0 pc=0xaaaaaad6585fcc
+runtime.doInit(0xaaaaaad879e3c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059fe50 sp=0xc00059fd20 pc=0xaaaaaad6585fcc
+runtime.doInit(0xaaaaaad87a2c40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059ff80 sp=0xc00059fe50 pc=0xaaaaaad6585fcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00059ffd8 sp=0xc00059ff80 pc=0xaaaaaad65787d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00059ffd8 sp=0xc00059ffd8 pc=0xaaaaaad65a6694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaad6578c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaad6578a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaad65a6694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 3 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005f798 sp=0xc00005f780 pc=0xaaaaaad6578c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005f7c8 sp=0xc00005f798 pc=0xaaaaaad6563c04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005f7d8 sp=0xc00005f7c8 pc=0xaaaaaad65583d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005f7d8 sp=0xc00005f7d8 pc=0xaaaaaad65a6694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 4 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ff80 sp=0xc00005ff68 pc=0xaaaaaad6578c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaad87fe6a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005ffa8 sp=0xc00005ff80 pc=0xaaaaaad6561b30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005ffc8 sp=0xc00005ffa8 pc=0xaaaaaad656209c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005ffd8 sp=0xc00005ffc8 pc=0xaaaaaad6558374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005ffd8 sp=0xc00005ffd8 pc=0xaaaaaad65a6694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 5 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaad6578c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaad65575c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaad65a6694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 6 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060748 sp=0xc000060730 pc=0xaaaaaad6578c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000607d8 sp=0xc000060748 pc=0xaaaaaad655a5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000607d8 sp=0xc0000607d8 pc=0xaaaaaad65a6694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 7 [GC worker (idle)]:
+runtime.gopark(0xaaaaaad7ad0830?, 0xc0003d49c0?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060f48 sp=0xc000060f30 pc=0xaaaaaad6578c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc000060fd8 sp=0xc000060f48 pc=0xaaaaaad655a5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000060fd8 sp=0xc000060fd8 pc=0xaaaaaad65a6694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 8 [GC worker (idle)]:
+runtime.gopark(0x113b6538f6e?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000061748 sp=0xc000061730 pc=0xaaaaaad6578c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000617d8 sp=0xc000061748 pc=0xaaaaaad655a5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000617d8 sp=0xc0000617d8 pc=0xaaaaaad65a6694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 9 [GC worker (idle)]:
+runtime.gopark(0xaaaaaad88324c0?, 0x3?, 0x9d?, 0xd7?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000061f48 sp=0xc000061f30 pc=0xaaaaaad6578c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc000061fd8 sp=0xc000061f48 pc=0xaaaaaad655a5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000061fd8 sp=0xc000061fd8 pc=0xaaaaaad65a6694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 34 [chan receive]:
+runtime.gopark(0xc000062c00?, 0xaaaaaad657ef0c?, 0x0?, 0x0?, 0xc000102401?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a6d8 sp=0xc00005a6c0 pc=0xaaaaaad6578c08
+runtime.chanrecv(0xc00050e120, 0xc00005a7b0, 0x20?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc00005a768 sp=0xc00005a6d8 pc=0xaaaaaad6545af0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc00005a788 sp=0xc00005a768 pc=0xaaaaaad6545644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc000092180?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc00005a7c8 sp=0xc00005a788 pc=0xaaaaaad6f958b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc00005a7d8 sp=0xc00005a7c8 pc=0xaaaaaad6f936bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaad65a6694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ CHECK_RESULT 1 0 0 'check podman images --format=json failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check podman images --format=json failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check podman images --format=json failed'
++ LOG_ERROR 'check podman images --format=json failed'
++ message='check podman images --format=json failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check podman images --format=json failed'
+Thu Jun 22 06:16:36 2023 - ERROR - check podman images --format=json failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_01.sh line 43'
++ message='oe_test_podman_3.4.4.2_01.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_01.sh line 43'
+Thu Jun 22 06:16:37 2023 - ERROR - oe_test_podman_3.4.4.2_01.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ podman images --no-trunc
++ grep sha256
+runtime: lfstack.push invalid packing: node=0xffffffa52ca520 cnt=0x1 packed=0xffffa52ca5200001 -> node=0xffffa52ca520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaad3564310?, 0xaaaaaad2662f40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffc57a37e8 sp=0xffffffc57a37c0 pc=0xaaaaaad265e1ec
+runtime.(*lfstack).push(0xc000052f00?, 0xffffffa52ca520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffc57a3818 sp=0xffffffc57a37e8 pc=0xaaaaaad2631d98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaad4911ff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffc57a3848 sp=0xffffffc57a3818 pc=0xaaaaaad2658010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffc57a3880 sp=0xffffffc57a3848 pc=0xaaaaaad264ba58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffc57a3888 sp=0xffffffc57a3880 pc=0xaaaaaad2640908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffc57a3890 sp=0xffffffc57a3888 pc=0xaaaaaad268c484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00059f8f0 sp=0xc00059f8e8 pc=0xaaaaaad268c418
+runtime.gcStart({0xffffffa52bb5b8?, 0x59?, 0x3000?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00059f980 sp=0xc00059f8f0 pc=0xaaaaaad2640c80
+runtime.mallocgc(0x1000, 0xaaaaaad393f240, 0x1)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00059f9f8 sp=0xc00059f980 pc=0xaaaaaad26339b0
+runtime.makeslice(0x80000000002d0?, 0xffffffa52c4028?, 0x8?)
+	/usr/lib/golang/src/runtime/slice.go:103 +0x70 fp=0xc00059fa18 sp=0xc00059f9f8 pc=0xaaaaaad26764c0
+bufio.NewWriterSize(...)
+	/usr/lib/golang/src/bufio/bufio.go:593
+bufio.NewWriter(...)
+	/usr/lib/golang/src/bufio/bufio.go:602
+encoding/csv.NewWriter(...)
+	/usr/lib/golang/src/encoding/csv/writer.go:40
+github.com/containers/podman/vendor/github.com/spf13/pflag.writeAsCSV({0xaaaaaad4918d20, 0x0, 0x0})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:33 +0x70 fp=0xc00059faa8 sp=0xc00059fa18 pc=0xaaaaaad2b5c898
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*stringSliceValue).String(0xaaaaaad48e8140?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:61 +0x3c fp=0xc00059fae8 sp=0xc00059faa8 pc=0xaaaaaad2b5cbfc
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarPF(0xc0003cc5a0?, {0xaaaaaad3bc7ce8, 0xc000460050}, {0xaaaaaad35604e0, 0xa}, {0x0, 0x0}, {0xaaaaaad35a743c, 0x28})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go:829 +0x94 fp=0xc00059fb28 sp=0xc00059fae8 pc=0xaaaaaad2b506e4
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarP(...)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go:837
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).StringSliceVar(0x0?, 0xaaaaaad48e89c0, {0xaaaaaad35604e0, 0xa}, {0xaaaaaad4918d20, 0x0, 0x0}, {0xaaaaaad35a743c, 0x28})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string_slice.go:105 +0x120 fp=0xc00059fb80 sp=0xc00059fb28 pc=0xaaaaaad2b5d078
+github.com/containers/podman/cmd/podman/common.DefineCreateFlags(0xaaaaaad484c1e0?, 0xaaaaaad48e89c0, 0x0)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/common/create.go:24 +0x90 fp=0xc00059fc68 sp=0xc00059fb80 pc=0xaaaaaad34833a8
+github.com/containers/podman/cmd/podman/containers.createFlags(0xaaaaaad3a2f100?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:71 +0x7c fp=0xc00059fcc0 sp=0xc00059fc68 pc=0xaaaaaad3493fac
+github.com/containers/podman/cmd/podman/containers.init.6()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:93 +0xd8 fp=0xc00059fd20 sp=0xc00059fcc0 pc=0xaaaaaad3494130
+runtime.doInit(0xaaaaaad488f840)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00059fe50 sp=0xc00059fd20 pc=0xaaaaaad266e08c
+runtime.doInit(0xaaaaaad488ac40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059ff80 sp=0xc00059fe50 pc=0xaaaaaad266dfcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00059ffd8 sp=0xc00059ff80 pc=0xaaaaaad26607d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00059ffd8 sp=0xc00059ffd8 pc=0xaaaaaad268e694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaad2660c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaad2660a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaad268e694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a798 sp=0xc00005a780 pc=0xaaaaaad2660c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005a7c8 sp=0xc00005a798 pc=0xaaaaaad264bc04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005a7d8 sp=0xc00005a7c8 pc=0xaaaaaad26403d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaad268e694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005af80 sp=0xc00005af68 pc=0xaaaaaad2660c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaad48e66a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005afa8 sp=0xc00005af80 pc=0xaaaaaad2649b30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005afc8 sp=0xc00005afa8 pc=0xaaaaaad264a09c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005afd8 sp=0xc00005afc8 pc=0xaaaaaad2640374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaad268e694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 34 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaad2660c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaad263f5c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaad268e694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 35 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004d8748 sp=0xc0004d8730 pc=0xaaaaaad2660c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004d87d8 sp=0xc0004d8748 pc=0xaaaaaad26425c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004d87d8 sp=0xc0004d87d8 pc=0xaaaaaad268e694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 3 [GC worker (idle)]:
+runtime.gopark(0x114389810a1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005f748 sp=0xc00005f730 pc=0xaaaaaad2660c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005f7d8 sp=0xc00005f748 pc=0xaaaaaad26425c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005f7d8 sp=0xc00005f7d8 pc=0xaaaaaad268e694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 4 [GC worker (idle)]:
+runtime.gopark(0x114388f45d8?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ff48 sp=0xc00005ff30 pc=0xaaaaaad2660c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005ffd8 sp=0xc00005ff48 pc=0xaaaaaad26425c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005ffd8 sp=0xc00005ffd8 pc=0xaaaaaad268e694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 5 [GC worker (idle)]:
+runtime.gopark(0xaaaaaad491a4c0?, 0x3?, 0x89?, 0xa1?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060748 sp=0xc000060730 pc=0xaaaaaad2660c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000607d8 sp=0xc000060748 pc=0xaaaaaad26425c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000607d8 sp=0xc0000607d8 pc=0xaaaaaad268e694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 21 [chan receive]:
+runtime.gopark(0xc000109800?, 0xaaaaaad2666f0c?, 0x0?, 0x0?, 0xc00008ae01?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005bed8 sp=0xc00005bec0 pc=0xaaaaaad2660c08
+runtime.chanrecv(0xc000136120, 0xc00005bfb0, 0x20?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc00005bf68 sp=0xc00005bed8 pc=0xaaaaaad262daf0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc00005bf88 sp=0xc00005bf68 pc=0xaaaaaad262d644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc000516060?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc00005bfc8 sp=0xc00005bf88 pc=0xaaaaaad307d8b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc00005bfd8 sp=0xc00005bfc8 pc=0xaaaaaad307b6bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005bfd8 sp=0xc00005bfd8 pc=0xaaaaaad268e694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ CHECK_RESULT 1 0 0 'check podman images --no-trunc failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check podman images --no-trunc failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check podman images --no-trunc failed'
++ LOG_ERROR 'check podman images --no-trunc failed'
++ message='check podman images --no-trunc failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check podman images --no-trunc failed'
+Thu Jun 22 06:16:38 2023 - ERROR - check podman images --no-trunc failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_01.sh line 45'
++ message='oe_test_podman_3.4.4.2_01.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_01.sh line 45'
+Thu Jun 22 06:16:39 2023 - ERROR - oe_test_podman_3.4.4.2_01.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ podman images --noheading
++ grep -i 'IMAGE ID'
+runtime: lfstack.push invalid packing: node=0xffffffb7b41520 cnt=0x1 packed=0xffffb7b415200001 -> node=0xffffb7b41520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaabb6ed310?, 0xaaaaaaba7ebf40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffc0c797e8 sp=0xffffffc0c797c0 pc=0xaaaaaaba7e71ec
+runtime.(*lfstack).push(0xc000052f00?, 0xffffffb7b41520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffc0c79818 sp=0xffffffc0c797e8 pc=0xaaaaaaba7bad98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaabca9aff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffc0c79848 sp=0xffffffc0c79818 pc=0xaaaaaaba7e1010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffc0c79880 sp=0xffffffc0c79848 pc=0xaaaaaaba7d4a58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffc0c79888 sp=0xffffffc0c79880 pc=0xaaaaaaba7c9908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffc0c79890 sp=0xffffffc0c79888 pc=0xaaaaaaba815484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00059f9c8 sp=0xc00059f9c0 pc=0xaaaaaaba815418
+runtime.gcStart({0xc000388000?, 0xa0?, 0xbad1577c?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00059fa58 sp=0xc00059f9c8 pc=0xaaaaaaba7c9c80
+runtime.mallocgc(0x98, 0xaaaaaabbccd340, 0x1)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00059fad0 sp=0xc00059fa58 pc=0xaaaaaaba7bc9b0
+runtime.newobject(0xaaaaaabad15e1c?)
+	/usr/lib/golang/src/runtime/malloc.go:1202 +0x38 fp=0xc00059faf0 sp=0xc00059fad0 pc=0xaaaaaaba7bcbd8
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarPF(0xaaaaaabbd50ce8?, {0xaaaaaabbd50da8, 0xaaaaaabca71c48}, {0xaaaaaabb6f0a92, 0xe}, {0x0, 0x0}, {0xaaaaaabb78431e, 0x5c})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go:824 +0xa8 fp=0xc00059fb30 sp=0xc00059faf0 pc=0xaaaaaabacd96f8
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).VarP(...)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/flag.go:837
+github.com/containers/podman/vendor/github.com/spf13/pflag.(*FlagSet).StringVar(0x0?, 0xaaaaaabb6fa73d?, {0xaaaaaabb6f0a92?, 0xaaaaaabbd3e970?}, {0xaaaaaabb6de956?, 0xaaaaaabb77e4dc?}, {0xaaaaaabb78431e?, 0xaaaaaabb78dd1b?})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/pflag/string.go:37 +0xbc fp=0xc00059fb80 sp=0xc00059fb30 pc=0xaaaaaabace4974
+github.com/containers/podman/cmd/podman/common.DefineCreateFlags(0xaaaaaabc9d51e0?, 0xaaaaaabca719c0, 0x0)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/common/create.go:288 +0xbf4 fp=0xc00059fc68 sp=0xc00059fb80 pc=0xaaaaaabb60cf0c
+github.com/containers/podman/cmd/podman/containers.createFlags(0xaaaaaabbbb8100?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:71 +0x7c fp=0xc00059fcc0 sp=0xc00059fc68 pc=0xaaaaaabb61cfac
+github.com/containers/podman/cmd/podman/containers.init.6()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:93 +0xd8 fp=0xc00059fd20 sp=0xc00059fcc0 pc=0xaaaaaabb61d130
+runtime.doInit(0xaaaaaabca18840)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00059fe50 sp=0xc00059fd20 pc=0xaaaaaaba7f708c
+runtime.doInit(0xaaaaaabca13c40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00059ff80 sp=0xc00059fe50 pc=0xaaaaaaba7f6fcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00059ffd8 sp=0xc00059ff80 pc=0xaaaaaaba7e97d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00059ffd8 sp=0xc00059ffd8 pc=0xaaaaaaba817694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaaba7e9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaaba7e9a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaaba817694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a798 sp=0xc00005a780 pc=0xaaaaaaba7e9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005a7c8 sp=0xc00005a798 pc=0xaaaaaaba7d4c04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005a7d8 sp=0xc00005a7c8 pc=0xaaaaaaba7c93d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaaba817694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005af80 sp=0xc00005af68 pc=0xaaaaaaba7e9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaabca6f6a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005afa8 sp=0xc00005af80 pc=0xaaaaaaba7d2b30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005afc8 sp=0xc00005afa8 pc=0xaaaaaaba7d309c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005afd8 sp=0xc00005afc8 pc=0xaaaaaaba7c9374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaaba817694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 20 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaaba7e9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaaba7c85c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaaba817694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 21 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005b748 sp=0xc00005b730 pc=0xaaaaaaba7e9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005b7d8 sp=0xc00005b748 pc=0xaaaaaaba7cb5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005b7d8 sp=0xc00005b7d8 pc=0xaaaaaaba817694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 3 [GC worker (idle)]:
+runtime.gopark(0xaaaaaabbd41830?, 0xc000480020?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005f748 sp=0xc00005f730 pc=0xaaaaaaba7e9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005f7d8 sp=0xc00005f748 pc=0xaaaaaaba7cb5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005f7d8 sp=0xc00005f7d8 pc=0xaaaaaaba817694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 34 [GC worker (idle)]:
+runtime.gopark(0x114bdfea4b7?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000488748 sp=0xc000488730 pc=0xaaaaaaba7e9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004887d8 sp=0xc000488748 pc=0xaaaaaaba7cb5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004887d8 sp=0xc0004887d8 pc=0xaaaaaaba817694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 4 [GC worker (idle)]:
+runtime.gopark(0x114bdfeab5b?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ff48 sp=0xc00005ff30 pc=0xaaaaaaba7e9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005ffd8 sp=0xc00005ff48 pc=0xaaaaaaba7cb5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005ffd8 sp=0xc00005ffd8 pc=0xaaaaaaba817694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 51 [chan receive]:
+runtime.gopark(0x50000000000e08?, 0xaaaaaaba7eff0c?, 0xd4?, 0x64?, 0xc0004821a0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000488ed8 sp=0xc000488ec0 pc=0xaaaaaaba7e9c08
+runtime.chanrecv(0xc00009c540, 0xc000488fb0, 0x40?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc000488f68 sp=0xc000488ed8 pc=0xaaaaaaba7b6af0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc000488f88 sp=0xc000488f68 pc=0xaaaaaaba7b6644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc000016000?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc000488fc8 sp=0xc000488f88 pc=0xaaaaaabb2068b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc000488fd8 sp=0xc000488fc8 pc=0xaaaaaabb2046bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000488fd8 sp=0xc000488fd8 pc=0xaaaaaaba817694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ CHECK_RESULT 1 0 1 'check podman images --noheading failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='check podman images --noheading failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 06:16:40 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 8
++ test 8 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 06:16:41 2023 - ERROR - failed to execute the case.
++ exit 8
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 06:16:42 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+runtime: lfstack.push invalid packing: node=0xffffffb7834520 cnt=0x1 packed=0xffffb78345200001 -> node=0xffffb7834520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaab9174310?, 0xaaaaaab8272f40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffc06767e8 sp=0xffffffc06767c0 pc=0xaaaaaab826e1ec
+runtime.(*lfstack).push(0xc000052f00?, 0xffffffb7834520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffc0676818 sp=0xffffffc06767e8 pc=0xaaaaaab8241d98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaaba521ff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffc0676848 sp=0xffffffc0676818 pc=0xaaaaaab8268010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffc0676880 sp=0xffffffc0676848 pc=0xaaaaaab825ba58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffc0676888 sp=0xffffffc0676880 pc=0xaaaaaab8250908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffc0676890 sp=0xffffffc0676888 pc=0xaaaaaab829c484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00051f570 sp=0xc00051f568 pc=0xaaaaaab829c418
+runtime.gcStart({0xffffffb78255b8?, 0xc0003b2447?, 0x42e200?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00051f600 sp=0xc00051f570 pc=0xaaaaaab8250c80
+runtime.mallocgc(0x580, 0x0, 0x0)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00051f678 sp=0xc00051f600 pc=0xaaaaaab82439b0
+runtime.growslice(0xc0004f01b0?, {0xc00042e000?, 0x400?, 0xaaaaaab8278bac?}, 0xaaaaaab8278bb0?)
+	/usr/lib/golang/src/runtime/slice.go:284 +0x4e8 fp=0xc00051f6d0 sp=0xc00051f678 pc=0xaaaaaab8286a80
+io.ReadAll({0xaaaaaab97d0120, 0xc0004f01b0})
+	/usr/lib/golang/src/io/io.go:659 +0xa4 fp=0xc00051f750 sp=0xc00051f6d0 pc=0xaaaaaab82aa86c
+io/ioutil.ReadAll(...)
+	/usr/lib/golang/src/io/ioutil/ioutil.go:27
+github.com/containers/podman/vendor/github.com/BurntSushi/toml.(*Decoder).Decode(0xaaaaaab91aeee8?, {0xaaaaaab9786fa0?, 0xc00042a000?})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/BurntSushi/toml/decode.go:115 +0x294 fp=0xc00051f910 sp=0xc00051f750 pc=0xaaaaaab853cc9c
+github.com/containers/podman/vendor/github.com/BurntSushi/toml.DecodeFile({0xaaaaaab91aeee8?, 0x25?}, {0xaaaaaab9786fa0, 0xc00042a000})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/BurntSushi/toml/decode.go:146 +0x114 fp=0xc00051fa50 sp=0xc00051f910 pc=0xaaaaaab853cf84
+github.com/containers/podman/vendor/github.com/containers/common/pkg/config.readConfigFromFile({0xaaaaaab91aeee8, 0x25}, 0xc000424000?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/containers/common/pkg/config/config.go:558 +0xa0 fp=0xc00051fb78 sp=0xc00051fa50 pc=0xaaaaaab88369d0
+github.com/containers/podman/vendor/github.com/containers/common/pkg/config.NewConfig({0x0, 0x0})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/containers/common/pkg/config/config.go:524 +0x220 fp=0xc00051fc58 sp=0xc00051fb78 pc=0xaaaaaab88367d0
+github.com/containers/podman/cmd/podman/registry.newPodmanConfig()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/registry/config.go:73 +0xbc fp=0xc00051fcb8 sp=0xc00051fc58 pc=0xaaaaaab90892fc
+sync.(*Once).doSlow(0xaaaaaaba48f958?, 0x1?)
+	/usr/lib/golang/src/sync/once.go:74 +0xf8 fp=0xc00051fd08 sp=0xc00051fcb8 pc=0xaaaaaab82a8178
+sync.(*Once).Do(...)
+	/usr/lib/golang/src/sync/once.go:65
+github.com/containers/podman/cmd/podman/registry.PodmanConfig(...)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/registry/config.go:45
+github.com/containers/podman/cmd/podman/common.init()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/common/create.go:17 +0x4c fp=0xc00051fd20 sp=0xc00051fd08 pc=0xaaaaaab909a43c
+runtime.doInit(0xaaaaaaba4963c0)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00051fe50 sp=0xc00051fd20 pc=0xaaaaaab827e08c
+runtime.doInit(0xaaaaaaba49ac40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00051ff80 sp=0xc00051fe50 pc=0xaaaaaab827dfcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00051ffd8 sp=0xc00051ff80 pc=0xaaaaaab82707d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00051ffd8 sp=0xc00051ffd8 pc=0xaaaaaab829e694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaab8270c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaab8270a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaab829e694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 3 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005f798 sp=0xc00005f780 pc=0xaaaaaab8270c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005f7c8 sp=0xc00005f798 pc=0xaaaaaab825bc04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005f7d8 sp=0xc00005f7c8 pc=0xaaaaaab82503d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005f7d8 sp=0xc00005f7d8 pc=0xaaaaaab829e694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 4 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ff80 sp=0xc00005ff68 pc=0xaaaaaab8270c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaaba4f66a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005ffa8 sp=0xc00005ff80 pc=0xaaaaaab8259b30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005ffc8 sp=0xc00005ffa8 pc=0xaaaaaab825a09c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005ffd8 sp=0xc00005ffc8 pc=0xaaaaaab8250374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005ffd8 sp=0xc00005ffd8 pc=0xaaaaaab829e694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 18 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaab8270c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaab824f5c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaab829e694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 19 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a748 sp=0xc00005a730 pc=0xaaaaaab8270c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005a7d8 sp=0xc00005a748 pc=0xaaaaaab82525c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaab829e694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 5 [GC worker (idle)]:
+runtime.gopark(0x11566bef796?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060748 sp=0xc000060730 pc=0xaaaaaab8270c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000607d8 sp=0xc000060748 pc=0xaaaaaab82525c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000607d8 sp=0xc0000607d8 pc=0xaaaaaab829e694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 6 [GC worker (idle)]:
+runtime.gopark(0x11566bb2062?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000060f48 sp=0xc000060f30 pc=0xaaaaaab8270c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc000060fd8 sp=0xc000060f48 pc=0xaaaaaab82525c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000060fd8 sp=0xc000060fd8 pc=0xaaaaaab829e694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 7 [GC worker (idle)]:
+runtime.gopark(0xaaaaaab97c8830?, 0xc000040080?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000061748 sp=0xc000061730 pc=0xaaaaaab8270c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000617d8 sp=0xc000061748 pc=0xaaaaaab82525c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000617d8 sp=0xc0000617d8 pc=0xaaaaaab829e694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 10 [chan receive]:
+runtime.gopark(0xc000062800?, 0xaaaaaab8276f0c?, 0x0?, 0x0?, 0xc000093501?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005aed8 sp=0xc00005aec0 pc=0xaaaaaab8270c08
+runtime.chanrecv(0xc000102060, 0xc00005afb0, 0x60?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc00005af68 sp=0xc00005aed8 pc=0xaaaaaab823daf0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc00005af88 sp=0xc00005af68 pc=0xaaaaaab823d644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc0000bc420?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc00005afc8 sp=0xc00005af88 pc=0xaaaaaab8c8d8b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc00005afd8 sp=0xc00005afc8 pc=0xaaaaaab8c8b6bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaab829e694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ podman rm --all
+runtime: lfstack.push invalid packing: node=0xffffff8876b520 cnt=0x1 packed=0xffff8876b5200001 -> node=0xffff8876b520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaaea92b310?, 0xaaaaaae9a29f40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffc77947e8 sp=0xffffffc77947c0 pc=0xaaaaaae9a251ec
+runtime.(*lfstack).push(0xc00004c000?, 0xffffff8876b520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffc7794818 sp=0xffffffc77947e8 pc=0xaaaaaae99f8d98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaaebcd8ff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffc7794848 sp=0xffffffc7794818 pc=0xaaaaaae9a1f010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffc7794880 sp=0xffffffc7794848 pc=0xaaaaaae9a12a58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffc7794888 sp=0xffffffc7794880 pc=0xaaaaaae9a07908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffc7794890 sp=0xffffffc7794888 pc=0xaaaaaae9a53484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00051f688 sp=0xc00051f680 pc=0xaaaaaae9a53418
+runtime.gcStart({0xffffff8875ca68?, 0x25?, 0x8875ca68?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00051f718 sp=0xc00051f688 pc=0xaaaaaae9a07c80
+runtime.mallocgc(0x100, 0xaaaaaaead12800, 0x1)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00051f790 sp=0xc00051f718 pc=0xaaaaaae99fa9b0
+runtime.newobject(0x0?)
+	/usr/lib/golang/src/runtime/malloc.go:1202 +0x38 fp=0xc00051f7b0 sp=0xc00051f790 pc=0xaaaaaae99fabd8
+github.com/containers/podman/vendor/github.com/pkg/errors.callers()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/pkg/errors/stack.go:165 +0x28 fp=0xc00051f7e8 sp=0xc00051f7b0 pc=0xaaaaaae9ced0b8
+github.com/containers/podman/vendor/github.com/pkg/errors.Errorf({0xaaaaaaea94a2b5?, 0x1d?}, {0x0?, 0x36f4?, 0xaaaaaae9a3508c?})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/pkg/errors/errors.go:115 +0x5c fp=0xc00051f830 sp=0xc00051f7e8 pc=0xaaaaaae9cebd5c
+github.com/containers/podman/vendor/github.com/containers/buildah/pkg/parse.init()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/containers/buildah/pkg/parse/parse.go:44 +0x84 fp=0xc00051f860 sp=0xc00051f830 pc=0xaaaaaaea65678c
+runtime.doInit(0xaaaaaaebc49540)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00051f990 sp=0xc00051f860 pc=0xaaaaaae9a3508c
+runtime.doInit(0xaaaaaaebc5e380)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00051fac0 sp=0xc00051f990 pc=0xaaaaaae9a34fcc
+runtime.doInit(0xaaaaaaebc47400)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00051fbf0 sp=0xc00051fac0 pc=0xaaaaaae9a34fcc
+runtime.doInit(0xaaaaaaebc468c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00051fd20 sp=0xc00051fbf0 pc=0xaaaaaae9a34fcc
+runtime.doInit(0xaaaaaaebc4d3c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00051fe50 sp=0xc00051fd20 pc=0xaaaaaae9a34fcc
+runtime.doInit(0xaaaaaaebc51c40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00051ff80 sp=0xc00051fe50 pc=0xaaaaaae9a34fcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00051ffd8 sp=0xc00051ff80 pc=0xaaaaaae9a277d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00051ffd8 sp=0xc00051ffd8 pc=0xaaaaaae9a55694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaae9a27c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaae9a27a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaae9a55694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a798 sp=0xc00005a780 pc=0xaaaaaae9a27c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005a7c8 sp=0xc00005a798 pc=0xaaaaaae9a12c04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005a7d8 sp=0xc00005a7c8 pc=0xaaaaaae9a073d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaae9a55694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005af80 sp=0xc00005af68 pc=0xaaaaaae9a27c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaaebcad6a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005afa8 sp=0xc00005af80 pc=0xaaaaaae9a10b30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005afc8 sp=0xc00005afa8 pc=0xaaaaaae9a1109c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005afd8 sp=0xc00005afc8 pc=0xaaaaaae9a07374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaae9a55694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 34 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaae9a27c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaae9a065c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaae9a55694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 35 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004c8748 sp=0xc0004c8730 pc=0xaaaaaae9a27c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004c87d8 sp=0xc0004c8748 pc=0xaaaaaae9a095c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004c87d8 sp=0xc0004c87d8 pc=0xaaaaaae9a55694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 36 [GC worker (idle)]:
+runtime.gopark(0xaaaaaaeaf7f830?, 0xc0003f09a0?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004c8f48 sp=0xc0004c8f30 pc=0xaaaaaae9a27c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004c8fd8 sp=0xc0004c8f48 pc=0xaaaaaae9a095c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004c8fd8 sp=0xc0004c8fd8 pc=0xaaaaaae9a55694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 37 [GC worker (idle)]:
+runtime.gopark(0x11591332c9e?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004c9748 sp=0xc0004c9730 pc=0xaaaaaae9a27c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004c97d8 sp=0xc0004c9748 pc=0xaaaaaae9a095c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004c97d8 sp=0xc0004c97d8 pc=0xaaaaaae9a55694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 38 [GC worker (idle)]:
+runtime.gopark(0x115916acc79?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004c9f48 sp=0xc0004c9f30 pc=0xaaaaaae9a27c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004c9fd8 sp=0xc0004c9f48 pc=0xaaaaaae9a095c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004c9fd8 sp=0xc0004c9fd8 pc=0xaaaaaae9a55694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 39 [chan receive]:
+runtime.gopark(0x50000000000e68?, 0xaaaaaae9a2df0c?, 0xd4?, 0x44?, 0xc0001076c0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0000616d8 sp=0xc0000616c0 pc=0xaaaaaae9a27c08
+runtime.chanrecv(0xc00018ca80, 0xc0000617b0, 0x80?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc000061768 sp=0xc0000616d8 pc=0xaaaaaae99f4af0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc000061788 sp=0xc000061768 pc=0xaaaaaae99f4644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc0000a4060?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc0000617c8 sp=0xc000061788 pc=0xaaaaaaea4448b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc0000617d8 sp=0xc0000617c8 pc=0xaaaaaaea4426bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000617d8 sp=0xc0000617d8 pc=0xaaaaaae9a55694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ podman rmi --all
+runtime: lfstack.push invalid packing: node=0xffffff86514520 cnt=0x1 packed=0xffff865145200001 -> node=0xffff86514520
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaace9dd310?, 0xaaaaaacdadbf40?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffffe10027e8 sp=0xffffffe10027c0 pc=0xaaaaaacdad71ec
+runtime.(*lfstack).push(0xc000052f00?, 0xffffff86514520)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffffe1002818 sp=0xffffffe10027e8 pc=0xaaaaaacdaaad98
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaacfd8aff8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffffe1002848 sp=0xffffffe1002818 pc=0xaaaaaacdad1010
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffffe1002880 sp=0xffffffe1002848 pc=0xaaaaaacdac4a58
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffffe1002888 sp=0xffffffe1002880 pc=0xaaaaaacdab9908
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffffe1002890 sp=0xffffffe1002888 pc=0xaaaaaacdb05484
+
+goroutine 1 [running, locked to thread]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc00049f5a0 sp=0xc00049f598 pc=0xaaaaaacdb05418
+runtime.gcStart({0xc000102500?, 0x2500?, 0x3ce990?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc00049f630 sp=0xc00049f5a0 pc=0xaaaaaacdab9c80
+runtime.mallocgc(0x2420, 0xaaaaaacef08ac0, 0x1)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc00049f6a8 sp=0xc00049f630 pc=0xaaaaaacdaac9b0
+runtime.newarray(0x110?, 0xaaaaaacef08ac0?)
+	/usr/lib/golang/src/runtime/malloc.go:1224 +0x6c fp=0xc00049f6c8 sp=0xc00049f6a8 pc=0xaaaaaacdaacc54
+runtime.makeBucketArray(0xaaaaaacee26ee0, 0x40?, 0xaaaaaacdaae5e4?)
+	/usr/lib/golang/src/runtime/map.go:363 +0x1b0 fp=0xc00049f6f0 sp=0xc00049f6c8 pc=0xaaaaaacdaadae8
+runtime.hashGrow(0xaaaaaacefb8140?, 0xc0002040f0)
+	/usr/lib/golang/src/runtime/map.go:1051 +0xa8 fp=0xc00049f728 sp=0xc00049f6f0 pc=0xaaaaaacdaaf7d0
+runtime.mapassign(0xaaaaaacee26ee0, 0xc0002040f0, 0xaaaaaacea080c8?)
+	/usr/lib/golang/src/runtime/map.go:658 +0xf4 fp=0xc00049f7a8 sp=0xc00049f728 pc=0xaaaaaacdaae3cc
+github.com/containers/podman/vendor/github.com/gogo/protobuf/proto.RegisterType({0xaaaaaacf042008?, 0x0}, {0xaaaaaacea080c8, 0x1f})
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/gogo/protobuf/proto/properties.go:559 +0x27c fp=0xc00049f838 sp=0xc00049f7a8 pc=0xaaaaaace1acbd4
+github.com/containers/podman/vendor/k8s.io/api/core/v1.init.0()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/api/core/v1/generated.pb.go:5893 +0x508 fp=0xc00049f860 sp=0xc00049f838 pc=0xaaaaaace598510
+runtime.doInit(0xaaaaaacfcf6400)
+	/usr/lib/golang/src/runtime/proc.go:6329 +0x134 fp=0xc00049f990 sp=0xc00049f860 pc=0xaaaaaacdae708c
+runtime.doInit(0xaaaaaacfd10380)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00049fac0 sp=0xc00049f990 pc=0xaaaaaacdae6fcc
+runtime.doInit(0xaaaaaacfcf9400)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00049fbf0 sp=0xc00049fac0 pc=0xaaaaaacdae6fcc
+runtime.doInit(0xaaaaaacfcf88c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00049fd20 sp=0xc00049fbf0 pc=0xaaaaaacdae6fcc
+runtime.doInit(0xaaaaaacfcff3c0)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00049fe50 sp=0xc00049fd20 pc=0xaaaaaacdae6fcc
+runtime.doInit(0xaaaaaacfd03c40)
+	/usr/lib/golang/src/runtime/proc.go:6306 +0x74 fp=0xc00049ff80 sp=0xc00049fe50 pc=0xaaaaaacdae6fcc
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:233 +0x1d0 fp=0xc00049ffd8 sp=0xc00049ff80 pc=0xaaaaaacdad97d0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00049ffd8 sp=0xc00049ffd8 pc=0xaaaaaacdb07694
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005efb0 sp=0xc00005ef98 pc=0xaaaaaacdad9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005efd8 sp=0xc00005efb0 pc=0xaaaaaacdad9a90
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005efd8 sp=0xc00005efd8 pc=0xaaaaaacdb07694
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005a798 sp=0xc00005a780 pc=0xaaaaaacdad9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc00005a7c8 sp=0xc00005a798 pc=0xaaaaaacdac4c04
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc00005a7d8 sp=0xc00005a7c8 pc=0xaaaaaacdab93d4
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005a7d8 sp=0xc00005a7d8 pc=0xaaaaaacdb07694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005af80 sp=0xc00005af68 pc=0xaaaaaacdad9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaacfd5f6a0)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc00005afa8 sp=0xc00005af80 pc=0xaaaaaacdac2b30
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc00005afc8 sp=0xc00005afa8 pc=0xaaaaaacdac309c
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc00005afd8 sp=0xc00005afc8 pc=0xaaaaaacdab9374
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005afd8 sp=0xc00005afd8 pc=0xaaaaaacdb07694
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 20 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005e5a8 sp=0xc00005e590 pc=0xaaaaaacdad9c08
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005e7d8 sp=0xc00005e5a8 pc=0xaaaaaacdab85c8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005e7d8 sp=0xc00005e7d8 pc=0xaaaaaacdb07694
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 21 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005b748 sp=0xc00005b730 pc=0xaaaaaacdad9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005b7d8 sp=0xc00005b748 pc=0xaaaaaacdabb5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005b7d8 sp=0xc00005b7d8 pc=0xaaaaaacdb07694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 22 [GC worker (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005bf48 sp=0xc00005bf30 pc=0xaaaaaacdad9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005bfd8 sp=0xc00005bf48 pc=0xaaaaaacdabb5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005bfd8 sp=0xc00005bfd8 pc=0xaaaaaacdb07694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 23 [GC worker (idle)]:
+runtime.gopark(0xaaaaaacf031830?, 0xc0003889c0?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005c748 sp=0xc00005c730 pc=0xaaaaaacdad9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc00005c7d8 sp=0xc00005c748 pc=0xaaaaaacdabb5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005c7d8 sp=0xc00005c7d8 pc=0xaaaaaacdb07694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 24 [GC worker (idle)]:
+runtime.gopark(0xc000054128?, 0x1?, 0xef?, 0xb4?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000506f48 sp=0xc000506f30 pc=0xaaaaaacdad9c08
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc000506fd8 sp=0xc000506f48 pc=0xaaaaaacdabb5c0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000506fd8 sp=0xc000506fd8 pc=0xaaaaaacdb07694
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 4 [chan receive]:
+runtime.gopark(0xc000062800?, 0xaaaaaacdadff0c?, 0x0?, 0x0?, 0xc0004a2d01?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005ced8 sp=0xc00005cec0 pc=0xaaaaaacdad9c08
+runtime.chanrecv(0xc0004be8a0, 0xc00005cfb0, 0xa0?)
+	/usr/lib/golang/src/runtime/chan.go:583 +0x498 fp=0xc00005cf68 sp=0xc00005ced8 pc=0xaaaaaacdaa6af0
+runtime.chanrecv2(0x12a05f200?, 0x0?)
+	/usr/lib/golang/src/runtime/chan.go:447 +0x14 fp=0xc00005cf88 sp=0xc00005cf68 pc=0xaaaaaacdaa6644
+github.com/containers/podman/vendor/k8s.io/klog/v2.(*loggingT).flushDaemon(0xc000052f00?)
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:1169 +0x6c fp=0xc00005cfc8 sp=0xc00005cf88 pc=0xaaaaaace4f68b4
+github.com/containers/podman/vendor/k8s.io/klog/v2.init.0.func1()
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x2c fp=0xc00005cfd8 sp=0xc00005cfc8 pc=0xaaaaaace4f46bc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005cfd8 sp=0xc00005cfd8 pc=0xaaaaaacdb07694
+created by github.com/containers/podman/vendor/k8s.io/klog/v2.init.0
+	/home/abuild/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/k8s.io/klog/v2/klog.go:420 +0x124
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpa59t2djw ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpa59t2djw
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 06:17:56 2023 - INFO  - End to restore the test environment.

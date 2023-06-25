@@ -1,0 +1,244 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 12:26:20 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpk9yc6awl
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpk9yc6awl
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T12:29:12Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 12:29:13 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 12:29:13 2023 - INFO  - Start to run test.
++ podman stop postgres
+postgres
+++ podman ps -aq
++ podman logs -f 4031fee603a6
++ CHECK_RESULT 0 0 0 'check podman logs -f $(podman ps -aq) failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman logs -f $(podman ps -aq) failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman logs -l
++ CHECK_RESULT 0 0 0 'check podman logs -l failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman logs -l failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman ps -aq
++ podman logs --since 2020-12-31 4031fee603a6
++ CHECK_RESULT 0 0 0 'check podman logs --since 2020-12-31 $(podman ps -aq) failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman logs --since 2020-12-31 $(podman ps -aq) failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman ps -aq
++ podman logs --tail 10 4031fee603a6
++ CHECK_RESULT 0 0 0 'check podman logs --tail 10 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman logs --tail 10 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman ps -aq
++ podman logs -t 4031fee603a6
++ CHECK_RESULT 0 0 0 'check podman logs -t failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman logs -t failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman start postgres
+time="2023-06-22T12:29:21Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+postgres
++ podman save -q -o alpine.tar registry.access.redhat.com/ubi8-minimal
++ podman import --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh --change LABEL=blue=image alpine.tar image-imported
+Getting image source signatures
+Copying blob sha256:919221d36acec53dffb1fc85db23ea3f815b7a7113e60d890c3ae172eab35446
+Copying config sha256:d63befc933d920bdaace3a84e38f6befb469c0808d1849e3878a8fc3f88aa764
+Writing manifest to image destination
+Storing signatures
+sha256:d63befc933d920bdaace3a84e38f6befb469c0808d1849e3878a8fc3f88aa764
++ CHECK_RESULT 0 0 0 'check podman import --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh --change LABEL=blue=image alpine.tar image-imported failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman import --change CMD=/bin/bash --change ENTRYPOINT=/bin/sh --change LABEL=blue=image alpine.tar image-imported failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ cat alpine.tar
++ podman import -q --message 'importing the alpine.tar tarball' - image-imported
+sha256:6b0c1390a1d42f6d8d7b13d38f849ef8357ce480714a6033391c2d4803ce2735
++ CHECK_RESULT 0 0 0 'check cat alpine.tar | podman import -q --message failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check cat alpine.tar | podman import -q --message failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman ps -aq
++ podman export -o redis-container.tar 4031fee603a6
++ CHECK_RESULT 0 0 0 'check podman export -o redis-container.tar failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman export -o redis-container.tar failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f redis-container.tar
++ CHECK_RESULT 0 0 0 'check test -f redis-container.tar failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check test -f redis-container.tar failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman images -q
++ podman tag 6b0c1390a1d4 d63befc933d9 f4fb65011c56 test
++ podman images
++ grep test
+localhost/image-imported                 latest      6b0c1390a1d4  9 seconds ago   94.5 MB
+localhost/d63befc933d9                   latest      6b0c1390a1d4  9 seconds ago   94.5 MB
+localhost/f4fb65011c56                   latest      6b0c1390a1d4  9 seconds ago   94.5 MB
+localhost/test                           latest      6b0c1390a1d4  9 seconds ago   94.5 MB
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago     94.4 MB
++ CHECK_RESULT 0 0 0 'check podman tag failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman tag failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 12:29:47 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 12:29:48 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 12:29:48 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+4031fee603a63a55e8148d5e1e5dc4240eed6e5af95e4a6229fbd72d2bb3df93
++ podman rm --all
+4031fee603a63a55e8148d5e1e5dc4240eed6e5af95e4a6229fbd72d2bb3df93
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: localhost/image-imported:latest
+Untagged: localhost/d63befc933d9:latest
+Untagged: localhost/f4fb65011c56:latest
+Untagged: localhost/test:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Deleted: d63befc933d920bdaace3a84e38f6befb469c0808d1849e3878a8fc3f88aa764
+Deleted: 6b0c1390a1d42f6d8d7b13d38f849ef8357ce480714a6033391c2d4803ce2735
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpk9yc6awl ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpk9yc6awl
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf alpine.tar redis-container.tar
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 12:30:43 2023 - INFO  - End to restore the test environment.

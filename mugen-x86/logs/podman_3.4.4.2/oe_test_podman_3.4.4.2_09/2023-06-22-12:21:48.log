@@ -1,0 +1,267 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 12:21:50 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmps5pez0da
++ '[' -z '' ']'
++ tmpfile=/tmp/tmps5pez0da
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T12:24:46Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 12:24:46 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 12:24:47 2023 - INFO  - Start to run test.
+++ podman create --cgroup-parent /tmp alpine ls
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying config sha256:c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Writing manifest to image destination
+Storing signatures
++ ID=d8ee5aad3ffe87d8d21a0f27fb9e646835ea1b98ae6aa6ce7a8e7649f1b3387b
++ podman inspect d8ee5aad3ffe87d8d21a0f27fb9e646835ea1b98ae6aa6ce7a8e7649f1b3387b
++ grep '"CgroupParent"'
+            "CgroupParent": "/tmp",
++ CHECK_RESULT 0 0 0 'check "CgroupParent" test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CgroupParent" test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --cidfile cidfile alpine ls
++ ID=36d424f6d6bbe70bf595531a46014eb808ea508e6d8d189d248a3f08c2b57b39
++ grep 36d424f6d6bbe70bf595531a46014eb808ea508e6d8d189d248a3f08c2b57b39 cidfile
+36d424f6d6bbe70bf595531a46014eb808ea508e6d8d189d248a3f08c2b57b39
++ CHECK_RESULT 0 0 0 'check test $id failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check test $id failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --conmon-pidfile ./ alpine ls
++ ID=40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0
++ podman inspect 40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0
++ grep 40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0
+        "Id": "40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0",
+        "StaticDir": "/var/lib/containers/storage/overlay-containers/40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0/userdata",
+        "PidFile": "/run/containers/storage/overlay-containers/40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0/userdata/pidfile",
+            "40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0"
+                "Path": "/var/lib/containers/storage/overlay-containers/40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0/userdata/ctr.log",
++ CHECK_RESULT 0 0 0 'check grep id failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check grep id failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --cpu-period 10000 alpine ls
++ ID=1c97c378aff20b84662b602d070e1f008408e46512ef363514b56538e3e8c237
++ podman inspect 1c97c378aff20b84662b602d070e1f008408e46512ef363514b56538e3e8c237
++ grep '"CpuPeriod": 10000'
+            "CpuPeriod": 10000,
++ CHECK_RESULT 0 0 0 'check "CpuPeriod": 10000 test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CpuPeriod": 10000 test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --cpu-quota 1001 alpine ls
++ ID=1bbea8e8b059ac0ecbbb85dfee875ebcf320aeebbd1d739cc1e9e9f18a9bbf0e
++ podman inspect 1bbea8e8b059ac0ecbbb85dfee875ebcf320aeebbd1d739cc1e9e9f18a9bbf0e
++ grep '"CpuQuota": 1001'
+            "CpuQuota": 1001,
++ CHECK_RESULT 0 0 0 'check "CpuQuota": 1001 test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CpuQuota": 1001 test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --cpu-rt-period 1 alpine ls
++ ID=31d0dd737d27e7292b00a449214a21a6a9540f0de56e8e38c6c600e5b051f545
++ podman inspect 31d0dd737d27e7292b00a449214a21a6a9540f0de56e8e38c6c600e5b051f545
++ grep '"CpuRealtimePeriod": 1'
+            "CpuRealtimePeriod": 1,
++ CHECK_RESULT 0 0 0 'check "CpuRealtimePeriod": 1 test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CpuRealtimePeriod": 1 test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --cpu-rt-runtime 2 alpine ls
++ ID=dcaea1b8b61761698ccef7f7f379ebaeea81d0f35d2d4e1def68a14226939529
++ podman inspect dcaea1b8b61761698ccef7f7f379ebaeea81d0f35d2d4e1def68a14226939529
++ grep '"CpuRealtimeRuntime": 2'
+            "CpuRealtimeRuntime": 2,
++ CHECK_RESULT 0 0 0 'check "CpuRealtimeRuntime": 2 test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CpuRealtimeRuntime": 2 test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --cpu-shares 3 alpine ls
++ ID=ea3f26f1a08cafbb2fb5ce0ce114aaebc556d705f680b7c64d0aa37555871be3
++ podman inspect ea3f26f1a08cafbb2fb5ce0ce114aaebc556d705f680b7c64d0aa37555871be3
++ grep '"CpuShares": 3'
+            "CpuShares": 3,
++ CHECK_RESULT 0 0 0 'check "CpuShares": 3 test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CpuShares": 3 test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --cpus 4 alpine ls
++ ID=95878f5c1cd5161dfdc697e3335c0bc0f8b4c25121256ed6577638ba6450241d
++ podman inspect 95878f5c1cd5161dfdc697e3335c0bc0f8b4c25121256ed6577638ba6450241d
++ grep '"CpuQuota": 400000'
+            "CpuQuota": 400000,
++ CHECK_RESULT 0 0 0 'check "CpuQuota": 400000 test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CpuQuota": 400000 test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 12:25:18 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 12:25:18 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 12:25:18 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0
+dcaea1b8b61761698ccef7f7f379ebaeea81d0f35d2d4e1def68a14226939529
+31d0dd737d27e7292b00a449214a21a6a9540f0de56e8e38c6c600e5b051f545
+36d424f6d6bbe70bf595531a46014eb808ea508e6d8d189d248a3f08c2b57b39
+d8ee5aad3ffe87d8d21a0f27fb9e646835ea1b98ae6aa6ce7a8e7649f1b3387b
+ea3f26f1a08cafbb2fb5ce0ce114aaebc556d705f680b7c64d0aa37555871be3
+1bbea8e8b059ac0ecbbb85dfee875ebcf320aeebbd1d739cc1e9e9f18a9bbf0e
+95878f5c1cd5161dfdc697e3335c0bc0f8b4c25121256ed6577638ba6450241d
+96b0a4b0bcc4718211bcf1d25c5cbfd5e18fde9adea8a3a89311d8e98fede60e
+1c97c378aff20b84662b602d070e1f008408e46512ef363514b56538e3e8c237
++ podman rm --all
+d8ee5aad3ffe87d8d21a0f27fb9e646835ea1b98ae6aa6ce7a8e7649f1b3387b
+dcaea1b8b61761698ccef7f7f379ebaeea81d0f35d2d4e1def68a14226939529
+1c97c378aff20b84662b602d070e1f008408e46512ef363514b56538e3e8c237
+31d0dd737d27e7292b00a449214a21a6a9540f0de56e8e38c6c600e5b051f545
+95878f5c1cd5161dfdc697e3335c0bc0f8b4c25121256ed6577638ba6450241d
+96b0a4b0bcc4718211bcf1d25c5cbfd5e18fde9adea8a3a89311d8e98fede60e
+1bbea8e8b059ac0ecbbb85dfee875ebcf320aeebbd1d739cc1e9e9f18a9bbf0e
+36d424f6d6bbe70bf595531a46014eb808ea508e6d8d189d248a3f08c2b57b39
+40d2d99275dd854948b3ef291142209d99c21cbf266d7f8243575e99e1708cd0
+ea3f26f1a08cafbb2fb5ce0ce114aaebc556d705f680b7c64d0aa37555871be3
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: docker.io/library/alpine:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Deleted: c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmps5pez0da ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmps5pez0da
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf cidfile
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 12:26:15 2023 - INFO  - End to restore the test environment.

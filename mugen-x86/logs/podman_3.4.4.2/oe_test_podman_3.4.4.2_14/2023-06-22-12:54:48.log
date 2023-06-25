@@ -1,0 +1,253 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 12:54:51 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpra2jgilh
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpra2jgilh
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 12:57:33 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 12:57:33 2023 - INFO  - Start to run test.
+++ podman create --oom-kill-disable alpine ls
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying config sha256:c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Writing manifest to image destination
+Storing signatures
++ ID=88d727051398ab5848e0dd3fc19ec74d936cf404189ab9529265f2cdc5530ea8
++ podman inspect 88d727051398ab5848e0dd3fc19ec74d936cf404189ab9529265f2cdc5530ea8
++ grep '"OomKillDisable": true'
+            "OomKillDisable": true,
++ CHECK_RESULT 0 0 0 'check OomKillDisable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check OomKillDisable failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --oom-score-adj 100 alpine ls
++ ID=a6377cc3c70d90b9c6bea69030ae3080fd7e52ba8f3763bfc3ae606247ad5c6b
++ podman inspect a6377cc3c70d90b9c6bea69030ae3080fd7e52ba8f3763bfc3ae606247ad5c6b
++ grep '"OomKillDisable":'
+            "OomKillDisable": false,
++ CHECK_RESULT 0 0 0 'check OomKillDisable faield'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check OomKillDisable faield'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --pid host alpine ls
++ ID=819f9b6e0594232ec6559b5f456187a4edfb990772dc9c104f773a4f4f507168
++ podman inspect 819f9b6e0594232ec6559b5f456187a4edfb990772dc9c104f773a4f4f507168
++ grep '"PidMode": "host"'
+            "PidMode": "host",
++ CHECK_RESULT 0 0 0 'check PidMode host failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check PidMode host failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --pids-limit 3 alpine ls
++ ID=d896090f4a3442f026dee2a8b49ffc60b20594632e9c1a4218833df1d6702cb2
++ podman inspect d896090f4a3442f026dee2a8b49ffc60b20594632e9c1a4218833df1d6702cb2
++ grep '"PidsLimit": 3'
+            "PidsLimit": 3,
++ CHECK_RESULT 0 0 0 'check PidsLimit failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check PidsLimit failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pod create --infra=false
+df9a1b3a156857a5d61a0b9e6ebde3da20e0bd114d5ebf4e06b85a7c4f13358d
++++ podman pod list -lq
+++ podman create --pod df9a1b3a156857a5d61a0b9e6ebde3da20e0bd114d5ebf4e06b85a7c4f13358d alpine ls
++ ID=53dc4bbda34ecd6696f39b08be43061e87aa4bc930c94156a3d4e531f04a3539
++ podman rm 53dc4bbda34ecd6696f39b08be43061e87aa4bc930c94156a3d4e531f04a3539
+53dc4bbda34ecd6696f39b08be43061e87aa4bc930c94156a3d4e531f04a3539
++ CHECK_RESULT 0 0 0 'check podman rm $ID failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman rm $ID failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman pod list -q
++ podman pod rm df9a1b3a156857a5d61a0b9e6ebde3da20e0bd114d5ebf4e06b85a7c4f13358d
+df9a1b3a156857a5d61a0b9e6ebde3da20e0bd114d5ebf4e06b85a7c4f13358d
+++ podman create --privileged alpine ls
++ ID=935b55fb92dfbfb123f129415b2b04abc4d393aebda6d81705c97c85cba59e59
++ podman inspect 935b55fb92dfbfb123f129415b2b04abc4d393aebda6d81705c97c85cba59e59
++ grep '"Privileged": true'
+            "Privileged": true,
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep Privileged: true failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep Privileged: true failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --publish 23 alpine ls
++ ID=f914f4d42f7c4b6dad93b890e89bfeb2be5a554301f4eeba6c7a34bd54a2c883
++ podman inspect f914f4d42f7c4b6dad93b890e89bfeb2be5a554301f4eeba6c7a34bd54a2c883
++ grep 23
+        "Created": "2023-06-22T12:58:04.79051553Z",
+                "LowerDir": "/var/lib/containers/storage/overlay/8d3ac3489996423f53d6087c81180006263b79f206d3fdec9e66f0e27ceb8759/diff",
+                "23/tcp": [
+                "23",
+                "23/tcp": [
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep 23 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep 23 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --publish-all alpine ls
++ ID=d26a7fa313f43b6934a86245b62451211f2553f2771c9b73d4af0ee237049bbf
++ podman inspect d26a7fa313f43b6934a86245b62451211f2553f2771c9b73d4af0ee237049bbf
++ grep '"PublishAllPorts": false'
+            "PublishAllPorts": false,
++ CHECK_RESULT 0 0 0 'check PublishAllPorts: false failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check PublishAllPorts: false failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman create -q alpine ls
+3ad45038119692a83c5eafa6b7f3b2b72762b0937abea3e9b0c331e07a75560e
++ CHECK_RESULT 0 0 0 'check podman create -q alpine ls failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman create -q alpine ls failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 12:58:07 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 12:58:07 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 12:58:08 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+d896090f4a3442f026dee2a8b49ffc60b20594632e9c1a4218833df1d6702cb2
+f914f4d42f7c4b6dad93b890e89bfeb2be5a554301f4eeba6c7a34bd54a2c883
+3ad45038119692a83c5eafa6b7f3b2b72762b0937abea3e9b0c331e07a75560e
+819f9b6e0594232ec6559b5f456187a4edfb990772dc9c104f773a4f4f507168
+88d727051398ab5848e0dd3fc19ec74d936cf404189ab9529265f2cdc5530ea8
+935b55fb92dfbfb123f129415b2b04abc4d393aebda6d81705c97c85cba59e59
+a6377cc3c70d90b9c6bea69030ae3080fd7e52ba8f3763bfc3ae606247ad5c6b
+d26a7fa313f43b6934a86245b62451211f2553f2771c9b73d4af0ee237049bbf
++ podman rm --all
+819f9b6e0594232ec6559b5f456187a4edfb990772dc9c104f773a4f4f507168
+88d727051398ab5848e0dd3fc19ec74d936cf404189ab9529265f2cdc5530ea8
+935b55fb92dfbfb123f129415b2b04abc4d393aebda6d81705c97c85cba59e59
+a6377cc3c70d90b9c6bea69030ae3080fd7e52ba8f3763bfc3ae606247ad5c6b
+d26a7fa313f43b6934a86245b62451211f2553f2771c9b73d4af0ee237049bbf
+d896090f4a3442f026dee2a8b49ffc60b20594632e9c1a4218833df1d6702cb2
+f914f4d42f7c4b6dad93b890e89bfeb2be5a554301f4eeba6c7a34bd54a2c883
+3ad45038119692a83c5eafa6b7f3b2b72762b0937abea3e9b0c331e07a75560e
++ podman rmi --all
+Untagged: docker.io/library/alpine:latest
+Deleted: c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpra2jgilh ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpra2jgilh
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 12:59:02 2023 - INFO  - End to restore the test environment.

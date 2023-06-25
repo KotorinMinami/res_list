@@ -1,0 +1,421 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 14:49:41 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp11m0pi9p
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp11m0pi9p
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ docker pull registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ docker run --name postgres registry.access.redhat.com/ubi8-minimal
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+time="2023-06-22T14:52:09Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 14:52:09 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 14:52:10 2023 - INFO  - Start to run test.
++ docker help
++ grep -E 'docker|help'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+  help        Help about any command
+      --help                       Help for podman
++ CHECK_RESULT 0 0 0 'check docker help | grep -E "docker|help" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker help | grep -E "docker|help" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker create alpine
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Error: initializing source docker://alpine:latest: pinging container registry registry-1.docker.io: Get "https://registry-1.docker.io/v2/": dial tcp: lookup registry-1.docker.io: i/o timeout
++ CHECK_RESULT 125 0 0 'check docker create alpine failed'
++ actual_result=125
++ expect_result=0
++ mode=0
++ error_log='check docker create alpine failed'
++ exit_mode=0
++ '[' -z 125 ']'
++ '[' 0 -eq 0 ']'
++ test 125x '!=' 0x
++ test -n 'check docker create alpine failed'
++ LOG_ERROR 'check docker create alpine failed'
++ message='check docker create alpine failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check docker create alpine failed'
+Thu Jun 22 14:52:52 2023 - ERROR - check docker create alpine failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_08.sh line 34'
++ message='oe_test_podman_DK_3.4.4.2_08.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_08.sh line 34'
+Thu Jun 22 14:52:52 2023 - ERROR - oe_test_podman_DK_3.4.4.2_08.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ docker ps -a
++ grep -i Created
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+CONTAINER ID  IMAGE                                           COMMAND     CREATED         STATUS                     PORTS       NAMES
++ CHECK_RESULT 0 0 0 'check docker ps -a | grep -i "Created" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker ps -a | grep -i "Created" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --annotation HELLO=WORLD alpine
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Error: initializing source docker://alpine:latest: Get "https://auth.docker.io/token?scope=repository%3Alibrary%2Falpine%3Apull&service=registry.docker.io": dial tcp: lookup auth.docker.io on [fec0::3]:53: read udp [fec0::6ef9:3da8:16c7:b485]:39377->[fec0::3]:53: i/o timeout
++ ID=
++ test -z
++ CHECK_RESULT 0 0 0 'check ID failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check ID failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker inspect
++ grep '"HELLO": "WORLD"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Error: no names or ids specified
++ CHECK_RESULT 1 0 0 'check docker inspect $ID | grep failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check docker inspect $ID | grep failed'
++ LOG_ERROR 'check docker inspect $ID | grep failed'
++ message='check docker inspect $ID | grep failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check docker inspect $ID | grep failed'
+Thu Jun 22 14:53:35 2023 - ERROR - check docker inspect $ID | grep failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_08.sh line 41'
++ message='oe_test_podman_DK_3.4.4.2_08.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_08.sh line 41'
+Thu Jun 22 14:53:35 2023 - ERROR - oe_test_podman_DK_3.4.4.2_08.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ docker create --attach STDIN alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3
+Copying blob sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3
+Copying config sha256:c1aabb73d2339c5ebaa3681de2e9d9c18d57485045a4e311d9f8004bec208d67
+Writing manifest to image destination
+Storing signatures
+bd51ddff389d8ce2bbd8e4ee779e4e451cf23ac40fc5b76b4d19368552025218
++ CHECK_RESULT 0 0 0 'check docker create --attach STDIN alpine ls failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker create --attach STDIN alpine ls failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker ps -a
++ grep ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+bd51ddff389d  docker.io/library/alpine:latest                 ls          Less than a second ago  Created                               vibrant_chatterjee
++ CHECK_RESULT 0 0 0 'check docker ps -a | grep ls faield'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker ps -a | grep ls faield'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --blkio-weight 15 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Your kernel does not support Block I/O weight or the cgroup is not mounted. Weight discarded.
++ ID=8de1d153b7c0c90242b12e72f65539ceeebcc35fa129b2d284047df2833c6805
++ docker inspect 8de1d153b7c0c90242b12e72f65539ceeebcc35fa129b2d284047df2833c6805
++ grep '"BlkioWeight": 15'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 1 0 0 'check docker inspect BlkioWeight failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check docker inspect BlkioWeight failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check docker inspect BlkioWeight failed'
++ LOG_ERROR 'check docker inspect BlkioWeight failed'
++ message='check docker inspect BlkioWeight failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check docker inspect BlkioWeight failed'
+Thu Jun 22 14:55:03 2023 - ERROR - check docker inspect BlkioWeight failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_08.sh line 48'
++ message='oe_test_podman_DK_3.4.4.2_08.sh line 48'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_08.sh line 48'
+Thu Jun 22 14:55:03 2023 - ERROR - oe_test_podman_DK_3.4.4.2_08.sh line 48
++ '[' 0 -eq 1 ']'
++ return 0
+++ docker create --blkio-weight-device /dev/:15 fedora ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Resolved "fedora" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull registry.fedoraproject.org/fedora:latest...
+Getting image source signatures
+Copying blob sha256:9c86172b66b31d7bf3d9f28325b7fcf737db2adad6d551b31dd213185f0435c6
+Copying blob sha256:9c86172b66b31d7bf3d9f28325b7fcf737db2adad6d551b31dd213185f0435c6
+Copying config sha256:0e79e93fc530998e29e00eeea134f53002d000be3f24c7716e2eb3ed2b35162f
+Writing manifest to image destination
+Storing signatures
+panic: assignment to entry in nil map
+
+goroutine 1 [running]:
+github.com/containers/podman/pkg/specgenutil.parseWeightDevices(0xc0000ae000, {0xc00007beb0?, 0x1, 0x0?})
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/pkg/specgenutil/specgen.go:794 +0x150
+github.com/containers/podman/pkg/specgenutil.getIOLimits(0xc0000ae000, 0x558b82100080)
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/pkg/specgenutil/specgen.go:87 +0xdd
+github.com/containers/podman/pkg/specgenutil.FillOutSpecGen(0xc0000ae000, 0x558b82100080, {0xc000493b80, 0x2, 0x4})
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/pkg/specgenutil/specgen.go:465 +0x15a7
+github.com/containers/podman/cmd/podman/containers.create(0x558b820623c0?, {0xc000493b80?, 0x2, 0x4})
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/containers/create.go:138 +0x458
+github.com/containers/podman/vendor/github.com/spf13/cobra.(*Command).execute(0x558b820623c0, {0xc000040200, 0x4, 0x4})
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/cobra/command.go:856 +0x67c
+github.com/containers/podman/vendor/github.com/spf13/cobra.(*Command).ExecuteC(0x558b82075c40)
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/cobra/command.go:974 +0x3bd
+github.com/containers/podman/vendor/github.com/spf13/cobra.(*Command).Execute(...)
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/cobra/command.go:902
+github.com/containers/podman/vendor/github.com/spf13/cobra.(*Command).ExecuteContext(...)
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/vendor/github.com/spf13/cobra/command.go:895
+main.Execute()
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/root.go:91 +0xc5
+main.main()
+	/root/rpmbuild/BUILD/podman-3.4.4/_build/src/github.com/containers/podman/cmd/podman/main.go:39 +0x74
++ ID=
++ docker inspect
++ grep '"weight": 15'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Error: no names or ids specified
++ CHECK_RESULT 1 0 0 'check docker inspect weight failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check docker inspect weight failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check docker inspect weight failed'
++ LOG_ERROR 'check docker inspect weight failed'
++ message='check docker inspect weight failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check docker inspect weight failed'
+Thu Jun 22 14:55:50 2023 - ERROR - check docker inspect weight failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_08.sh line 51'
++ message='oe_test_podman_DK_3.4.4.2_08.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_08.sh line 51'
+Thu Jun 22 14:55:51 2023 - ERROR - oe_test_podman_DK_3.4.4.2_08.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
+++ docker create --cap-add net_admin alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=ad661f5d02d9c8aaa2072db3d6a87fc65110d9cc5c0dd11f837227ea97688d41
++ test -z ad661f5d02d9c8aaa2072db3d6a87fc65110d9cc5c0dd11f837227ea97688d41
++ CHECK_RESULT 1 0 0 'check test -z ${ID} failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check test -z ${ID} failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check test -z ${ID} failed'
++ LOG_ERROR 'check test -z ${ID} failed'
++ message='check test -z ${ID} failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check test -z ${ID} failed'
+Thu Jun 22 14:55:51 2023 - ERROR - check test -z ${ID} failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_08.sh line 54'
++ message='oe_test_podman_DK_3.4.4.2_08.sh line 54'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_08.sh line 54'
+Thu Jun 22 14:55:52 2023 - ERROR - oe_test_podman_DK_3.4.4.2_08.sh line 54
++ '[' 0 -eq 1 ']'
++ return 0
++ docker inspect ad661f5d02d9c8aaa2072db3d6a87fc65110d9cc5c0dd11f837227ea97688d41
++ grep -A 1 CapAdd
++ grep net_admin
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 1 0 0 'check docker inspect $ID | grep -A 1 "CapAdd" | grep "net_admin" failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep -A 1 "CapAdd" | grep "net_admin" failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check docker inspect $ID | grep -A 1 "CapAdd" | grep "net_admin" failed'
++ LOG_ERROR 'check docker inspect $ID | grep -A 1 "CapAdd" | grep "net_admin" failed'
++ message='check docker inspect $ID | grep -A 1 "CapAdd" | grep "net_admin" failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check docker inspect $ID | grep -A 1 "CapAdd" | grep "net_admin" failed'
+Thu Jun 22 14:55:52 2023 - ERROR - check docker inspect $ID | grep -A 1 "CapAdd" | grep "net_admin" failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_08.sh line 56'
++ message='oe_test_podman_DK_3.4.4.2_08.sh line 56'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_08.sh line 56'
+Thu Jun 22 14:55:53 2023 - ERROR - oe_test_podman_DK_3.4.4.2_08.sh line 56
++ '[' 0 -eq 1 ']'
++ return 0
+++ docker create --cap-drop net_admin alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=6bab2eabe1f4044ab2457e251f75c5ff9d88628c7ee871776bfc3d8e8024814e
++ test -z
++ CHECK_RESULT 0 0 0 'check test -z ${ID}-2 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check test -z ${ID}-2 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ docker inspect 6bab2eabe1f4044ab2457e251f75c5ff9d88628c7ee871776bfc3d8e8024814e
++ grep -A 1 CapDrop
++ grep net_admin
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ CHECK_RESULT 1 0 0 'check docker inspect $ID | grep -A 1 "CapDrop" | grep "net_admin" failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep -A 1 "CapDrop" | grep "net_admin" failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check docker inspect $ID | grep -A 1 "CapDrop" | grep "net_admin" failed'
++ LOG_ERROR 'check docker inspect $ID | grep -A 1 "CapDrop" | grep "net_admin" failed'
++ message='check docker inspect $ID | grep -A 1 "CapDrop" | grep "net_admin" failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check docker inspect $ID | grep -A 1 "CapDrop" | grep "net_admin" failed'
+Thu Jun 22 14:55:54 2023 - ERROR - check docker inspect $ID | grep -A 1 "CapDrop" | grep "net_admin" failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_DK_3.4.4.2_08.sh line 61'
++ message='oe_test_podman_DK_3.4.4.2_08.sh line 61'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_DK_3.4.4.2_08.sh line 61'
+Thu Jun 22 14:55:54 2023 - ERROR - oe_test_podman_DK_3.4.4.2_08.sh line 61
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 14:55:55 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 14:55:55 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 14:55:55 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop postgres
+postgres
++ podman rm --all
+495441f0d741de98f1576945e104996ec541be228d546a90813ecc3ceb23a4b8
+6bab2eabe1f4044ab2457e251f75c5ff9d88628c7ee871776bfc3d8e8024814e
+8de1d153b7c0c90242b12e72f65539ceeebcc35fa129b2d284047df2833c6805
+ad661f5d02d9c8aaa2072db3d6a87fc65110d9cc5c0dd11f837227ea97688d41
+bd51ddff389d8ce2bbd8e4ee779e4e451cf23ac40fc5b76b4d19368552025218
++ podman rmi -f --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: docker.io/library/alpine:latest
+Untagged: registry.fedoraproject.org/fedora:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Deleted: c1aabb73d2339c5ebaa3681de2e9d9c18d57485045a4e311d9f8004bec208d67
+Deleted: 0e79e93fc530998e29e00eeea134f53002d000be3f24c7716e2eb3ed2b35162f
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp11m0pi9p ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp11m0pi9p
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 14:56:41 2023 - INFO  - End to restore the test environment.

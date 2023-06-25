@@ -1,0 +1,278 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 12:01:40 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp_txrjzml
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp_txrjzml
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T12:04:48Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 12:04:49 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 12:04:49 2023 - INFO  - Start to run test.
+++ podman create --cpuset-cpus 1 alpine ls
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying config sha256:c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Writing manifest to image destination
+Storing signatures
++ ID=47b1005fbb1069b451411de4bfe63d5f85396cf2464c04977a77652d4d0a03f2
++ podman inspect 47b1005fbb1069b451411de4bfe63d5f85396cf2464c04977a77652d4d0a03f2
++ grep -i '"CpuSetCpus": "1"'
+            "CpusetCpus": "1",
++ CHECK_RESULT 0 0 0 'check "CpuSetCpus": "1" test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CpuSetCpus": "1" test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --cpuset-mems 0 alpine ls
++ ID=74b3c48aea51e8ae81e5d0078fbe7e68ec7e869bba1ed5368042251e44981b59
++ podman inspect 74b3c48aea51e8ae81e5d0078fbe7e68ec7e869bba1ed5368042251e44981b59
++ grep -i '"CpuSetMems": "0"'
+            "CpusetMems": "0",
++ CHECK_RESULT 0 0 0 'check "CpuSetMems": "0" test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check "CpuSetMems": "0" test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create alpine ls
++ ID=b78c49aaecb3e991dfdb256e96b0bdc6a918bd1cf2e7b3e694503084f7af4850
++ podman inspect b78c49aaecb3e991dfdb256e96b0bdc6a918bd1cf2e7b3e694503084f7af4850
++ grep -i alpine
+        "ImageName": "docker.io/library/alpine:latest",
+            "Image": "docker.io/library/alpine:latest",
+                "alpine",
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep -i alpine failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep -i alpine failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --device /dev/dm-0 alpine ls
+Error: stat /dev/dm-0: no such file or directory
++ ID=
++ podman inspect
++ grep -i '"PathOnHost": "/dev/dm-0"'
+Error: no names or ids specified
++ CHECK_RESULT 1 0 0 'check "PathOnHost": "/dev/dm-0" test failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='check "PathOnHost": "/dev/dm-0" test failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'check "PathOnHost": "/dev/dm-0" test failed'
++ LOG_ERROR 'check "PathOnHost": "/dev/dm-0" test failed'
++ message='check "PathOnHost": "/dev/dm-0" test failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check "PathOnHost": "/dev/dm-0" test failed'
+Thu Jun 22 12:05:14 2023 - ERROR - check "PathOnHost": "/dev/dm-0" test failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_podman_3.4.4.2_10.sh line 42'
++ message='oe_test_podman_3.4.4.2_10.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_podman_3.4.4.2_10.sh line 42'
+Thu Jun 22 12:05:15 2023 - ERROR - oe_test_podman_3.4.4.2_10.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
+++ podman create --device-read-bps=/dev/:1mb alpine ls
++ ID=072d550fe131593b90d27fed076fc9d4e40703775d55b02d9ec0b910670ddad6
++ podman inspect 072d550fe131593b90d27fed076fc9d4e40703775d55b02d9ec0b910670ddad6
++ grep -A 5 -i BlkioDeviceReadBps
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
++ CHECK_RESULT 0 0 0 'check BlkioDeviceReadBps test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check BlkioDeviceReadBps test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --device-read-iops=/dev/:1000 alpine ls
++ ID=0aeff203e3a70b697c210f3f401a96c9a1c92b4359ed7e2095449cf5a02528af
++ podman inspect 0aeff203e3a70b697c210f3f401a96c9a1c92b4359ed7e2095449cf5a02528af
++ grep -A 5 -i BlkioDeviceReadIOps
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
++ CHECK_RESULT 0 0 0 'check BlkioDeviceReadIOps test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check BlkioDeviceReadIOps test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --device-write-bps=/dev/:1mb alpine ls
++ ID=1313c9a496fc613e722ff3008af0af969c91dad7411633b7bd1a115c2a892125
++ podman inspect 1313c9a496fc613e722ff3008af0af969c91dad7411633b7bd1a115c2a892125
++ grep -A 5 -i BlkioDeviceWriteBps
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
++ CHECK_RESULT 0 0 0 'check BlkioDeviceWriteBps test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check BlkioDeviceWriteBps test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --device-write-iops=/dev/:1000 alpine ls
++ ID=fa1ceafad849a6fd139c6199b65f3868b7f914c71671288ecd439e36f585c62f
++ podman inspect fa1ceafad849a6fd139c6199b65f3868b7f914c71671288ecd439e36f585c62f
++ grep -A 5 -i BlkioDeviceWriteIOps
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
++ CHECK_RESULT 0 0 0 'check BlkioDeviceWriteBps test failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check BlkioDeviceWriteBps test failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 12:05:21 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 12:05:21 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 12:05:22 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+0aeff203e3a70b697c210f3f401a96c9a1c92b4359ed7e2095449cf5a02528af
+1313c9a496fc613e722ff3008af0af969c91dad7411633b7bd1a115c2a892125
+47b1005fbb1069b451411de4bfe63d5f85396cf2464c04977a77652d4d0a03f2
+74b3c48aea51e8ae81e5d0078fbe7e68ec7e869bba1ed5368042251e44981b59
+8df4830c63855c48909867dbbd790fe3a0b5f219f3870d3446db0643e7163058
+b78c49aaecb3e991dfdb256e96b0bdc6a918bd1cf2e7b3e694503084f7af4850
+fa1ceafad849a6fd139c6199b65f3868b7f914c71671288ecd439e36f585c62f
+072d550fe131593b90d27fed076fc9d4e40703775d55b02d9ec0b910670ddad6
++ podman rm --all
+1313c9a496fc613e722ff3008af0af969c91dad7411633b7bd1a115c2a892125
+47b1005fbb1069b451411de4bfe63d5f85396cf2464c04977a77652d4d0a03f2
+74b3c48aea51e8ae81e5d0078fbe7e68ec7e869bba1ed5368042251e44981b59
+8df4830c63855c48909867dbbd790fe3a0b5f219f3870d3446db0643e7163058
+b78c49aaecb3e991dfdb256e96b0bdc6a918bd1cf2e7b3e694503084f7af4850
+fa1ceafad849a6fd139c6199b65f3868b7f914c71671288ecd439e36f585c62f
+072d550fe131593b90d27fed076fc9d4e40703775d55b02d9ec0b910670ddad6
+0aeff203e3a70b697c210f3f401a96c9a1c92b4359ed7e2095449cf5a02528af
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Untagged: docker.io/library/alpine:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Deleted: c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp_txrjzml ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp_txrjzml
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 12:06:21 2023 - INFO  - End to restore the test environment.

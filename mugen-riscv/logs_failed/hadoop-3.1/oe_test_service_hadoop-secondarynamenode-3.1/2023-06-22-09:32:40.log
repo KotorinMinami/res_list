@@ -1,0 +1,314 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Jun 22 09:32:43 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL 'hadoop-3.1-hdfs java-1.8.0-openjdk'
++ pkgs='hadoop-3.1-hdfs java-1.8.0-openjdk'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'hadoop-3.1-hdfs java-1.8.0-openjdk' --node 1 --tempfile ''
++ tmpfile2='Error: Unable to find a match: hadoop-3.1-hdfs'
++ '[' -z '' ']'
++ tmpfile='Error: Unable to find a match: hadoop-3.1-hdfs'
++ echo 'export JAVA_HOME=/usr/lib/jvm/jre'
++ sed -i '/Group=hadoop/a SuccessExitStatus=143' /usr/lib/systemd/system/hadoop-secondarynamenode.service
+sed: can't read /usr/lib/systemd/system/hadoop-secondarynamenode.service: No such file or directory
++ systemctl daemon-reload
++ expect
+spawn sudo -u hdfs hdfs namenode -format
+sudo: unknown user hdfs
+sudo: error initializing audit plugin sudoers_audit
+expect: spawn id exp3 not open
+    while executing
+"expect eof"
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Jun 22 09:33:18 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Thu Jun 22 09:33:18 2023 - INFO  - Start testing...
++ test_execution hadoop-secondarynamenode.service
++ service=hadoop-secondarynamenode.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-06-22 09:33:18'
++ test_restart hadoop-secondarynamenode.service
++ service=hadoop-secondarynamenode.service
++ systemctl restart hadoop-secondarynamenode.service
+Failed to restart hadoop-secondarynamenode.service: Unit hadoop-secondarynamenode.service not found.
++ CHECK_RESULT 5 0 0 'hadoop-secondarynamenode.service restart failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='hadoop-secondarynamenode.service restart failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'hadoop-secondarynamenode.service restart failed'
++ LOG_ERROR 'hadoop-secondarynamenode.service restart failed'
++ message='hadoop-secondarynamenode.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-secondarynamenode.service restart failed'
+Thu Jun 22 09:33:19 2023 - ERROR - hadoop-secondarynamenode.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 34'
++ message='../common/common_lib.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 34'
+Thu Jun 22 09:33:20 2023 - ERROR - ../common/common_lib.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status hadoop-secondarynamenode.service
++ grep 'Active: active'
+Unit hadoop-secondarynamenode.service could not be found.
++ CHECK_RESULT 1 0 0 'hadoop-secondarynamenode.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='hadoop-secondarynamenode.service restart failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'hadoop-secondarynamenode.service restart failed'
++ LOG_ERROR 'hadoop-secondarynamenode.service restart failed'
++ message='hadoop-secondarynamenode.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-secondarynamenode.service restart failed'
+Thu Jun 22 09:33:26 2023 - ERROR - hadoop-secondarynamenode.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 37'
++ message='../common/common_lib.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 37'
+Thu Jun 22 09:33:27 2023 - ERROR - ../common/common_lib.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl stop hadoop-secondarynamenode.service
+Failed to stop hadoop-secondarynamenode.service: Unit hadoop-secondarynamenode.service not loaded.
++ CHECK_RESULT 5 0 0 'hadoop-secondarynamenode.service stop failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='hadoop-secondarynamenode.service stop failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'hadoop-secondarynamenode.service stop failed'
++ LOG_ERROR 'hadoop-secondarynamenode.service stop failed'
++ message='hadoop-secondarynamenode.service stop failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-secondarynamenode.service stop failed'
+Thu Jun 22 09:33:27 2023 - ERROR - hadoop-secondarynamenode.service stop failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 39'
++ message='../common/common_lib.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 39'
+Thu Jun 22 09:33:28 2023 - ERROR - ../common/common_lib.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status hadoop-secondarynamenode.service
++ grep 'Active: inactive'
+Unit hadoop-secondarynamenode.service could not be found.
++ CHECK_RESULT 1 0 0 'hadoop-secondarynamenode.service stop failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='hadoop-secondarynamenode.service stop failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'hadoop-secondarynamenode.service stop failed'
++ LOG_ERROR 'hadoop-secondarynamenode.service stop failed'
++ message='hadoop-secondarynamenode.service stop failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-secondarynamenode.service stop failed'
+Thu Jun 22 09:33:35 2023 - ERROR - hadoop-secondarynamenode.service stop failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 42'
++ message='../common/common_lib.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 42'
+Thu Jun 22 09:33:35 2023 - ERROR - ../common/common_lib.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl start hadoop-secondarynamenode.service
+Failed to start hadoop-secondarynamenode.service: Unit hadoop-secondarynamenode.service not found.
++ CHECK_RESULT 5 0 0 'hadoop-secondarynamenode.service start failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='hadoop-secondarynamenode.service start failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'hadoop-secondarynamenode.service start failed'
++ LOG_ERROR 'hadoop-secondarynamenode.service start failed'
++ message='hadoop-secondarynamenode.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-secondarynamenode.service start failed'
+Thu Jun 22 09:33:36 2023 - ERROR - hadoop-secondarynamenode.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 44'
++ message='../common/common_lib.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 44'
+Thu Jun 22 09:33:37 2023 - ERROR - ../common/common_lib.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'Active: active'
++ systemctl status hadoop-secondarynamenode.service
+Unit hadoop-secondarynamenode.service could not be found.
++ CHECK_RESULT 1 0 0 'hadoop-secondarynamenode.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='hadoop-secondarynamenode.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'hadoop-secondarynamenode.service start failed'
++ LOG_ERROR 'hadoop-secondarynamenode.service start failed'
++ message='hadoop-secondarynamenode.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-secondarynamenode.service start failed'
+Thu Jun 22 09:33:44 2023 - ERROR - hadoop-secondarynamenode.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 47'
++ message='../common/common_lib.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 47'
+Thu Jun 22 09:33:44 2023 - ERROR - ../common/common_lib.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ test_enabled hadoop-secondarynamenode.service
++ service=hadoop-secondarynamenode.service
+++ systemctl is-enabled hadoop-secondarynamenode.service
+Failed to get unit file state for hadoop-secondarynamenode.service: No such file or directory
++ state=
++ '[' '' == enabled ']'
++ '[' '' == disabled ']'
++ '[' '' == masked ']'
++ '[' '' == static ']'
++ LOG_INFO 'Unit is indirect, ignoring.'
++ message='Unit is indirect, ignoring.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Unit is indirect, ignoring.'
+Thu Jun 22 09:33:45 2023 - INFO  - Unit is indirect, ignoring.
++ journalctl --since '2023-06-22 09:33:18' -u hadoop-secondarynamenode.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of hadoop-secondarynamenode.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of hadoop-secondarynamenode.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload hadoop-secondarynamenode.service
++ service=hadoop-secondarynamenode.service
++ systemctl start hadoop-secondarynamenode.service
+Failed to start hadoop-secondarynamenode.service: Unit hadoop-secondarynamenode.service not found.
++ systemctl reload hadoop-secondarynamenode.service
++ grep 'Job type reload is not applicable'
++ CHECK_RESULT 1 0 0 'Job type reload is not applicable for unit hadoop-secondarynamenode.service'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit hadoop-secondarynamenode.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Job type reload is not applicable for unit hadoop-secondarynamenode.service'
++ LOG_ERROR 'Job type reload is not applicable for unit hadoop-secondarynamenode.service'
++ message='Job type reload is not applicable for unit hadoop-secondarynamenode.service'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Job type reload is not applicable for unit hadoop-secondarynamenode.service'
+Thu Jun 22 09:33:46 2023 - ERROR - Job type reload is not applicable for unit hadoop-secondarynamenode.service
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 91'
++ message='../common/common_lib.sh line 91'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 91'
+Thu Jun 22 09:33:47 2023 - ERROR - ../common/common_lib.sh line 91
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl status hadoop-secondarynamenode.service
++ grep 'Active: active'
+Unit hadoop-secondarynamenode.service could not be found.
++ systemctl status hadoop-secondarynamenode.service
++ grep 'inactive (dead)'
+Unit hadoop-secondarynamenode.service could not be found.
++ return 1
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Thu Jun 22 09:33:48 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Jun 22 09:33:48 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu Jun 22 09:33:49 2023 - INFO  - start environment cleanup.
++ sed -i '/export JAVA_HOME=\/usr\/lib\/jvm\/jre/d' /usr/libexec/hadoop-layout.sh
++ sed -i /SuccessExitStatus=143/d /usr/lib/systemd/system/hadoop-secondarynamenode.service
+sed: can't read /usr/lib/systemd/system/hadoop-secondarynamenode.service: No such file or directory
++ systemctl daemon-reload
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Error: Unable to find a match: hadoop-3.1-hdfs ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Error: Unable to find a match: hadoop-3.1-hdfs'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 173, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 144, in rpm_remove
+    with open(tmpfile, "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Error: Unable to find a match: hadoop-3.1-hdfs'
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Thu Jun 22 09:33:57 2023 - INFO  - Finish environment cleanup!

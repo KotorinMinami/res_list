@@ -1,0 +1,261 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 13:03:34 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpzb10e33x
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpzb10e33x
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ touch /tmp/host
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 13:06:06 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 13:06:07 2023 - INFO  - Start to run test.
+++ podman create --log-driver=k8s-file alpine ls
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying blob sha256:59bf1c3509f33515622619af21ed55bbe26d24913cedbca106468a5fb37a50c3
+Copying config sha256:c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
+Writing manifest to image destination
+Storing signatures
++ ID=41498fb6dca50b9dd69e79edbd2b8e95f21989b15cc893c8024973342bb41e0e
++ podman inspect 41498fb6dca50b9dd69e79edbd2b8e95f21989b15cc893c8024973342bb41e0e
++ grep -i driver
+        "Driver": "overlay",
+        "GraphDriver": {
+                    "DriverOpts": null,
+            "--storage-driver",
+                "--log-driver=k8s-file",
+            "VolumeDriver": "",
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep -i driver failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep -i driver failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --log-opt max-size=10mb alpine ls
++ ID=ef35960ae20bdd9d7f6e53d95f0aa97026bce5d00f2ebe4cbc3af9d0913c639b
++ podman inspect ef35960ae20bdd9d7f6e53d95f0aa97026bce5d00f2ebe4cbc3af9d0913c639b
++ grep -i log
+                "Log": null
+            "--log-level",
+                "--log-opt",
+            "LogConfig": {
+                "Path": "/var/lib/containers/storage/overlay-containers/ef35960ae20bdd9d7f6e53d95f0aa97026bce5d00f2ebe4cbc3af9d0913c639b/userdata/ctr.log",
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep -i log failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep -i log failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --memory 5MB alpine ls
++ ID=33d89b18142210f0dbdb761498a342a57b43351dc9e81fd6352feebbc749eb22
++ podman inspect 33d89b18142210f0dbdb761498a342a57b43351dc9e81fd6352feebbc749eb22
++ grep '"Memory": 5242880'
+            "Memory": 5242880,
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep Memory failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep Memory failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --memory-reservation 5g alpine ls
++ ID=391ff746018f45864576d9fd7f4d41814d93605e511f8f7e122f9fcb4b640ffc
++ podman inspect 391ff746018f45864576d9fd7f4d41814d93605e511f8f7e122f9fcb4b640ffc
++ grep '"MemoryReservation": 5368709120'
+            "MemoryReservation": 5368709120,
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep Memory failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep Memory failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --memory 2g --memory-swap 4g alpine ls
++ ID=d27dab450804698f5e181a25e7636b93abc32da3c9fa8b47704972ce390a0a6b
++ grep '"MemorySwap": 4294967296'
++ podman inspect d27dab450804698f5e181a25e7636b93abc32da3c9fa8b47704972ce390a0a6b
+            "MemorySwap": 4294967296,
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep MemorySwap failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep MemorySwap failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --memory-swappiness 4 alpine ls
++ ID=9ae7b68299e96d8d1f1092c0c5545c11fb4c509a092ad59a734dfe3ee5d923d1
++ grep '"MemorySwappiness": 4'
++ podman inspect 9ae7b68299e96d8d1f1092c0c5545c11fb4c509a092ad59a734dfe3ee5d923d1
+            "MemorySwappiness": 4,
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep MemorySwappiness failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep MemorySwappiness failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --mount type=bind,source=/tmp/host,destination=/tmp/container alpine ls
++ ID=dd5cc824bc24fb76e5433031d38ae0a83c7b663b817750aaa73458a8288fb385
++ podman inspect dd5cc824bc24fb76e5433031d38ae0a83c7b663b817750aaa73458a8288fb385
++ grep /tmp/host
+                "Source": "/tmp/host",
+                "type=bind,source=/tmp/host,destination=/tmp/container",
+                "/tmp/host:/tmp/container:rw,rprivate,nosuid,nodev,rbind"
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep /tmp/host failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep /tmp/host failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --name example alpine ls
++ ID=f79c0b59f769d6a3cc043d8f8507647bc6a2744b0e24745c2d63068b9a7fb968
++ podman inspect f79c0b59f769d6a3cc043d8f8507647bc6a2744b0e24745c2d63068b9a7fb968
++ grep '"Name": "example"'
+        "Name": "example",
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep Name example failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep Name example failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ podman create --net bridge alpine ls
++ ID=65d0d278655f268a27e1df45ea8a87632730f07ca46d186ff614c7beaaaebe1a
++ podman inspect 65d0d278655f268a27e1df45ea8a87632730f07ca46d186ff614c7beaaaebe1a
++ grep '"NetworkMode": "bridge"'
+            "NetworkMode": "bridge",
++ CHECK_RESULT 0 0 0 'check podman inspect $ID | grep Nameexample failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman inspect $ID | grep Nameexample failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 13:06:38 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 13:06:38 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 13:06:39 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+33d89b18142210f0dbdb761498a342a57b43351dc9e81fd6352feebbc749eb22
+65d0d278655f268a27e1df45ea8a87632730f07ca46d186ff614c7beaaaebe1a
+9ae7b68299e96d8d1f1092c0c5545c11fb4c509a092ad59a734dfe3ee5d923d1
+391ff746018f45864576d9fd7f4d41814d93605e511f8f7e122f9fcb4b640ffc
+d27dab450804698f5e181a25e7636b93abc32da3c9fa8b47704972ce390a0a6b
+dd5cc824bc24fb76e5433031d38ae0a83c7b663b817750aaa73458a8288fb385
+ef35960ae20bdd9d7f6e53d95f0aa97026bce5d00f2ebe4cbc3af9d0913c639b
+f79c0b59f769d6a3cc043d8f8507647bc6a2744b0e24745c2d63068b9a7fb968
+41498fb6dca50b9dd69e79edbd2b8e95f21989b15cc893c8024973342bb41e0e
++ podman rm --all
+65d0d278655f268a27e1df45ea8a87632730f07ca46d186ff614c7beaaaebe1a
+9ae7b68299e96d8d1f1092c0c5545c11fb4c509a092ad59a734dfe3ee5d923d1
+33d89b18142210f0dbdb761498a342a57b43351dc9e81fd6352feebbc749eb22
+d27dab450804698f5e181a25e7636b93abc32da3c9fa8b47704972ce390a0a6b
+391ff746018f45864576d9fd7f4d41814d93605e511f8f7e122f9fcb4b640ffc
+ef35960ae20bdd9d7f6e53d95f0aa97026bce5d00f2ebe4cbc3af9d0913c639b
+f79c0b59f769d6a3cc043d8f8507647bc6a2744b0e24745c2d63068b9a7fb968
+41498fb6dca50b9dd69e79edbd2b8e95f21989b15cc893c8024973342bb41e0e
+dd5cc824bc24fb76e5433031d38ae0a83c7b663b817750aaa73458a8288fb385
++ podman rmi --all
+Untagged: docker.io/library/alpine:latest
+Deleted: c059bfaa849c4d8e4aecaeb3a10c2d9b3d85f5165c66ad3a4d937758128c4d18
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpzb10e33x ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpzb10e33x
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf /tmp/host
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 13:07:30 2023 - INFO  - End to restore the test environment.

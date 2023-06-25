@@ -1,0 +1,222 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 11:53:23 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpzjx9e2yv
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpzjx9e2yv
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 11:56:31 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 11:56:32 2023 - INFO  - Start to run test.
++ podman images
++ grep registry.access.redhat.com/ubi8-minimal
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images 2>&1 | grep "registry.access.redhat.com/ubi8-minimal" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pull -q registry.access.redhat.com/ubi8-minimal
+++ podman images -q
++ grep f4fb65011c56
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ CHECK_RESULT 0 0 0 'check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pull -q registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman pull --tls-verify registry.access.redhat.com/ubi8-minimal
+++ podman images -q
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
++ grep f4fb65011c56
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ CHECK_RESULT 0 0 0 'check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman pull --tls-verify registry.access.redhat.com/ubi8-minimal | grep "$(podman images -q)" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T11:56:40Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ CHECK_RESULT 0 0 0 'check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman run --name postgres registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images --all
+REPOSITORY                               TAG         IMAGE ID      CREATED      SIZE
+registry.access.redhat.com/ubi8-minimal  latest      f4fb65011c56  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images --all failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images --all failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images --digests
++ grep -i DIGEST
+REPOSITORY                               TAG         DIGEST                                                                   IMAGE ID      CREATED      SIZE
++ CHECK_RESULT 0 0 0 'check podman images --digests | grep -i "DIGEST" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images --digests | grep -i "DIGEST" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images --format=json
++ grep -i '"digest":'
+        "Digest": "sha256:621f5245fb3e8597a626163cdf1229e1f8311e07ab71bb1e9332014b51c59f9c",
++ CHECK_RESULT 0 0 0 'check podman images --format=json failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images --format=json failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images --no-trunc
++ grep sha256
+registry.access.redhat.com/ubi8-minimal  latest      sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4  7 weeks ago  94.4 MB
++ CHECK_RESULT 0 0 0 'check podman images --no-trunc failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman images --no-trunc failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman images --noheading
++ grep -i 'IMAGE ID'
++ CHECK_RESULT 1 0 1 'check podman images --noheading failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='check podman images --noheading failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 11:56:44 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 11:56:45 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 11:56:45 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+fbdcb7b80a66d23e97cdb0e81b1ae9757490706350fbb72fbe1596a0b0d53f00
++ podman rm --all
+fbdcb7b80a66d23e97cdb0e81b1ae9757490706350fbb72fbe1596a0b0d53f00
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpzjx9e2yv ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpzjx9e2yv
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ rm -rf
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 11:57:43 2023 - INFO  - End to restore the test environment.

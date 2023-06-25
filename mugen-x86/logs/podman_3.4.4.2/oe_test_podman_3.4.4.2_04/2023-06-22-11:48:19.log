@@ -1,0 +1,255 @@
++ source ../common/common3.4.4.2_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 11:48:21 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpm1_vtje1
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpm1_vtje1
++ echo -e '
+unqualified-search-registries = ['\''docker.io'\'']    
+[[registry]]
+prefix = '\''docker.io'\''
+location = '\''a74l47xi.mirror.aliyuncs.com'\''
+'
++ podman pull registry.access.redhat.com/ubi8-minimal
+Trying to pull registry.access.redhat.com/ubi8-minimal:latest...
+Getting image source signatures
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying blob sha256:d2b5f358ecf170222d561c3811b4d74699c0078ec14ffaa84434d303b0b3591f
+Copying config sha256:f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
+Writing manifest to image destination
+Storing signatures
+f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ podman run --name postgres registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T11:52:04Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 11:52:05 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 11:52:06 2023 - INFO  - Start to run test.
++ podman ps --filter name=postgres
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
++ CHECK_RESULT 0 0 0 'check podman ps --filter name=postgres failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps --filter name=postgres failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -q
++ CHECK_RESULT 0 0 0 'check podman ps -q failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -q failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -s
++ grep SIZE
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES       SIZE
++ CHECK_RESULT 0 0 0 'check podman ps -s | grep SIZE failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -s | grep SIZE failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman run --name postgres2 registry.access.redhat.com/ubi8-minimal
+time="2023-06-22T11:52:09Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
++ CHECK_RESULT 0 0 0 'check podman run --name postgres2 registry.access.redhat.com/ubi8-minimal failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman run --name postgres2 registry.access.redhat.com/ubi8-minimal failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a --sort names
++ awk '{print $NF}'
++ grep postgres2
+postgres2
++ CHECK_RESULT 0 0 0 'check podman ps -a --sort names failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -a --sort names failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a
++ grep postgres
+84d0d07d7bf0  registry.access.redhat.com/ubi8-minimal:latest  /bin/bash   8 seconds ago  Exited (0) 6 seconds ago              postgres
+8fbf0470a5e7  registry.access.redhat.com/ubi8-minimal:latest  /bin/bash   3 seconds ago  Exited (0) 2 seconds ago              postgres2
++ CHECK_RESULT 0 0 0 'check podman ps -a | grep "postgres" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -a | grep "postgres" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -a --sort names
++ awk '{print $NF}'
++ grep postgres
+postgres
+postgres2
++ CHECK_RESULT 0 0 0 'check podman ps -a --sort names | awk {print' '} | grep "postgres" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -a --sort names | awk {print'
++ exit_mode='} | grep "postgres" failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman stop postgres2
+postgres2
++ CHECK_RESULT 0 0 0 'check stop postgres2 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check stop postgres2 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman rm postgres2
+8fbf0470a5e7fbb6e69625bcdbbc929b3f67f36d6e3f88b642c1bc7ffa4249e0
++ CHECK_RESULT 0 0 0 'check rm postgres2 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check rm postgres2 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps -aq
+++ ls /run/crun/
+++ cut -b 1-12
++ grep ''
+84d0d07d7bf0
++ CHECK_RESULT 0 0 0 'check podman ps -aq | grep "$(ls /run/crun/ | cut -b 1-12)" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps -aq | grep "$(ls /run/crun/ | cut -b 1-12)" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps --no-trunc
+++ ls /run/crun/
++ grep ''
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
++ CHECK_RESULT 0 0 0 'check podman ps --no-trunc failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps --no-trunc failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ podman ps --pod
++ grep POD
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES       POD ID      PODNAME
++ CHECK_RESULT 0 0 0 'check podman ps --pod | grep "POD" failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check podman ps --pod | grep "POD" failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 11:52:15 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 11:52:16 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 11:52:16 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop --all
+84d0d07d7bf0517025d3aa86d297f112afa471605cd21b1182cf3b1b938e651f
++ podman rm --all
+84d0d07d7bf0517025d3aa86d297f112afa471605cd21b1182cf3b1b938e651f
++ podman rmi --all
+Untagged: registry.access.redhat.com/ubi8-minimal:latest
+Deleted: f4fb65011c56d354c56b9d688b2da5bd1e887a0108fe0d7554c6a4c514d89cb4
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpm1_vtje1 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpm1_vtje1
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 11:53:18 2023 - INFO  - End to restore the test environment.

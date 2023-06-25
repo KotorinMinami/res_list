@@ -1,0 +1,214 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ source ./conmon_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 09:45:09 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'conmon podman docker-runc podman-docker tar'
++ pkgs='conmon podman docker-runc podman-docker tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'conmon podman docker-runc podman-docker tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp02qeubq8
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp02qeubq8
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ podman load
+Getting image source signatures
+Copying blob sha256:107c05280400cae50fcb9a03a2cd9e895e64c2f919cabf403f65b4967737e623
+Copying config sha256:2d0d8216f525405eec5284066d6d371456026e0bdb088ea813b300481d9a6b05
+Writing manifest to image destination
+Storing signatures
+Loaded image(s): docker.io/library/busybox:latest
++ podman run --name busybox2 -dti docker.io/library/busybox:latest
+time="2023-06-22T09:47:23Z" level=warning msg="The input device is not a TTY. The --tty and --interactive flags might not work properly"
+time="2023-06-22T09:47:24Z" level=warning msg="Path \"/usr/share/rhel/secrets\" from \"/usr/share/containers/mounts.conf\" doesn't exist, skipping"
+e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377
+++ podman ps -a --no-trunc
+++ grep busybox2
+++ awk '{print $1}'
++ podman_build_id=e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 09:47:25 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 09:47:26 2023 - INFO  - Start to run test.
++ conmon -c e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 -u e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/ctr.log --exit-dir /var/run/libpod/exits
++ CHECK_RESULT 0 0 0 'Failed to check the --exit-dir'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --exit-dir'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 -u e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/ctr.log --exit-command /usr/bin/podman
++ CHECK_RESULT 0 0 0 'Failed to check the --exit-command'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --exit-command'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 -u e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/ctr.log --exit-command /usr/bin/podman --exit-command-arg /var/run/containers/storage
++ CHECK_RESULT 0 0 0 'Failed to check the --exit-command-arg'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --exit-command-arg'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 -u e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/ctr.log --exit-command /usr/bin/podman --exit-command-arg /var/run/containers/storage -T 10
++ CHECK_RESULT 0 0 0 'Failed to check the -T'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the -T'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 -u e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/ctr.log --exit-command /usr/bin/podman --exit-command-arg /var/run/containers/storage -T 10 --log-size-max 20480
++ CHECK_RESULT 0 0 0 'Failed to check the --log-size-max'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --log-size-max'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 -u e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/ctr.log --exit-command /usr/bin/podman --exit-command-arg /var/run/containers/storage -T 10 --log-size-max 20480 --socket-dir-path /var/run/libpod/socket
++ CHECK_RESULT 0 0 0 'Failed to check the --socket-dir-path'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --socket-dir-path'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 -u e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/ctr.log --syslog /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/sys.log
++ CHECK_RESULT 0 0 0 'Failed to check the --syslog'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --syslog'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ conmon -c e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 -u e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377 --runtime /usr/bin/runc -l /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/ctr.log --syslog /var/lib/containers/storage/overlay-containers/e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377/userdata/sys.log --log-level error
++ CHECK_RESULT 0 0 0 'Failed to check the --log-level'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --log-level'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 09:47:26 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 09:47:26 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 09:47:27 2023 - INFO  - Start to restore the test environment.
++ podman stop busybox2
+busybox2
++ podman ps -a
++ grep busybox:latest
++ awk '{print $1}'
++ xargs podman rm
+e814ade85b5f5c1c248f084298201c9afa9f9e2fab751ae589412e6bad6d9377
++ podman rmi docker.io/library/busybox
+Untagged: docker.io/library/busybox:latest
+Deleted: 2d0d8216f525405eec5284066d6d371456026e0bdb088ea813b300481d9a6b05
++ clear_env
++ podman rm -all
+Error: --all and --latest cannot be used together
++ podman rmi -f -all
+Error: unknown shorthand flag: 'l' in -ll
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp02qeubq8 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp02qeubq8
++ '[' 0 -ne 0 ']'
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp02qeubq8 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp02qeubq8
++ '[' 0 -ne 0 ']'
++ rm -rf attach ctl uuid_file
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Thu Jun 22 09:48:14 2023 - INFO  - Finish restoring the test environment.

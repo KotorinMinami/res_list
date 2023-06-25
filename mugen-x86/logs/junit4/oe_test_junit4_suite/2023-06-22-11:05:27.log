@@ -1,0 +1,68 @@
++ source ../common/common_junit.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 11:05:29 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL junit
++ pkgs=junit
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs junit --node 1 --tempfile ''
+Thu Jun 22 11:05:35 2023 - INFO  - pkgs:(junit) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
+++ grep 'java-.*-openjdk'
+++ awk -F - '{print $2}'
+++ rpm -qa 'java*'
++ java_version='1.8.0
+1.8.0
+1.8.0'
++ DNF_INSTALL java-1.8.0 1.8.0 1.8.0-devel
++ pkgs=java-1.8.0
++ node=1.8.0
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs java-1.8.0 --node 1.8.0 --tempfile ''
+usage: rpm_manage.py install|remove [-h] [--node NODE] [--pkgs PKG] [--tempfile TEPMFILE]
+rpm_manage.py: error: argument --node: invalid int value: '1.8.0'
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Thu Jun 22 11:05:38 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 11:05:39 2023 - INFO  - Start to run test.
++ compile_java
+++ ls
+++ grep .java
++ params='SuiteTest.java
+Test1.java
+Test2.java
+TestRunner.java'
++ javac -classpath '/usr/share/java/*:/usr/share/java/hamcrest/*:' -d . SuiteTest.java Test1.java Test2.java TestRunner.java
+Thu Jun 22 11:35:27 2023 - ERROR - Timeout : Command 'bash -x oe_test_junit4_suite.sh' timed out after 1799.9997432100004 seconds

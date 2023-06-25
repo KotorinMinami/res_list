@@ -1,0 +1,263 @@
++ source ../common/common_podman.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Jun 22 14:56:44 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'podman podman-docker'
++ pkgs='podman podman-docker'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'podman podman-docker' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpgeze2a3e
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpgeze2a3e
++ echo -e '[registries.search]
+registries = ['\''docker.io'\'']
+
+[registries.insecure]
+registries = []
+
+[registries.block]
+registries = []
+'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Jun 22 14:58:48 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 14:58:49 2023 - INFO  - Start to run test.
+++ docker create -t -i --name myctr alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+Resolved "alpine" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)
+Trying to pull docker.io/library/alpine:latest...
+Getting image source signatures
+Copying blob sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3
+Copying blob sha256:31e352740f534f9ad170f75378a84fe453d6156e40700b882d737a8f4a6988a3
+Copying config sha256:c1aabb73d2339c5ebaa3681de2e9d9c18d57485045a4e311d9f8004bec208d67
+Writing manifest to image destination
+Storing signatures
++ ID=3c6a96ea52501dd00dd1f8874960627683545377b2621b7bec05b3fb9b1418ac
++ docker inspect 3c6a96ea52501dd00dd1f8874960627683545377b2621b7bec05b3fb9b1418ac
++ grep '"Name": "myctr"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+        "Name": "myctr",
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep Name myctr failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep Name myctr failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --hostname localhost alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=3788ff427690cee86c16cc6dde0d0a48accb32641ecee7b57092c723e9b401f7
++ docker inspect 3788ff427690cee86c16cc6dde0d0a48accb32641ecee7b57092c723e9b401f7
++ grep '"Hostname": "localhost"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "Hostname": "localhost",
++ CHECK_RESULT 0 0 0 'check Hostname": "localhost failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check Hostname": "localhost failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --image-volume bind alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=605e12edde60cb30836767a89f46df7c516ad799524c2db852a7a7a32a9f85d3
++ docker inspect 605e12edde60cb30836767a89f46df7c516ad799524c2db852a7a7a32a9f85d3
++ grep -i bind
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "CAP_NET_BIND_SERVICE",
+            "CAP_NET_BIND_SERVICE",
+                "bind",
+            "Binds": [],
+            "PortBindings": {},
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep -i bind failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep -i bind failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --ip 127.0.0.1 alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=ce7cf7a1cbd7e231de7becbe31a44a82b5e96276131961d2368144b8f77f6edb
++ docker inspect ce7cf7a1cbd7e231de7becbe31a44a82b5e96276131961d2368144b8f77f6edb
++ grep -i ip
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "IPAMConfig": null,
+                "--ip",
+            "IpcMode": "private",
++ CHECK_RESULT 0 0 0 'check docker inspect $ID | grep -i ip failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check docker inspect $ID | grep -i ip failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --ipc host alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=1534e94d792f55224e67761c48f0e8cfcfa482a57b03f87a31148cfe58a4f28b
++ docker inspect 1534e94d792f55224e67761c48f0e8cfcfa482a57b03f87a31148cfe58a4f28b
++ grep '"IpcMode": "host"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "IpcMode": "host",
++ CHECK_RESULT 0 0 0 'check IpcMode": "host failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check IpcMode": "host failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --kernel-memory 1g alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=534fdb19ed8c017d4fa2d49c1e1a93a04f728275158b7fd90d88c67faf031139
++ docker inspect 534fdb19ed8c017d4fa2d49c1e1a93a04f728275158b7fd90d88c67faf031139
++ grep '"KernelMemory": 1073741824'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+            "KernelMemory": 1073741824,
++ CHECK_RESULT 0 0 0 'check KernelMemory": 1073741824 failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check KernelMemory": 1073741824 failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ docker create --label com.example.key=value alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=5d48985fe38201877a29821337fc5b6fdf95640f5e79a534884cb1daf89d2321
++ docker inspect 5d48985fe38201877a29821337fc5b6fdf95640f5e79a534884cb1daf89d2321
++ grep '"com.example.key": "value"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+                "com.example.key": "value"
++ CHECK_RESULT 0 0 0 'check com.example.key": "value failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check com.example.key": "value failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo com.example.key=value
+++ docker create --label-file ./a alpine ls
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
++ ID=c67c2913a3a3fadc1262318b1046c8a2b8fc9cffb3217727f76bfb2006a21a2f
++ docker inspect c67c2913a3a3fadc1262318b1046c8a2b8fc9cffb3217727f76bfb2006a21a2f
++ grep '"com.example.key": "value"'
+Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.
+                "com.example.key": "value"
++ CHECK_RESULT 0 0 0 'check com.example.key": "value failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check com.example.key": "value failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Jun 22 14:59:49 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 14:59:50 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 14:59:50 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ podman stop postgres
+Error: no container with name or ID "postgres" found: no such container
++ podman rm --all
+605e12edde60cb30836767a89f46df7c516ad799524c2db852a7a7a32a9f85d3
+c67c2913a3a3fadc1262318b1046c8a2b8fc9cffb3217727f76bfb2006a21a2f
+ce7cf7a1cbd7e231de7becbe31a44a82b5e96276131961d2368144b8f77f6edb
+1534e94d792f55224e67761c48f0e8cfcfa482a57b03f87a31148cfe58a4f28b
+3788ff427690cee86c16cc6dde0d0a48accb32641ecee7b57092c723e9b401f7
+3c6a96ea52501dd00dd1f8874960627683545377b2621b7bec05b3fb9b1418ac
+534fdb19ed8c017d4fa2d49c1e1a93a04f728275158b7fd90d88c67faf031139
+5d48985fe38201877a29821337fc5b6fdf95640f5e79a534884cb1daf89d2321
++ podman rmi -f --all
+Untagged: docker.io/library/alpine:latest
+Deleted: c1aabb73d2339c5ebaa3681de2e9d9c18d57485045a4e311d9f8004bec208d67
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpgeze2a3e ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpgeze2a3e
++ '[' 0 -ne 0 ']'
+++ grep -vE .sh
+++ ls
++ rm -rf a
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Jun 22 15:00:33 2023 - INFO  - End to restore the test environment.
