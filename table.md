@@ -1094,17 +1094,17 @@
 |  | oe_test_iSula_query_state_001 | fail | [./mugen-riscv/logs/AT/oe_test_iSula_query_state_001/2023-04-29-02:12:18.log](./mugen-riscv/logs/AT/oe_test_iSula_query_state_001/2023-04-29-02:12:18.log) | docker镜像地址错误 |
 |  | oe_test_iSula_restart_stop_001 | fail | [./mugen-riscv/logs/AT/oe_test_iSula_restart_stop_001/2023-04-29-02:22:41.log](./mugen-riscv/logs/AT/oe_test_iSula_restart_stop_001/2023-04-29-02:22:41.log) | docker镜像地址错误 |
 |  | oe_test_iSula_search_info_001 | fail | [./mugen-riscv/logs/AT/oe_test_iSula_search_info_001/2023-04-29-02:24:46.log](./mugen-riscv/logs/AT/oe_test_iSula_search_info_001/2023-04-29-02:24:46.log) | docker镜像地址错误 |
-|  | oe_test_iscsi | fail | [./mugen-riscv/logs/AT/oe_test_iscsi/2023-04-29-03:18:50.log](./mugen-riscv/logs/AT/oe_test_iscsi/2023-04-29-03:18:50.log) |  |
+|  | oe_test_iscsi | fail | [./mugen-riscv/logs/AT/oe_test_iscsi/2023-04-29-03:18:50.log](./mugen-riscv/logs/AT/oe_test_iscsi/2023-04-29-03:18:50.log) | CONFIG_CONFIGFS_FS is not set |
 |  | oe_test_log_001 | fail | [./mugen-riscv/logs/AT/oe_test_log_001/2023-04-29-03:23:03.log](./mugen-riscv/logs/AT/oe_test_log_001/2023-04-29-03:23:03.log) | preinstall absent |
-|  | oe_test_numactl | fail | [./mugen-riscv/logs/AT/oe_test_numactl/2023-04-29-03:29:49.log](./mugen-riscv/logs/AT/oe_test_numactl/2023-04-29-03:29:49.log) |  |
+|  | oe_test_numactl | fail | [./mugen-riscv/logs/AT/oe_test_numactl/2023-04-29-03:29:49.log](./mugen-riscv/logs/AT/oe_test_numactl/2023-04-29-03:29:49.log) | CONFIG_NUMA is not set |
 |  | oe_test_perf | fail | [./mugen-riscv/logs/AT/oe_test_perf/2023-04-29-03:32:37.log](./mugen-riscv/logs/AT/oe_test_perf/2023-04-29-03:32:37.log) | timeout |
 |  | oe_test_pwd_001 | fail | [./mugen-riscv/logs/AT/oe_test_pwd_001/2023-04-29-03:33:42.log](./mugen-riscv/logs/AT/oe_test_pwd_001/2023-04-29-03:33:42.log) | preinstall absent |
-|  | oe_test_rollback | fail | [./mugen-riscv/logs/AT/oe_test_rollback/2023-04-29-03:54:37.log](./mugen-riscv/logs/AT/oe_test_rollback/2023-04-29-03:54:37.log) |  |
+|  | oe_test_rollback | fail | [./mugen-riscv/logs/AT/oe_test_rollback/2023-04-29-03:54:37.log](./mugen-riscv/logs/AT/oe_test_rollback/2023-04-29-03:54:37.log) | mugen 测试代码并没有考虑到git软件包已安装时的情况 |
 |  | oe_test_rpm_suffix_name | fail | [./mugen-riscv/logs/AT/oe_test_rpm_suffix_name/2023-04-29-00:35:20.log](./mugen-riscv/logs/AT/oe_test_rpm_suffix_name/2023-04-29-00:35:20.log) | dnf list 获取的oetestsuite 软件仓中软件包版本号不带有oe2303的规范 |
 |  | oe_test_service | fail | [./mugen-riscv/logs/AT/oe_test_service/2023-04-29-00:34:27.log](./mugen-riscv/logs/AT/oe_test_service/2023-04-29-00:34:27.log) | preinstall absent |
 |  | oe_test_skopeo | fail | [./mugen-riscv/logs/AT/oe_test_skopeo/2023-04-29-03:35:50.log](./mugen-riscv/logs/AT/oe_test_skopeo/2023-04-29-03:35:50.log) | choosing image instance: no image found in manifest list for architecture riscv64 |
 |  | oe_test_syslog_logrotate_001 | fail | [./mugen-riscv/logs/AT/oe_test_syslog_logrotate_001/2023-04-29-03:47:46.log](./mugen-riscv/logs/AT/oe_test_syslog_logrotate_001/2023-04-29-03:47:46.log) | preinstall absent |
-|  | oe_test_yumgroup_001 | fail | [./mugen-riscv/logs/AT/oe_test_yumgroup_001/2023-04-29-03:51:10.log](./mugen-riscv/logs/AT/oe_test_yumgroup_001/2023-04-29-03:51:10.log) |  |
+|  | oe_test_yumgroup_001 | fail | [./mugen-riscv/logs/AT/oe_test_yumgroup_001/2023-04-29-03:51:10.log](./mugen-riscv/logs/AT/oe_test_yumgroup_001/2023-04-29-03:51:10.log) | oe-rv目前软件仓内并没有划分软件包组 |
 |  | oe_test_IPV6_traceroute6_02 | fail | [./mugen-riscv/logs/AT/oe_test_IPV6_traceroute6_02/2023-04-29-05:02:14.log](./mugen-riscv/logs/AT/oe_test_IPV6_traceroute6_02/2023-04-29-05:02:14.log) |  |
 |  | oe_test_audit_fixed_memory_02 | fail | [./mugen-riscv/logs/AT/oe_test_audit_fixed_memory_02/2023-04-29-07:16:50.log](./mugen-riscv/logs/AT/oe_test_audit_fixed_memory_02/2023-04-29-07:16:50.log) | file missing |
 |  | oe_test_bbr_02 | fail | [./mugen-riscv/logs/AT/oe_test_bbr_02/2023-04-29-07:17:44.log](./mugen-riscv/logs/AT/oe_test_bbr_02/2023-04-29-07:17:44.log) | preinstall absent |
@@ -1123,13 +1123,13 @@
 |  | oe_test_ip_ipv6_02 | fail | [./mugen-riscv/logs/AT/oe_test_ip_ipv6_02/2023-04-29-04:55:55.log](./mugen-riscv/logs/AT/oe_test_ip_ipv6_02/2023-04-29-04:55:55.log) |  |
 |  | oe_test_ip_ipv6_03 | fail | [./mugen-riscv/logs/AT/oe_test_ip_ipv6_03/2023-04-29-04:56:31.log](./mugen-riscv/logs/AT/oe_test_ip_ipv6_03/2023-04-29-04:56:31.log) |  |
 |  | oe_test_ip_ipv6_04 | fail | [./mugen-riscv/logs/AT/oe_test_ip_ipv6_04/2023-04-29-04:56:48.log](./mugen-riscv/logs/AT/oe_test_ip_ipv6_04/2023-04-29-04:56:48.log) |  |
-|  | oe_test_ip_rule_01 | fail | [./mugen-riscv/logs/AT/oe_test_ip_rule_01/2023-04-29-04:58:05.log](./mugen-riscv/logs/AT/oe_test_ip_rule_01/2023-04-29-04:58:05.log) |  |
-|  | oe_test_ip_rule_02 | fail | [./mugen-riscv/logs/AT/oe_test_ip_rule_02/2023-04-29-04:58:21.log](./mugen-riscv/logs/AT/oe_test_ip_rule_02/2023-04-29-04:58:21.log) |  |
+|  | oe_test_ip_rule_01 | fail | [./mugen-riscv/logs/AT/oe_test_ip_rule_01/2023-04-29-04:58:05.log](./mugen-riscv/logs/AT/oe_test_ip_rule_01/2023-04-29-04:58:05.log) | CONFIG_IP_MULTIPLE_TABLES is not set |
+|  | oe_test_ip_rule_02 | fail | [./mugen-riscv/logs/AT/oe_test_ip_rule_02/2023-04-29-04:58:21.log](./mugen-riscv/logs/AT/oe_test_ip_rule_02/2023-04-29-04:58:21.log) | CONFIG_IP_MULTIPLE_TABLES is not set |
 |  | oe_test_iproute_ipv6_01 | fail | [./mugen-riscv/logs/AT/oe_test_iproute_ipv6_01/2023-04-29-04:57:28.log](./mugen-riscv/logs/AT/oe_test_iproute_ipv6_01/2023-04-29-04:57:28.log) |  |
 |  | oe_test_iptables-save | fail | [./mugen-riscv/logs/AT/oe_test_iptables-save/2023-04-29-04:58:43.log](./mugen-riscv/logs/AT/oe_test_iptables-save/2023-04-29-04:58:43.log) |  |
 |  | oe_test_ipv6_VLAN_01 | fail | [./mugen-riscv/logs/AT/oe_test_ipv6_VLAN_01/2023-04-29-05:04:11.log](./mugen-riscv/logs/AT/oe_test_ipv6_VLAN_01/2023-04-29-05:04:11.log) |  |
 |  | oe_test_ipv6_VLAN_02 | fail | [./mugen-riscv/logs/AT/oe_test_ipv6_VLAN_02/2023-04-29-05:04:28.log](./mugen-riscv/logs/AT/oe_test_ipv6_VLAN_02/2023-04-29-05:04:28.log) |  |
-|  | oe_test_iscsid | fail | [./mugen-riscv/logs/AT/oe_test_iscsid/2023-04-29-05:06:01.log](./mugen-riscv/logs/AT/oe_test_iscsid/2023-04-29-05:06:01.log) |  |
+|  | oe_test_iscsid | fail | [./mugen-riscv/logs/AT/oe_test_iscsid/2023-04-29-05:06:01.log](./mugen-riscv/logs/AT/oe_test_iscsid/2023-04-29-05:06:01.log) | can not create NETLINK_ISCSI socket [Protocol not supported]可能为内核问题 |
 |  | oe_test_mtr | fail | [./mugen-riscv/logs/AT/oe_test_mtr/2023-04-29-06:34:05.log](./mugen-riscv/logs/AT/oe_test_mtr/2023-04-29-06:34:05.log) |  |
 |  | oe_test_ncurses | fail | [./mugen-riscv/logs/AT/oe_test_ncurses/2023-04-29-05:19:24.log](./mugen-riscv/logs/AT/oe_test_ncurses/2023-04-29-05:19:24.log) |  |
 |  | oe_test_normal_tcpdump_02 | fail | [./mugen-riscv/logs/AT/oe_test_normal_tcpdump_02/2023-04-29-07:24:28.log](./mugen-riscv/logs/AT/oe_test_normal_tcpdump_02/2023-04-29-07:24:28.log) | file missing/timeout |
@@ -1149,7 +1149,7 @@
 |  | oe_test_rsyslog_08 | fail | [./mugen-riscv/logs/AT/oe_test_rsyslog_08/2023-04-29-05:49:26.log](./mugen-riscv/logs/AT/oe_test_rsyslog_08/2023-04-29-05:49:26.log) | file missing |
 |  | oe_test_rsyslog_09 | fail | [./mugen-riscv/logs/AT/oe_test_rsyslog_09/2023-04-29-05:50:24.log](./mugen-riscv/logs/AT/oe_test_rsyslog_09/2023-04-29-05:50:24.log) | preinstall absent |
 |  | oe_test_rsyslog_10 | fail | [./mugen-riscv/logs/AT/oe_test_rsyslog_10/2023-04-29-05:51:26.log](./mugen-riscv/logs/AT/oe_test_rsyslog_10/2023-04-29-05:51:26.log) | PMU Hardware doesn't support sampling/overflow-interrupts. |
-|  | oe_test_rule_ipv6 | fail | [./mugen-riscv/logs/AT/oe_test_rule_ipv6/2023-04-29-06:06:44.log](./mugen-riscv/logs/AT/oe_test_rule_ipv6/2023-04-29-06:06:44.log) |  |
+|  | oe_test_rule_ipv6 | fail | [./mugen-riscv/logs/AT/oe_test_rule_ipv6/2023-04-29-06:06:44.log](./mugen-riscv/logs/AT/oe_test_rule_ipv6/2023-04-29-06:06:44.log) | CONFIG_IP_MULTIPLE_TABLES is not set |
 |  | oe_test_sevice_001 | fail | [./mugen-riscv/logs/AT/oe_test_sevice_001/2023-04-29-03:35:22.log](./mugen-riscv/logs/AT/oe_test_sevice_001/2023-04-29-03:35:22.log) |  |
 |  | oe_test_stat | fail | [./mugen-riscv/logs/AT/oe_test_stat/2023-04-29-06:08:58.log](./mugen-riscv/logs/AT/oe_test_stat/2023-04-29-06:08:58.log) |  |
 |  | oe_test_systemd_SCEN_01 | fail | [./mugen-riscv/logs/AT/oe_test_systemd_SCEN_01/2023-04-29-06:26:34.log](./mugen-riscv/logs/AT/oe_test_systemd_SCEN_01/2023-04-29-06:26:34.log) | systemd unit restart failure |
@@ -2313,6 +2313,7 @@
 |  | oe_test_storage_diskpartiton_parted_delete | success | [./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_parted_delete/2023-04-28-07:05:05.log](./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_parted_delete/2023-04-28-07:05:05.log) | None |
 |  | oe_test_storage_diskpartiton_parted_view | success | [./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_parted_view/2023-04-28-06:47:17.log](./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_parted_view/2023-04-28-06:47:17.log) | None |
 |  | oe_test_storage_diskpartiton_view_lsblk | success | [./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_view_lsblk/2023-04-28-06:59:07.log](./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_view_lsblk/2023-04-28-06:59:07.log) | None |
+|  | oe_test_storage_ext3_mount | success | [./mugen-riscv/logs/os-storage/oe_test_storage_ext3_mount/2023-06-25-04:08:03.log](./mugen-riscv/logs/os-storage/oe_test_storage_ext3_mount/2023-06-25-04:08:03.log) | None |
 |  | oe_test_storage_ext4_create | success | [./mugen-riscv/logs/os-storage/oe_test_storage_ext4_create/2023-04-28-07:01:32.log](./mugen-riscv/logs/os-storage/oe_test_storage_ext4_create/2023-04-28-07:01:32.log) | None |
 |  | oe_test_storage_ext4_resize | success | [./mugen-riscv/logs/os-storage/oe_test_storage_ext4_resize/2023-04-28-06:40:49.log](./mugen-riscv/logs/os-storage/oe_test_storage_ext4_resize/2023-04-28-06:40:49.log) | None |
 |  | oe_test_storage_fileCMD_cd | success | [./mugen-riscv/logs/os-storage/oe_test_storage_fileCMD_cd/2023-04-28-07:19:26.log](./mugen-riscv/logs/os-storage/oe_test_storage_fileCMD_cd/2023-04-28-07:19:26.log) | None |
@@ -2371,7 +2372,6 @@
 |  | oe_test_storage_diskpartiton_parted_resize | x86 fail | [./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_parted_resize/2023-04-28-07:03:01.log](./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_parted_resize/2023-04-28-07:03:01.log) | x86 fail |
 |  | oe_test_storage_diskpartiton_view_fdisk | x86 fail | [./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_view_fdisk/2023-04-28-06:41:44.log](./mugen-riscv/logs/os-storage/oe_test_storage_diskpartiton_view_fdisk/2023-04-28-06:41:44.log) | x86 fail |
 |  | oe_test_storage_ext3_create | x86 fail | [./mugen-riscv/logs/os-storage/oe_test_storage_ext3_create/2023-04-28-06:57:00.log](./mugen-riscv/logs/os-storage/oe_test_storage_ext3_create/2023-04-28-06:57:00.log) | x86 fail |
-|  | oe_test_storage_ext3_mount | x86 fail | [./mugen-riscv/logs/os-storage/oe_test_storage_ext3_mount/2023-04-28-06:54:38.log](./mugen-riscv/logs/os-storage/oe_test_storage_ext3_mount/2023-04-28-06:54:38.log) | x86 fail |
 |  | oe_test_storage_ext3_resize | x86 fail | [./mugen-riscv/logs/os-storage/oe_test_storage_ext3_resize/2023-04-28-07:16:18.log](./mugen-riscv/logs/os-storage/oe_test_storage_ext3_resize/2023-04-28-07:16:18.log) | x86 fail |
 |  | oe_test_storage_ext4_mount_write | x86 fail | [./mugen-riscv/logs/os-storage/oe_test_storage_ext4_mount_write/2023-04-28-06:49:47.log](./mugen-riscv/logs/os-storage/oe_test_storage_ext4_mount_write/2023-04-28-06:49:47.log) | x86 fail |
 |  | oe_test_storage_fileCMD_cat | x86 fail | [./mugen-riscv/logs/os-storage/oe_test_storage_fileCMD_cat/2023-04-28-06:42:00.log](./mugen-riscv/logs/os-storage/oe_test_storage_fileCMD_cat/2023-04-28-06:42:00.log) | x86 fail |
@@ -2649,9 +2649,9 @@
 |  | oe_test_qt5-qttools_qt5-qttools-devel | success | [./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qt5-qttools-devel/2023-04-28-01:19:01.log](./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qt5-qttools-devel/2023-04-28-01:19:01.log) | None |
 |  | oe_test_qt5-qttools_qtattributionsscanner-qt5 | success | [./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qtattributionsscanner-qt5/2023-04-28-01:23:32.log](./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qtattributionsscanner-qt5/2023-04-28-01:23:32.log) | None |
 |  | oe_test_qt5-qttools_qtpaths | success | [./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qtpaths/2023-04-28-01:27:11.log](./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qtpaths/2023-04-28-01:27:11.log) | None |
+|  | oe_test_qt5-qttools_qdoc_02 | success | [./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdoc_02/2023-06-24-03:57:27.log](./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdoc_02/2023-06-24-03:57:27.log) | None |
+|  | oe_test_qt5-qttools_qdoc_03 | success | [./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdoc_03/2023-06-24-03:58:32.log](./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdoc_03/2023-06-24-03:58:32.log) | None |
 |  | oe_test_qt5-qttools_qdbus-qt5 | fail | [./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdbus-qt5/2023-04-28-01:03:31.log](./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdbus-qt5/2023-04-28-01:03:31.log) | Unable to autolaunch a dbus-daemon without a $DISPLAY for X11 |
-|  | oe_test_qt5-qttools_qdoc_02 | fail | [./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdoc_02/2023-06-24-03:57:27.log](./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdoc_02/2023-06-24-03:57:27.log) |  |
-|  | oe_test_qt5-qttools_qdoc_03 | fail | [./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdoc_03/2023-06-24-03:58:32.log](./mugen-riscv/logs/qt5-qttools/oe_test_qt5-qttools_qdoc_03/2023-06-24-03:58:32.log) |  |
 | quota | oe_test_service_rpc-rquotad | success | [./mugen-riscv/logs/quota/oe_test_service_rpc-rquotad/2023-04-26-21:20:05.log](./mugen-riscv/logs/quota/oe_test_service_rpc-rquotad/2023-04-26-21:20:05.log) | None |
 |  | oe_test_service_quota_nld | fail | [./mugen-riscv/logs/quota/oe_test_service_quota_nld/2023-04-26-21:17:36.log](./mugen-riscv/logs/quota/oe_test_service_quota_nld/2023-04-26-21:17:36.log) |  |
 | rabbitmq-server | oe_test_rabbitmq-plugins | success | [./mugen-riscv/logs/rabbitmq-server/oe_test_rabbitmq-plugins/2023-04-26-22:40:14.log](./mugen-riscv/logs/rabbitmq-server/oe_test_rabbitmq-plugins/2023-04-26-22:40:14.log) | None |
@@ -2895,7 +2895,7 @@
 |  | oe_test_less | success | [./mugen-riscv/logs/smoke-basic-os/oe_test_less/2023-04-29-07:45:36.log](./mugen-riscv/logs/smoke-basic-os/oe_test_less/2023-04-29-07:45:36.log) | None |
 |  | oe_test_less_001 | success | [./mugen-riscv/logs/smoke-basic-os/oe_test_less_001/2023-04-29-05:50:25.log](./mugen-riscv/logs/smoke-basic-os/oe_test_less_001/2023-04-29-05:50:25.log) | None |
 |  | oe_test_let | success | [./mugen-riscv/logs/smoke-basic-os/oe_test_let/2023-04-29-09:15:38.log](./mugen-riscv/logs/smoke-basic-os/oe_test_let/2023-04-29-09:15:38.log) | None |
-|  | oe_test_libcgroup_01 | success | [./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_01/2023-04-29-07:45:49.log](./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_01/2023-04-29-07:45:49.log) | None |
+|  | oe_test_libcgroup_01 | success | [./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_01/2023-06-28-02:00:48.log](./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_01/2023-06-28-02:00:48.log) | None |
 |  | oe_test_libcgroup_02 | success | [./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_02/2023-04-29-07:46:53.log](./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_02/2023-04-29-07:46:53.log) | None |
 |  | oe_test_libcgroup_03 | success | [./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_03/2023-04-29-07:47:56.log](./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_03/2023-04-29-07:47:56.log) | None |
 |  | oe_test_libuser_sm | success | [./mugen-riscv/logs/smoke-basic-os/oe_test_libuser_sm/2023-04-29-07:50:07.log](./mugen-riscv/logs/smoke-basic-os/oe_test_libuser_sm/2023-04-29-07:50:07.log) | None |
@@ -3057,22 +3057,22 @@
 |  | oe_test_bonding_SCEN_05 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_bonding_SCEN_05/2023-04-29-09:55:05.log](./mugen-riscv/logs/smoke-basic-os/oe_test_bonding_SCEN_05/2023-04-29-09:55:05.log) | preinstall absent kernel module absent |
 |  | oe_test_criu | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_criu/2023-04-29-05:34:06.log](./mugen-riscv/logs/smoke-basic-os/oe_test_criu/2023-04-29-05:34:06.log) | file missing |
 |  | oe_test_gcc_001 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_gcc_001/2023-05-26-00:01:54.log](./mugen-riscv/logs/smoke-basic-os/oe_test_gcc_001/2023-05-26-00:01:54.log) | file missing |
-|  | oe_test_ip_rule_01 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_ip_rule_01/2023-04-29-07:32:00.log](./mugen-riscv/logs/smoke-basic-os/oe_test_ip_rule_01/2023-04-29-07:32:00.log) |  |
-|  | oe_test_ip_rule_02 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_ip_rule_02/2023-04-29-07:32:16.log](./mugen-riscv/logs/smoke-basic-os/oe_test_ip_rule_02/2023-04-29-07:32:16.log) |  |
-|  | oe_test_iscsi | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_iscsi/2023-04-29-05:46:14.log](./mugen-riscv/logs/smoke-basic-os/oe_test_iscsi/2023-04-29-05:46:14.log) |  |
-|  | oe_test_iscsid | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_iscsid/2023-04-29-07:40:15.log](./mugen-riscv/logs/smoke-basic-os/oe_test_iscsid/2023-04-29-07:40:15.log) |  |
+|  | oe_test_ip_rule_01 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_ip_rule_01/2023-04-29-07:32:00.log](./mugen-riscv/logs/smoke-basic-os/oe_test_ip_rule_01/2023-04-29-07:32:00.log) | CONFIG_IP_MULTIPLE_TABLES is not set |
+|  | oe_test_ip_rule_02 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_ip_rule_02/2023-04-29-07:32:16.log](./mugen-riscv/logs/smoke-basic-os/oe_test_ip_rule_02/2023-04-29-07:32:16.log) | CONFIG_IP_MULTIPLE_TABLES is not set |
+|  | oe_test_iscsi | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_iscsi/2023-04-29-05:46:14.log](./mugen-riscv/logs/smoke-basic-os/oe_test_iscsi/2023-04-29-05:46:14.log) | CONFIG_CONFIGFS_FS is not set |
+|  | oe_test_iscsid | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_iscsid/2023-04-29-07:40:15.log](./mugen-riscv/logs/smoke-basic-os/oe_test_iscsid/2023-04-29-07:40:15.log) | can not create NETLINK_ISCSI socket [Protocol not supported]可能为内核问题 |
 |  | oe_test_libcgroup_04 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_04/2023-04-29-07:49:01.log](./mugen-riscv/logs/smoke-basic-os/oe_test_libcgroup_04/2023-04-29-07:49:01.log) |  |
-|  | oe_test_ncurses | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_ncurses/2023-04-29-07:53:42.log](./mugen-riscv/logs/smoke-basic-os/oe_test_ncurses/2023-04-29-07:53:42.log) |  |
-|  | oe_test_numactl | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_numactl/2023-04-29-05:58:41.log](./mugen-riscv/logs/smoke-basic-os/oe_test_numactl/2023-04-29-05:58:41.log) |  |
+|  | oe_test_ncurses | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_ncurses/2023-06-28-02:06:03.log](./mugen-riscv/logs/smoke-basic-os/oe_test_ncurses/2023-06-28-02:06:03.log) |  |
+|  | oe_test_numactl | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_numactl/2023-04-29-05:58:41.log](./mugen-riscv/logs/smoke-basic-os/oe_test_numactl/2023-04-29-05:58:41.log) | CONFIG_NUMA is not set |
 |  | oe_test_perf | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_perf/2023-04-29-06:01:18.log](./mugen-riscv/logs/smoke-basic-os/oe_test_perf/2023-04-29-06:01:18.log) | timeout |
 |  | oe_test_pwd_001 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_pwd_001/2023-04-29-06:02:28.log](./mugen-riscv/logs/smoke-basic-os/oe_test_pwd_001/2023-04-29-06:02:28.log) | preinstall absent |
-|  | oe_test_rollback | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_rollback/2023-04-29-06:26:56.log](./mugen-riscv/logs/smoke-basic-os/oe_test_rollback/2023-04-29-06:26:56.log) |  |
-|  | oe_test_rule_ipv6 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_rule_ipv6/2023-04-29-08:40:20.log](./mugen-riscv/logs/smoke-basic-os/oe_test_rule_ipv6/2023-04-29-08:40:20.log) |  |
+|  | oe_test_rollback | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_rollback/2023-04-29-06:26:56.log](./mugen-riscv/logs/smoke-basic-os/oe_test_rollback/2023-04-29-06:26:56.log) | mugen 测试代码并没有考虑到git软件包已安装时的情况 |
+|  | oe_test_rule_ipv6 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_rule_ipv6/2023-04-29-08:40:20.log](./mugen-riscv/logs/smoke-basic-os/oe_test_rule_ipv6/2023-04-29-08:40:20.log) | CONFIG_IP_MULTIPLE_TABLES is not set |
 |  | oe_test_service | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_service/2023-04-29-08:40:36.log](./mugen-riscv/logs/smoke-basic-os/oe_test_service/2023-04-29-08:40:36.log) | preinstall absent |
 |  | oe_test_skopeo | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_skopeo/2023-04-29-06:04:38.log](./mugen-riscv/logs/smoke-basic-os/oe_test_skopeo/2023-04-29-06:04:38.log) | choosing image instance: no image found in manifest list for architecture riscv64 |
 |  | oe_test_syslog_logrotate_001 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_syslog_logrotate_001/2023-05-26-00:15:50.log](./mugen-riscv/logs/smoke-basic-os/oe_test_syslog_logrotate_001/2023-05-26-00:15:50.log) | preinstall absent |
 |  | oe_test_user_debug_iotop_03 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_user_debug_iotop_03/2023-04-29-10:09:55.log](./mugen-riscv/logs/smoke-basic-os/oe_test_user_debug_iotop_03/2023-04-29-10:09:55.log) | file missing |
-|  | oe_test_yumgroup_001 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_yumgroup_001/2023-04-29-06:23:17.log](./mugen-riscv/logs/smoke-basic-os/oe_test_yumgroup_001/2023-04-29-06:23:17.log) |  |
+|  | oe_test_yumgroup_001 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_yumgroup_001/2023-04-29-06:23:17.log](./mugen-riscv/logs/smoke-basic-os/oe_test_yumgroup_001/2023-04-29-06:23:17.log) | oe-rv目前软件仓内并没有划分软件包组 |
 |  | oe_test_MEMinfo_001 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_MEMinfo_001/2023-05-26-00:16:17.log](./mugen-riscv/logs/smoke-basic-os/oe_test_MEMinfo_001/2023-05-26-00:16:17.log) | file missing |
 |  | oe_test_perf_top_01 | fail | [./mugen-riscv/logs/smoke-basic-os/oe_test_perf_top_01/2023-05-26-00:17:11.log](./mugen-riscv/logs/smoke-basic-os/oe_test_perf_top_01/2023-05-26-00:17:11.log) | file missing |
 | smoke-iSulad | oe_test_iSula_install_deploy_001 | success | [./mugen-riscv/logs/smoke-iSulad/oe_test_iSula_install_deploy_001/2023-04-29-00:11:14.log](./mugen-riscv/logs/smoke-iSulad/oe_test_iSula_install_deploy_001/2023-04-29-00:11:14.log) | None |
@@ -3095,7 +3095,7 @@
 |  | oe_test_sosreport_04 | x86 fail | [./mugen-riscv/logs/sos/oe_test_sosreport_04/2023-04-27-03:40:36.log](./mugen-riscv/logs/sos/oe_test_sosreport_04/2023-04-27-03:40:36.log) | x86 fail |
 |  | oe_test_sosreport_01 | fail | [./mugen-riscv/logs/sos/oe_test_sosreport_01/2023-04-27-02:54:08.log](./mugen-riscv/logs/sos/oe_test_sosreport_01/2023-04-27-02:54:08.log) | file missing |
 |  | oe_test_sosreport_03 | fail | [./mugen-riscv/logs/sos/oe_test_sosreport_03/2023-04-27-03:27:15.log](./mugen-riscv/logs/sos/oe_test_sosreport_03/2023-04-27-03:27:15.log) | file missing |
-| spawn-fcgi | oe_test_service_spawn-fcgi | fail | [./mugen-riscv/logs/spawn-fcgi/oe_test_service_spawn-fcgi/2023-04-27-03:00:40.log](./mugen-riscv/logs/spawn-fcgi/oe_test_service_spawn-fcgi/2023-04-27-03:00:40.log) | 未安装initscripts |
+| spawn-fcgi | oe_test_service_spawn-fcgi | fail | [./mugen-riscv/logs/spawn-fcgi/oe_test_service_spawn-fcgi/2023-06-25-04:36:27.log](./mugen-riscv/logs/spawn-fcgi/oe_test_service_spawn-fcgi/2023-06-25-04:36:27.log) | 未安装initscripts |
 | storm | oe_test_service_storm-logviewer | fail | [./mugen-riscv/logs/storm/oe_test_service_storm-logviewer/2023-04-27-03:14:39.log](./mugen-riscv/logs/storm/oe_test_service_storm-logviewer/2023-04-27-03:14:39.log) | no pkg in pkglist |
 |  | oe_test_service_storm-nimbus | fail | [./mugen-riscv/logs/storm/oe_test_service_storm-nimbus/2023-04-27-03:16:14.log](./mugen-riscv/logs/storm/oe_test_service_storm-nimbus/2023-04-27-03:16:14.log) | no pkg in pkglist |
 |  | oe_test_service_storm-supervisor | fail | [./mugen-riscv/logs/storm/oe_test_service_storm-supervisor/2023-04-27-03:17:35.log](./mugen-riscv/logs/storm/oe_test_service_storm-supervisor/2023-04-27-03:17:35.log) | no pkg in pkglist |

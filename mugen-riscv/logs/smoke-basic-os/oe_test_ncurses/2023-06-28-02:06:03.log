@@ -6,8 +6,8 @@
 ++ type -t post_test
 + '[' -n function ']'
 + trap post_test EXIT INT HUP TERM
-+ grep expect
 + rpm -qa
++ grep expect
 ++ type -t config_params
 + '[' -n '' ']'
 ++ type -t pre_test
@@ -16,7 +16,7 @@
 + LOG_INFO 'Start to prepare the test environment.'
 + message='Start to prepare the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
-Sat Apr 29 07:53:45 2023 - INFO  - Start to prepare the test environment.
+Wed Jun 28 02:06:06 2023 - INFO  - Start to prepare the test environment.
 + echo '#!/usr/bin/expect
 log_file testlog
 spawn ssh -o StrictHostKeyChecking=no 127.0.0.1
@@ -32,15 +32,15 @@ expect eof
 + LOG_INFO 'End to prepare the test environment.'
 + message='End to prepare the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
-Sat Apr 29 07:53:46 2023 - INFO  - End to prepare the test environment.
+Wed Jun 28 02:06:06 2023 - INFO  - End to prepare the test environment.
 ++ type -t run_test
 + '[' -n function ']'
 + run_test
 + LOG_INFO 'Start to run test.'
 + message='Start to run test.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
-Sat Apr 29 07:53:47 2023 - INFO  - Start to run test.
-+ '[' unknown ']'
+Wed Jun 28 02:06:07 2023 - INFO  - Start to run test.
++ '[' vt220 ']'
 + CHECK_RESULT 0 0 0 'Failed to execute xterm'
 + actual_result=0
 + expect_result=0
@@ -53,7 +53,7 @@ Sat Apr 29 07:53:47 2023 - INFO  - Start to run test.
 + return 0
 + infocmp
 + grep terminfo
-#	Reconstructed via infocmp from file: /usr/share/terminfo/u/unknown
+#	Reconstructed via infocmp from file: /usr/share/terminfo/v/vt220
 + CHECK_RESULT 0 0 0 'Failed to execute infocmp'
 + actual_result=0
 + expect_result=0
@@ -67,60 +67,50 @@ Sat Apr 29 07:53:47 2023 - INFO  - Start to run test.
 + infocmp
 + infotocap test.log
 + grep capabilities
-+ CHECK_RESULT 1 0 0 'Failed to execute infotocap'
-+ actual_result=1
+# (untranslatable capabilities removed to fit entry within 1023 bytes)
+# (terminfo-only capabilities suppressed to fit entry within 1023 bytes)
++ CHECK_RESULT 0 0 0 'Failed to execute infotocap'
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log='Failed to execute infotocap'
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n 'Failed to execute infotocap'
-+ LOG_ERROR 'Failed to execute infotocap'
-+ message='Failed to execute infotocap'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to execute infotocap'
-Sat Apr 29 07:53:48 2023 - ERROR - Failed to execute infotocap
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_ncurses.sh line 47'
-+ message='oe_test_ncurses.sh line 47'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ncurses.sh line 47'
-Sat Apr 29 07:53:48 2023 - ERROR - oe_test_ncurses.sh line 47
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 + ./run-term
 spawn ssh -o StrictHostKeyChecking=no 127.0.0.1
+Warning: Permanently added '127.0.0.1' (ED25519) to the list of known hosts.
 root@127.0.0.1's password: 
-Last login: Thu Apr 27 23:46:12 2023
+Last login: Tue Jun 27 17:35:54 2023
 
 
-Welcome to 6.1.8-3.oe2303.riscv64
+Welcome to 6.1.19-2.oe2303.riscv64
 
-System information as of time: 	Sat Apr 29 07:53:53 AM CST 2023
+System information as of time: 	Wed Jun 28 02:06:12 AM CST 2023
 
-System load: 	[0;33;40m2.27[0m
+System load: 	[0;33;40m0.16[0m
 Processes: 	119
-Memory used: 	3.7%
+Memory used: 	2.2%
 Swap used: 	0.0%
-Usage On: 	32%
+Usage On: 	21%
 IP address: 	10.0.2.15
-Users online: 	1
+Users online: 	2
 
 
 
 export TERM=vt100
 
 echo $TERM
-
-exit
-[root@openeuler-riscv64 ~]# 
-[root@openeuler-riscv64 ~]# export TERM=vt100
-[root@openeuler-riscv64 ~]# 
-[root@openeuler-riscv64 ~]# echo $TERM
-vt100
-[root@openeuler-riscv64 ~]# 
-[root@openeuler-riscv64 ~]# exit
-logout
+[?2004h[root@openeuler-riscv64 ~]# 
+[?2004l[?2004h[root@openeuler-riscv64 ~]# export TERM=vt100
+[?2004l[?2004h[root@openeuler-riscv64 ~]# 
+[?2004l[?2004h[root@openeuler-riscv64 ~]# echo $TERM
+[?2004lvt100
+[?2004h[root@openeuler-riscv64 ~]# 
+[?2004l[?2004h[root@openeuler-riscv64 ~]# exit
+[?2004llogout
 Connection to 127.0.0.1 closed.
 + CHECK_RESULT 0 0 0 'Failed to execute run-term'
 + actual_result=0
@@ -134,7 +124,7 @@ Connection to 127.0.0.1 closed.
 + return 0
 + grep '$TERM' testlog
 echo $TERM
-[root@openeuler-riscv64 ~]# echo $TERM
+[?2004l[?2004h[root@openeuler-riscv64 ~]# echo $TERM
 + CHECK_RESULT 0 0 0 'Failed to display term'
 + actual_result=0
 + expect_result=0
@@ -148,23 +138,24 @@ echo $TERM
 + LOG_INFO 'End to run test.'
 + message='End to run test.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
-Sat Apr 29 07:53:54 2023 - INFO  - End to run test.
+Wed Jun 28 02:06:13 2023 - INFO  - End to run test.
 + CASE_RESULT 0
 + case_re=0
-+ test -z 1
-+ test 1 -gt 0
-+ LOG_ERROR 'failed to execute the case.'
-+ message='failed to execute the case.'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
-Sat Apr 29 07:53:55 2023 - ERROR - failed to execute the case.
-+ exit 1
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Jun 28 02:06:14 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
 + post_test
 + LOG_INFO 'Start to restore the test environment.'
 + message='Start to restore the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
-Sat Apr 29 07:53:55 2023 - INFO  - Start to restore the test environment.
+Wed Jun 28 02:06:14 2023 - INFO  - Start to restore the test environment.
 + rm -rf testlog run-term test.log
 + LOG_INFO 'End to restore the test environment.'
 + message='End to restore the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
-Sat Apr 29 07:53:56 2023 - INFO  - End to restore the test environment.
+Wed Jun 28 02:06:15 2023 - INFO  - End to restore the test environment.

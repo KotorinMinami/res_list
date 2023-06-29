@@ -15,7 +15,7 @@
 + LOG_INFO 'Start loading data!'
 + message='Start loading data!'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start loading data!'
-Fri Apr 28 06:54:42 2023 - INFO  - Start loading data!
+Sun Jun 25 04:08:06 2023 - INFO  - Start loading data!
 + check_free_disk
 ++ TEST_DISK
 ++ id=1
@@ -29,14 +29,14 @@ Fri Apr 28 06:54:42 2023 - INFO  - Start loading data!
 + LOG_INFO 'Loading data is complete!'
 + message='Loading data is complete!'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Loading data is complete!'
-Fri Apr 28 06:54:52 2023 - INFO  - Loading data is complete!
+Sun Jun 25 04:08:16 2023 - INFO  - Loading data is complete!
 ++ type -t pre_test
 + '[' -n function ']'
 + pre_test
 + LOG_INFO 'Start environment preparation.'
 + message='Start environment preparation.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
-Fri Apr 28 06:54:53 2023 - INFO  - Start environment preparation.
+Sun Jun 25 04:08:17 2023 - INFO  - Start environment preparation.
 + echo -e 'm\nn\np\n1\n\n+500M\np\nw\n'
 + fdisk /dev/vdb
 
@@ -44,8 +44,6 @@ Welcome to fdisk (util-linux 2.37.2).
 Changes will remain in memory only, until you decide to write them.
 Be careful before using the write command.
 
-Device does not contain a recognized partition table.
-Created a new DOS disklabel with disk identifier 0x733d21e8.
 
 Command (m for help): 
 Help:
@@ -88,101 +86,102 @@ Help:
 Command (m for help): Partition type
    p   primary (0 primary, 0 extended, 4 free)
    e   extended (container for logical partitions)
-Select (default p): Partition number (1-4, default 1): First sector (2048-1023999, default 2048): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1023999, default 1023999): Value out of range.
-Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1023999, default 1023999): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1023999, default 1023999): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1023999, default 1023999): 
-Created a new partition 1 of type 'Linux' and of size 499 MiB.
+Select (default p): Partition number (1-4, default 1): First sector (2048-2097151, default 2048): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-2097151, default 2097151): 
+Created a new partition 1 of type 'Linux' and of size 500 MiB.
 
-Command (m for help): 
+Command (m for help): Disk /dev/vdb: 1 GiB, 1073741824 bytes, 2097152 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x3f007463
+
+Device     Boot Start     End Sectors  Size Id Type
+/dev/vdb1        2048 1026047 1024000  500M 83 Linux
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
 + LOG_INFO 'Environmental preparation is over.'
 + message='Environmental preparation is over.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
-Fri Apr 28 06:54:54 2023 - INFO  - Environmental preparation is over.
+Sun Jun 25 04:08:18 2023 - INFO  - Environmental preparation is over.
 ++ type -t run_test
 + '[' -n function ']'
 + run_test
 + LOG_INFO 'Start executing testcase!'
 + message='Start executing testcase!'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
-Fri Apr 28 06:54:55 2023 - INFO  - Start executing testcase!
+Sun Jun 25 04:08:19 2023 - INFO  - Start executing testcase!
 + mkdir /home/data
 + mkfs.ext3 -F /dev/vdb1
 mke2fs 1.46.5 (30-Dec-2021)
-The file /dev/vdb1 does not exist and no size was specified.
-+ CHECK_RESULT 1
-+ actual_result=1
+Discarding device blocks:      0/512000             done                            
+Creating filesystem with 512000 1k blocks and 128016 inodes
+Filesystem UUID: 9ebed85e-7ae9-4257-af7a-ec8dbb0c4fcc
+Superblock backups stored on blocks: 
+	8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409
+
+Allocating group tables:  0/63     done                            
+Writing inode tables:  0/63     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/63     done
+
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_storage_ext3_mount.sh line 37'
-+ message='oe_test_storage_ext3_mount.sh line 37'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_ext3_mount.sh line 37'
-Fri Apr 28 06:54:56 2023 - ERROR - oe_test_storage_ext3_mount.sh line 37
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 + mount /dev/vdb1 /home/data
-mount: /home/data: special device /dev/vdb1 does not exist.
-+ CHECK_RESULT 32
-+ actual_result=32
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 32 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 32x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_storage_ext3_mount.sh line 39'
-+ message='oe_test_storage_ext3_mount.sh line 39'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_ext3_mount.sh line 39'
-Fri Apr 28 06:54:57 2023 - ERROR - oe_test_storage_ext3_mount.sh line 39
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 + df -h
 + grep /home/data
-+ CHECK_RESULT 1
-+ actual_result=1
+/dev/vdb1       459M   47K  434M   1% /home/data
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_storage_ext3_mount.sh line 41'
-+ message='oe_test_storage_ext3_mount.sh line 41'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_ext3_mount.sh line 41'
-Fri Apr 28 06:54:57 2023 - ERROR - oe_test_storage_ext3_mount.sh line 41
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 + LOG_INFO 'End of testcase execution!'
 + message='End of testcase execution!'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
-Fri Apr 28 06:54:58 2023 - INFO  - End of testcase execution!
+Sun Jun 25 04:08:21 2023 - INFO  - End of testcase execution!
 + CASE_RESULT 0
 + case_re=0
-+ test -z 3
-+ test 3 -gt 0
-+ LOG_ERROR 'failed to execute the case.'
-+ message='failed to execute the case.'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
-Fri Apr 28 06:54:59 2023 - ERROR - failed to execute the case.
-+ exit 3
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Sun Jun 25 04:08:22 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
 + post_test
 + LOG_INFO 'start environment cleanup.'
 + message='start environment cleanup.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
-Fri Apr 28 06:55:00 2023 - INFO  - start environment cleanup.
+Sun Jun 25 04:08:23 2023 - INFO  - start environment cleanup.
 + umount /home/data
-umount: /home/data: not mounted.
 + rm -rf /home/data
 + echo -e 'd\np\nw\n'
 + fdisk /dev/vdb
@@ -191,18 +190,16 @@ Welcome to fdisk (util-linux 2.37.2).
 Changes will remain in memory only, until you decide to write them.
 Be careful before using the write command.
 
-Device does not contain a recognized partition table.
-Created a new DOS disklabel with disk identifier 0x76f88d77.
 
-Command (m for help): No partition is defined yet!
+Command (m for help): Selected partition 1
+Partition 1 has been deleted.
 
-Command (m for help): 
-Disk /dev/vdb: 500 MiB, 524288000 bytes, 1024000 sectors
+Command (m for help): Disk /dev/vdb: 1 GiB, 1073741824 bytes, 2097152 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disklabel type: dos
-Disk identifier: 0x76f88d77
+Disk identifier: 0x3f007463
 
 Command (m for help): The partition table has been altered.
 Calling ioctl() to re-read partition table.
@@ -211,4 +208,4 @@ Syncing disks.
 + LOG_INFO 'Finish environment cleanup.'
 + message='Finish environment cleanup.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
-Fri Apr 28 06:55:01 2023 - INFO  - Finish environment cleanup.
+Sun Jun 25 04:08:24 2023 - INFO  - Finish environment cleanup.
