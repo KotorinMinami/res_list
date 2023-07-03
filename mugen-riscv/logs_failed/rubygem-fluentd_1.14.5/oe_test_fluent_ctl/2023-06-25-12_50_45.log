@@ -1,0 +1,331 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ source ./common/lib/util.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sun Jun 25 12:50:49 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'rubygem-fluentd tar'
++ pkgs='rubygem-fluentd tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'rubygem-fluentd tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp47ytopk4
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp47ytopk4
++ extract_data
++ [[ -f ./common/data.tar.gz ]]
++ tar -xvf ./common/data.tar.gz
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Sun Jun 25 12:52:44 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sun Jun 25 12:52:45 2023 - INFO  - Start to run test.
++ fluent-ctl -h
++ grep 'COMMAND PID'
+Usage: /usr/bin/fluent-ctl COMMAND PID
++ CHECK_RESULT 0 0 0 'Check fluent-ctl -h failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluent-ctl -h failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fluentd -c ./data/v1_config.conf -d pid.info
+2023-06-25 12:53:01 +0800 [info]: parsing config file is succeeded path="./data/v1_config.conf"
+2023-06-25 12:53:01 +0800 [info]: gem 'fluentd' version '1.14.5'
+2023-06-25 12:53:02 +0800 [info]: using configuration file: <ROOT>
+  <source>
+    @type monitor_agent
+    bind "0.0.0.0"
+    port 19854
+  </source>
+</ROOT>
+2023-06-25 12:53:02 +0800 [info]: starting fluentd-1.14.5 pid=1308 ruby="3.1.3"
+2023-06-25 12:53:02 +0800 [info]: spawn command to main:  cmdline=["/usr/bin/ruby", "-Eascii-8bit:ascii-8bit", "/usr/bin/fluentd", "-c", "./data/v1_config.conf", "-d", "pid.info", "--under-supervisor"]
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+++ cat pid.info
++ pidnum=1314
++ fluent-ctl shutdown 1314
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ grep 'fluentd -c'
++ ps -ef
++ grep -v grep
++ CHECK_RESULT 1 1 0 'Check fluent-ctl shutdown failed'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='Check fluent-ctl shutdown failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ rm -f pid.info
++ fluentd -c ./data/v1_config.conf -d pid.info -o log.file
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+++ cat pid.info
++ pidnum=1333
++ fluent-ctl restart 1333
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ grep 'Worker 0 finished unexpectedly with status 0' log.file
++ CHECK_RESULT 1 0 0 'Check fluent-ctl restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check fluent-ctl restart failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check fluent-ctl restart failed'
++ LOG_ERROR 'Check fluent-ctl restart failed'
++ message='Check fluent-ctl restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check fluent-ctl restart failed'
+Sun Jun 25 12:53:40 2023 - ERROR - Check fluent-ctl restart failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fluent_ctl.sh line 43'
++ message='oe_test_fluent_ctl.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fluent_ctl.sh line 43'
+Sun Jun 25 12:53:41 2023 - ERROR - oe_test_fluent_ctl.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 1333 1341
++ rm -f pid.info log.file
++ fluentd -c ./data/v1_config.conf -d pid.info -o log.file
++ SLEEP_WAIT 20
++ wait_time=20
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 20 --cmd '' --mode 1
+++ cat pid.info
++ pidnum=1353
++ fluent-ctl flush 1353
++ SLEEP_WAIT 20
++ wait_time=20
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 20 --cmd '' --mode 1
++ grep 'force flushing buffered events' log.file
+2023-06-25 12:54:20 +0800 [info]: #0 force flushing buffered events
++ CHECK_RESULT 0 0 0 'Check fluent-ctl flush failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluent-ctl flush failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 1353 1356
++ rm -f pid.info log.file
++ fluentd -c ./data/v1_config.conf -d pid.info -o log.file
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+++ cat pid.info
++ pidnum=1374
++ fluent-ctl reload 1374
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ grep 'restart fluentd worker worker' log.file
++ CHECK_RESULT 1 0 0 'Check fluent-ctl reload failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check fluent-ctl reload failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check fluent-ctl reload failed'
++ LOG_ERROR 'Check fluent-ctl reload failed'
++ message='Check fluent-ctl reload failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check fluent-ctl reload failed'
+Sun Jun 25 12:55:08 2023 - ERROR - Check fluent-ctl reload failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fluent_ctl.sh line 61'
++ message='oe_test_fluent_ctl.sh line 61'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fluent_ctl.sh line 61'
+Sun Jun 25 12:55:09 2023 - ERROR - oe_test_fluent_ctl.sh line 61
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 1374 1385
++ rm -f pid.info log.file
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Sun Jun 25 12:55:10 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Sun Jun 25 12:55:11 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Sun Jun 25 12:55:12 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp47ytopk4 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp47ytopk4
++ '[' 0 -ne 0 ']'
++ clean_dir
+++ ls
++ filelist='common
+data
+example
+lib
+loki
+oe_test_fluent_binlog_reader.sh
+oe_test_fluent_ca_generate.sh
+oe_test_fluent_cap_ctl.sh
+oe_test_fluent_cat_01.sh
+oe_test_fluent_cat_02_2003.sh
+oe_test_fluent_cat_02.sh
+oe_test_fluent_ctl.sh
+oe_test_fluentd_01_2003.sh
+oe_test_fluentd_01.sh
+oe_test_fluentd_02.sh
+oe_test_fluentd_03_2003.sh
+oe_test_fluentd_03.sh
+oe_test_fluentd_04.sh
+oe_test_fluent_debug.sh
+oe_test_fluent_gem_01_2003.sh
+oe_test_fluent_gem_01.sh
+oe_test_fluent_gem_02_2003.sh
+oe_test_fluent_gem_02.sh
+oe_test_fluent_gem_03_2003.sh
+oe_test_fluent_gem_03.sh
+oe_test_fluent_plugin_config_format_2003.sh
+oe_test_fluent_plugin_config_format.sh
+oe_test_fluent_plugin_generate.sh
+rubygem-fluentd.md'
++ for filename in ${filelist[@]}
++ [[ -d common ]]
++ [[ ! commonx == \c\o\m\m\o\n\x ]]
++ for filename in ${filelist[@]}
++ [[ -d data ]]
++ [[ ! datax == \c\o\m\m\o\n\x ]]
++ rm -rf data
++ for filename in ${filelist[@]}
++ [[ -d example ]]
++ [[ ! examplex == \c\o\m\m\o\n\x ]]
++ rm -rf example
++ for filename in ${filelist[@]}
++ [[ -d lib ]]
++ [[ ! libx == \c\o\m\m\o\n\x ]]
++ rm -rf lib
++ for filename in ${filelist[@]}
++ [[ -d loki ]]
++ [[ ! lokix == \c\o\m\m\o\n\x ]]
++ rm -rf loki
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_binlog_reader.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_ca_generate.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cap_ctl.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_02_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_ctl.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_01_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_03_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_03.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_04.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_debug.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_01_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_02_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_03_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_03.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_config_format_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_config_format.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_generate.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d rubygem-fluentd.md ]]
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Sun Jun 25 12:55:58 2023 - INFO  - End to restore the test environment.

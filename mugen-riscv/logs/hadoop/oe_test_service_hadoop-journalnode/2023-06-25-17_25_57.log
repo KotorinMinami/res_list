@@ -1,0 +1,322 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Sun Jun 25 17:26:01 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL 'hadoop-hdfs java-1.8.0-openjdk'
++ pkgs='hadoop-hdfs java-1.8.0-openjdk'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'hadoop-hdfs java-1.8.0-openjdk' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 5:21:28 ago on Sun 25 Jun 2023 12:05:09 PM CST.
+No match for argument: hadoop-hdfs
+Error: Unable to find a match: hadoop-hdfs'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 5:21:28 ago on Sun 25 Jun 2023 12:05:09 PM CST.
+No match for argument: hadoop-hdfs
+Error: Unable to find a match: hadoop-hdfs'
++ echo 'export JAVA_HOME=/usr/lib/jvm/jre'
++ sed -i '/Group=hadoop/a SuccessExitStatus=143' /usr/lib/systemd/system/hadoop-journalnode.service
+sed: can't read /usr/lib/systemd/system/hadoop-journalnode.service: No such file or directory
++ systemctl daemon-reload
++ expect
+spawn sudo -u hdfs hdfs namenode -format
+sudo: unknown user hdfs
+sudo: error initializing audit plugin sudoers_audit
+expect: spawn id exp3 not open
+    while executing
+"expect eof"
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Sun Jun 25 17:26:45 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Sun Jun 25 17:26:46 2023 - INFO  - Start testing...
++ test_execution hadoop-journalnode.service
++ service=hadoop-journalnode.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-06-25 17:26:46'
++ test_restart hadoop-journalnode.service
++ service=hadoop-journalnode.service
++ systemctl restart hadoop-journalnode.service
+Failed to restart hadoop-journalnode.service: Unit hadoop-journalnode.service not found.
++ CHECK_RESULT 5 0 0 'hadoop-journalnode.service restart failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='hadoop-journalnode.service restart failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'hadoop-journalnode.service restart failed'
++ LOG_ERROR 'hadoop-journalnode.service restart failed'
++ message='hadoop-journalnode.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-journalnode.service restart failed'
+Sun Jun 25 17:26:47 2023 - ERROR - hadoop-journalnode.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 34'
++ message='../common/common_lib.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 34'
+Sun Jun 25 17:26:48 2023 - ERROR - ../common/common_lib.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status hadoop-journalnode.service
++ grep 'Active: active'
+Unit hadoop-journalnode.service could not be found.
++ CHECK_RESULT 1 0 0 'hadoop-journalnode.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='hadoop-journalnode.service restart failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'hadoop-journalnode.service restart failed'
++ LOG_ERROR 'hadoop-journalnode.service restart failed'
++ message='hadoop-journalnode.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-journalnode.service restart failed'
+Sun Jun 25 17:26:55 2023 - ERROR - hadoop-journalnode.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 37'
++ message='../common/common_lib.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 37'
+Sun Jun 25 17:26:55 2023 - ERROR - ../common/common_lib.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl stop hadoop-journalnode.service
+Failed to stop hadoop-journalnode.service: Unit hadoop-journalnode.service not loaded.
++ CHECK_RESULT 5 0 0 'hadoop-journalnode.service stop failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='hadoop-journalnode.service stop failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'hadoop-journalnode.service stop failed'
++ LOG_ERROR 'hadoop-journalnode.service stop failed'
++ message='hadoop-journalnode.service stop failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-journalnode.service stop failed'
+Sun Jun 25 17:26:56 2023 - ERROR - hadoop-journalnode.service stop failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 39'
++ message='../common/common_lib.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 39'
+Sun Jun 25 17:26:57 2023 - ERROR - ../common/common_lib.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status hadoop-journalnode.service
++ grep 'Active: inactive'
+Unit hadoop-journalnode.service could not be found.
++ CHECK_RESULT 1 0 0 'hadoop-journalnode.service stop failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='hadoop-journalnode.service stop failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'hadoop-journalnode.service stop failed'
++ LOG_ERROR 'hadoop-journalnode.service stop failed'
++ message='hadoop-journalnode.service stop failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-journalnode.service stop failed'
+Sun Jun 25 17:27:04 2023 - ERROR - hadoop-journalnode.service stop failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 42'
++ message='../common/common_lib.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 42'
+Sun Jun 25 17:27:05 2023 - ERROR - ../common/common_lib.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl start hadoop-journalnode.service
+Failed to start hadoop-journalnode.service: Unit hadoop-journalnode.service not found.
++ CHECK_RESULT 5 0 0 'hadoop-journalnode.service start failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='hadoop-journalnode.service start failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'hadoop-journalnode.service start failed'
++ LOG_ERROR 'hadoop-journalnode.service start failed'
++ message='hadoop-journalnode.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-journalnode.service start failed'
+Sun Jun 25 17:27:06 2023 - ERROR - hadoop-journalnode.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 44'
++ message='../common/common_lib.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 44'
+Sun Jun 25 17:27:07 2023 - ERROR - ../common/common_lib.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status hadoop-journalnode.service
++ grep 'Active: active'
+Unit hadoop-journalnode.service could not be found.
++ CHECK_RESULT 1 0 0 'hadoop-journalnode.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='hadoop-journalnode.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'hadoop-journalnode.service start failed'
++ LOG_ERROR 'hadoop-journalnode.service start failed'
++ message='hadoop-journalnode.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'hadoop-journalnode.service start failed'
+Sun Jun 25 17:27:14 2023 - ERROR - hadoop-journalnode.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 47'
++ message='../common/common_lib.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 47'
+Sun Jun 25 17:27:15 2023 - ERROR - ../common/common_lib.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ test_enabled hadoop-journalnode.service
++ service=hadoop-journalnode.service
+++ systemctl is-enabled hadoop-journalnode.service
+Failed to get unit file state for hadoop-journalnode.service: No such file or directory
++ state=
++ '[' '' == enabled ']'
++ '[' '' == disabled ']'
++ '[' '' == masked ']'
++ '[' '' == static ']'
++ LOG_INFO 'Unit is indirect, ignoring.'
++ message='Unit is indirect, ignoring.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Unit is indirect, ignoring.'
+Sun Jun 25 17:27:16 2023 - INFO  - Unit is indirect, ignoring.
++ journalctl --since '2023-06-25 17:26:46' -u hadoop-journalnode.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of hadoop-journalnode.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of hadoop-journalnode.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload hadoop-journalnode.service
++ service=hadoop-journalnode.service
++ systemctl start hadoop-journalnode.service
+Failed to start hadoop-journalnode.service: Unit hadoop-journalnode.service not found.
++ systemctl reload hadoop-journalnode.service
++ grep 'Job type reload is not applicable'
++ CHECK_RESULT 1 0 0 'Job type reload is not applicable for unit hadoop-journalnode.service'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit hadoop-journalnode.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Job type reload is not applicable for unit hadoop-journalnode.service'
++ LOG_ERROR 'Job type reload is not applicable for unit hadoop-journalnode.service'
++ message='Job type reload is not applicable for unit hadoop-journalnode.service'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Job type reload is not applicable for unit hadoop-journalnode.service'
+Sun Jun 25 17:27:17 2023 - ERROR - Job type reload is not applicable for unit hadoop-journalnode.service
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 91'
++ message='../common/common_lib.sh line 91'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 91'
+Sun Jun 25 17:27:18 2023 - ERROR - ../common/common_lib.sh line 91
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl status hadoop-journalnode.service
++ grep 'Active: active'
+Unit hadoop-journalnode.service could not be found.
++ systemctl status hadoop-journalnode.service
++ grep 'inactive (dead)'
+Unit hadoop-journalnode.service could not be found.
++ return 1
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Sun Jun 25 17:27:19 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Sun Jun 25 17:27:20 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Sun Jun 25 17:27:21 2023 - INFO  - start environment cleanup.
++ sed -i '/export JAVA_HOME=\/usr\/lib\/jvm\/jre/d' /usr/libexec/hadoop-layout.sh
++ sed -i /SuccessExitStatus=143/d /usr/lib/systemd/system/hadoop-journalnode.service
+sed: can't read /usr/lib/systemd/system/hadoop-journalnode.service: No such file or directory
++ systemctl daemon-reload
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 5:21:28 ago on Sun 25 Jun 2023 12:05:09 PM CST.
+No match for argument: hadoop-hdfs
+Error: Unable to find a match: hadoop-hdfs ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 5:21:28 ago on Sun 25 Jun 2023 12:05:09 PM CST.
+No match for argument: hadoop-hdfs
+Error: Unable to find a match: hadoop-hdfs'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'Last metadata expiration check: 5:21:28 ago on Sun 25 Jun 2023 12:05:09 PM CST.\nNo match for argument: hadoop-hdfs\nError: Unable to find a match: hadoop-hdfs'
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Sun Jun 25 17:27:31 2023 - INFO  - Finish environment cleanup!
