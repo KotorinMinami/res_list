@@ -1,0 +1,616 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ source ./common/lib/util.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Jun 28 13:42:25 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'rubygem-fluentd ruby-devel tar'
++ pkgs='rubygem-fluentd ruby-devel tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'rubygem-fluentd ruby-devel tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpg7djo2ro
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpg7djo2ro
++ extract_data
++ [[ -f ./common/data.tar.gz ]]
++ tar -xvf ./common/data.tar.gz
++ fluent-gem install nokogiri
+Building native extensions. This could take a while...
+ERROR:  Error installing nokogiri:
+	ERROR: Failed to build gem native extension.
+
+    current directory: /usr/local/share/gems/gems/racc-1.7.1/ext/racc/cparse
+/usr/bin/ruby -I /usr/share/rubygems extconf.rb
+checking for rb_block_call()... *** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+	--with-opt-dir
+	--without-opt-dir
+	--with-opt-include
+	--without-opt-include=${opt-dir}/include
+	--with-opt-lib
+	--without-opt-lib=${opt-dir}/lib64
+	--with-make-prog
+	--without-make-prog
+	--srcdir=.
+	--curdir
+	--ruby=/usr/bin/$(RUBY_BASE_NAME)
+/usr/share/ruby/mkmf.rb:490:in `try_do': The compiler failed to generate an executable file. (RuntimeError)
+You have to install development tools first.
+	from /usr/share/ruby/mkmf.rb:583:in `try_link0'
+	from /usr/share/ruby/mkmf.rb:601:in `try_link'
+	from /usr/share/ruby/mkmf.rb:812:in `try_func'
+	from /usr/share/ruby/mkmf.rb:1116:in `block in have_func'
+	from /usr/share/ruby/mkmf.rb:989:in `block in checking_for'
+	from /usr/share/ruby/mkmf.rb:354:in `block (2 levels) in postpone'
+	from /usr/share/ruby/mkmf.rb:324:in `open'
+	from /usr/share/ruby/mkmf.rb:354:in `block in postpone'
+	from /usr/share/ruby/mkmf.rb:324:in `open'
+	from /usr/share/ruby/mkmf.rb:350:in `postpone'
+	from /usr/share/ruby/mkmf.rb:988:in `checking_for'
+	from /usr/share/ruby/mkmf.rb:1115:in `have_func'
+	from extconf.rb:6:in `<main>'
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /usr/local/lib64/gems/ruby/racc-1.7.1/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /usr/local/share/gems/gems/racc-1.7.1 for inspection.
+Results logged to /usr/local/lib64/gems/ruby/racc-1.7.1/gem_make.out
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Jun 28 13:42:41 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Jun 28 13:42:41 2023 - INFO  - Start to run test.
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ fluentd -c ./data/fluent.conf -i 'inport 18888' -o log.file
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'parameter '\''inport'\'' in' log.file
+2023-06-28 13:42:43 +0000 [warn]: parameter 'inport' in <ROOT>
++ CHECK_RESULT 0 0 0 'Check fluentd -i failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd -i failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 3454 3460
++ rm -f log.file
++ SLEEP_WAIT 5
++ fluentd -c ./data/fluent.conf --inline-config 'inport 18888' -o log.file
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  3454 Killed                  fluentd -c ./data/fluent.conf -i "inport 18888" -o log.file
++ grep 'parameter '\''inport'\'' in' log.file
+2023-06-28 13:42:48 +0000 [warn]: parameter 'inport' in <ROOT>
++ CHECK_RESULT 0 0 0 'Check fluentd --inline-config failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --inline-config failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 3473 3479
++ rm -f log.file
++ fluentd -c ./data/fluent.conf --emit-error-log-interval 2 -d pid.file
+2023-06-28 13:42:52 +0000 [info]: parsing config file is succeeded path="./data/fluent.conf"
+2023-06-28 13:42:52 +0000 [info]: gem 'fluentd' version '1.14.5'
+2023-06-28 13:42:52 +0000 [info]: [stdout_output] Oj isn't installed, fallback to Yajl as json parser
+2023-06-28 13:42:52 +0000 [info]: adding forwarding server '192.168.0.12:24224' host="192.168.0.12" port=24224 weight=60 plugin_id="object:7e4"
+2023-06-28 13:42:52 +0000 [info]: [forward_output] adding forwarding server '192.168.0.11:24224' host="192.168.0.11" port=24224 weight=60 plugin_id="forward_output"
+2023-06-28 13:42:52 +0000 [warn]: [http_input] LoadError
+2023-06-28 13:42:52 +0000 [info]: using configuration file: <ROOT>
+  <source>
+    @type forward
+    @id forward_input
+  </source>
+  <source>
+    @type http
+    @id http_input
+    port 8888
+  </source>
+  <source>
+    @type monitor_agent
+    @id monitor_agent_input
+    port 24220
+  </source>
+  <source>
+    @type debug_agent
+    @id debug_agent_input
+    bind "127.0.0.1"
+    port 24230
+  </source>
+  <match debug.**>
+    @type stdout
+    @id stdout_output
+  </match>
+  <match system.**>
+    @type forward
+    @id forward_output
+    <server>
+      host "192.168.0.11"
+    </server>
+    <secondary>
+      <server>
+        host "192.168.0.12"
+      </server>
+    </secondary>
+  </match>
+</ROOT>
+2023-06-28 13:42:52 +0000 [info]: starting fluentd-1.14.5 pid=3492 ruby="3.1.3"
+2023-06-28 13:42:52 +0000 [info]: spawn command to main:  cmdline=["/usr/bin/ruby", "-Eascii-8bit:ascii-8bit", "/usr/bin/fluentd", "-c", "./data/fluent.conf", "--emit-error-log-interval", "2", "-d", "pid.file", "--under-supervisor"]
+oe_test_fluentd_03.sh: line 26:  3473 Killed                  fluentd -c ./data/fluent.conf --inline-config "inport 18888" -o log.file
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ ps -ef
++ grep fluentd
++ grep -e --emit-error-log-interval
+root        3498       1  0 13:42 ?        00:00:00 /usr/bin/ruby /usr/bin/fluentd -c ./data/fluent.conf --emit-error-log-interval 2 -d pid.file
+root        3501    3498 10 13:42 ?        00:00:00 /usr/bin/ruby -Eascii-8bit:ascii-8bit /usr/bin/fluentd -c ./data/fluent.conf --emit-error-log-interval 2 -d pid.file --under-supervisor
++ CHECK_RESULT 0 0 0 'Check fluentd --emit-error-log-interval failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --emit-error-log-interval failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 3498 3501
++ rm -f pid.file
++ SLEEP_WAIT 5
++ fluentd -c ./data/v1_config.conf --conf-encoding utf-8
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+2023-06-28 13:42:58 +0000 [info]: parsing config file is succeeded path="./data/v1_config.conf"
+2023-06-28 13:42:58 +0000 [info]: gem 'fluentd' version '1.14.5'
+2023-06-28 13:42:58 +0000 [info]: using configuration file: <ROOT>
+  <source>
+    @type monitor_agent
+    bind "0.0.0.0"
+    port 19854
+  </source>
+</ROOT>
+2023-06-28 13:42:58 +0000 [info]: starting fluentd-1.14.5 pid=3518 ruby="3.1.3"
+2023-06-28 13:42:58 +0000 [info]: spawn command to main:  cmdline=["/usr/bin/ruby", "-Eascii-8bit:ascii-8bit", "/usr/bin/fluentd", "-c", "./data/v1_config.conf", "--conf-encoding", "utf-8", "--under-supervisor"]
+2023-06-28 13:42:58 +0000 [info]: adding source type="monitor_agent"
+2023-06-28 13:42:58 +0000 [info]: #0 starting fluentd worker pid=3524 ppid=3518 worker=0
+2023-06-28 13:42:58 +0000 [info]: #0 fluentd worker is now running worker=0
++ ps -ef
++ grep fluentd
++ grep -e --conf-encoding
+root        3518    3378  8 13:42 ?        00:00:00 /usr/bin/ruby /usr/bin/fluentd -c ./data/v1_config.conf --conf-encoding utf-8
+root        3524    3518  9 13:42 ?        00:00:00 /usr/bin/ruby -Eascii-8bit:ascii-8bit /usr/bin/fluentd -c ./data/v1_config.conf --conf-encoding utf-8 --under-supervisor
++ CHECK_RESULT 0 0 0 'Check fluentd --conf-encoding failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --conf-encoding failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 3518 3524
++ rm -f pid.file
++ SLEEP_WAIT 5
++ fluentd -c ./data/v1_config.conf --disable-shared-socket
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+2023-06-28 13:43:03 +0000 [info]: parsing config file is succeeded path="./data/v1_config.conf"
+2023-06-28 13:43:03 +0000 [info]: gem 'fluentd' version '1.14.5'
+2023-06-28 13:43:03 +0000 [info]: using configuration file: <ROOT>
+  <source>
+    @type monitor_agent
+    bind "0.0.0.0"
+    port 19854
+  </source>
+</ROOT>
+2023-06-28 13:43:03 +0000 [info]: starting fluentd-1.14.5 pid=3532 ruby="3.1.3"
+2023-06-28 13:43:03 +0000 [info]: spawn command to main:  cmdline=["/usr/bin/ruby", "-Eascii-8bit:ascii-8bit", "/usr/bin/fluentd", "-c", "./data/v1_config.conf", "--disable-shared-socket", "--under-supervisor"]
+2023-06-28 13:43:03 +0000 [info]: shared socket for multiple workers is disabled
+2023-06-28 13:43:03 +0000 [info]: adding source type="monitor_agent"
+2023-06-28 13:43:03 +0000 [info]: #0 starting fluentd worker pid=3538 ppid=3532 worker=0
+2023-06-28 13:43:03 +0000 [info]: #0 fluentd worker is now running worker=0
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  3518 Killed                  fluentd -c ./data/v1_config.conf --conf-encoding utf-8
++ ps -ef
++ grep fluentd
++ grep -e --disable-shared-socket
+root        3532    3378  8 13:43 ?        00:00:00 /usr/bin/ruby /usr/bin/fluentd -c ./data/v1_config.conf --disable-shared-socket
+root        3538    3532  9 13:43 ?        00:00:00 /usr/bin/ruby -Eascii-8bit:ascii-8bit /usr/bin/fluentd -c ./data/v1_config.conf --disable-shared-socket --under-supervisor
++ CHECK_RESULT 0 0 0 'Check fluentd --disable-shared-socket failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --disable-shared-socket failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 3532 3538
++ rm -f pid.file
++ SLEEP_WAIT 15
++ wait_time=15
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 15 --cmd '' --mode 1
++ fluentd -c ./data/fluentd_cloudwatch_log.conf -p ./lib/gems/fluent-plugin-cloudwatch-logs-0.14.3/lib/fluent/plugin -I ./lib/gems/aws-sdk-cloudwatchlogs-1.53.0/lib -I ./lib/gems/aws-sdk-core-3.155.0/lib/ -I ./lib/gems/aws-partitions-1.637.0/lib/ -I ./lib/gems/jmespath-1.6.1/lib/ -I ./lib/gems/aws-eventstream-1.2.0/lib/ -I ./lib/gems/aws-sigv4-1.5.1/lib/ --suppress-repeated-stacktrace true
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  3532 Killed                  fluentd -c ./data/v1_config.conf --disable-shared-socket
++ grep 'suppressed same stacktrace' tmp.txt
++ CHECK_RESULT 1 0 0 'Check fluentd --suppress-repeated-stacktrace failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --suppress-repeated-stacktrace failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check fluentd --suppress-repeated-stacktrace failed'
++ LOG_ERROR 'Check fluentd --suppress-repeated-stacktrace failed'
++ message='Check fluentd --suppress-repeated-stacktrace failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check fluentd --suppress-repeated-stacktrace failed'
+Wed Jun 28 13:43:22 2023 - ERROR - Check fluentd --suppress-repeated-stacktrace failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fluentd_03.sh line 61'
++ message='oe_test_fluentd_03.sh line 61'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fluentd_03.sh line 61'
+Wed Jun 28 13:43:23 2023 - ERROR - oe_test_fluentd_03.sh line 61
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ rm -f tmp.txt
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ fluentd -c ./data/in_forward.conf --without-source -o tmp.log
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep ''\''--without-source'\'' is applied. Ignore <source> sections' tmp.log
+2023-06-28 13:43:23 +0000 [info]: '--without-source' is applied. Ignore <source> sections
++ CHECK_RESULT 0 0 0 'Check fluentd --without-source failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --without-source failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd -c'
++ kill -9 3553 3559
++ rm -f tmp.log
++ fluentd --use-v1-config -c ./data/v1_config.conf -o log.file
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  3553 Killed                  fluentd -c ./data/in_forward.conf --without-source -o tmp.log
++ grep 'fluentd worker is now running worker' log.file
+2023-06-28 13:43:28 +0000 [info]: #0 fluentd worker is now running worker=0
++ CHECK_RESULT 0 0 0 'Check fluentd --use-v1-config failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --use-v1-config failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd --use-v1-config'
++ kill -9 3563 3569
++ rm -f log.file
++ SLEEP_WAIT 5
++ fluentd --use-v0-config -c ./data/v0_config.conf -o log.file
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  3563 Killed                  fluentd --use-v1-config -c ./data/v1_config.conf -o log.file
++ grep 'fluentd worker is now running worker' log.file
+2023-06-28 13:43:33 +0000 [info]: #0 fluentd worker is now running worker=0
++ CHECK_RESULT 0 0 0 'Check fluentd --use-v0-config failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --use-v0-config failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd --use-v0-config'
++ kill -9 3575 3581
++ rm -f log.file
++ fluentd --strict-config-value -c ./data/strict_value.conf
++ grep 'config error file'
+2023-06-28 13:43:38 +0000 [error]: config error file="./data/strict_value.conf" error_class=Fluent::ConfigError error="port: invalid value for Integer(): \"false\""
+oe_test_fluentd_03.sh: line 26:  3575 Killed                  fluentd --use-v0-config -c ./data/v0_config.conf -o log.file
++ CHECK_RESULT 0 0 0 'Check fluentd --strict-config-value failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --strict-config-value failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ fluentd --enable-input-metrics -c ./data/in_forward.conf
+2023-06-28 13:43:39 +0000 [info]: parsing config file is succeeded path="./data/in_forward.conf"
+2023-06-28 13:43:39 +0000 [info]: gem 'fluentd' version '1.14.5'
+2023-06-28 13:43:39 +0000 [info]: Oj isn't installed, fallback to Yajl as json parser
+2023-06-28 13:43:39 +0000 [info]: using configuration file: <ROOT>
+  <system>
+    rpc_endpoint "0.0.0.0:24444"
+  </system>
+  <source>
+    @type forward
+  </source>
+  <match test>
+    @type stdout
+  </match>
+</ROOT>
+2023-06-28 13:43:39 +0000 [info]: starting fluentd-1.14.5 pid=3589 ruby="3.1.3"
+2023-06-28 13:43:39 +0000 [info]: spawn command to main:  cmdline=["/usr/bin/ruby", "-Eascii-8bit:ascii-8bit", "/usr/bin/fluentd", "--enable-input-metrics", "-c", "./data/in_forward.conf", "--under-supervisor"]
+2023-06-28 13:43:39 +0000 [info]: adding match pattern="test" type="stdout"
+2023-06-28 13:43:39 +0000 [info]: #0 Oj isn't installed, fallback to Yajl as json parser
+2023-06-28 13:43:39 +0000 [info]: adding source type="forward"
+2023-06-28 13:43:39 +0000 [info]: #0 starting fluentd worker pid=3595 ppid=3589 worker=0
+2023-06-28 13:43:39 +0000 [info]: #0 listening port port=24224 bind="0.0.0.0"
+2023-06-28 13:43:39 +0000 [info]: #0 fluentd worker is now running worker=0
++ ps -ef
++ grep fluent
++ grep -e --enable-input-metrics
+root        3589    3378  8 13:43 ?        00:00:00 /usr/bin/ruby /usr/bin/fluentd --enable-input-metrics -c ./data/in_forward.conf
+root        3595    3589  7 13:43 ?        00:00:00 /usr/bin/ruby -Eascii-8bit:ascii-8bit /usr/bin/fluentd --enable-input-metrics -c ./data/in_forward.conf --under-supervisor
++ CHECK_RESULT 0 0 0 'Check fluentd --enable-input-metrics failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --enable-input-metrics failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd --enable-input-metrics'
++ kill -9 3589 3595
++ SLEEP_WAIT 5
++ fluentd --enable-size-metrics -c ./data/in_forward.conf
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+2023-06-28 13:43:44 +0000 [info]: parsing config file is succeeded path="./data/in_forward.conf"
+2023-06-28 13:43:44 +0000 [info]: gem 'fluentd' version '1.14.5'
+2023-06-28 13:43:44 +0000 [info]: Oj isn't installed, fallback to Yajl as json parser
+2023-06-28 13:43:44 +0000 [info]: using configuration file: <ROOT>
+  <system>
+    rpc_endpoint "0.0.0.0:24444"
+  </system>
+  <source>
+    @type forward
+  </source>
+  <match test>
+    @type stdout
+  </match>
+</ROOT>
+2023-06-28 13:43:44 +0000 [info]: starting fluentd-1.14.5 pid=3601 ruby="3.1.3"
+2023-06-28 13:43:44 +0000 [info]: spawn command to main:  cmdline=["/usr/bin/ruby", "-Eascii-8bit:ascii-8bit", "/usr/bin/fluentd", "--enable-size-metrics", "-c", "./data/in_forward.conf", "--under-supervisor"]
+2023-06-28 13:43:44 +0000 [info]: adding match pattern="test" type="stdout"
+2023-06-28 13:43:44 +0000 [info]: #0 Oj isn't installed, fallback to Yajl as json parser
+2023-06-28 13:43:44 +0000 [info]: adding source type="forward"
+2023-06-28 13:43:44 +0000 [info]: #0 starting fluentd worker pid=3607 ppid=3601 worker=0
+2023-06-28 13:43:44 +0000 [info]: #0 listening port port=24224 bind="0.0.0.0"
+2023-06-28 13:43:44 +0000 [info]: #0 fluentd worker is now running worker=0
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  3589 Killed                  fluentd --enable-input-metrics -c ./data/in_forward.conf
++ ps -ef
++ grep fluent
++ grep -e --enable-size-metrics
+root        3601    3378  8 13:43 ?        00:00:00 /usr/bin/ruby /usr/bin/fluentd --enable-size-metrics -c ./data/in_forward.conf
+root        3607    3601  8 13:43 ?        00:00:00 /usr/bin/ruby -Eascii-8bit:ascii-8bit /usr/bin/fluentd --enable-size-metrics -c ./data/in_forward.conf --under-supervisor
++ CHECK_RESULT 0 0 0 'Check fluentd --enable-size-metrics failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fluentd --enable-size-metrics failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'fluentd --enable-size-metrics'
++ kill -9 3601 3607
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Jun 28 13:43:48 2023 - INFO  - End to run test.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 19:  3601 Killed                  fluentd --enable-size-metrics -c ./data/in_forward.conf
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Jun 28 13:43:48 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Jun 28 13:43:48 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpg7djo2ro ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpg7djo2ro
++ '[' 0 -ne 0 ']'
++ clean_dir
+++ ls
++ filelist='common
+data
+example
+lib
+loki
+oe_test_fluent_binlog_reader.sh
+oe_test_fluent_ca_generate.sh
+oe_test_fluent_cap_ctl.sh
+oe_test_fluent_cat_01.sh
+oe_test_fluent_cat_02_2003.sh
+oe_test_fluent_cat_02.sh
+oe_test_fluent_ctl.sh
+oe_test_fluentd_01_2003.sh
+oe_test_fluentd_01.sh
+oe_test_fluentd_02.sh
+oe_test_fluentd_03_2003.sh
+oe_test_fluentd_03.sh
+oe_test_fluentd_04.sh
+oe_test_fluent_debug.sh
+oe_test_fluent_gem_01_2003.sh
+oe_test_fluent_gem_01.sh
+oe_test_fluent_gem_02_2003.sh
+oe_test_fluent_gem_02.sh
+oe_test_fluent_gem_03_2003.sh
+oe_test_fluent_gem_03.sh
+oe_test_fluent_plugin_config_format_2003.sh
+oe_test_fluent_plugin_config_format.sh
+oe_test_fluent_plugin_generate.sh
+rubygem-fluentd.md'
++ for filename in ${filelist[@]}
++ [[ -d common ]]
++ [[ ! commonx == \c\o\m\m\o\n\x ]]
++ for filename in ${filelist[@]}
++ [[ -d data ]]
++ [[ ! datax == \c\o\m\m\o\n\x ]]
++ rm -rf data
++ for filename in ${filelist[@]}
++ [[ -d example ]]
++ [[ ! examplex == \c\o\m\m\o\n\x ]]
++ rm -rf example
++ for filename in ${filelist[@]}
++ [[ -d lib ]]
++ [[ ! libx == \c\o\m\m\o\n\x ]]
++ rm -rf lib
++ for filename in ${filelist[@]}
++ [[ -d loki ]]
++ [[ ! lokix == \c\o\m\m\o\n\x ]]
++ rm -rf loki
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_binlog_reader.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_ca_generate.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cap_ctl.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_02_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_cat_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_ctl.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_01_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_03_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_03.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluentd_04.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_debug.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_01_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_01.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_02_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_02.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_03_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_gem_03.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_config_format_2003.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_config_format.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d oe_test_fluent_plugin_generate.sh ]]
++ for filename in ${filelist[@]}
++ [[ -d rubygem-fluentd.md ]]
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Jun 28 13:43:51 2023 - INFO  - End to restore the test environment.

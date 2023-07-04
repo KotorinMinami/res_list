@@ -1,0 +1,202 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sun Jun 25 15:52:31 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'fetch-crl tar'
++ pkgs='fetch-crl tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'fetch-crl tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp9cq8hfyf
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp9cq8hfyf
++ tar -xvf common/data.tar.gz
++ cp -f ./data/KEK.crl_url /etc/grid-security/certificates
++ cp -f ./data/KEK.pem /etc/grid-security/certificates
++ mkdir -p ./tmp1 ./tmp2 ./tmp3 ./tmp4
++ systemctl start fetch-crl.service
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Sun Jun 25 15:53:42 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sun Jun 25 15:53:44 2023 - INFO  - Start to run test.
++ fetch-crl -q -l ./data/
++ CHECK_RESULT 0 0 0 'Check fetch-crl -q failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl -q failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl --quiet -l ./data/
++ CHECK_RESULT 0 0 0 'Check fetch-crl --quiet failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl --quiet failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl --cadir ./data/ -l ./data/
++ CHECK_RESULT 0 0 0 'Check fetch-crl --cadir failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl --cadir failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl -l ./data/ -s ./tmp1
++ ls -al ./tmp1/
++ grep .0.state
+-rw-r--r-- 1 root root 4945 Jun 25 15:54 KEK.0.state
++ CHECK_RESULT 0 0 0 'Check fetch-crl -s failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl -s failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl -l ./data/ --statedir ./tmp2
++ ls -al ./tmp2/
++ grep .0.state
+-rw-r--r-- 1 root root 4945 Jun 25 15:54 KEK.0.state
++ CHECK_RESULT 0 0 0 'Check fetch-crl --statedir failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl --statedir failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl -T 100 -l ./data/
++ CHECK_RESULT 0 0 0 'Check fetch-crl -T failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl -T failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl --httptimeout 1 -l ./data/
++ CHECK_RESULT 0 0 0 'Check fetch-crl --httptimeout failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl --httptimeout failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl --output ./tmp3 -l ./data/
+++ ls ./tmp3/
+++ wc -l
++ test 2 -gt 0
++ CHECK_RESULT 0 0 0 'Check fetch-crl --output failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl --output failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl -o ./tmp4 -l ./data/
+++ ls ./tmp4/
+++ wc -l
++ test 2 -gt 0
++ CHECK_RESULT 0 0 0 'Check fetch-crl -o failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl -o failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fetch-crl --format pem -l ./data/
++ ls -al ./data/
++ grep .0.crl.pem
+-rw-r--r-- 1 root root 3437 Jun 25 15:54 KEK.0.crl.pem
++ CHECK_RESULT 0 0 0 'Check fetch-crl --format failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fetch-crl --format failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Sun Jun 25 15:54:36 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Sun Jun 25 15:54:37 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Sun Jun 25 15:54:39 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp9cq8hfyf ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp9cq8hfyf
++ '[' 0 -ne 0 ']'
++ rm -rf ./data ./tmp1 ./tmp2 ./tmp3 ./tmp4
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Sun Jun 25 15:55:05 2023 - INFO  - End to restore the test environment.
