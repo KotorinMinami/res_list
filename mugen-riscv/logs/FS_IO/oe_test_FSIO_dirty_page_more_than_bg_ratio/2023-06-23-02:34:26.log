@@ -1,0 +1,106 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Fri Jun 23 02:34:33 2023 - INFO  - Start to prepare the database config.
+++ sysctl vm.dirty_background_ratio
+++ awk '{print $3}'
++ ori=10
++ sync
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Fri Jun 23 02:34:35 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 23 02:34:36 2023 - INFO  - Start to run test.
++ dd if=/dev/zero of=/tmp/test_dirty_page_file_1 bs=5120 count=1
+1+0 records in
+1+0 records out
+5120 bytes (5.1 kB, 5.0 KiB) copied, 0.0172058 s, 298 kB/s
+++ awk '{print $2}'
+++ grep Dirty /proc/meminfo
++ dirty1=4
++ sysctl vm.dirty_background_ratio=0
+vm.dirty_background_ratio = 0
++ SLEEP_WAIT 30
++ wait_time=30
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 30 --cmd '' --mode 1
+++ grep Dirty /proc/meminfo
+++ awk '{print $2}'
++ dirty2=0
++ dd if=/dev/zero of=/tmp/test_dirty_page_file_2 bs=5120 count=1
+1+0 records in
+1+0 records out
+5120 bytes (5.1 kB, 5.0 KiB) copied, 0.011532 s, 444 kB/s
++ SLEEP_WAIT 30
++ wait_time=30
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 30 --cmd '' --mode 1
+++ grep Dirty /proc/meminfo
+++ awk '{print $2}'
++ dirty3=0
++ SLEEP_WAIT 30
++ wait_time=30
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 30 --cmd '' --mode 1
++ [[ 4 -ge 0 ]]
++ [[ 0 -le 0 ]]
++ CHECK_RESULT 0 0 0 'The dirty page doesn'\''t writeback when its size more than dirty_background_ratio.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The dirty page doesn'\''t writeback when its size more than dirty_background_ratio.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun 23 02:36:15 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Jun 23 02:36:17 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 23 02:36:18 2023 - INFO  - Start to restore the test environment.
++ sysctl vm.dirty_background_ratio=10
+vm.dirty_background_ratio = 10
++ rm -f /tmp/test_dirty_page_file_1 /tmp/test_dirty_page_file_2
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun 23 02:36:20 2023 - INFO  - End to restore the test environment.

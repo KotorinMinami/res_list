@@ -1,0 +1,279 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ grep test_vggroup
+++ lsblk
+++ [[ 1 -eq 0 ]]
+++ rm -rf /tmp/point120230623021736 /tmp/point220230623021736 /tmp/point320230623021736
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Fri Jun 23 02:18:15 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230623021815
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230623021815
+++++ grep disk
+++++ lsblk
+++++ tail -n 1
+++++ awk '{print $1}'
++++ free_disk=vdt
++++ disk_name=/dev/vdt
++++ pvcreate /dev/vdt -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdt
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20230623013800
++++ printf test_vggroup20230623013800
+++ vggroup=test_vggroup20230623013800
+++ count=1
+++ msg='test_vggroup20230623013800 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230623021815
+++ point=/tmp/point120230623021815
+++ lvcreate -n test_lv120230623021815 -L 512M test_vggroup20230623013800 -y
+  Volume group "test_vggroup20230623013800" has insufficient free space (124 extents): 128 required.
+++ mkfs -t ext3 /dev/test_vggroup20230623013800/test_lv120230623021815
+mke2fs 1.46.5 (30-Dec-2021)
+The file /dev/test_vggroup20230623013800/test_lv120230623021815 does not exist and no size was specified.
+++ mkdir /tmp/point120230623021815
+++ mount /dev/test_vggroup20230623013800/test_lv120230623021815 /tmp/point120230623021815
+mount: /tmp/point120230623021815: special device /dev/test_vggroup20230623013800/test_lv120230623021815 does not exist.
+++ msg='test_vggroup20230623013800 /tmp/point120230623021815 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230623021815
+++ point=/tmp/point220230623021815
+++ lvcreate -n test_lv220230623021815 -L 512M test_vggroup20230623013800 -y
+  Volume group "test_vggroup20230623013800" has insufficient free space (124 extents): 128 required.
+++ mkfs -t ext4 /dev/test_vggroup20230623013800/test_lv220230623021815
+mke2fs 1.46.5 (30-Dec-2021)
+The file /dev/test_vggroup20230623013800/test_lv220230623021815 does not exist and no size was specified.
+++ mkdir /tmp/point220230623021815
+++ mount /dev/test_vggroup20230623013800/test_lv220230623021815 /tmp/point220230623021815
+mount: /tmp/point220230623021815: special device /dev/test_vggroup20230623013800/test_lv220230623021815 does not exist.
+++ msg='test_vggroup20230623013800 /tmp/point120230623021815 /tmp/point220230623021815 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230623021815
+++ point=/tmp/point320230623021815
+++ lvcreate -n test_lv320230623021815 -L 512M test_vggroup20230623013800 -y
+  Volume group "test_vggroup20230623013800" has insufficient free space (124 extents): 128 required.
+++ mkfs -t xfs /dev/test_vggroup20230623013800/test_lv320230623021815
+mkfs: failed to execute mkfs.xfs: No such file or directory
+++ mkdir /tmp/point320230623021815
+++ mount /dev/test_vggroup20230623013800/test_lv320230623021815 /tmp/point320230623021815
+mount: /tmp/point320230623021815: special device /dev/test_vggroup20230623013800/test_lv320230623021815 does not exist.
+++ msg='test_vggroup20230623013800 /tmp/point120230623021815 /tmp/point220230623021815 /tmp/point320230623021815 '
+++ count=4
+++ echo test_vggroup20230623013800 /tmp/point120230623021815 /tmp/point220230623021815 /tmp/point320230623021815
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Jun 23 02:18:23 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 23 02:18:25 2023 - INFO  - Start to run test.
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point120230623021815
++ echo test
+++ stat /tmp/point120230623021815/testfile1
+++ awk '{print $1}'
+++ grep Inode
+++ cut -d : -f 3
++ inode1=3280
++ mv /tmp/point120230623021815/testfile1 /tmp/point120230623021815/testfile2
+++ stat /tmp/point120230623021815/testfile2
+++ awk '{print $1}'
+++ grep Inode
+++ cut -d : -f 3
++ inode2=3280
++ [[ 3280 -eq 3280 ]]
++ CHECK_RESULT 0 0 0 'Check inode failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q test /tmp/point120230623021815/testfile2
++ CHECK_RESULT 0 0 0 'The file info of /tmp/point120230623021815/testfile2 is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The file info of /tmp/point120230623021815/testfile2 is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220230623021815
++ echo test
+++ stat /tmp/point220230623021815/testfile1
+++ grep Inode
+++ awk '{print $1}'
+++ cut -d : -f 3
++ inode1=3281
++ mv /tmp/point220230623021815/testfile1 /tmp/point220230623021815/testfile2
+++ cut -d : -f 3
+++ awk '{print $1}'
+++ stat /tmp/point220230623021815/testfile2
+++ grep Inode
++ inode2=3281
++ [[ 3281 -eq 3281 ]]
++ CHECK_RESULT 0 0 0 'Check inode failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q test /tmp/point220230623021815/testfile2
++ CHECK_RESULT 0 0 0 'The file info of /tmp/point220230623021815/testfile2 is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The file info of /tmp/point220230623021815/testfile2 is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320230623021815
++ echo test
+++ stat /tmp/point320230623021815/testfile1
+++ cut -d : -f 3
+++ awk '{print $1}'
+++ grep Inode
++ inode1=3282
++ mv /tmp/point320230623021815/testfile1 /tmp/point320230623021815/testfile2
+++ grep Inode
+++ stat /tmp/point320230623021815/testfile2
+++ cut -d : -f 3
+++ awk '{print $1}'
++ inode2=3282
++ [[ 3282 -eq 3282 ]]
++ CHECK_RESULT 0 0 0 'Check inode failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q test /tmp/point320230623021815/testfile2
++ CHECK_RESULT 0 0 0 'The file info of /tmp/point320230623021815/testfile2 is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The file info of /tmp/point320230623021815/testfile2 is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun 23 02:18:29 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Jun 23 02:18:30 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 23 02:18:32 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230623013800 /tmp/point120230623021815 /tmp/point220230623021815 /tmp/point320230623021815
++ list='test_vggroup20230623013800 /tmp/point120230623021815 /tmp/point220230623021815 /tmp/point320230623021815'
++ REMOVE_FS 'test_vggroup20230623013800 /tmp/point120230623021815 /tmp/point220230623021815 /tmp/point320230623021815'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230623013800
+++ df -T
+++ grep test_vggroup20230623013800
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230623021815
+++ df -T
+++ awk '{print $1}'
+++ grep /tmp/point120230623021815
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230623021815
+++ df -T
+++ awk '{print $1}'
+++ grep /tmp/point220230623021815
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230623021815
+++ df -T
+++ grep /tmp/point320230623021815
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun 23 02:18:35 2023 - INFO  - End to restore the test environment.

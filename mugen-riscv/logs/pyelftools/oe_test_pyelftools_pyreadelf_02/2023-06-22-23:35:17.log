@@ -1,0 +1,224 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Jun 22 23:35:24 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL python3-pyelftools
++ pkgs=python3-pyelftools
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs python3-pyelftools --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp541aktlp
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp541aktlp
++ cp ./common/sample_exe64.elf ./
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Jun 22 23:36:38 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Jun 22 23:36:40 2023 - INFO  - Start to run test.
++ grep PHDR
++ pyreadelf --segments sample_exe64.elf
+  PHDR           0x0000000000000040 0x0000000000400040 0x0000000000400040
++ CHECK_RESULT 0 0 0 'Check pyreadelf --segments sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf --segments sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pyreadelf -S sample_exe64.elf
++ grep init
+  [13] .init             PROGBITS         00000000004003c0  000003c0
++ CHECK_RESULT 0 0 0 'Check pyreadelf -S sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf -S sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pyreadelf --section-headers sample_exe64.elf
++ grep init
+  [13] .init             PROGBITS         00000000004003c0  000003c0
++ CHECK_RESULT 0 0 0 'Check pyreadelf --section-headers sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf --section-headers sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pyreadelf --sections sample_exe64.elf
++ grep init
+  [13] .init             PROGBITS         00000000004003c0  000003c0
++ CHECK_RESULT 0 0 0 'Check pyreadelf --sections sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf --sections sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pyreadelf -e -A sample_exe64.elf
++ grep PHDR
+  PHDR           0x0000000000000040 0x0000000000400040 0x0000000000400040
++ CHECK_RESULT 0 0 0 'Check pyreadelf -e -A  sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf -e -A  sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pyreadelf --headers --arch-specific sample_exe64.elf
++ grep PHDR
+  PHDR           0x0000000000000040 0x0000000000400040 0x0000000000400040
++ CHECK_RESULT 0 0 0 'Check pyreadelf --headers  --arch-specific sample_exe64.elf   failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf --headers  --arch-specific sample_exe64.elf   failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pyreadelf -s sample_exe64.elf
++ grep init
+    13: 00000000004003c0     0 SECTION LOCAL  DEFAULT   13 .init
+    39: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS init.c
+    40: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS initfini.c
+    55: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS initfini.c
+    57: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS elf-init.c
+    59: 0000000000600e14     0 NOTYPE  LOCAL  HIDDEN    20 __init_array_end
+    60: 0000000000600e14     0 NOTYPE  LOCAL  HIDDEN    20 __init_array_start
+    74: 0000000000400530   137 FUNC    GLOBAL DEFAULT   15 __libc_csu_init
+    79: 00000000004003c0     0 FUNC    GLOBAL DEFAULT   13 _init
++ CHECK_RESULT 0 0 0 'Check pyreadelf -s sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf -s sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep init
++ pyreadelf --symbols sample_exe64.elf
+    13: 00000000004003c0     0 SECTION LOCAL  DEFAULT   13 .init
+    39: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS init.c
+    40: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS initfini.c
+    55: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS initfini.c
+    57: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS elf-init.c
+    59: 0000000000600e14     0 NOTYPE  LOCAL  HIDDEN    20 __init_array_end
+    60: 0000000000600e14     0 NOTYPE  LOCAL  HIDDEN    20 __init_array_start
+    74: 0000000000400530   137 FUNC    GLOBAL DEFAULT   15 __libc_csu_init
+    79: 00000000004003c0     0 FUNC    GLOBAL DEFAULT   13 _init
++ CHECK_RESULT 0 0 0 'Check pyreadelf --symbols sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf --symbols sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pyreadelf --syms sample_exe64.elf
++ grep init
+    13: 00000000004003c0     0 SECTION LOCAL  DEFAULT   13 .init
+    39: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS init.c
+    40: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS initfini.c
+    55: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS initfini.c
+    57: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS elf-init.c
+    59: 0000000000600e14     0 NOTYPE  LOCAL  HIDDEN    20 __init_array_end
+    60: 0000000000600e14     0 NOTYPE  LOCAL  HIDDEN    20 __init_array_start
+    74: 0000000000400530   137 FUNC    GLOBAL DEFAULT   15 __libc_csu_init
+    79: 00000000004003c0     0 FUNC    GLOBAL DEFAULT   13 _init
++ CHECK_RESULT 0 0 0 'Check pyreadelf --syms sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf --syms sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pyreadelf -n sample_exe64.elf
++ grep GNU
+  GNU                  0x00000010	NT_GNU_ABI_TAG (ABI version tag)
+  GNU                  0x00000014	NT_GNU_BUILD_ID (unique build ID bitstring)
++ CHECK_RESULT 0 0 0 'Check pyreadelf -n sample_exe64.elf  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pyreadelf -n sample_exe64.elf  failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Jun 22 23:37:33 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Jun 22 23:37:35 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp541aktlp ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp541aktlp
++ '[' 0 -ne 0 ']'
++ rm -rf sample_exe64.elf
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Thu Jun 22 23:38:00 2023 - INFO  - Finish restoring the test environment.

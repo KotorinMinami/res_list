@@ -1,0 +1,341 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Mon Jun 26 05:53:15 2023 - INFO  - Start to prepare the database config.
++ DNF_INSTALL sysstat
++ pkgs=sysstat
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs sysstat --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp10f8nzfm
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp10f8nzfm
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230626055435
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230626055435
+++++ lsblk
+++++ awk '{print $1}'
+++++ tail -n 1
+++++ grep disk
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 0 -eq 0 ]]
++++ vggroup=test_vggroup20230626055435
++++ vgcreate test_vggroup20230626055435 /dev/vdb
++++ printf test_vggroup20230626055435
+++ vggroup=test_vggroup20230626055435
+++ count=1
+++ msg='test_vggroup20230626055435 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230626055435
+++ point=/tmp/point120230626055435
+++ lvcreate -n test_lv120230626055435 -L 512M test_vggroup20230626055435 -y
+++ mkfs -t ext3 /dev/test_vggroup20230626055435/test_lv120230626055435
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point120230626055435
+++ mount /dev/test_vggroup20230626055435/test_lv120230626055435 /tmp/point120230626055435
+++ msg='test_vggroup20230626055435 /tmp/point120230626055435 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230626055435
+++ point=/tmp/point220230626055435
+++ lvcreate -n test_lv220230626055435 -L 512M test_vggroup20230626055435 -y
+++ mkfs -t ext4 /dev/test_vggroup20230626055435/test_lv220230626055435
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point220230626055435
+++ mount /dev/test_vggroup20230626055435/test_lv220230626055435 /tmp/point220230626055435
+++ msg='test_vggroup20230626055435 /tmp/point120230626055435 /tmp/point220230626055435 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230626055435
+++ point=/tmp/point320230626055435
+++ lvcreate -n test_lv320230626055435 -L 512M test_vggroup20230626055435 -y
+++ mkfs -t xfs /dev/test_vggroup20230626055435/test_lv320230626055435
+++ mkdir /tmp/point320230626055435
+++ mount /dev/test_vggroup20230626055435/test_lv320230626055435 /tmp/point320230626055435
+++ msg='test_vggroup20230626055435 /tmp/point120230626055435 /tmp/point220230626055435 /tmp/point320230626055435 '
+++ count=4
+++ echo test_vggroup20230626055435 /tmp/point120230626055435 /tmp/point220230626055435 /tmp/point320230626055435
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Mon Jun 26 05:54:50 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 05:54:52 2023 - INFO  - Start to run test.
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ mnt_point=/tmp/point120230626055435
+++ df -T
+++ grep /tmp/point120230626055435
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626055435-test_lv120230626055435
+++ ls -l /dev/mapper/test_vggroup20230626055435-test_lv120230626055435
+++ awk '{print $11}'
+++ cut -d / -f 2
++ dm=dm-0
++ dd if=/dev/zero of=/tmp/point120230626055435/testfile1 bs=512000 count=100
+++ iostat
+++ grep dm-0
+++ awk '{print $6}'
++ wr=3337
++ [[ 3337 -ge 3000 ]]
++ CHECK_RESULT 0 0 0 'read speed slow.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='read speed slow.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dd if=/tmp/point120230626055435/testfile1 of=/tmp/point120230626055435/testfile2 bs=512000 count=100
+++ iostat
+++ grep dm-0
+++ awk '{print $7}'
++ ar=24984
++ [[ 24984 -ge 6000 ]]
++ CHECK_RESULT 0 0 0 'write speed slow.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='write speed slow.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ mnt_point=/tmp/point220230626055435
+++ df -T
+++ grep /tmp/point220230626055435
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626055435-test_lv220230626055435
+++ ls -l /dev/mapper/test_vggroup20230626055435-test_lv220230626055435
+++ awk '{print $11}'
+++ cut -d / -f 2
++ dm=dm-1
++ dd if=/dev/zero of=/tmp/point220230626055435/testfile1 bs=512000 count=100
+++ iostat
+++ grep dm-1
+++ awk '{print $6}'
++ wr=4241
++ [[ 4241 -ge 3000 ]]
++ CHECK_RESULT 0 0 0 'read speed slow.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='read speed slow.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dd if=/tmp/point220230626055435/testfile1 of=/tmp/point220230626055435/testfile2 bs=512000 count=100
+++ iostat
+++ grep dm-1
+++ awk '{print $7}'
++ ar=24996
++ [[ 24996 -ge 6000 ]]
++ CHECK_RESULT 0 0 0 'write speed slow.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='write speed slow.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ mnt_point=/tmp/point320230626055435
+++ df -T
+++ grep /tmp/point320230626055435
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626055435-test_lv320230626055435
+++ ls -l /dev/mapper/test_vggroup20230626055435-test_lv320230626055435
+++ awk '{print $11}'
+++ cut -d / -f 2
++ dm=dm-2
++ dd if=/dev/zero of=/tmp/point320230626055435/testfile1 bs=512000 count=100
+++ iostat
+++ grep dm-2
+++ awk '{print $6}'
+100+0 records in
+100+0 records out
+51200000 bytes (51 MB, 49 MiB) copied, 4.65001 s, 11.0 MB/s
++ wr=4289
++ [[ 4289 -ge 3000 ]]
++ CHECK_RESULT 0 0 0 'read speed slow.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='read speed slow.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dd if=/tmp/point320230626055435/testfile1 of=/tmp/point320230626055435/testfile2 bs=512000 count=100
+++ iostat
+++ grep dm-2
+++ awk '{print $7}'
++ ar=68012
++ [[ 68012 -ge 6000 ]]
++ CHECK_RESULT 0 0 0 'write speed slow.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='write speed slow.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+100+0 records in
+100+0 records out
+51200000 bytes (51 MB, 49 MiB) copied, 4.61694 s, 11.1 MB/s
+100+0 records in
+100+0 records out
+51200000 bytes (51 MB, 49 MiB) copied, 4.66932 s, 11.0 MB/s
+100+0 records in
+100+0 records out
+51200000 bytes (51 MB, 49 MiB) copied, 6.89599 s, 7.4 MB/s
+100+0 records in
+100+0 records out
+51200000 bytes (51 MB, 49 MiB) copied, 3.17992 s, 16.1 MB/s
+100+0 records in
+100+0 records out
+51200000 bytes (51 MB, 49 MiB) copied, 2.96171 s, 17.3 MB/s
+Mon Jun 26 05:55:02 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Mon Jun 26 05:55:04 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 05:55:06 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230626055435 /tmp/point120230626055435 /tmp/point220230626055435 /tmp/point320230626055435
++ list='test_vggroup20230626055435 /tmp/point120230626055435 /tmp/point220230626055435 /tmp/point320230626055435'
++ REMOVE_FS 'test_vggroup20230626055435 /tmp/point120230626055435 /tmp/point220230626055435 /tmp/point320230626055435'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230626055435
+++ df -T
+++ grep test_vggroup20230626055435
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20230626055435-test_lv120230626055435
+/dev/mapper/test_vggroup20230626055435-test_lv220230626055435
+/dev/mapper/test_vggroup20230626055435-test_lv320230626055435'
++ [[ /dev/mapper/test_vggroup20230626055435-test_lv120230626055435
+/dev/mapper/test_vggroup20230626055435-test_lv220230626055435
+/dev/mapper/test_vggroup20230626055435-test_lv320230626055435 == '' ]]
++ umount -f test_vggroup20230626055435
+umount: test_vggroup20230626055435: no mount point specified.
++ rm -rf test_vggroup20230626055435
++ DELETE_LV /dev/mapper/test_vggroup20230626055435-test_lv120230626055435 /dev/mapper/test_vggroup20230626055435-test_lv220230626055435 /dev/mapper/test_vggroup20230626055435-test_lv320230626055435
++ lvname=/dev/mapper/test_vggroup20230626055435-test_lv120230626055435
++ lvremove /dev/mapper/test_vggroup20230626055435-test_lv120230626055435 -y
+  Logical volume test_vggroup20230626055435/test_lv120230626055435 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230626055435
+++ df -T
+++ grep /tmp/point120230626055435
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626055435-test_lv120230626055435
++ [[ /dev/mapper/test_vggroup20230626055435-test_lv120230626055435 == '' ]]
++ umount -f /tmp/point120230626055435
++ rm -rf /tmp/point120230626055435
++ DELETE_LV /dev/mapper/test_vggroup20230626055435-test_lv120230626055435
++ lvname=/dev/mapper/test_vggroup20230626055435-test_lv120230626055435
++ lvremove /dev/mapper/test_vggroup20230626055435-test_lv120230626055435 -y
+  Logical volume "test_lv120230626055435" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230626055435
+++ df -T
+++ grep /tmp/point220230626055435
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626055435-test_lv220230626055435
++ [[ /dev/mapper/test_vggroup20230626055435-test_lv220230626055435 == '' ]]
++ umount -f /tmp/point220230626055435
++ rm -rf /tmp/point220230626055435
++ DELETE_LV /dev/mapper/test_vggroup20230626055435-test_lv220230626055435
++ lvname=/dev/mapper/test_vggroup20230626055435-test_lv220230626055435
++ lvremove /dev/mapper/test_vggroup20230626055435-test_lv220230626055435 -y
+  Logical volume "test_lv220230626055435" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230626055435
+++ df -T
+++ grep /tmp/point320230626055435
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626055435-test_lv320230626055435
++ [[ /dev/mapper/test_vggroup20230626055435-test_lv320230626055435 == '' ]]
++ umount -f /tmp/point320230626055435
++ rm -rf /tmp/point320230626055435
++ DELETE_LV /dev/mapper/test_vggroup20230626055435-test_lv320230626055435
++ lvname=/dev/mapper/test_vggroup20230626055435-test_lv320230626055435
++ lvremove /dev/mapper/test_vggroup20230626055435-test_lv320230626055435 -y
+  Logical volume "test_lv320230626055435" successfully removed.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp10f8nzfm ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp10f8nzfm
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jun 26 05:55:54 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,382 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Jun 26 03:20:02 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'containerd docker-runc'
++ pkgs='containerd docker-runc'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'containerd docker-runc' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpffdarnsm
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpffdarnsm
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Mon Jun 26 03:21:54 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 03:21:56 2023 - INFO  - Start to run test.
++ ctr images pull docker.io/library/nginx:latest
++ nohup containerd
+time="2023-06-26T03:21:59.105867328+08:00" level=info msg="starting containerd" revision=.m version=
+runtime: lfstack.push invalid packing: node=0xffffff741899c0 cnt=0x1 packed=0xffff741899c00001 -> node=0xffff741899c0
+fatal error: lfstack.push
+
+runtime stack:
+runtime.throw({0xaaaaaadf669ecb?, 0xaaaaaadecfed48?})
+	/usr/lib/golang/src/runtime/panic.go:1047 +0x44 fp=0xffffff67ffe750 sp=0xffffff67ffe728 pc=0xaaaaaadecf9ff4
+runtime.(*lfstack).push(0xc00004c500?, 0xffffff741899c0)
+	/usr/lib/golang/src/runtime/lfstack.go:30 +0x120 fp=0xffffff67ffe780 sp=0xffffff67ffe750 pc=0xaaaaaadeccd2c0
+runtime.(*spanSetBlockAlloc).free(...)
+	/usr/lib/golang/src/runtime/mspanset.go:292
+runtime.(*spanSet).reset(0xaaaaaae02d1cd8)
+	/usr/lib/golang/src/runtime/mspanset.go:265 +0xb0 fp=0xffffff67ffe7b0 sp=0xffffff67ffe780 pc=0xaaaaaadecf3e28
+runtime.finishsweep_m()
+	/usr/lib/golang/src/runtime/mgcsweep.go:260 +0xc0 fp=0xffffff67ffe7e8 sp=0xffffff67ffe7b0 pc=0xaaaaaadece6f80
+runtime.gcStart.func1()
+	/usr/lib/golang/src/runtime/mgc.go:668 +0x20 fp=0xffffff67ffe7f0 sp=0xffffff67ffe7e8 pc=0xaaaaaadecdbe30
+runtime.systemstack()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:133 +0x54 fp=0xffffff67ffe7f8 sp=0xffffff67ffe7f0 pc=0xaaaaaaded29e5c
+
+goroutine 61 [running]:
+runtime.systemstack_switch()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:96 +0x8 fp=0xc000540b08 sp=0xc000540b00 pc=0xaaaaaaded29df0
+runtime.gcStart({0xffffff9d039f18?, 0x400009?, 0x4?})
+	/usr/lib/golang/src/runtime/mgc.go:667 +0x358 fp=0xc000540b98 sp=0xc000540b08 pc=0xaaaaaadecdc1a8
+runtime.mallocgc(0x1c, 0x0, 0x0)
+	/usr/lib/golang/src/runtime/malloc.go:1148 +0x6a8 fp=0xc000540c10 sp=0xc000540b98 pc=0xaaaaaadecceed8
+runtime.slicebytetostring(0xc0002181a0?, 0xc00000ab00, 0x1c)
+	/usr/lib/golang/src/runtime/string.go:114 +0x6c fp=0xc000540c40 sp=0xc000540c10 pc=0xaaaaaaded15924
+fmt.Sprintf({0xaaaaaadf660990, 0x5}, {0xc000540d40, 0x2, 0x2})
+	/usr/lib/golang/src/fmt/print.go:220 +0x8c fp=0xc000540c90 sp=0xc000540c40 pc=0xaaaaaadeda4904
+github.com/containerd/containerd/plugin.(*Registration).URI(...)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/plugin/plugin.go:125
+github.com/containerd/containerd/plugin.children(0xc00050c360, 0x5?, 0xc000540f98)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/plugin/plugin.go:213 +0x13c fp=0xc000540d60 sp=0xc000540c90 pc=0xaaaaaadf05aa14
+github.com/containerd/containerd/plugin.children(0xc00012cea0, 0x5?, 0xc000540f98)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/plugin/plugin.go:215 +0x2ac fp=0xc000540e30 sp=0xc000540d60 pc=0xaaaaaadf05ab84
+github.com/containerd/containerd/plugin.children(0xc00012c5a0, 0xc000540fb0?, 0xc000540f98)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/plugin/plugin.go:215 +0x2ac fp=0xc000540f00 sp=0xc000540e30 pc=0xaaaaaadf05ab84
+github.com/containerd/containerd/plugin.Graph(0xc0003bcb30)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/plugin/plugin.go:200 +0x158 fp=0xc000541040 sp=0xc000540f00 pc=0xaaaaaadf05a740
+github.com/containerd/containerd/services/server.LoadPlugins({0xaaaaaadfa4d738?, 0xc000350940}, 0xc000514380)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/services/server/server.go:530 +0x644 fp=0xc0005412b8 sp=0xc000541040 pc=0xaaaaaadf62adb4
+github.com/containerd/containerd/services/server.New({0xaaaaaadfa4d738, 0xc000350940}, 0xc000514380)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/services/server/server.go:125 +0x198 fp=0xc000541ef8 sp=0xc0005412b8 pc=0xaaaaaadf628148
+github.com/containerd/containerd/cmd/containerd/command.App.func1.1()
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/cmd/containerd/command/main.go:195 +0x70 fp=0xc000541fd8 sp=0xc000541ef8 pc=0xaaaaaadf659818
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000541fd8 sp=0xc000541fd8 pc=0xaaaaaaded2c06c
+created by github.com/containerd/containerd/cmd/containerd/command.App.func1
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/cmd/containerd/command/main.go:192 +0x6c4
+
+goroutine 1 [select]:
+runtime.gopark(0xc0004ff410?, 0x2?, 0x18?, 0x9f?, 0xc0004ff214?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc0004ff058 sp=0xc0004ff040 pc=0xaaaaaadecfca10
+runtime.selectgo(0xc0004ff410, 0xc0004ff210, 0xc0004ff398?, 0x0, 0x1?, 0x1)
+	/usr/lib/golang/src/runtime/select.go:328 +0x3b4 fp=0xc0004ff160 sp=0xc0004ff058 pc=0xaaaaaaded0cabc
+github.com/containerd/containerd/cmd/containerd/command.App.func1(0xc00014a000?)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/cmd/containerd/command/main.go:216 +0x720 fp=0xc0004ff950 sp=0xc0004ff160 pc=0xaaaaaadf658e30
+github.com/containerd/containerd/vendor/github.com/urfave/cli.HandleAction({0xaaaaaadf898640?, 0xaaaaaadfa3b7b8?}, 0xc000110200?)
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/vendor/github.com/urfave/cli/app.go:523 +0x6c fp=0xc0004ff960 sp=0xc0004ff950 pc=0xaaaaaadf645544
+github.com/containerd/containerd/vendor/github.com/urfave/cli.(*App).Run(0xc0005141c0, {0xc000110200, 0x1, 0x1})
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/vendor/github.com/urfave/cli/app.go:285 +0x5d4 fp=0xc0004fff30 sp=0xc0004ff960 pc=0xaaaaaadf643324
+main.main()
+	github.com/containerd/containerd/cmd/containerd/main.go:33 +0x3c fp=0xc0004fff80 sp=0xc0004fff30 pc=0xaaaaaadf65d17c
+runtime.main()
+	/usr/lib/golang/src/runtime/proc.go:250 +0x218 fp=0xc0004fffd8 sp=0xc0004fff80 pc=0xaaaaaadecfc620
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004fffd8 sp=0xc0004fffd8 pc=0xaaaaaaded2c06c
+
+goroutine 2 [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005cfb0 sp=0xc00005cf98 pc=0xaaaaaadecfca10
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.forcegchelper()
+	/usr/lib/golang/src/runtime/proc.go:302 +0xb0 fp=0xc00005cfd8 sp=0xc00005cfb0 pc=0xaaaaaadecfc898
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005cfd8 sp=0xc00005cfd8 pc=0xaaaaaaded2c06c
+created by runtime.init.5
+	/usr/lib/golang/src/runtime/proc.go:290 +0x28
+
+goroutine 18 [GC sweep wait]:
+runtime.gopark(0x1?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000058798 sp=0xc000058780 pc=0xaaaaaadecfca10
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.bgsweep(0x0?)
+	/usr/lib/golang/src/runtime/mgcsweep.go:297 +0x114 fp=0xc0000587c8 sp=0xc000058798 pc=0xaaaaaadece712c
+runtime.gcenable.func1()
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x2c fp=0xc0000587d8 sp=0xc0000587c8 pc=0xaaaaaadecdb8fc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000587d8 sp=0xc0000587d8 pc=0xaaaaaaded2c06c
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:178 +0x70
+
+goroutine 19 [GC scavenge wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x412e848000000000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000058f80 sp=0xc000058f68 pc=0xaaaaaadecfca10
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.(*scavengerState).park(0xaaaaaae02a8e60)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:389 +0x68 fp=0xc000058fa8 sp=0xc000058f80 pc=0xaaaaaadece5058
+runtime.bgscavenge(0x0?)
+	/usr/lib/golang/src/runtime/mgcscavenge.go:622 +0x6c fp=0xc000058fc8 sp=0xc000058fa8 pc=0xaaaaaadece55c4
+runtime.gcenable.func2()
+	/usr/lib/golang/src/runtime/mgc.go:179 +0x2c fp=0xc000058fd8 sp=0xc000058fc8 pc=0xaaaaaadecdb89c
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000058fd8 sp=0xc000058fd8 pc=0xaaaaaaded2c06c
+created by runtime.gcenable
+	/usr/lib/golang/src/runtime/mgc.go:179 +0xb0
+
+goroutine 34 [finalizer wait]:
+runtime.gopark(0x3000?, 0x18000?, 0x0?, 0x30?, 0x3000?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00005c5a8 sp=0xc00005c590 pc=0xaaaaaadecfca10
+runtime.goparkunlock(...)
+	/usr/lib/golang/src/runtime/proc.go:369
+runtime.runfinq()
+	/usr/lib/golang/src/runtime/mfinal.go:180 +0x110 fp=0xc00005c7d8 sp=0xc00005c5a8 pc=0xaaaaaadecdaaf0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005c7d8 sp=0xc00005c7d8 pc=0xaaaaaaded2c06c
+created by runtime.createfing
+	/usr/lib/golang/src/runtime/mfinal.go:157 +0x64
+
+goroutine 36 [GC worker (idle)]:
+runtime.gopark(0xc0004147a0?, 0x0?, 0xd8?, 0x83?, 0xaaaaaadecc8a10?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000414748 sp=0xc000414730 pc=0xaaaaaadecfca10
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004147d8 sp=0xc000414748 pc=0xaaaaaadecddae8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004147d8 sp=0xc0004147d8 pc=0xaaaaaaded2c06c
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 50 [GC worker (idle)]:
+runtime.gopark(0x28ada6d7ff?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000410748 sp=0xc000410730 pc=0xaaaaaadecfca10
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0004107d8 sp=0xc000410748 pc=0xaaaaaadecddae8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0004107d8 sp=0xc0004107d8 pc=0xaaaaaaded2c06c
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 37 [GC worker (idle)]:
+runtime.gopark(0x28ac9021bf?, 0x0?, 0x0?, 0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000414f48 sp=0xc000414f30 pc=0xaaaaaadecfca10
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc000414fd8 sp=0xc000414f48 pc=0xaaaaaadecddae8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000414fd8 sp=0xc000414fd8 pc=0xaaaaaaded2c06c
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 21 [GC worker (idle)]:
+runtime.gopark(0xaaaaaadfa3e3b0?, 0xc000040020?, 0x18?, 0x14?, 0x0?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000059748 sp=0xc000059730 pc=0xaaaaaadecfca10
+runtime.gcBgMarkWorker()
+	/usr/lib/golang/src/runtime/mgc.go:1235 +0x100 fp=0xc0000597d8 sp=0xc000059748 pc=0xaaaaaadecddae8
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc0000597d8 sp=0xc0000597d8 pc=0xaaaaaaded2c06c
+created by runtime.gcBgMarkStartWorkers
+	/usr/lib/golang/src/runtime/mgc.go:1159 +0x2c
+
+goroutine 59 [select]:
+runtime.gopark(0xc00006ad38?, 0x2?, 0x2?, 0x0?, 0xc00006ac9c?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc00006ab38 sp=0xc00006ab20 pc=0xaaaaaadecfca10
+runtime.selectgo(0xc00006ad38, 0xc00006ac98, 0x0?, 0x0, 0x0?, 0x1)
+	/usr/lib/golang/src/runtime/select.go:328 +0x3b4 fp=0xc00006ac40 sp=0xc00006ab38 pc=0xaaaaaaded0cabc
+github.com/containerd/containerd/cmd/containerd/command.handleSignals.func1()
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/cmd/containerd/command/main_unix.go:44 +0xb4 fp=0xc00006afd8 sp=0xc00006ac40 pc=0xaaaaaadf65accc
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00006afd8 sp=0xc00006afd8 pc=0xaaaaaaded2c06c
+created by github.com/containerd/containerd/cmd/containerd/command.handleSignals
+	/home/abuild/rpmbuild/BUILD/_build/src/github.com/containerd/containerd/cmd/containerd/command/main_unix.go:41 +0x118
+
+goroutine 60 [select, locked to thread]:
+runtime.gopark(0xc000415fb0?, 0x2?, 0x0?, 0x0?, 0xc000415fac?)
+	/usr/lib/golang/src/runtime/proc.go:363 +0x110 fp=0xc000415e50 sp=0xc000415e38 pc=0xaaaaaadecfca10
+runtime.selectgo(0xc000415fb0, 0xc000415fa8, 0x0?, 0x0, 0x0?, 0x1)
+	/usr/lib/golang/src/runtime/select.go:328 +0x3b4 fp=0xc000415f58 sp=0xc000415e50 pc=0xaaaaaaded0cabc
+runtime.ensureSigM.func1()
+	/usr/lib/golang/src/runtime/signal_unix.go:991 +0x1e8 fp=0xc000415fd8 sp=0xc000415f58 pc=0xaaaaaaded11140
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc000415fd8 sp=0xc000415fd8 pc=0xaaaaaaded2c06c
+created by runtime.ensureSigM
+	/usr/lib/golang/src/runtime/signal_unix.go:974 +0xdc
+
+goroutine 4 [syscall]:
+runtime.notetsleepg(0x0?, 0x0?)
+	/usr/lib/golang/src/runtime/lock_futex.go:236 +0x48 fp=0xc00005bfa8 sp=0xc00005bf78 pc=0xaaaaaadeccda58
+os/signal.signal_recv()
+	/usr/lib/golang/src/runtime/sigqueue.go:152 +0x34 fp=0xc00005bfc0 sp=0xc00005bfa8 pc=0xaaaaaaded2914c
+os/signal.loop()
+	/usr/lib/golang/src/os/signal/signal_unix.go:23 +0x20 fp=0xc00005bfd8 sp=0xc00005bfc0 pc=0xaaaaaadf360ec0
+runtime.goexit()
+	/usr/lib/golang/src/runtime/asm_riscv64.s:516 +0x4 fp=0xc00005bfd8 sp=0xc00005bfd8 pc=0xaaaaaaded2c06c
+created by os/signal.Notify.func1.1
+	/usr/lib/golang/src/os/signal/signal.go:151 +0x2c
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ ctr images ls
++ grep docker.io
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ CHECK_RESULT 1 0 0 'Image removal failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Image removal failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Image removal failed'
++ LOG_ERROR 'Image removal failed'
++ message='Image removal failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Image removal failed'
+Mon Jun 26 03:22:21 2023 - ERROR - Image removal failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_containerd.sh line 33'
++ message='oe_test_containerd.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_containerd.sh line 33'
+Mon Jun 26 03:22:23 2023 - ERROR - oe_test_containerd.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ ctr c create docker.io/library/nginx:latest nginx-container
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ ctr c ls
++ grep nginx-container
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ CHECK_RESULT 1 0 0 'Container creation failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Container creation failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Container creation failed'
++ LOG_ERROR 'Container creation failed'
++ message='Container creation failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Container creation failed'
+Mon Jun 26 03:22:47 2023 - ERROR - Container creation failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_containerd.sh line 36'
++ message='oe_test_containerd.sh line 36'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_containerd.sh line 36'
+Mon Jun 26 03:22:49 2023 - ERROR - oe_test_containerd.sh line 36
++ '[' 0 -eq 1 ']'
++ return 0
++ ctr t start -d nginx-container
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ CHECK_RESULT 1 0 0 'Container startup failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Container startup failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Container startup failed'
++ LOG_ERROR 'Container startup failed'
++ message='Container startup failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Container startup failed'
+Mon Jun 26 03:23:02 2023 - ERROR - Container startup failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_containerd.sh line 38'
++ message='oe_test_containerd.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_containerd.sh line 38'
+Mon Jun 26 03:23:03 2023 - ERROR - oe_test_containerd.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ ctr t ls
++ grep nginx-container
++ grep RUNNING
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ CHECK_RESULT 1 0 0 'Container not running'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Container not running'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Container not running'
++ LOG_ERROR 'Container not running'
++ message='Container not running'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Container not running'
+Mon Jun 26 03:23:17 2023 - ERROR - Container not running
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_containerd.sh line 40'
++ message='oe_test_containerd.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_containerd.sh line 40'
+Mon Jun 26 03:23:18 2023 - ERROR - oe_test_containerd.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Mon Jun 26 03:23:19 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Jun 26 03:23:21 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 03:23:22 2023 - INFO  - Start to restore the test environment.
++ ctr task kill nginx-container
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ ctr c rm nginx-container
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ ctr images rm docker.io/library/nginx:latest
+ctr: failed to dial "/run/containerd/containerd.sock": context deadline exceeded: connection error: desc = "transport: error while dialing: dial unix:///run/containerd/containerd.sock: timeout"
++ ps -ef
++ grep -v grep
++ grep containerd
++ awk '{print $2}'
++ grep -v oe_test_containerd
++ xargs -I '{}' kill -9 '{}'
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpffdarnsm ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpffdarnsm
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Mon Jun 26 03:24:12 2023 - INFO  - Finish restoring the test environment.

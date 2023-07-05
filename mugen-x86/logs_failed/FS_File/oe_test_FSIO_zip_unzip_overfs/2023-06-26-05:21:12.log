@@ -1,0 +1,366 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Mon Jun 26 05:21:22 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS "ext3 ext4 xfs"))
+++ CREATE_FS 'ext3 ext4 xfs'
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230626052122
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230626052122
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20230626051859
++++ printf test_vggroup20230626051859
+++ vggroup=test_vggroup20230626051859
+++ count=1
+++ msg='test_vggroup20230626051859 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230626052122
+++ point=/tmp/point120230626052122
+++ lvcreate -n test_lv120230626052122 -L 512M test_vggroup20230626051859 -y
+++ mkfs -t ext3 /dev/test_vggroup20230626051859/test_lv120230626052122
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point120230626052122
+++ mount /dev/test_vggroup20230626051859/test_lv120230626052122 /tmp/point120230626052122
+++ msg='test_vggroup20230626051859 /tmp/point120230626052122 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230626052122
+++ point=/tmp/point220230626052122
+++ lvcreate -n test_lv220230626052122 -L 512M test_vggroup20230626051859 -y
+++ mkfs -t ext4 /dev/test_vggroup20230626051859/test_lv220230626052122
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point220230626052122
+++ mount /dev/test_vggroup20230626051859/test_lv220230626052122 /tmp/point220230626052122
+++ msg='test_vggroup20230626051859 /tmp/point120230626052122 /tmp/point220230626052122 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230626052122
+++ point=/tmp/point320230626052122
+++ lvcreate -n test_lv320230626052122 -L 512M test_vggroup20230626051859 -y
+++ mkfs -t xfs /dev/test_vggroup20230626051859/test_lv320230626052122
+++ mkdir /tmp/point320230626052122
+++ mount /dev/test_vggroup20230626051859/test_lv320230626052122 /tmp/point320230626052122
+++ msg='test_vggroup20230626051859 /tmp/point120230626052122 /tmp/point220230626052122 /tmp/point320230626052122 '
+++ count=4
+++ echo test_vggroup20230626051859 /tmp/point120230626052122 /tmp/point220230626052122 /tmp/point320230626052122
++ ext3_point=/tmp/point120230626052122
++ ext4_point=/tmp/point220230626052122
++ xfs_point=/tmp/point320230626052122
++ mkdir /tmp/point120230626052122/testDir1 /tmp/point120230626052122/testDir2
++ echo 'test file'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Mon Jun 26 05:21:32 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 05:21:34 2023 - INFO  - Start to run test.
++ zip -r /tmp/point220230626052122/test1.zip /tmp/point120230626052122/testDir1
+  adding: tmp/point120230626052122/testDir1/ (stored 0%)
+  adding: tmp/point120230626052122/testDir1/testFile (stored 0%)
++ CHECK_RESULT 0 0 0 'Compress file by zip from ext3 to ext4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by zip from ext3 to ext4 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ unzip -l /tmp/point220230626052122/test1.zip
++ grep testFile
+oe_test_FSIO_zip_unzip_overfs.sh: line 36: unzip: command not found
++ CHECK_RESULT 1 0 0 'Check file on zip in ext4 failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check file on zip in ext4 failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check file on zip in ext4 failed.'
++ LOG_ERROR 'Check file on zip in ext4 failed.'
++ message='Check file on zip in ext4 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check file on zip in ext4 failed.'
+Mon Jun 26 05:21:36 2023 - ERROR - Check file on zip in ext4 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_zip_unzip_overfs.sh line 37'
++ message='oe_test_FSIO_zip_unzip_overfs.sh line 37'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_zip_unzip_overfs.sh line 37'
+Mon Jun 26 05:21:37 2023 - ERROR - oe_test_FSIO_zip_unzip_overfs.sh line 37
++ return 0
++ unzip /tmp/point220230626052122/test1.zip -d /tmp/point220230626052122
+oe_test_FSIO_zip_unzip_overfs.sh: line 38: unzip: command not found
++ CHECK_RESULT 127 0 0 'Decompress file by zip in ext4 failed.'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Decompress file by zip in ext4 failed.'
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Decompress file by zip in ext4 failed.'
++ LOG_ERROR 'Decompress file by zip in ext4 failed.'
++ message='Decompress file by zip in ext4 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Decompress file by zip in ext4 failed.'
+Mon Jun 26 05:21:38 2023 - ERROR - Decompress file by zip in ext4 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_zip_unzip_overfs.sh line 39'
++ message='oe_test_FSIO_zip_unzip_overfs.sh line 39'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_zip_unzip_overfs.sh line 39'
+Mon Jun 26 05:21:40 2023 - ERROR - oe_test_FSIO_zip_unzip_overfs.sh line 39
++ return 0
++ zip -r /tmp/point320230626052122/test2.zip /tmp/point120230626052122/testDir1
+  adding: tmp/point120230626052122/testDir1/ (stored 0%)
+  adding: tmp/point120230626052122/testDir1/testFile (stored 0%)
++ CHECK_RESULT 0 0 0 'Compress file by zip from ext3 to xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by zip from ext3 to xfs failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ unzip -l /tmp/point320230626052122/test2.zip
++ grep testFile
+oe_test_FSIO_zip_unzip_overfs.sh: line 42: unzip: command not found
++ CHECK_RESULT 1 0 0 'Check file on zip in xfs failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check file on zip in xfs failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check file on zip in xfs failed.'
++ LOG_ERROR 'Check file on zip in xfs failed.'
++ message='Check file on zip in xfs failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check file on zip in xfs failed.'
+Mon Jun 26 05:21:42 2023 - ERROR - Check file on zip in xfs failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_zip_unzip_overfs.sh line 43'
++ message='oe_test_FSIO_zip_unzip_overfs.sh line 43'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_zip_unzip_overfs.sh line 43'
+Mon Jun 26 05:21:44 2023 - ERROR - oe_test_FSIO_zip_unzip_overfs.sh line 43
++ return 0
++ unzip /tmp/point320230626052122/test2.zip -d /tmp/point320230626052122
+oe_test_FSIO_zip_unzip_overfs.sh: line 44: unzip: command not found
++ CHECK_RESULT 127 0 0 'Decompress file by zip in xfs failed.'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Decompress file by zip in xfs failed.'
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Decompress file by zip in xfs failed.'
++ LOG_ERROR 'Decompress file by zip in xfs failed.'
++ message='Decompress file by zip in xfs failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Decompress file by zip in xfs failed.'
+Mon Jun 26 05:21:45 2023 - ERROR - Decompress file by zip in xfs failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_zip_unzip_overfs.sh line 45'
++ message='oe_test_FSIO_zip_unzip_overfs.sh line 45'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_zip_unzip_overfs.sh line 45'
+Mon Jun 26 05:21:47 2023 - ERROR - oe_test_FSIO_zip_unzip_overfs.sh line 45
++ return 0
++ zip -r /tmp/point320230626052122/test3.zip /tmp/point220230626052122//tmp/point120230626052122/testDir1
+	zip warning: name not matched: /tmp/point220230626052122//tmp/point120230626052122/testDir1
+
+zip error: Nothing to do! (try: zip -r /tmp/point320230626052122/test3.zip . -i /tmp/point220230626052122//tmp/point120230626052122/testDir1)
++ CHECK_RESULT 12 0 0 'Compress file by zip from ext4 to xfs failed.'
++ actual_result=12
++ expect_result=0
++ mode=0
++ error_log='Compress file by zip from ext4 to xfs failed.'
++ '[' -z 12 ']'
++ '[' 0 -eq 0 ']'
++ test 12x '!=' 0x
++ test -n 'Compress file by zip from ext4 to xfs failed.'
++ LOG_ERROR 'Compress file by zip from ext4 to xfs failed.'
++ message='Compress file by zip from ext4 to xfs failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Compress file by zip from ext4 to xfs failed.'
+Mon Jun 26 05:21:48 2023 - ERROR - Compress file by zip from ext4 to xfs failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_zip_unzip_overfs.sh line 47'
++ message='oe_test_FSIO_zip_unzip_overfs.sh line 47'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_zip_unzip_overfs.sh line 47'
+Mon Jun 26 05:21:49 2023 - ERROR - oe_test_FSIO_zip_unzip_overfs.sh line 47
++ return 0
++ unzip -l /tmp/point320230626052122/test3.zip
++ grep testFile
+oe_test_FSIO_zip_unzip_overfs.sh: line 48: unzip: command not found
++ CHECK_RESULT 1 0 0 'Check file on zip in xfs failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check file on zip in xfs failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check file on zip in xfs failed.'
++ LOG_ERROR 'Check file on zip in xfs failed.'
++ message='Check file on zip in xfs failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check file on zip in xfs failed.'
+Mon Jun 26 05:21:51 2023 - ERROR - Check file on zip in xfs failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_zip_unzip_overfs.sh line 49'
++ message='oe_test_FSIO_zip_unzip_overfs.sh line 49'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_zip_unzip_overfs.sh line 49'
+Mon Jun 26 05:21:52 2023 - ERROR - oe_test_FSIO_zip_unzip_overfs.sh line 49
++ return 0
++ unzip /tmp/point320230626052122/test3.zip -d /tmp/point320230626052122
+oe_test_FSIO_zip_unzip_overfs.sh: line 50: unzip: command not found
++ CHECK_RESULT 127 0 0 'Decompress file by zip in xfs failed.'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Decompress file by zip in xfs failed.'
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Decompress file by zip in xfs failed.'
++ LOG_ERROR 'Decompress file by zip in xfs failed.'
++ message='Decompress file by zip in xfs failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Decompress file by zip in xfs failed.'
+Mon Jun 26 05:21:54 2023 - ERROR - Decompress file by zip in xfs failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_zip_unzip_overfs.sh line 51'
++ message='oe_test_FSIO_zip_unzip_overfs.sh line 51'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_zip_unzip_overfs.sh line 51'
+Mon Jun 26 05:21:55 2023 - ERROR - oe_test_FSIO_zip_unzip_overfs.sh line 51
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jun 26 05:21:57 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Jun 26 05:21:58 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 05:22:00 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230626051859 /tmp/point120230626052122 /tmp/point220230626052122 /tmp/point320230626052122
++ list='test_vggroup20230626051859 /tmp/point120230626052122 /tmp/point220230626052122 /tmp/point320230626052122'
++ REMOVE_FS 'test_vggroup20230626051859 /tmp/point120230626052122 /tmp/point220230626052122 /tmp/point320230626052122'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230626051859
+++ df -T
+++ grep test_vggroup20230626051859
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20230626051859-test_lv120230626052122
+/dev/mapper/test_vggroup20230626051859-test_lv220230626052122
+/dev/mapper/test_vggroup20230626051859-test_lv320230626052122'
++ [[ /dev/mapper/test_vggroup20230626051859-test_lv120230626052122
+/dev/mapper/test_vggroup20230626051859-test_lv220230626052122
+/dev/mapper/test_vggroup20230626051859-test_lv320230626052122 == '' ]]
++ umount -f test_vggroup20230626051859
+umount: test_vggroup20230626051859: no mount point specified.
++ rm -rf test_vggroup20230626051859
++ DELETE_LV /dev/mapper/test_vggroup20230626051859-test_lv120230626052122 /dev/mapper/test_vggroup20230626051859-test_lv220230626052122 /dev/mapper/test_vggroup20230626051859-test_lv320230626052122
++ lvname=/dev/mapper/test_vggroup20230626051859-test_lv120230626052122
++ lvremove /dev/mapper/test_vggroup20230626051859-test_lv120230626052122 -y
+  Logical volume test_vggroup20230626051859/test_lv120230626052122 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230626052122
+++ df -T
+++ awk '{print $1}'
+++ grep /tmp/point120230626052122
++ lv=/dev/mapper/test_vggroup20230626051859-test_lv120230626052122
++ [[ /dev/mapper/test_vggroup20230626051859-test_lv120230626052122 == '' ]]
++ umount -f /tmp/point120230626052122
++ rm -rf /tmp/point120230626052122
++ DELETE_LV /dev/mapper/test_vggroup20230626051859-test_lv120230626052122
++ lvname=/dev/mapper/test_vggroup20230626051859-test_lv120230626052122
++ lvremove /dev/mapper/test_vggroup20230626051859-test_lv120230626052122 -y
+  Logical volume "test_lv120230626052122" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230626052122
+++ df -T
+++ grep /tmp/point220230626052122
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626051859-test_lv220230626052122
++ [[ /dev/mapper/test_vggroup20230626051859-test_lv220230626052122 == '' ]]
++ umount -f /tmp/point220230626052122
++ rm -rf /tmp/point220230626052122
++ DELETE_LV /dev/mapper/test_vggroup20230626051859-test_lv220230626052122
++ lvname=/dev/mapper/test_vggroup20230626051859-test_lv220230626052122
++ lvremove /dev/mapper/test_vggroup20230626051859-test_lv220230626052122 -y
+  Logical volume "test_lv220230626052122" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230626052122
+++ df -T
+++ grep /tmp/point320230626052122
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626051859-test_lv320230626052122
++ [[ /dev/mapper/test_vggroup20230626051859-test_lv320230626052122 == '' ]]
++ umount -f /tmp/point320230626052122
++ rm -rf /tmp/point320230626052122
++ DELETE_LV /dev/mapper/test_vggroup20230626051859-test_lv320230626052122
++ lvname=/dev/mapper/test_vggroup20230626051859-test_lv320230626052122
++ lvremove /dev/mapper/test_vggroup20230626051859-test_lv320230626052122 -y
+  Logical volume "test_lv320230626052122" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jun 26 05:22:06 2023 - INFO  - End to restore the test environment.

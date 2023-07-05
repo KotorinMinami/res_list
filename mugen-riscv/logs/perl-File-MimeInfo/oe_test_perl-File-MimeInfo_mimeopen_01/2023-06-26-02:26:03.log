@@ -1,0 +1,232 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Jun 26 02:26:09 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'perl-File-MimeInfo tar'
++ pkgs='perl-File-MimeInfo tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'perl-File-MimeInfo tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpvodveknp
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpvodveknp
++ tar -zxvf common/test.tar.gz
+data/
+data/cpanm
+data/data.txt
++ mkdir -p tmp/ /root/.local/share/applications/
++ expect
+spawn mimeopen data/data.txt
+WARNING: You don't seem to have any mimeinfo.cache files.
+Try running the update-desktop-database command. If you
+don't have this command you should install the
+desktop-file-utils package. This package is available from
+http://freedesktop.org/wiki/Software/desktop-file-utils/
+Use of uninitialized value in subroutine entry at /usr/share/perl5/vendor_perl/File/BaseDir.pm line 105.
+Use of uninitialized value in subroutine entry at /usr/share/perl5/vendor_perl/File/BaseDir.pm line 105.
+Use of uninitialized value in subroutine entry at /usr/share/perl5/vendor_perl/File/BaseDir.pm line 105.
+Please choose a default application for files of type text/plain
+
+	1) Other...
+
+use application #1
+use command: vi
+Opening "data/data.txt" with vi  (text/plain)
+
+E558: Terminal entry not found in terminfo
+'unknown' not known. Available builtin terminals are:
+    builtin_ansi
+    builtin_xterm
+    builtin_iris-ansi
+    builtin_dumb
+defaulting to 'ansi'
+[0m[H[2J[24;1H"data/data.txt"+ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Mon Jun 26 02:27:22 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 02:27:23 2023 - INFO  - Start to run test.
++ expect
++ grep ' with vi' tmp/1.txt
+Opening "data/data.txt" with vi  (text/plain)
++ CHECK_RESULT 0 0 0 'Check mimeopen -a failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen -a failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep ' with vi' tmp/2.txt
+Opening "data/data.txt" with vi  (text/plain)
++ CHECK_RESULT 0 0 0 'Check mimeopen --ask failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen --ask failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep 'use application' tmp/3.txt
+use application #1
++ CHECK_RESULT 0 0 0 'Check mimeopen -d failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen -d failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep 'use application' tmp/4.txt
+use application #1
++ CHECK_RESULT 0 0 0 'Check mimeopen --ask-default failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen --ask-default failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep data/data.txt tmp/5.txt
+spawn mimeopen -n data/data.txt
++ CHECK_RESULT 0 0 0 'Check mimeopen -n failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen -n failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep data/data.txt tmp/6.txt
+spawn mimeopen --no-ask data/data.txt
++ CHECK_RESULT 0 0 0 'Check mimeopen --no-ask failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen --no-ask failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep data/data.txt tmp/7.txt
+spawn mimeopen -M data/data.txt
++ CHECK_RESULT 0 0 0 'Check mimeopen -M failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen -M failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep data/data.txt tmp/8.txt
+spawn mimeopen --magic-only data/data.txt
++ CHECK_RESULT 0 0 0 'Check mimeopen --magic-only failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen --magic-only failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep data/data.txt tmp/9.txt
+spawn mimeopen --database=/usr/share/mime data/data.txt
++ CHECK_RESULT 0 0 0 'Check mimeopen --database failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen --database failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
++ grep data/data.txt tmp/10.txt
+spawn mimeopen -D data/data.txt
++ CHECK_RESULT 0 0 0 'Check mimeopen -D failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check mimeopen -D failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jun 26 02:28:18 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Mon Jun 26 02:28:19 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 02:28:21 2023 - INFO  - Start to restore the test environment.
++ rm -rf tmp/ /root/.local/share/applications/ data/
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpvodveknp ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpvodveknp
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jun 26 02:28:43 2023 - INFO  - End to restore the test environment.

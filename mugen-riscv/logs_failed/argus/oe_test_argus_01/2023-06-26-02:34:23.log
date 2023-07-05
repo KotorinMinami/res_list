@@ -1,0 +1,355 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Jun 26 02:34:30 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'argus argus-clients tar'
++ pkgs='argus argus-clients tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'argus argus-clients tar' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpqdxrd1b_
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpqdxrd1b_
++ tar -xvf ./common/data.tar.gz
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Mon Jun 26 02:36:22 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 02:36:24 2023 - INFO  - Start to run test.
++ argus -h
++ grep 'usage: argus'
+usage: argus [options] [-i interface] [filter-expression] 
+usage: argus [options]  -r packetfile [filter-expression] 
++ CHECK_RESULT 0 0 0 'Check argus -h failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check argus -h failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ argus -r data/test.pcap
++ CHECK_RESULT 0 0 0 'Check argus -r failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check argus -r failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ argus -r ./data/test.pcap -w package.argus
++ ra -r package.argus
++ grep radius
+   15:49:10.323778              udp          127.0.0.1.37868                 127.0.0.1.radius
++ CHECK_RESULT 0 0 0 'Check argus -w failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check argus -w failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -f package.argus
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ argus -A -F ./data/argus.conf -w package.argus -d
+argus[520]: 26 Jun 23 02:36:30.983633 started
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ ra -r package.argus
++ grep StartTime
++ CHECK_RESULT 1 0 0 'Check argus -A failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check argus -A failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check argus -A failed'
++ LOG_ERROR 'Check argus -A failed'
++ message='Check argus -A failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check argus -A failed'
+Mon Jun 26 02:36:44 2023 - ERROR - Check argus -A failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_argus_01.sh line 39'
++ message='oe_test_argus_01.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_argus_01.sh line 39'
+Mon Jun 26 02:36:46 2023 - ERROR - oe_test_argus_01.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'argus -A -F'
++ kill -9 520
++ rm -f package.argus
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ argus -b -F ./data/argus.conf -w package.argus -d
+argus[535]: 26 Jun 23 02:36:49.505016 started
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ ra -r package.argus
++ grep StartTime
++ CHECK_RESULT 1 0 0 'Check argus -b failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check argus -b failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check argus -b failed'
++ LOG_ERROR 'Check argus -b failed'
++ message='Check argus -b failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check argus -b failed'
+Mon Jun 26 02:37:03 2023 - ERROR - Check argus -b failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_argus_01.sh line 45'
++ message='oe_test_argus_01.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_argus_01.sh line 45'
+Mon Jun 26 02:37:05 2023 - ERROR - oe_test_argus_01.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'argus -b -F'
++ kill -9 535
++ rm -f package.argus
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ argus -B 127.0.0.1 -F ./data/argus.conf -w package.argus -d
+argus[548]: 26 Jun 23 02:37:09.281446 started
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ ra -r package.argus
++ grep StartTime
++ CHECK_RESULT 1 0 0 'Check argus -B failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check argus -B failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check argus -B failed'
++ LOG_ERROR 'Check argus -B failed'
++ message='Check argus -B failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check argus -B failed'
+Mon Jun 26 02:37:23 2023 - ERROR - Check argus -B failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_argus_01.sh line 51'
++ message='oe_test_argus_01.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_argus_01.sh line 51'
+Mon Jun 26 02:37:24 2023 - ERROR - oe_test_argus_01.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'argus -B'
++ kill -9 548
++ rm -f package.argus
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ mkdir tmp
+++ pwd
++ rootpath=/root/mugen/testcases/cli-test/argus
++ argus -c /root/mugen/testcases/cli-test/argus/tmp -F ./data/argus.conf -w package.argus -d
+argus[563]: 26 Jun 23 02:37:28.485254 started
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ test -f ./tmp/package.argus
++ CHECK_RESULT 0 0 0 'Check argus -c failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check argus -c failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'argus -c'
++ kill -9 563
++ rm -rf tmp
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ argus -C -F ./data/argus.conf -w package.argus -d
+argus[572]: 26 Jun 23 02:37:44.053429 started
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ ra -r package.argus
++ grep StartTime
++ CHECK_RESULT 1 0 0 'Check argus -C failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check argus -C failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check argus -C failed'
++ LOG_ERROR 'Check argus -C failed'
++ message='Check argus -C failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check argus -C failed'
+Mon Jun 26 02:37:58 2023 - ERROR - Check argus -C failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_argus_01.sh line 65'
++ message='oe_test_argus_01.sh line 65'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_argus_01.sh line 65'
+Mon Jun 26 02:37:59 2023 - ERROR - oe_test_argus_01.sh line 65
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'argus -C -F'
++ kill -9 572
++ rm -f package.argus
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ argus -F ./data/argus.conf -w package.argus -d
+argus[585]: 26 Jun 23 02:38:03.167635 started
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ ra -r package.argus
++ grep StartTime
+         StartTime      Flgs  Proto            SrcAddr  Sport   Dir            DstAddr  Dport  TotPkts   TotBytes State 
++ CHECK_RESULT 0 0 0 'Check argus -d failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check argus -d failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'argus -F'
++ kill -9 585
++ rm -f package.argus
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
+++ hostname
++ argus -e openeuler-riscv64 -F ./data/argus.conf -w package.argus -d
+argus[597]: 26 Jun 23 02:38:19.229431 started
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ grep StartTime
++ ra -r package.argus
+         StartTime      Flgs  Proto            SrcAddr  Sport   Dir            DstAddr  Dport  TotPkts   TotBytes State 
++ CHECK_RESULT 0 0 0 'Check argus -e failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check argus -e failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'argus -e'
++ kill -9 597
++ rm -f package.argus
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jun 26 02:38:34 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Jun 26 02:38:35 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 02:38:36 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpqdxrd1b_ ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpqdxrd1b_
++ '[' 0 -ne 0 ']'
++ rm -rf ./data
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jun 26 02:39:06 2023 - INFO  - End to restore the test environment.
