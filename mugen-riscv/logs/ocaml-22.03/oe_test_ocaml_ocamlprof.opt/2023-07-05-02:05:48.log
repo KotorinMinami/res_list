@@ -16,31 +16,36 @@
 + LOG_INFO 'Start to prepare the test environment.'
 + message='Start to prepare the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
-Sun Jun 25 12:15:31 2023 - INFO  - Start to prepare the test environment.
+Wed Jul  5 02:05:52 2023 - INFO  - Start to prepare the test environment.
 + DNF_INSTALL ocaml
 + pkgs=ocaml
 + node=1
 + '[' -z '' ']'
 + tmpfile=
 ++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs ocaml --node 1 --tempfile ''
-+ tmpfile2=/tmp/tmp5dtept4t
++ tmpfile2=/tmp/tmpg30wpotn
 + '[' -z '' ']'
-+ tmpfile=/tmp/tmp5dtept4t
-+ cp -rf ../hello.ml ../example.ml ./
++ tmpfile=/tmp/tmpg30wpotn
++ cp ../example.ml ./
+++ rpm -qa ocaml
+++ awk -F - '{print $2}'
++ ocaml_version=4.13.1
 + LOG_INFO 'End to prepare the test environment.'
 + message='End to prepare the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
-Sun Jun 25 12:19:48 2023 - INFO  - End to prepare the test environment.
+Wed Jul  5 02:09:28 2023 - INFO  - End to prepare the test environment.
 ++ type -t run_test
 + '[' -n function ']'
 + run_test
 + LOG_INFO 'Start to run test.'
 + message='Start to run test.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
-Sun Jun 25 12:19:49 2023 - INFO  - Start to run test.
-+ ocaml -help
-+ grep ocaml
-Usage: ocaml <options> <files>
+Wed Jul  5 02:09:29 2023 - INFO  - Start to run test.
++ ocamlcp -P a example.ml
++ echo example
++ ocamlprof -f s example.dump
++ grep example
+example
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -51,19 +56,10 @@ Usage: ocaml <options> <files>
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ ocaml -absname hello.ml
-+ CHECK_RESULT 2 0 1
-+ actual_result=2
-+ expect_result=0
-+ mode=1
-+ error_log=
-+ exit_mode=0
-+ '[' -z 2 ']'
-+ '[' 1 -eq 0 ']'
-+ test 2x == 0x
-+ return 0
-+ grep /hello.ml result
-File "/root/mugen/testcases/cli-test/ocaml/oe_test_ocaml_ocaml/hello.ml", line 1:
++ ocamlprof -instrument -impl example.ml
++ grep OCAML__prof_Profiling
+module OCAML__prof_Profiling = Profiling;; let __ocaml_prof_example_cnt = Array.make 000000000 0;; Profiling.counters := ("example", ("fm", __ocaml_prof_example_cnt)) :: !Profiling.counters;; (* 将多个参数合并到一个元组中，但这种方式不能部分求值 *)
+  (OCAML__prof_Profiling.incr __ocaml_prof_example_cnt 0; a + b + c) ;;
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -74,10 +70,34 @@ File "/root/mugen/testcases/cli-test/ocaml/oe_test_ocaml_ocaml/hello.ml", line 1
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ mkdir ocamldir
-+ ocaml -I ocamldir/ example.ml
-+ grep 6
-6
++ ocamlprof -intf /usr/lib64/ocaml/filename.mli
++ grep string
+val current_dir_name : string
+val parent_dir_name : string
+val dir_sep : string
+val concat : string -> string -> string
+val is_relative : string -> bool
+val is_implicit : string -> bool
+val check_suffix : string -> string -> bool
+val chop_suffix : string -> string -> string
+val chop_suffix_opt: suffix:string -> string -> string option
+val extension : string -> string
+    string.
+val remove_extension : string -> string
+val chop_extension : string -> string
+val basename : string -> string
+val dirname : string -> string
+val null : string
+val temp_file : ?temp_dir: string -> string -> string -> string
+      ?mode: open_flag list -> ?perms: int -> ?temp_dir: string -> string ->
+      string -> string * out_channel
+val get_temp_dir_name : unit -> string
+val set_temp_dir_name : string -> unit
+val temp_dir_name : string
+val quote : string -> string
+       string -> ?stdin:string -> ?stdout:string -> ?stderr:string
+              -> string list -> string
+    The string [cmd] is the command to call.  The list [args] is
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -88,62 +108,7 @@ File "/root/mugen/testcases/cli-test/ocaml/oe_test_ocaml_ocaml/hello.ml", line 1
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ ocaml -no-app-funct -no-alias-deps -nolabels -noassert -noinit -noprompt -nopromptcont -no-principal -no-rectypes -no-strict-sequence -no-strict-formats -no-version example.ml
-+ grep 6
-6
-+ CHECK_RESULT 0
-+ actual_result=0
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 0 ']'
-+ '[' 0 -eq 0 ']'
-+ test 0x '!=' 0x
-+ return 0
-+ ocaml -alias-deps -app-funct -labels -open Printf -principal -rectypes example.ml
-+ grep 6
-6
-+ CHECK_RESULT 0
-+ actual_result=0
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 0 ']'
-+ '[' 0 -eq 0 ']'
-+ test 0x '!=' 0x
-+ return 0
-+ ocaml -safe-string -strict-sequence -strict-formats -unboxed-types -unsafe example.ml
-+ grep 6
-6
-+ CHECK_RESULT 0
-+ actual_result=0
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 0 ']'
-+ '[' 0 -eq 0 ']'
-+ test 0x '!=' 0x
-+ return 0
-+ ocaml -version example.ml
-+ grep version
-The OCaml toplevel, version 4.13.1
-+ CHECK_RESULT 0
-+ actual_result=0
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 0 ']'
-+ '[' 0 -eq 0 ']'
-+ test 0x '!=' 0x
-+ return 0
-++ rpm -qa ocaml
-++ awk -F - '{print $2}'
-+ ocaml_version=4.13.1
-+ ocaml -vnum example.ml
++ ocamlprof -vnum ocamlprof.dump
 + grep 4.13.1
 4.13.1
 + CHECK_RESULT 0
@@ -156,9 +121,9 @@ The OCaml toplevel, version 4.13.1
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ ocaml -w +a-4-6-7-9-27-29-32..42-44-45-48-50-60 -warn-error -a+31 -short-paths example.ml
-+ grep 6
-6
++ ocamlprof -version ocamlprof.dump
++ grep 4.13.1
+ocamlprof, version 4.13.1
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -169,28 +134,24 @@ The OCaml toplevel, version 4.13.1
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ grep warning
-+ ocaml -warn-help example.ml
-    "unit" (and that is not a function, see warning number 5).
- 22 [preprocessor] Preprocessor warning.
- 25 Ignored: now part of warning 8.
- 42 [disambiguated-name] Disambiguated constructor or label name (compatibility warning).
-  A all warnings
-  C warnings 1, 2.
-  D Alias for warning 3.
-  E Alias for warning 4.
-  F Alias for warning 5.
-  K warnings 32, 33, 34, 35, 36, 37, 38, 39.
-  L Alias for warning 6.
-  M Alias for warning 7.
-  P Alias for warning 8.
-  R Alias for warning 9.
-  S Alias for warning 10.
-  U warnings 11, 12.
-  V Alias for warning 13.
-  X warnings 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 30.
-  Y Alias for warning 26.
-  Z Alias for warning 27.
++ echo example.dump
++ ocamlprof -args tmpprof
++ grep example
+example
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ocamlprof -help
++ grep ocamlprof
+Usage: ocamlprof <options> <files>
+  -f <file>     Use <file> as dump file (default ocamlprof.dump)
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -204,7 +165,7 @@ The OCaml toplevel, version 4.13.1
 + LOG_INFO 'End to run test.'
 + message='End to run test.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
-Sun Jun 25 12:19:56 2023 - INFO  - End to run test.
+Wed Jul  5 02:09:32 2023 - INFO  - End to run test.
 + CASE_RESULT 0
 + case_re=0
 + test -z ''
@@ -212,25 +173,25 @@ Sun Jun 25 12:19:56 2023 - INFO  - End to run test.
 + LOG_INFO 'succeed to execute the case.'
 + message='succeed to execute the case.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
-Sun Jun 25 12:19:57 2023 - INFO  - succeed to execute the case.
+Wed Jul  5 02:09:33 2023 - INFO  - succeed to execute the case.
 + exec_result=
 + exit 0
 + post_test
 + LOG_INFO 'Start to restore the test environment.'
 + message='Start to restore the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
-Sun Jun 25 12:19:58 2023 - INFO  - Start to restore the test environment.
+Wed Jul  5 02:09:33 2023 - INFO  - Start to restore the test environment.
 + DNF_REMOVE
 + node=1
 + pkg_list=
 + mode=0
-+ [[ -z /tmp/tmp5dtept4t ]]
++ [[ -z /tmp/tmpg30wpotn ]]
 + '[' 0 -ne 0 ']'
 + '[' 1 == 0 ']'
-+ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp5dtept4t
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpg30wpotn
 + '[' 0 -ne 0 ']'
-+ rm -rf hello.ml example.ml ocamldir result
++ rm -rf ./example.cmi ./example.cmo ./example.dump ./example.ml a.out ocamlprof.dump example.dump tmpprof
 + LOG_INFO 'End to restore the test environment.'
 + message='End to restore the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
-Sun Jun 25 12:20:17 2023 - INFO  - End to restore the test environment.
+Wed Jul  5 02:09:49 2023 - INFO  - End to restore the test environment.
