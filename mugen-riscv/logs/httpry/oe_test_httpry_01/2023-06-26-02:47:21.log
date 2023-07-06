@@ -1,0 +1,518 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Jun 26 02:47:26 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL httpry
++ pkgs=httpry
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs httpry --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpx6b93d60
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpx6b93d60
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Mon Jun 26 02:48:32 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 02:48:33 2023 - INFO  - Start to run test.
++ grep 'Usage: httpry'
++ httpry -h
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Usage: httpry [ -dFhpqs ] [-b file ] [ -f format ] [ -i device ] [ -l threshold ]
++ CHECK_RESULT 0 0 0 'Check httpry -h failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check httpry -h failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ httpry -b tmp.txt -o log.file -d
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Starting capture on eth0 interface
+Warning: Output file path is not absolute and may be inaccessible after daemonizing
+Writing output to file: log.file
+Warning: Binary capture file path is not absolute and may be inaccessible after daemonizing
+Writing binary dump file: tmp.txt
++ (( i=1 ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:48:34--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.75, 112.80.248.76
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.75|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html’
+
+     0K ..                                                    100% 7.06M=0s
+
+2023-06-26 02:48:34 (7.06 MB/s) - ‘index.html’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:48:34--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.1’
+
+     0K ..                                                    100% 9.15M=0s
+
+2023-06-26 02:48:34 (9.15 MB/s) - ‘index.html.1’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:48:34--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.2’
+
+     0K ..                                                    100% 7.28M=0s
+
+2023-06-26 02:48:34 (7.28 MB/s) - ‘index.html.2’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep baidu tmp.txt
+grep: tmp.txt: binary file matches
++ CHECK_RESULT 0 0 0 'Check httpry -b failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check httpry -b failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ ps -ef
+++ grep 'httpry -b'
+++ grep -v grep
+++ awk -F ' ' '{print $2}'
++ kill -9 483
++ rm -f index.html index.html.1 index.html.2 tmp.txt log.file
++ httpry -i -b tmp.txt -o log.file -d
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Error: Cannot open live capture on '-b': -b: No such device exists (No such device exists)
+Caught SIGINT, shutting down...
++ (( i=1 ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:48:43--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html’
+
+     0K ..                                                    100% 8.70M=0s
+
+2023-06-26 02:48:43 (8.70 MB/s) - ‘index.html’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:48:43--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.1’
+
+     0K ..                                                    100% 2.74M=0.001s
+
+2023-06-26 02:48:43 (2.74 MB/s) - ‘index.html.1’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:48:43--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.75, 112.80.248.76
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.75|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.2’
+
+     0K ..                                                    100% 5.34M=0s
+
+2023-06-26 02:48:43 (5.34 MB/s) - ‘index.html.2’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep baidu tmp.txt
+grep: tmp.txt: No such file or directory
++ CHECK_RESULT 2 0 0 'Check httpry -i failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Check httpry -i failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Check httpry -i failed'
++ LOG_ERROR 'Check httpry -i failed'
++ message='Check httpry -i failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check httpry -i failed'
+Mon Jun 26 02:48:51 2023 - ERROR - Check httpry -i failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_httpry_01.sh line 48'
++ message='oe_test_httpry_01.sh line 48'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_httpry_01.sh line 48'
+Mon Jun 26 02:48:52 2023 - ERROR - oe_test_httpry_01.sh line 48
++ '[' 0 -eq 1 ']'
++ return 0
+++ ps -ef
+++ grep 'httpry -i'
+++ awk -F ' ' '{print $2}'
+++ grep -v grep
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ rm -f index.html index.html.1 index.html.2 tmp.txt log.file
++ httpry -i -b tmp.txt -o log.file -d
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Error: Cannot open live capture on '-b': -b: No such device exists (No such device exists)
+Caught SIGINT, shutting down...
++ wget www.baidu.com
+--2023-06-26 02:48:53--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.75, 112.80.248.76
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.75|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html’
+
+     0K ..                                                    100% 6.35M=0s
+
+2023-06-26 02:48:54 (6.35 MB/s) - ‘index.html’ saved [2381/2381]
+
++ wget www.baidu.com
+--2023-06-26 02:48:54--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.75, 112.80.248.76
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.75|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.1’
+
+     0K ..                                                    100% 4.21M=0.001s
+
+2023-06-26 02:48:54 (4.21 MB/s) - ‘index.html.1’ saved [2381/2381]
+
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ httpry -r tmp.txt
++ grep baidu
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Error: Cannot open saved capture file: tmp.txt: No such file or directory
+Caught SIGINT, shutting down...
++ CHECK_RESULT 1 0 0 'Check httpry -r failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check httpry -r failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check httpry -r failed'
++ LOG_ERROR 'Check httpry -r failed'
++ message='Check httpry -r failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check httpry -r failed'
+Mon Jun 26 02:49:02 2023 - ERROR - Check httpry -r failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_httpry_01.sh line 56'
++ message='oe_test_httpry_01.sh line 56'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_httpry_01.sh line 56'
+Mon Jun 26 02:49:03 2023 - ERROR - oe_test_httpry_01.sh line 56
++ '[' 0 -eq 1 ']'
++ return 0
+++ ps -ef
+++ grep 'httpry -i'
+++ grep -v grep
+++ awk -F ' ' '{print $2}'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ rm -f index.html index.html.1 tmp.txt log.file
++ httpry -o output.txt -d
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Starting capture on eth0 interface
+Warning: Output file path is not absolute and may be inaccessible after daemonizing
+Writing output to file: output.txt
++ test -f output.txt
++ CHECK_RESULT 0 0 0 'Check httpry -o failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check httpry -o failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ ps -ef
+++ grep 'httpry -o'
+++ grep -v grep
+++ awk -F ' ' '{print $2}'
++ kill -9 537
++ rm -f 'index*' output.txt
++ httpry -i -m get -b tmp.txt -o log.file -d
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Error: Cannot open live capture on '-m': -m: No such device exists (No such device exists)
+Caught SIGINT, shutting down...
++ (( i=1 ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:49:05--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html’
+
+     0K ..                                                    100% 8.95M=0s
+
+2023-06-26 02:49:05 (8.95 MB/s) - ‘index.html’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:49:05--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.1’
+
+     0K ..                                                    100% 4.05M=0.001s
+
+2023-06-26 02:49:05 (4.05 MB/s) - ‘index.html.1’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:49:06--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.2’
+
+     0K ..                                                    100% 4.46M=0.001s
+
+2023-06-26 02:49:06 (4.46 MB/s) - ‘index.html.2’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep baidu tmp.txt
+grep: tmp.txt: No such file or directory
++ CHECK_RESULT 2 0 0 'Check httpry -m failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Check httpry -m failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Check httpry -m failed'
++ LOG_ERROR 'Check httpry -m failed'
++ message='Check httpry -m failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check httpry -m failed'
+Mon Jun 26 02:49:13 2023 - ERROR - Check httpry -m failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_httpry_01.sh line 70'
++ message='oe_test_httpry_01.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_httpry_01.sh line 70'
+Mon Jun 26 02:49:15 2023 - ERROR - oe_test_httpry_01.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
+++ ps -ef
+++ grep 'httpry -i'
+++ grep -v grep
+++ awk -F ' ' '{print $2}'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ rm -f index.html index.html.1 index.html.2 tmp.txt log.file
++ httpry -o output.txt -d
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Starting capture on eth0 interface
+Warning: Output file path is not absolute and may be inaccessible after daemonizing
+Writing output to file: output.txt
++ test -f /run/httpry.pid
++ CHECK_RESULT 0 0 0 'Check httpry -d failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check httpry -d failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ ps -ef
+++ grep 'httpry -o'
+++ grep -v grep
+++ awk -F ' ' '{print $2}'
++ kill -9 566
++ rm -f 'index*' output.txt
++ httpry -n 2 -t 2 -b tmp.txt -o log.file -d
+httpry version 0.1.8 -- HTTP logging and information retrieval tool
+Copyright (c) 2005-2014 Jason Bittel <jason.bittel@gmail.com>
+Starting capture on eth0 interface
+Warning: Output file path is not absolute and may be inaccessible after daemonizing
+Writing output to file: log.file
+Warning: Binary capture file path is not absolute and may be inaccessible after daemonizing
+Writing binary dump file: tmp.txt
++ (( i=1 ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:49:16--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html’
+
+     0K ..                                                    100% 9.34M=0s
+
+2023-06-26 02:49:16 (9.34 MB/s) - ‘index.html’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:49:17--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.1’
+
+     0K ..                                                    100% 8.06M=0s
+
+2023-06-26 02:49:17 (8.06 MB/s) - ‘index.html.1’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ wget www.baidu.com
+--2023-06-26 02:49:17--  http://www.baidu.com/
+Resolving www.baidu.com (www.baidu.com)... 112.80.248.76, 112.80.248.75
+Connecting to www.baidu.com (www.baidu.com)|112.80.248.76|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2381 (2.3K) [text/html]
+Saving to: ‘index.html.2’
+
+     0K ..                                                    100% 7.49M=0s
+
+2023-06-26 02:49:17 (7.49 MB/s) - ‘index.html.2’ saved [2381/2381]
+
++ (( i++ ))
++ (( i<=3 ))
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ grep baidu tmp.txt
+grep: tmp.txt: binary file matches
++ CHECK_RESULT 0 0 0 'Check httpry -t failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check httpry -t failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ ps -ef
+++ grep 'httpry -n'
+++ grep -v grep
+++ awk -F ' ' '{print $2}'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jun 26 02:49:22 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Jun 26 02:49:23 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 02:49:25 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpx6b93d60 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpx6b93d60
++ '[' 0 -ne 0 ']'
++ rm -f /run/httpry.pid index.html index.html.1 index.html.2 tmp.txt log.file
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jun 26 02:49:49 2023 - INFO  - End to restore the test environment.

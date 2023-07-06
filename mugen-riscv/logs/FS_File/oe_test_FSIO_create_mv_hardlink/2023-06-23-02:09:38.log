@@ -1,0 +1,195 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ awk '{print $7}'
++++ grep test_vggroup
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf /tmp/point120230623020855 /tmp/point220230623020855 /tmp/point320230623020855
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Fri Jun 23 02:09:46 2023 - INFO  - Start environment preparation.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230623020946
++ point_list=($(CREATE_FS "ext3 ext4"))
+++ CREATE_FS 'ext3 ext4'
+++ fs_type='ext3 ext4'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230623020946
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230623020946
+++++ lsblk
+++++ tail -n 1
+++++ grep disk
+++++ awk '{print $1}'
++++ free_disk=vdt
++++ disk_name=/dev/vdt
++++ pvcreate /dev/vdt -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdt
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20230623013800
++++ printf test_vggroup20230623013800
+++ vggroup=test_vggroup20230623013800
+++ count=1
+++ msg='test_vggroup20230623013800 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230623020946
+++ point=/tmp/point120230623020946
+++ lvcreate -n test_lv120230623020946 -L 512M test_vggroup20230623013800 -y
+  Volume group "test_vggroup20230623013800" has insufficient free space (124 extents): 128 required.
+++ mkfs -t ext3 /dev/test_vggroup20230623013800/test_lv120230623020946
+mke2fs 1.46.5 (30-Dec-2021)
+The file /dev/test_vggroup20230623013800/test_lv120230623020946 does not exist and no size was specified.
+++ mkdir /tmp/point120230623020946
+++ mount /dev/test_vggroup20230623013800/test_lv120230623020946 /tmp/point120230623020946
+mount: /tmp/point120230623020946: special device /dev/test_vggroup20230623013800/test_lv120230623020946 does not exist.
+++ msg='test_vggroup20230623013800 /tmp/point120230623020946 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230623020946
+++ point=/tmp/point220230623020946
+++ lvcreate -n test_lv220230623020946 -L 512M test_vggroup20230623013800 -y
+  Volume group "test_vggroup20230623013800" has insufficient free space (124 extents): 128 required.
+++ mkfs -t ext4 /dev/test_vggroup20230623013800/test_lv220230623020946
+mke2fs 1.46.5 (30-Dec-2021)
+The file /dev/test_vggroup20230623013800/test_lv220230623020946 does not exist and no size was specified.
+++ mkdir /tmp/point220230623020946
+++ mount /dev/test_vggroup20230623013800/test_lv220230623020946 /tmp/point220230623020946
+mount: /tmp/point220230623020946: special device /dev/test_vggroup20230623013800/test_lv220230623020946 does not exist.
+++ msg='test_vggroup20230623013800 /tmp/point120230623020946 /tmp/point220230623020946 '
+++ count=3
+++ echo test_vggroup20230623013800 /tmp/point120230623020946 /tmp/point220230623020946
++ ext3_point=/tmp/point120230623020946
++ ext4_point=
++ echo 'test ext3'
++ ln /tmp/point120230623020946/testFile /tmp/point120230623020946/testLink
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Jun 23 02:09:52 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 23 02:09:54 2023 - INFO  - Start to run test.
+++ stat /tmp/point120230623020946/testLink
+++ grep Inode
+++ cut -d : -f 3
+++ awk '{print $1}'
++ ori_inode=3194
++ mv /tmp/point120230623020946/testLink /tmp/point120230623020946/testLink1
+++ stat /tmp/point120230623020946/testLink1
+++ grep Inode
+++ awk '{print $1}'
+++ cut -d : -f 3
++ inode1=3194
++ [[ 3194 == \3\1\9\4 ]]
++ CHECK_RESULT 0 0 0 'The hard link inode is changed unexpectly when mv on ext3'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The hard link inode is changed unexpectly when mv on ext3'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point120230623020946/testLink1 /testLink
+++ stat /testLink
+++ grep Inode
+++ awk '{print $1}'
+++ cut -d : -f 3
++ inode2=2965
++ [[ 3194 != \2\9\6\5 ]]
++ CHECK_RESULT 0 0 0 'The hard link inode doesn'\''t change when mv from ext3 to ext4'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The hard link inode doesn'\''t change when mv from ext3 to ext4'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun 23 02:09:57 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Jun 23 02:09:59 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 23 02:10:00 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230623013800 /tmp/point120230623020946 /tmp/point220230623020946
++ list='test_vggroup20230623013800 /tmp/point120230623020946 /tmp/point220230623020946'
++ REMOVE_FS 'test_vggroup20230623013800 /tmp/point120230623020946 /tmp/point220230623020946'
++ point_list=($1)
+++ seq 0 2
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230623013800
+++ df -T
+++ awk '{print $1}'
+++ grep test_vggroup20230623013800
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230623020946
+++ awk '{print $1}'
+++ df -T
+++ grep /tmp/point120230623020946
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230623020946
+++ df -T
+++ grep /tmp/point220230623020946
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun 23 02:10:03 2023 - INFO  - End to restore the test environment.

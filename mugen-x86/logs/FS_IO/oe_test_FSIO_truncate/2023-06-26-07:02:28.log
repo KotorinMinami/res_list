@@ -1,0 +1,113 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Mon Jun 26 07:02:38 2023 - INFO  - Start to prepare the database config.
++ DNF_INSTALL gcc
++ pkgs=gcc
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs gcc --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpiq050ncw
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpiq050ncw
++ [[ ! -f ./truncate_file ]]
++ make
+ftruncate_file.c: In function ‘main’:
+ftruncate_file.c:30:21: warning: ‘read’ writing 50 bytes into a region of size 20 overflows the destination [-Wstringop-overflow=]
+   30 |     int readbytes = read(fd, str, 50);
+      |                     ^~~~~~~~~~~~~~~~~
+In file included from ftruncate_file.c:4:
+/usr/include/unistd.h:371:16: note: in a call to function ‘read’ declared with attribute ‘write_only (2, 3)’
+  371 | extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur
+      |                ^~~~
++ dd if=/dev/zero of=test_truncate bs=5120 count=1000
+1000+0 records in
+1000+0 records out
+5120000 bytes (5.1 MB, 4.9 MiB) copied, 0.180702 s, 28.3 MB/s
++ dd if=/dev/zero of=test_ftruncate bs=5120 count=1000
+1000+0 records in
+1000+0 records out
+5120000 bytes (5.1 MB, 4.9 MiB) copied, 0.173589 s, 29.5 MB/s
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Mon Jun 26 07:04:51 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 07:04:53 2023 - INFO  - Start to run test.
++ echo test_truncate
++ ./truncate_file
++ CHECK_RESULT 0 0 0 'Truncate file failed by truncate.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Truncate file failed by truncate.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo test_ftruncate
++ ./ftruncate_file
++ CHECK_RESULT 0 0 0 'Truncate file failed by truncate.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Truncate file failed by truncate.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jun 26 07:04:54 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Mon Jun 26 07:04:55 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 07:04:58 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpiq050ncw ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpiq050ncw
++ '[' 0 -ne 0 ']'
++ rm -f test_truncate test_ftruncate
++ make clean
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jun 26 07:05:30 2023 - INFO  - End to restore the test environment.

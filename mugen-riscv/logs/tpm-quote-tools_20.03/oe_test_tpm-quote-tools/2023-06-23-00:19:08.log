@@ -1,0 +1,597 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Jun 23 00:19:16 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'tpm-tools tpm-quote-tools trousers cmake make gcc-c++ gmp-devel'
++ pkgs='tpm-tools tpm-quote-tools trousers cmake make gcc-c++ gmp-devel'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'tpm-tools tpm-quote-tools trousers cmake make gcc-c++ gmp-devel' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpkf1y8aws
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpkf1y8aws
++ wget https://github.com/PeterHuewe/tpm-emulator/archive/v0.7.5.zip
+--2023-06-23 00:21:34--  https://github.com/PeterHuewe/tpm-emulator/archive/v0.7.5.zip
+Resolving github.com (github.com)... 20.205.243.166
+Connecting to github.com (github.com)|20.205.243.166|:443... connected.
+HTTP request sent, awaiting response... Read error (Error in the pull function.) in headers.
+Retrying.
+
+--2023-06-23 00:22:01--  (try: 2)  https://github.com/PeterHuewe/tpm-emulator/archive/v0.7.5.zip
+Connecting to github.com (github.com)|20.205.243.166|:443... failed: Connection refused.
+Resolving github.com (github.com)... 20.205.243.166
+Connecting to github.com (github.com)|20.205.243.166|:443... connected.
+HTTP request sent, awaiting response... Read error (Error in the pull function.) in headers.
+Retrying.
+
+--2023-06-23 00:22:45--  (try: 3)  https://github.com/PeterHuewe/tpm-emulator/archive/v0.7.5.zip
+Connecting to github.com (github.com)|20.205.243.166|:443... connected.
+HTTP request sent, awaiting response... Read error (Error in the pull function.) in headers.
+Retrying.
+
+--2023-06-23 00:23:09--  (try: 4)  https://github.com/PeterHuewe/tpm-emulator/archive/v0.7.5.zip
+Connecting to github.com (github.com)|20.205.243.166|:443... failed: Connection refused.
+Resolving github.com (github.com)... 20.205.243.166
+Connecting to github.com (github.com)|20.205.243.166|:443... failed: Connection refused.
++ unzip v0.7.5.zip
+unzip:  cannot find or open v0.7.5.zip, v0.7.5.zip.zip or v0.7.5.zip.ZIP.
++ test -d tpm-emulator-0.7.5
++ '[' riscv64x == aarch64x ']'
++ sed -i 's/$(shell uname -m)/x86/g' tpmd_dev/linux/Makefile
+sed: can't read tpmd_dev/linux/Makefile: No such file or directory
++ sed -i 's/-Wall -Werror/-Wall -Wno-error/g' tpmd_dev/linux/Makefile
+sed: can't read tpmd_dev/linux/Makefile: No such file or directory
++ mkdir build
++ cd build
++ cmake ..
+CMake Warning:
+  Ignoring extra path from command line:
+
+   ".."
+
+
+CMake Error: The source directory "/root/mugen/testcases/cli-test/tpm-quote-tools/oe_test_tpm-quote-tools" does not appear to contain CMakeLists.txt.
+Specify --help for usage, or press the help button on the CMake GUI.
++ tpmd deactivated
+oe_test_tpm-quote-tools.sh: line 36: tpmd: command not found
++ tpmd clear
+oe_test_tpm-quote-tools.sh: line 37: tpmd: command not found
++ modprobe tpmd_dev
+modprobe: FATAL: Module tpmd_dev not found in directory /lib/modules/6.1.8-3.oe2303.riscv64
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ nohup tpmd -d -f clear
+++ pgrep -f 'tpmd -d'
++ '[' -z '' ']'
++ rm -rf /var/run/tpm/tpmd_socket:0
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ nohup tpmd -d -f clear
++ pgrep -f 'tpmd -d'
+++ pgrep -f 'tcsd -e'
++ '[' -n '' ']'
++ SLEEP_WAIT 10
++ nohup tcsd -e -f
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ pgrep -f 'tcsd -e'
++ tpm_version
++ grep -i '[0-9a-z]'
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
++ tpm_getpubek
++ grep -i '[0-9a-z\!():,_]'
+Tspi_Context_Connect failed: 0x00003011 - layer=tsp, code=0011 (17), Communication failure
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Fri Jun 23 00:24:32 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 23 00:24:34 2023 - INFO  - Start to run test.
++ tpm_mkuuid -h
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'Usage: tpm_mkuuid|-' helpinfo
+Usage: tpm_mkuuid [options] uuid
+	-h   Display command usage info
+	-v   Display command version info
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_mkuuid -v
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'TPM Quote Tools.*[0-9]' versioninfo
+TPM Quote Tools 1.0.4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_mkuuid uuidfile
+Error while connecting. Error code: TSS_E_COMM_FAILURE
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_tpm-quote-tools.sh line 70'
++ message='oe_test_tpm-quote-tools.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_tpm-quote-tools.sh line 70'
+Fri Jun 23 00:24:37 2023 - ERROR - oe_test_tpm-quote-tools.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
++ grep -a '.*' uuidfile
+grep: uuidfile: No such file or directory
++ CHECK_RESULT 2
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_tpm-quote-tools.sh line 72'
++ message='oe_test_tpm-quote-tools.sh line 72'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_tpm-quote-tools.sh line 72'
+Fri Jun 23 00:24:38 2023 - ERROR - oe_test_tpm-quote-tools.sh line 72
++ '[' 0 -eq 1 ']'
++ return 0
++ tpm_mkaik -h
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'Usage: tpm_mkaik|-' helpinfo
+Usage: tpm_mkaik [options] blob pubkey
+	-z   Use well known secret used as owner secret
+	-u   Use TSS UNICODE encoding for passwords
+	-h   Display command usage info
+	-v   Display command version info
+and a DER-encoded public key in pubkey.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_mkaik -v
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'TPM Quote Tools.*[0-9]' versioninfo
+TPM Quote Tools 1.0.4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_loadkey -h
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'Usage: tpm_loadkey|-' helpinfo
+Usage: tpm_loadkey [-r host] [-hv] blob uuid
+	-r host
+	-h   Display command usage info
+	-v   Display command version info
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_loadkey -v
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'TPM Quote Tools.*[0-9]' versioninfo
+TPM Quote Tools 1.0.4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_getpcrhash -h
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'Usage: tpm_getpcrhash|-' helpinfo
+Usage: tpm_getpcrhash [-r host] [-hv] uuid hash pcrvals PCRS...
+	-r host
+	-h   Display command usage info
+	-v   Display command version info
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_getpcrhash -v
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'TPM Quote Tools.*[0-9]' versioninfo
+TPM Quote Tools 1.0.4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_updatepcrhash -h
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'Usage: tpm_updatepcrhash|-' helpinfo
+Usage: tpm_updatepcrhash [-hv] oldhash newpcrvals newhash
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_updatepcrhash -v
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'TPM Quote Tools.*[0-9]' versioninfo
+TPM Quote Tools 1.0.4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_getquote -h
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'Usage: tpm_getquote|-' helpinfo
+Usage: tpm_getquote [-r host] [-p pcrvals] [-hv] uuid nonce quote PCRS...
+	nonce	File containing 20-byte nonce
+	-r host
+	-p pcrvals
+	-h   Display command usage info
+	-v   Display command version info
+	nonce: file containing 20-byte nonce to use
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_getquote -v
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'TPM Quote Tools.*[0-9]' versioninfo
+TPM Quote Tools 1.0.4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_verifyquote -h
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'Usage: tpm_verifyquote|-' helpinfo
+Usage: tpm_verifyquote [-hv] pubkey hash nonce [quote]
+	-h   Display command usage info
+	-v   Display command version info
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_verifyquote -v
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'TPM Quote Tools.*[0-9]' versioninfo
+TPM Quote Tools 1.0.4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_unloadkey -h
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'Usage: tpm_unloadkey|-' helpinfo
+Usage: tpm_unloadkey [-r host] [-hv] uuid
+	-r host
+	-h   Display command usage info
+	-v   Display command version info
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tpm_unloadkey -v
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'TPM Quote Tools.*[0-9]' versioninfo
+TPM Quote Tools 1.0.4
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Fri Jun 23 00:24:43 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun 23 00:24:45 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 23 00:24:47 2023 - INFO  - Start to restore the test environment.
+++ pgrep -f 'tpmd -d'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
+++ pgrep -f 'tcsd -e'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++++ dirname oe_test_tpm-quote-tools.sh
+++ cd .
+++ pwd
++ currentDir=/root/mugen/testcases/cli-test/tpm-quote-tools/oe_test_tpm-quote-tools/build
+++ echo /root/mugen/testcases/cli-test/tpm-quote-tools/oe_test_tpm-quote-tools/build
+++ awk -F / '{print $NF}'
++ currentName=build
++ test buildx = buildx
++ cd ../../
+++ ls
+++ grep -v .sh
++ rm -rf oe_test_tpm-quote-tools
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpkf1y8aws ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpkf1y8aws
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Fri Jun 23 00:25:26 2023 - INFO  - Finish restoring the test environment.

@@ -1,0 +1,249 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Mon Jun 26 05:06:19 2023 - INFO  - Start environment preparation.
++ mapfile -t point_list
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230626050619
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230626050619
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20230626042701
++++ printf test_vggroup20230626042701
+++ vggroup=test_vggroup20230626042701
+++ count=1
+++ msg='test_vggroup20230626042701 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230626050619
+++ point=/tmp/point120230626050619
+++ lvcreate -n test_lv120230626050619 -L 512M test_vggroup20230626042701 -y
+++ mkfs -t ext3 /dev/test_vggroup20230626042701/test_lv120230626050619
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point120230626050619
+++ mount /dev/test_vggroup20230626042701/test_lv120230626050619 /tmp/point120230626050619
+++ msg='test_vggroup20230626042701 /tmp/point120230626050619 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230626050619
+++ point=/tmp/point220230626050619
+++ lvcreate -n test_lv220230626050619 -L 512M test_vggroup20230626042701 -y
+++ mkfs -t ext4 /dev/test_vggroup20230626042701/test_lv220230626050619
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point220230626050619
+++ mount /dev/test_vggroup20230626042701/test_lv220230626050619 /tmp/point220230626050619
+++ msg='test_vggroup20230626042701 /tmp/point120230626050619 /tmp/point220230626050619 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230626050619
+++ point=/tmp/point320230626050619
+++ lvcreate -n test_lv320230626050619 -L 512M test_vggroup20230626042701 -y
+++ mkfs -t xfs /dev/test_vggroup20230626042701/test_lv320230626050619
+++ mkdir /tmp/point320230626050619
+++ mount /dev/test_vggroup20230626042701/test_lv320230626050619 /tmp/point320230626050619
+++ msg='test_vggroup20230626042701 /tmp/point120230626050619 /tmp/point220230626050619 /tmp/point320230626050619 '
+++ count=4
+++ echo test_vggroup20230626042701 /tmp/point120230626050619 /tmp/point220230626050619 /tmp/point320230626050619
+++ echo 'test_vggroup20230626042701 /tmp/point120230626050619 /tmp/point220230626050619 /tmp/point320230626050619'
+++ awk '{print $2}'
++ ext3_point=/tmp/point120230626050619
+++ echo 'test_vggroup20230626042701 /tmp/point120230626050619 /tmp/point220230626050619 /tmp/point320230626050619'
+++ awk '{print $3}'
++ ext4_point=/tmp/point220230626050619
+++ echo 'test_vggroup20230626042701 /tmp/point120230626050619 /tmp/point220230626050619 /tmp/point320230626050619'
+++ awk '{print $4}'
++ xfs_point=/tmp/point320230626050619
++ echo 'test ext3'
++ ln /tmp/point120230626050619/testFile /tmp/point120230626050619/testLink
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Mon Jun 26 05:06:28 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 05:06:29 2023 - INFO  - Start to run test.
+++ stat /tmp/point120230626050619/testLink
+++ grep Inode
+++ cut -d : -f 3
+++ awk '{print $1}'
++ ori_inode=12
++ mv /tmp/point120230626050619/testLink /tmp/point120230626050619/testLink1
+++ stat /tmp/point120230626050619/testLink1
+++ grep Inode
+++ cut -d : -f 3
+++ awk '{print $1}'
++ inode1=12
++ [[ 12 == \1\2 ]]
++ CHECK_RESULT 0 0 0 'The hard link inode is changed unexpectly when mv on ext3'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The hard link inode is changed unexpectly when mv on ext3'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point120230626050619/testLink1 /tmp/point220230626050619/testLink
+++ stat /tmp/point220230626050619/testLink
+++ grep Inode
+++ awk '{print $1}'
+++ cut -d : -f 3
++ inode2=12
++ [[ 12x == \1\2x ]]
++ CHECK_RESULT 0 0 0 'The hard link inode change when mv from ext3 to ext4'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The hard link inode change when mv from ext3 to ext4'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point220230626050619/testLink /tmp/point320230626050619/testLink
+++ stat /tmp/point320230626050619/testLink
+++ grep Inode
+++ cut -d : -f 3
+++ awk '{print $1}'
++ inode3=131
++ [[ 12x != \1\3\1x ]]
++ CHECK_RESULT 0 0 0 'The hard link inode doesn'\''t change when mv from ext3 to xfs'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The hard link inode doesn'\''t change when mv from ext3 to xfs'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jun 26 05:06:32 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Mon Jun 26 05:06:33 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 05:06:35 2023 - INFO  - Start to restore the test environment.
++ list='test_vggroup20230626042701 /tmp/point120230626050619 /tmp/point220230626050619 /tmp/point320230626050619'
++ REMOVE_FS 'test_vggroup20230626042701 /tmp/point120230626050619 /tmp/point220230626050619 /tmp/point320230626050619'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230626042701
+++ df -T
+++ awk '{print $1}'
+++ grep test_vggroup20230626042701
++ lv='/dev/mapper/test_vggroup20230626042701-test_lv120230626050619
+/dev/mapper/test_vggroup20230626042701-test_lv220230626050619
+/dev/mapper/test_vggroup20230626042701-test_lv320230626050619'
++ [[ /dev/mapper/test_vggroup20230626042701-test_lv120230626050619
+/dev/mapper/test_vggroup20230626042701-test_lv220230626050619
+/dev/mapper/test_vggroup20230626042701-test_lv320230626050619 == '' ]]
++ umount -f test_vggroup20230626042701
+umount: test_vggroup20230626042701: no mount point specified.
++ rm -rf test_vggroup20230626042701
++ DELETE_LV /dev/mapper/test_vggroup20230626042701-test_lv120230626050619 /dev/mapper/test_vggroup20230626042701-test_lv220230626050619 /dev/mapper/test_vggroup20230626042701-test_lv320230626050619
++ lvname=/dev/mapper/test_vggroup20230626042701-test_lv120230626050619
++ lvremove /dev/mapper/test_vggroup20230626042701-test_lv120230626050619 -y
+  Logical volume test_vggroup20230626042701/test_lv120230626050619 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230626050619
+++ df -T
+++ grep /tmp/point120230626050619
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626042701-test_lv120230626050619
++ [[ /dev/mapper/test_vggroup20230626042701-test_lv120230626050619 == '' ]]
++ umount -f /tmp/point120230626050619
++ rm -rf /tmp/point120230626050619
++ DELETE_LV /dev/mapper/test_vggroup20230626042701-test_lv120230626050619
++ lvname=/dev/mapper/test_vggroup20230626042701-test_lv120230626050619
++ lvremove /dev/mapper/test_vggroup20230626042701-test_lv120230626050619 -y
+  Logical volume "test_lv120230626050619" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230626050619
+++ df -T
+++ awk '{print $1}'
+++ grep /tmp/point220230626050619
++ lv=/dev/mapper/test_vggroup20230626042701-test_lv220230626050619
++ [[ /dev/mapper/test_vggroup20230626042701-test_lv220230626050619 == '' ]]
++ umount -f /tmp/point220230626050619
++ rm -rf /tmp/point220230626050619
++ DELETE_LV /dev/mapper/test_vggroup20230626042701-test_lv220230626050619
++ lvname=/dev/mapper/test_vggroup20230626042701-test_lv220230626050619
++ lvremove /dev/mapper/test_vggroup20230626042701-test_lv220230626050619 -y
+  Logical volume "test_lv220230626050619" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230626050619
+++ df -T
+++ grep /tmp/point320230626050619
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230626042701-test_lv320230626050619
++ [[ /dev/mapper/test_vggroup20230626042701-test_lv320230626050619 == '' ]]
++ umount -f /tmp/point320230626050619
++ rm -rf /tmp/point320230626050619
++ DELETE_LV /dev/mapper/test_vggroup20230626042701-test_lv320230626050619
++ lvname=/dev/mapper/test_vggroup20230626042701-test_lv320230626050619
++ lvremove /dev/mapper/test_vggroup20230626042701-test_lv320230626050619 -y
+  Logical volume "test_lv320230626050619" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jun 26 05:06:40 2023 - INFO  - End to restore the test environment.

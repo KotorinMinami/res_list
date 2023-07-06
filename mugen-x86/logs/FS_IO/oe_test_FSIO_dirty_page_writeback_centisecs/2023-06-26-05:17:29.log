@@ -1,0 +1,84 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Mon Jun 26 05:17:38 2023 - INFO  - Start to prepare the database config.
+++ sysctl vm.dirty_writeback_centisecs
+++ awk '{print $3}'
++ ori=500
++ sync
++ sysctl vm.dirty_writeback_centisecs=10
+vm.dirty_writeback_centisecs = 10
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Mon Jun 26 05:17:40 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jun 26 05:17:42 2023 - INFO  - Start to run test.
++ dd if=/dev/zero of=/tmp/test_dirty_page_file bs=5120 count=100
+100+0 records in
+100+0 records out
+512000 bytes (512 kB, 500 KiB) copied, 0.0384346 s, 13.3 MB/s
++ SLEEP_WAIT 40
++ wait_time=40
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 40 --cmd '' --mode 1
+++ grep Dirty /proc/meminfo
+++ awk '{print $2}'
++ dirty=0
++ [[ 0 -eq 0 ]]
++ CHECK_RESULT 0 0 0 'The dirty page doesn'\''t writeback after dirty_writeback_centisecs.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The dirty page doesn'\''t writeback after dirty_writeback_centisecs.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jun 26 05:18:26 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Mon Jun 26 05:18:27 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jun 26 05:18:28 2023 - INFO  - Start to restore the test environment.
++ sysctl vm.dirty_writeback_centisecs=500
+vm.dirty_writeback_centisecs = 500
++ rm -f /tmp/test_dirty_page_file
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jun 26 05:18:30 2023 - INFO  - End to restore the test environment.

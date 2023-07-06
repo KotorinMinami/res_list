@@ -1,0 +1,116 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Fri Jun 23 02:36:41 2023 - INFO  - Start to prepare the database config.
+++ sysctl vm.dirty_ratio
+++ awk '{print $3}'
++ ori=20
++ sync
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Fri Jun 23 02:36:43 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jun 23 02:36:45 2023 - INFO  - Start to run test.
++ dd if=/dev/zero of=/tmp/test_dirty_page_file_1 bs=5120 count=100
+100+0 records in
+100+0 records out
+512000 bytes (512 kB, 500 KiB) copied, 0.0413225 s, 12.4 MB/s
+++ grep Dirty /proc/meminfo
+++ awk '{print $2}'
++ dirty1=4
++ sysctl vm.dirty_ratio=0
+vm.dirty_ratio = 0
++ SLEEP_WAIT 30
++ wait_time=30
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 30 --cmd '' --mode 1
+++ grep Dirty /proc/meminfo
+++ awk '{print $2}'
++ dirty2=0
++ dd if=/dev/zero of=/tmp/test_dirty_page_file_2 bs=5120 count=100
+100+0 records in
+100+0 records out
+512000 bytes (512 kB, 500 KiB) copied, 0.0432093 s, 11.8 MB/s
++ SLEEP_WAIT 30
++ wait_time=30
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 30 --cmd '' --mode 1
+++ grep Dirty /proc/meminfo
+++ awk '{print $2}'
++ dirty3=32
++ SLEEP_WAIT 30
++ wait_time=30
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 30 --cmd '' --mode 1
++ [[ 4 -ge 0 ]]
++ [[ 32 -le 0 ]]
++ CHECK_RESULT 1 0 0 'The dirty page doesn'\''t writeback when its size more than dirty_ratio.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The dirty page doesn'\''t writeback when its size more than dirty_ratio.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The dirty page doesn'\''t writeback when its size more than dirty_ratio.'
++ LOG_ERROR 'The dirty page doesn'\''t writeback when its size more than dirty_ratio.'
++ message='The dirty page doesn'\''t writeback when its size more than dirty_ratio.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The dirty page doesn'\''t writeback when its size more than dirty_ratio.'
+Fri Jun 23 02:38:23 2023 - ERROR - The dirty page doesn't writeback when its size more than dirty_ratio.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_dirty_page_more_than_ratio.sh line 40'
++ message='oe_test_FSIO_dirty_page_more_than_ratio.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_dirty_page_more_than_ratio.sh line 40'
+Fri Jun 23 02:38:24 2023 - ERROR - oe_test_FSIO_dirty_page_more_than_ratio.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jun 23 02:38:26 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jun 23 02:38:28 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jun 23 02:38:29 2023 - INFO  - Start to restore the test environment.
++ sysctl vm.dirty_ratio=20
+vm.dirty_ratio = 20
++ rm -f /tmp/test_dirty_page_file_1 /tmp/test_dirty_page_file_2
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jun 23 02:38:31 2023 - INFO  - End to restore the test environment.

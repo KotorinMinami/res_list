@@ -1,0 +1,135 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Mon Jun 26 03:35:03 2023 - INFO  - Start environmental preparation.
++ grep '^example:' /etc/passwd
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Mon Jun 26 03:35:05 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Mon Jun 26 03:35:06 2023 - INFO  - Start executing testcase.
++ useradd example
++ passwd example
+New password: Retype new password: Changing password for user example.
+passwd: all authentication tokens updated successfully.
++ touch /tmp/test
++ ls -l /tmp/test
++ grep 'root root'
+-rw-r--r-- 1 root root 0 Jun 26 03:35 /tmp/test
++ CHECK_RESULT 0 0 0 'Failed to view '\''/tmp/test'\'' document and obtain '\''root root'\'' field'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view '\''/tmp/test'\'' document and obtain '\''root root'\'' field'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ su - example -c 'chown example:example /tmp/test'
+chown: changing ownership of '/tmp/test': Operation not permitted
++ CHECK_RESULT 1 0 1 'Switching example user to change the file owner succeeded, but it should fail here'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='Switching example user to change the file owner succeeded, but it should fail here'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ setcap cap_chown=eip /bin/chown.coreutils
+Failed to set capabilities on file '/bin/chown.coreutils': No such file or directory
++ CHECK_RESULT 1 0 0 'Failed to set cap'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to set cap'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to set cap'
++ LOG_ERROR 'Failed to set cap'
++ message='Failed to set cap'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to set cap'
+Mon Jun 26 03:35:17 2023 - ERROR - Failed to set cap
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_acl_allow_change_ownership.sh line 40'
++ message='oe_test_acl_allow_change_ownership.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_acl_allow_change_ownership.sh line 40'
+Mon Jun 26 03:35:18 2023 - ERROR - oe_test_acl_allow_change_ownership.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ su - example -c 'chown example:example /tmp/test'
+chown: changing ownership of '/tmp/test': Operation not permitted
++ CHECK_RESULT 1 0 0 'Failed to switch example user to change file owner'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to switch example user to change file owner'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to switch example user to change file owner'
++ LOG_ERROR 'Failed to switch example user to change file owner'
++ message='Failed to switch example user to change file owner'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to switch example user to change file owner'
+Mon Jun 26 03:35:24 2023 - ERROR - Failed to switch example user to change file owner
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_acl_allow_change_ownership.sh line 42'
++ message='oe_test_acl_allow_change_ownership.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_acl_allow_change_ownership.sh line 42'
+Mon Jun 26 03:35:26 2023 - ERROR - oe_test_acl_allow_change_ownership.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ ls -l /tmp/test
++ grep 'example example'
++ LOG_INFO 'Finish testcase execution.'
++ message='Finish testcase execution.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish testcase execution.'
+Mon Jun 26 03:35:27 2023 - INFO  - Finish testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Jun 26 03:35:29 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Mon Jun 26 03:35:30 2023 - INFO  - start environment cleanup.
++ rm -rf /tmp/test
++ setcap -r /bin/chown.coreutils
+Failed to set capabilities on file '/bin/chown.coreutils': No such file or directory
++ userdel -rf example
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Mon Jun 26 03:35:32 2023 - INFO  - Finish environment cleanup!
