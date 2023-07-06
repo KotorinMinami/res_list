@@ -1749,8 +1749,8 @@
 |  | oe_test_target_veritysetup-pre | x86 fail | [./mugen-riscv/logs/systemd/oe_test_target_veritysetup-pre/2023-05-25-22_25_11.log](./mugen-riscv/logs/systemd/oe_test_target_veritysetup-pre/2023-05-25-22_25_11.log) | 没有软件包提供 veritysetup-pre.target |
 |  | oe_test_target_veritysetup | x86 fail | [./mugen-riscv/logs/systemd/oe_test_target_veritysetup/2023-05-25-22_24_25.log](./mugen-riscv/logs/systemd/oe_test_target_veritysetup/2023-05-25-22_24_25.log) | 没有软件包提供 veritysetup.target |
 |  | oe_test_socket_syslog | fail | [./mugen-riscv/logs/systemd/oe_test_socket_syslog/2023-05-25-21_41_08.log](./mugen-riscv/logs/systemd/oe_test_socket_syslog/2023-05-25-21_41_08.log) | 镜像没有预装测试所需的 rsyslog |
-|  | oe_test_service_systemd-boot-check-no-failures |  |  |  |
-|  | oe_test_service_system-update-cleanup |  |  |  |
+|  | oe_test_service_systemd-boot-check-no-failures | x86 fail | [./mugen-riscv/logs/systemd/oe_test_service_systemd-boot-check-no-failures/2023-07-06-17_10_31.log](./mugen-riscv/logs/systemd/oe_test_service_systemd-boot-check-no-failures/2023-07-06-17_10_31.log) | x86 fail |
+|  | oe_test_service_system-update-cleanup | success | [./mugen-riscv/logs/iperf3/oe_test_iperf3_client/2023-06-02-03:12:17.log](./mugen-riscv/logs/iperf3/oe_test_iperf3_client/2023-06-02-03:12:17.log) | None |
 | iperf3 | oe_test_iperf3_client | success | [./mugen-riscv/logs/iperf3/oe_test_iperf3_client/2023-06-02-03:12:17.log](./mugen-riscv/logs/iperf3/oe_test_iperf3_client/2023-06-02-03:12:17.log) | None |
 |  | oe_test_iperf3_command_client | x86 fail | [./mugen-riscv/logs/iperf3/oe_test_iperf3_command_client/2023-06-02-03:08:49.log](./mugen-riscv/logs/iperf3/oe_test_iperf3_command_client/2023-06-02-03:08:49.log) | x86 fail |
 |  | oe_test_iperf3_command_clientAndShared | x86 fail | [./mugen-riscv/logs/iperf3/oe_test_iperf3_command_clientAndShared/2023-06-02-03:09:59.log](./mugen-riscv/logs/iperf3/oe_test_iperf3_command_clientAndShared/2023-06-02-03:09:59.log) | x86 fail |
