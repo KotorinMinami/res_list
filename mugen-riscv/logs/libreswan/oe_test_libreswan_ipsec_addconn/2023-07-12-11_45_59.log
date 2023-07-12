@@ -1,0 +1,290 @@
++ source ./common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Jul 12 11:46:09 2023 - INFO  - Start to prepare the database config.
++ SET_CONF
++ DNF_INSTALL libreswan
++ pkgs=libreswan
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpmp4qhrye
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpmp4qhrye
++ DNF_INSTALL libreswan 2
++ pkgs=libreswan
++ node=2
++ '[' -z /tmp/tmpmp4qhrye ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 2 --tempfile /tmp/tmpmp4qhrye
++ tmpfile2=/tmp/tmpmp4qhrye
++ '[' -z /tmp/tmpmp4qhrye ']'
++ cp ./common/test-vm.secrets /etc/ipsec.d/test-vm.secrets
++ sed -i s/left=left/left=10.0.0.1/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/right=right/right=10.0.0.4/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/leftid=testA/leftid=10.0.0.1/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/rightid=testB/rightid=10.0.0.4/g /etc/ipsec.d/test-vm.secrets
++ SSH_SCP ./common/test-vm.secrets root@10.0.0.4:/etc/ipsec.d 'openEuler12#$'
++ src=./common/test-vm.secrets
++ dest=root@10.0.0.4:/etc/ipsec.d
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s ./common/test-vm.secrets -d root@10.0.0.4:/etc/ipsec.d
+Wed Jul 12 11:53:46 2023 - WARN  - the remote password uses the default configuration.
+Wed Jul 12 11:53:49 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r ./common/test-vm.secrets root@10.0.0.4:/etc/ipsec.d
+The authenticity of host '10.0.0.4 (10.0.0.4)' can't be established.
+ED25519 key fingerprint is SHA256:Bsp/hqtVKVqidVxNdxFK0vp6r/xf9w0YVjEkdazrmNY.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.0.0.4' (ED25519) to the list of known hosts.
+root@10.0.0.4's password: 
+test-vm.secrets                                                                                                                                  0%    0     0.0KB/s   --:-- ETAtest-vm.secrets                                                                                                                                100%  368     9.3KB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
++ SSH_CMD 'sed -i '\''s/left=left/left=10.0.0.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.0.0.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.0.0.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.0.0.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart' 10.0.0.4 'openEuler12#$' root
++ cmd='sed -i '\''s/left=left/left=10.0.0.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.0.0.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.0.0.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.0.0.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart'
++ remoteip=10.0.0.4
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sed -i '\''s/left=left/left=10.0.0.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.0.0.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.0.0.4/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.0.0.1/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart' -i 10.0.0.4 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Jul 12 11:54:13 2023 - WARN  - the remote user uses the default configuration.
+Wed Jul 12 11:54:16 2023 - WARN  - the remote password uses the default configuration.
+Wed Jul 12 11:54:19 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.4 sed -i 's/left=left/left=10.0.0.4/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/right=right/right=10.0.0.1/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/leftid=testA/leftid=10.0.0.4/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/rightid=testB/rightid=10.0.0.1/g' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart
+root@10.0.0.4's password: 
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
+Redirecting to: systemctl restart ipsec.service
++ ret=0
++ test 0 -ne 0
++ return 0
++ ipsec restart
+Redirecting to: systemctl restart ipsec.service
++ ADD_CONN
++ ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test
++ SSH_CMD 'ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test' 10.0.0.4 'openEuler12#$' root
++ cmd='ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test'
++ remoteip=10.0.0.4
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test' -i 10.0.0.4 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Jul 12 11:56:11 2023 - WARN  - the remote user uses the default configuration.
+Wed Jul 12 11:56:15 2023 - WARN  - the remote password uses the default configuration.
+Wed Jul 12 11:56:19 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.4 ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test
+root@10.0.0.4's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ipsec auto --up test-vm-test
++ ipsec auto --up test-vm-test
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Wed Jul 12 11:56:48 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Jul 12 11:56:52 2023 - INFO  - Start to run test.
++ ipsec addconn --config /etc/ipsec.d/test-vm.secrets --varprefix /etc/ipsec.d/test-vm.secrets --noexport --verbose test-vm-test
+debugging mode enabled
+end of file /etc/ipsec.d/test-vm.secrets
+Loading conn test-vm-test
+conn: "test-vm-test" modecfgdns=<unset>
+conn: "test-vm-test" modecfgdomains=<unset>
+conn: "test-vm-test" modecfgbanner=<unset>
+conn: "test-vm-test" mark=<unset>
+conn: "test-vm-test" mark-in=<unset>
+conn: "test-vm-test" mark-out=<unset>
+conn: "test-vm-test" vti_iface=<unset>
+conn: "test-vm-test" redirect-to=<unset>
+conn: "test-vm-test" accept-redirect-to=<unset>
+conn: "test-vm-test" esp=3des-sha1
+conn: "test-vm-test" ike=3des-sha1
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --config --varprefix --noexport --verbose failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --config --varprefix --noexport --verbose failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --autoall
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --autoall failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --autoall failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --listall
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --listall failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --listall failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --listroute
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --listroute failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --listroute failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --liststart
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --liststart failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --liststart failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --liststack
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --liststack failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --liststack failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --listignore
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --listignore failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --listignore failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec addconn --configsetup test-vm-test
+conn 'test-vm-test': not found (tried aliases)
++ CHECK_RESULT 0 0 0 'Check ipsec addconn --configsetup failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec addconn --configsetup failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Jul 12 11:57:04 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Jul 12 11:57:08 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Jul 12 11:57:12 2023 - INFO  - Start to restore the test environment.
++ REVERT_CONF
++ rm -f /etc/ipsec.d/test-vm.secrets
++ SSH_CMD 'systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets' 10.0.0.4 'openEuler12#$' root
++ cmd='systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets'
++ remoteip=10.0.0.4
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets' -i 10.0.0.4 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Jul 12 11:57:18 2023 - WARN  - the remote user uses the default configuration.
+Wed Jul 12 11:57:22 2023 - WARN  - the remote password uses the default configuration.
+Wed Jul 12 11:57:26 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.4 systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets
+root@10.0.0.4's password: 
+Failed to restart firewalld.service: Unit firewalld.service not found.
++ ret=0
++ test 0 -ne 0
++ return 0
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpmp4qhrye ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpmp4qhrye
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Jul 12 11:59:46 2023 - INFO  - End to restore the test environment.
