@@ -17,25 +17,25 @@
 + LOG_INFO 'Start environmental preparation.'
 + message='Start environmental preparation.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
-Fri Jun  2 16:42:50 2023 - INFO  - Start environmental preparation.
+Wed Jul 12 13:30:30 2023 - INFO  - Start environmental preparation.
 + DNF_INSTALL multipath-tools
 + pkgs=multipath-tools
 + node=1
 + '[' -z '' ']'
 + tmpfile=
 ++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs multipath-tools --node 1 --tempfile ''
-+ tmpfile2=/tmp/tmph_l3u6j6
++ tmpfile2=/tmp/tmpoyzb9sp8
 + '[' -z '' ']'
-+ tmpfile=/tmp/tmph_l3u6j6
++ tmpfile=/tmp/tmpoyzb9sp8
 + service=multipathd.service
 ++ date '+%Y-%m-%d %T'
-+ log_time='2023-06-02 16:43:23'
++ log_time='2023-07-12 13:31:28'
 ++ lsblk
 ++ grep disk
 ++ awk '{print $1}'
 ++ sed 's@|$@@'
 ++ tr '\n' '|'
-+ disk_name='vda|vdb'
++ disk_name='vda|vdb|vdc|vdd'
 + mv /etc/multipath.conf /etc/multipath.bak
 + echo 'defaults {
 	user_friendly_names yes
@@ -45,19 +45,19 @@ blacklist_exceptions {
         property (SCSI_IDENT_|ID_WWN)
 }
 blacklist {
-	devnode "^vda|vdb"
+	devnode "^vda|vdb|vdc|vdd"
 }'
 + LOG_INFO 'End of environmental preparation!'
 + message='End of environmental preparation!'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
-Fri Jun  2 16:43:24 2023 - INFO  - End of environmental preparation!
+Wed Jul 12 13:31:29 2023 - INFO  - End of environmental preparation!
 ++ type -t run_test
 + '[' -n function ']'
 + run_test
 + LOG_INFO 'Start testing...'
 + message='Start testing...'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
-Fri Jun  2 16:43:25 2023 - INFO  - Start testing...
+Wed Jul 12 13:31:30 2023 - INFO  - Start testing...
 + test_restart multipathd.service
 + service=multipathd.service
 + systemctl restart multipathd.service
@@ -76,12 +76,12 @@ See "systemctl status multipathd.service" and "journalctl -xeu multipathd.servic
 + LOG_ERROR 'multipathd.service restart failed'
 + message='multipathd.service restart failed'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'multipathd.service restart failed'
-Fri Jun  2 16:43:26 2023 - ERROR - multipathd.service restart failed
+Wed Jul 12 13:31:32 2023 - ERROR - multipathd.service restart failed
 + (( exec_result++ ))
 + LOG_ERROR '../common/common_lib.sh line 34'
 + message='../common/common_lib.sh line 34'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 34'
-Fri Jun  2 16:43:26 2023 - ERROR - ../common/common_lib.sh line 34
+Wed Jul 12 13:31:33 2023 - ERROR - ../common/common_lib.sh line 34
 + '[' 0 -eq 1 ']'
 + return 0
 + SLEEP_WAIT 5
@@ -104,12 +104,12 @@ Fri Jun  2 16:43:26 2023 - ERROR - ../common/common_lib.sh line 34
 + LOG_ERROR 'multipathd.service restart failed'
 + message='multipathd.service restart failed'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'multipathd.service restart failed'
-Fri Jun  2 16:43:33 2023 - ERROR - multipathd.service restart failed
+Wed Jul 12 13:31:40 2023 - ERROR - multipathd.service restart failed
 + (( exec_result++ ))
 + LOG_ERROR '../common/common_lib.sh line 37'
 + message='../common/common_lib.sh line 37'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 37'
-Fri Jun  2 16:43:34 2023 - ERROR - ../common/common_lib.sh line 37
+Wed Jul 12 13:31:41 2023 - ERROR - ../common/common_lib.sh line 37
 + '[' 0 -eq 1 ']'
 + return 0
 + systemctl stop multipathd.service
@@ -128,8 +128,8 @@ Fri Jun  2 16:43:34 2023 - ERROR - ../common/common_lib.sh line 37
 + cmd=
 + mode=1
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
-+ systemctl status multipathd.service
 + grep 'Active: inactive'
++ systemctl status multipathd.service
 + CHECK_RESULT 1 0 0 'multipathd.service stop failed'
 + actual_result=1
 + expect_result=0
@@ -143,12 +143,12 @@ Fri Jun  2 16:43:34 2023 - ERROR - ../common/common_lib.sh line 37
 + LOG_ERROR 'multipathd.service stop failed'
 + message='multipathd.service stop failed'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'multipathd.service stop failed'
-Fri Jun  2 16:43:40 2023 - ERROR - multipathd.service stop failed
+Wed Jul 12 13:31:49 2023 - ERROR - multipathd.service stop failed
 + (( exec_result++ ))
 + LOG_ERROR '../common/common_lib.sh line 42'
 + message='../common/common_lib.sh line 42'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 42'
-Fri Jun  2 16:43:41 2023 - ERROR - ../common/common_lib.sh line 42
+Wed Jul 12 13:31:50 2023 - ERROR - ../common/common_lib.sh line 42
 + '[' 0 -eq 1 ']'
 + return 0
 + systemctl start multipathd.service
@@ -167,12 +167,12 @@ See "systemctl status multipathd.service" and "journalctl -xeu multipathd.servic
 + LOG_ERROR 'multipathd.service start failed'
 + message='multipathd.service start failed'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'multipathd.service start failed'
-Fri Jun  2 16:43:42 2023 - ERROR - multipathd.service start failed
+Wed Jul 12 13:31:52 2023 - ERROR - multipathd.service start failed
 + (( exec_result++ ))
 + LOG_ERROR '../common/common_lib.sh line 44'
 + message='../common/common_lib.sh line 44'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 44'
-Fri Jun  2 16:43:43 2023 - ERROR - ../common/common_lib.sh line 44
+Wed Jul 12 13:31:52 2023 - ERROR - ../common/common_lib.sh line 44
 + '[' 0 -eq 1 ']'
 + return 0
 + SLEEP_WAIT 5
@@ -195,12 +195,12 @@ Fri Jun  2 16:43:43 2023 - ERROR - ../common/common_lib.sh line 44
 + LOG_ERROR 'multipathd.service start failed'
 + message='multipathd.service start failed'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'multipathd.service start failed'
-Fri Jun  2 16:43:50 2023 - ERROR - multipathd.service start failed
+Wed Jul 12 13:32:00 2023 - ERROR - multipathd.service start failed
 + (( exec_result++ ))
 + LOG_ERROR '../common/common_lib.sh line 47'
 + message='../common/common_lib.sh line 47'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 47'
-Fri Jun  2 16:43:50 2023 - ERROR - ../common/common_lib.sh line 47
+Wed Jul 12 13:32:00 2023 - ERROR - ../common/common_lib.sh line 47
 + '[' 0 -eq 1 ']'
 + return 0
 + test_enabled multipathd.service
@@ -243,16 +243,16 @@ find: ‘/etc/systemd/system/sockets.target.wants/multipathd.socket’: No such 
 + '[' 1 -eq 0 ']'
 + test 1x == 0x
 + return 0
-+ journalctl --since '2023-06-02 16:43:23' -u multipathd.service
++ journalctl --since '2023-07-12 13:31:28' -u multipathd.service
 + grep -i 'fail\|error'
 + grep -v -i 'DEBUG\|INFO\|WARNING'
 + grep -v 'failed to increase buffer size'
-Jun 02 16:43:25 openeuler-riscv64 systemd[1]: multipathd.service: Main process exited, code=exited, status=1/FAILURE
-Jun 02 16:43:25 openeuler-riscv64 systemd[1]: multipathd.service: Failed with result 'exit-code'.
-Jun 02 16:43:25 openeuler-riscv64 systemd[1]: Failed to start Device-Mapper Multipath Device Controller.
-Jun 02 16:43:42 openeuler-riscv64 systemd[1]: multipathd.service: Main process exited, code=exited, status=1/FAILURE
-Jun 02 16:43:42 openeuler-riscv64 systemd[1]: multipathd.service: Failed with result 'exit-code'.
-Jun 02 16:43:42 openeuler-riscv64 systemd[1]: Failed to start Device-Mapper Multipath Device Controller.
+Jul 12 13:31:31 openeuler-riscv64 systemd[1]: multipathd.service: Main process exited, code=exited, status=1/FAILURE
+Jul 12 13:31:31 openeuler-riscv64 systemd[1]: multipathd.service: Failed with result 'exit-code'.
+Jul 12 13:31:31 openeuler-riscv64 systemd[1]: Failed to start Device-Mapper Multipath Device Controller.
+Jul 12 13:31:51 openeuler-riscv64 systemd[1]: multipathd.service: Main process exited, code=exited, status=1/FAILURE
+Jul 12 13:31:51 openeuler-riscv64 systemd[1]: multipathd.service: Failed with result 'exit-code'.
+Jul 12 13:31:51 openeuler-riscv64 systemd[1]: Failed to start Device-Mapper Multipath Device Controller.
 + CHECK_RESULT 0 0 1 'There is an error message for the log of multipathd.service'
 + actual_result=0
 + expect_result=0
@@ -266,12 +266,12 @@ Jun 02 16:43:42 openeuler-riscv64 systemd[1]: Failed to start Device-Mapper Mult
 + LOG_ERROR 'There is an error message for the log of multipathd.service'
 + message='There is an error message for the log of multipathd.service'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'There is an error message for the log of multipathd.service'
-Fri Jun  2 16:44:00 2023 - ERROR - There is an error message for the log of multipathd.service
+Wed Jul 12 13:32:14 2023 - ERROR - There is an error message for the log of multipathd.service
 + (( exec_result++ ))
 + LOG_ERROR 'oe_test_service_multipathd.sh line 47'
 + message='oe_test_service_multipathd.sh line 47'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_multipathd.sh line 47'
-Fri Jun  2 16:44:00 2023 - ERROR - oe_test_service_multipathd.sh line 47
+Wed Jul 12 13:32:15 2023 - ERROR - oe_test_service_multipathd.sh line 47
 + '[' 0 -eq 1 ']'
 + return 0
 + systemctl start multipathd.service
@@ -294,12 +294,12 @@ multipathd.service is not active, cannot reload.
 + LOG_ERROR 'multipathd.service reload failed'
 + message='multipathd.service reload failed'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'multipathd.service reload failed'
-Fri Jun  2 16:44:06 2023 - ERROR - multipathd.service reload failed
+Wed Jul 12 13:32:24 2023 - ERROR - multipathd.service reload failed
 + (( exec_result++ ))
 + LOG_ERROR 'oe_test_service_multipathd.sh line 52'
 + message='oe_test_service_multipathd.sh line 52'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_multipathd.sh line 52'
-Fri Jun  2 16:44:07 2023 - ERROR - oe_test_service_multipathd.sh line 52
+Wed Jul 12 13:32:25 2023 - ERROR - oe_test_service_multipathd.sh line 52
 + '[' 0 -eq 1 ']'
 + return 0
 + systemctl status multipathd.service
@@ -317,18 +317,18 @@ Fri Jun  2 16:44:07 2023 - ERROR - oe_test_service_multipathd.sh line 52
 + LOG_ERROR 'multipathd.service reload causes the service status to change'
 + message='multipathd.service reload causes the service status to change'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'multipathd.service reload causes the service status to change'
-Fri Jun  2 16:44:08 2023 - ERROR - multipathd.service reload causes the service status to change
+Wed Jul 12 13:32:26 2023 - ERROR - multipathd.service reload causes the service status to change
 + (( exec_result++ ))
 + LOG_ERROR 'oe_test_service_multipathd.sh line 54'
 + message='oe_test_service_multipathd.sh line 54'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_multipathd.sh line 54'
-Fri Jun  2 16:44:08 2023 - ERROR - oe_test_service_multipathd.sh line 54
+Wed Jul 12 13:32:27 2023 - ERROR - oe_test_service_multipathd.sh line 54
 + '[' 0 -eq 1 ']'
 + return 0
 + LOG_INFO 'Finish test!'
 + message='Finish test!'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
-Fri Jun  2 16:44:09 2023 - INFO  - Finish test!
+Wed Jul 12 13:32:28 2023 - INFO  - Finish test!
 + CASE_RESULT 0
 + case_re=0
 + test -z 8
@@ -336,13 +336,13 @@ Fri Jun  2 16:44:09 2023 - INFO  - Finish test!
 + LOG_ERROR 'failed to execute the case.'
 + message='failed to execute the case.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
-Fri Jun  2 16:44:10 2023 - ERROR - failed to execute the case.
+Wed Jul 12 13:32:29 2023 - ERROR - failed to execute the case.
 + exit 8
 + post_test
 + LOG_INFO 'start environment cleanup.'
 + message='start environment cleanup.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
-Fri Jun  2 16:44:10 2023 - INFO  - start environment cleanup.
+Wed Jul 12 13:32:29 2023 - INFO  - start environment cleanup.
 + sed -i 's\ExecStart=/usr/sbin/multipathd -v\ExecStart=/usr/sbin/multipathd\g' /usr/lib/systemd/system/multipathd.service
 + systemctl daemon-reload
 + systemctl reload multipathd.service
@@ -353,12 +353,12 @@ multipathd.service is not active, cannot reload.
 + node=1
 + pkg_list=
 + mode=0
-+ [[ -z /tmp/tmph_l3u6j6 ]]
++ [[ -z /tmp/tmpoyzb9sp8 ]]
 + '[' 0 -ne 0 ']'
 + '[' 1 == 0 ']'
-+ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmph_l3u6j6
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpoyzb9sp8
 + '[' 0 -ne 0 ']'
 + LOG_INFO 'Finish environment cleanup!'
 + message='Finish environment cleanup!'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
-Fri Jun  2 16:44:29 2023 - INFO  - Finish environment cleanup!
+Wed Jul 12 13:32:59 2023 - INFO  - Finish environment cleanup!
