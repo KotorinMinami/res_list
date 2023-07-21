@@ -1,0 +1,243 @@
++ source ./common/disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment!'
++ message='Start to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment!'
+Mon Jun  5 17:51:39 2023 - INFO  - Start to prepare the test environment!
++ DNF_INSTALL lvm2
++ pkgs=lvm2
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs lvm2 --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp830ew0kb
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp830ew0kb
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks=vdb
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=
++ local_disk2=
++ local_disk3=
+++ cat /etc/os-release
+++ grep VERSION_ID
+++ awk -F = '{print$NF}'
++ version_id='"23.03"'
++ LOG_INFO 'End to prepare the test environment!'
++ message='End to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment!'
+Mon Jun  5 17:53:08 2023 - INFO  - End to prepare the test environment!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Mon Jun  5 17:53:09 2023 - INFO  - Start executing testcase!
++ pvcreate /dev/vdb -y --norestorefile
++ grep 'successfully created'
+  Physical volume "/dev/vdb" successfully created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'successfully created'
++ pvcreate /dev/vdb -y --setphysicalvolumesize 50MB
+  WARNING: Faking size of PV /dev/vdb. Don't write outside real device.
+  Physical volume "/dev/vdb" successfully created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pvs
++ sed -n 3p
++ grep 50.00m
++ awk '{print$4}'
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_lvm2_pvcreate_002.sh line 35'
++ message='oe_test_lvm2_pvcreate_002.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_lvm2_pvcreate_002.sh line 35'
+Mon Jun  5 17:53:11 2023 - ERROR - oe_test_lvm2_pvcreate_002.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
++ pvcreate /dev/vdb -y --setphysicalvolumesize 50MB --reportformat basic
++ grep 'successfully created'
+  WARNING: Faking size of PV /dev/vdb. Don't write outside real device.
+  Physical volume "/dev/vdb" successfully created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pvcreate /dev/vdb -y --setphysicalvolumesize 50MB --reportformat json
++ grep 'successfully created'
+  WARNING: Faking size of PV /dev/vdb. Don't write outside real device.
+  Physical volume "/dev/vdb" successfully created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pvcreate /dev/vdb -y --verbose
++ grep 'successfully created'
+  Wiping signatures on new PV /dev/vdb.
+  Set up physical volume for "/dev/vdb" with 1024000 available sectors.
+  Zeroing start of device /dev/vdb.
+  Writing physical volume data to disk "/dev/vdb".
+  Physical volume "/dev/vdb" successfully created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pvcreate /dev/vdb -y --driverloaded y
++ grep 'successfully created'
+  Physical volume "/dev/vdb" successfully created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pvcreate /dev/vdb -y --nolocking
++ grep 'successfully created'
+  Physical volume "/dev/vdb" successfully created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pvcreate --longhelp
++ grep LV
+  pvcreate - Initialize physical volume(s) for use by LVM
+        e.g. PV, VG, LV, Size, Number, String, Tag.
+        LV
+        Logical Volume name. See lvm(8) for valid names. An LV positional
+        arg generally includes the VG name and LV name, e.g. VG/LV.
+        LV followed by _<type> indicates that an LV of the given type is
+        The _new suffix indicates that the LV name is new.
+        tags in place of a VG, LV or PV.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pvcreate --version
++ grep 'LVM version'
+  LVM version:     2.03.18(2)-git (2022-11-10)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ '["23.03"' = '22.03]'
+oe_test_lvm2_pvcreate_002.sh: line 50: ["23.03": command not found
++ LOG_INFO 'End executing testcase!'
++ message='End executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End executing testcase!'
+Mon Jun  5 17:53:15 2023 - INFO  - End executing testcase!
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Jun  5 17:53:16 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start environment cleanup.'
++ message='Start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment cleanup.'
+Mon Jun  5 17:53:17 2023 - INFO  - Start environment cleanup.
++ pvremove -f /dev/vdb
+  Labels on physical volume "/dev/vdb" successfully wiped.
++ DNF_REMOVE lvm2
++ node=lvm2
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp830ew0kb ]]
++ '[' 0 -ne 0 ']'
++ '[' lvm2 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node lvm2 --pkgs '' --tempfile /tmp/tmp830ew0kb
+usage: rpm_manage.py install|remove [-h] [--node NODE] [--pkgs PKG] [--tempfile TEPMFILE]
+rpm_manage.py: error: argument --node: invalid int value: 'lvm2'
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Mon Jun  5 17:53:21 2023 - INFO  - Finish environment cleanup.

@@ -1,0 +1,349 @@
++ source ./common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Fri Jul 21 01:25:52 2023 - INFO  - Start to prepare the database config.
++ SET_CONF
++ DNF_INSTALL libreswan
++ pkgs=libreswan
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpvwrrvzbh
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpvwrrvzbh
++ DNF_INSTALL libreswan 2
++ pkgs=libreswan
++ node=2
++ '[' -z /tmp/tmpvwrrvzbh ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 2 --tempfile /tmp/tmpvwrrvzbh
+Fri Jul 21 01:27:22 2023 - INFO  - pkgs:(libreswan) is already installed
++ tmpfile2=
++ '[' -z /tmp/tmpvwrrvzbh ']'
++ cp ./common/test-vm.secrets /etc/ipsec.d/test-vm.secrets
++ sed -i s/left=left/left=10.0.0.3/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/right=right/right=10.0.0.6/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/leftid=testA/leftid=10.0.0.3/g /etc/ipsec.d/test-vm.secrets
++ sed -i s/rightid=testB/rightid=10.0.0.6/g /etc/ipsec.d/test-vm.secrets
++ SSH_SCP ./common/test-vm.secrets root@10.0.0.6:/etc/ipsec.d 'openEuler12#$'
++ src=./common/test-vm.secrets
++ dest=root@10.0.0.6:/etc/ipsec.d
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s ./common/test-vm.secrets -d root@10.0.0.6:/etc/ipsec.d
+Fri Jul 21 01:27:24 2023 - WARN  - the remote password uses the default configuration.
+Fri Jul 21 01:27:25 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r ./common/test-vm.secrets root@10.0.0.6:/etc/ipsec.d
+root@10.0.0.6's password: 
+test-vm.secrets                                 0%    0     0.0KB/s   --:-- ETAtest-vm.secrets                               100%  368    20.9KB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
++ SSH_CMD 'sed -i '\''s/left=left/left=10.0.0.6/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.0.0.3/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.0.0.6/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.0.0.3/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart' 10.0.0.6 'openEuler12#$' root
++ cmd='sed -i '\''s/left=left/left=10.0.0.6/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.0.0.3/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.0.0.6/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.0.0.3/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart'
++ remoteip=10.0.0.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sed -i '\''s/left=left/left=10.0.0.6/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/right=right/right=10.0.0.3/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/leftid=testA/leftid=10.0.0.6/g'\'' /etc/ipsec.d/test-vm.secrets
+            sed -i '\''s/rightid=testB/rightid=10.0.0.3/g'\'' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart' -i 10.0.0.6 -u root -p 'openEuler12#$' -t 300 -o 22
+Fri Jul 21 01:27:31 2023 - WARN  - the remote user uses the default configuration.
+Fri Jul 21 01:27:32 2023 - WARN  - the remote password uses the default configuration.
+Fri Jul 21 01:27:33 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.6 sed -i 's/left=left/left=10.0.0.6/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/right=right/right=10.0.0.3/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/leftid=testA/leftid=10.0.0.6/g' /etc/ipsec.d/test-vm.secrets
+            sed -i 's/rightid=testB/rightid=10.0.0.3/g' /etc/ipsec.d/test-vm.secrets
+            systemctl stop firewalld
+            ipsec restart
+root@10.0.0.6's password: 
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
+Redirecting to: systemctl restart ipsec.service
++ ret=0
++ test 0 -ne 0
++ return 0
++ ipsec restart
+Redirecting to: systemctl restart ipsec.service
++ ADD_CONN
++ ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test
++ SSH_CMD 'ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test' 10.0.0.6 'openEuler12#$' root
++ cmd='ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test'
++ remoteip=10.0.0.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test' -i 10.0.0.6 -u root -p 'openEuler12#$' -t 300 -o 22
+Fri Jul 21 01:28:00 2023 - WARN  - the remote user uses the default configuration.
+Fri Jul 21 01:28:01 2023 - WARN  - the remote password uses the default configuration.
+Fri Jul 21 01:28:02 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.6 ipsec auto --config /etc/ipsec.d/test-vm.secrets --add test-vm-test
+root@10.0.0.6's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ipsec auto --up test-vm-test
++ ipsec auto --up test-vm-test
++ LOG_INFO 'End to prepare the database config.'
++ message='End to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the database config.'
+Fri Jul 21 01:28:09 2023 - INFO  - End to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Jul 21 01:28:10 2023 - INFO  - Start to run test.
++ ipsec auto --listpubkeys
++ CHECK_RESULT 0 0 0 'Check ipsec auto --listpubkeys failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --listpubkeys failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --listcerts
++ CHECK_RESULT 0 0 0 'Check ipsec auto --listcerts failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --listcerts failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --checkpubkeys
++ CHECK_RESULT 0 0 0 'Check ipsec auto --checkpubkeys failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --checkpubkeys failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --listcacerts
++ CHECK_RESULT 0 0 0 'Check ipsec auto --listcacerts failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --listcacerts failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --showonly --utc --listgroups
+ipsec auto: unknown option "--listgroups"
++ CHECK_RESULT 2 0 0 'Check ipsec auto --showonly --utc --listgroups failed.'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --showonly --utc --listgroups failed.'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Check ipsec auto --showonly --utc --listgroups failed.'
++ LOG_ERROR 'Check ipsec auto --showonly --utc --listgroups failed.'
++ message='Check ipsec auto --showonly --utc --listgroups failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check ipsec auto --showonly --utc --listgroups failed.'
+Fri Jul 21 01:28:14 2023 - ERROR - Check ipsec auto --showonly --utc --listgroups failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_libreswan_ipsec_auto_2.sh line 42'
++ message='oe_test_libreswan_ipsec_auto_2.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_libreswan_ipsec_auto_2.sh line 42'
+Fri Jul 21 01:28:15 2023 - ERROR - oe_test_libreswan_ipsec_auto_2.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ ipsec auto --listcrls
++ CHECK_RESULT 0 0 0 'Check ipsec auto --listcrls failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --listcrls failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --listall
++ CHECK_RESULT 0 0 0 'Check ipsec auto --listall failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --listall failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --purgeocsp
++ CHECK_RESULT 0 0 0 'Check ipsec auto --purgeocsp failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --purgeocsp failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --rereadsecrets
++ CHECK_RESULT 0 0 0 'Check ipsec auto --rereadsecrets failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --rereadsecrets failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --rereadgroups
+ipsec auto: unknown option "--rereadgroups"
++ CHECK_RESULT 2 0 0 'Check ipsec auto --rereadgroups failed.'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --rereadgroups failed.'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Check ipsec auto --rereadgroups failed.'
++ LOG_ERROR 'Check ipsec auto --rereadgroups failed.'
++ message='Check ipsec auto --rereadgroups failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check ipsec auto --rereadgroups failed.'
+Fri Jul 21 01:28:18 2023 - ERROR - Check ipsec auto --rereadgroups failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_libreswan_ipsec_auto_2.sh line 52'
++ message='oe_test_libreswan_ipsec_auto_2.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_libreswan_ipsec_auto_2.sh line 52'
+Fri Jul 21 01:28:19 2023 - ERROR - oe_test_libreswan_ipsec_auto_2.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ ipsec crls
++ CHECK_RESULT 0 0 0 'Check ipsec crls failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec crls failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --rereadcerts
++ CHECK_RESULT 0 0 0 'Check ipsec auto --rereadcerts failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --rereadcerts failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec auto --rereadall
++ CHECK_RESULT 0 0 0 'Check ipsec auto --rereadall failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check ipsec auto --rereadall failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Jul 21 01:28:21 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Jul 21 01:28:22 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Jul 21 01:28:23 2023 - INFO  - Start to restore the test environment.
++ REVERT_CONF
++ rm -f /etc/ipsec.d/test-vm.secrets
++ SSH_CMD 'systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets' 10.0.0.6 'openEuler12#$' root
++ cmd='systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets'
++ remoteip=10.0.0.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets' -i 10.0.0.6 -u root -p 'openEuler12#$' -t 300 -o 22
+Fri Jul 21 01:28:25 2023 - WARN  - the remote user uses the default configuration.
+Fri Jul 21 01:28:26 2023 - WARN  - the remote password uses the default configuration.
+Fri Jul 21 01:28:27 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.6 systemctl restart firewalld
+            rm -f /etc/ipsec.d/test-vm.secrets
+root@10.0.0.6's password: 
+Failed to restart firewalld.service: Unit firewalld.service not found.
++ ret=0
++ test 0 -ne 0
++ return 0
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpvwrrvzbh ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpvwrrvzbh
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Jul 21 01:29:01 2023 - INFO  - End to restore the test environment.
