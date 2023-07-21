@@ -1,0 +1,145 @@
++ source ./common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Jul 19 16:07:11 2023 - INFO  - Start to prepare the test environment.
++ iSulad_install
++ DNF_INSTALL iSulad
++ pkgs=iSulad
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iSulad --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpmc1xcbqb
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpmc1xcbqb
++ sed -i '/registry-mirrors/a\"docker.io"' /etc/isulad/daemon.json
++ systemctl restart isulad
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Jul 19 16:07:55 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Jul 19 16:07:55 2023 - INFO  - Start to run test.
+++ isula run -tid --cgroup-parent /cgroup123 --system-container busybox
+Unable to find image 'busybox' locally
+Image "busybox" pulling
+Image "a416a98b71e224a31ee99cff8e16063554498227d2b696152a9c3e0aa65e5824" pulled
++ container_names=3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+++ isula inspect -f '{{json .State.Pid}}' 3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
++ container_pid=2715
++ grep cgroup123 /proc/2715/cgroup
+12:blkio:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+11:rdma:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+10:pids:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+9:devices:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+8:cpuset:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+7:cpu,cpuacct:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+6:memory:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+5:freezer:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+4:hugetlb:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+3:net_cls,net_prio:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+2:perf_event:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+1:name=systemd:/cgroup123/3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
++ CHECK_RESULT 0 0 0 'configure the Cgroup path failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='configure the Cgroup path failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ sed -i '/use-decrypted-key/a\"cgroup-parent": "/cgroup456",' /etc/isulad/daemon.json
++ systemctl restart isulad
+++ isula run -tid busybox
++ container_names1=f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+++ isula inspect -f '{{json .State.Pid}}' f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
++ container_pid1=2751
++ grep cgroup456 /proc/2751/cgroup
+12:blkio:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+11:rdma:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+10:pids:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+9:devices:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+8:cpuset:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+7:cpu,cpuacct:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+6:memory:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+5:freezer:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+4:hugetlb:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+3:net_cls,net_prio:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+2:perf_event:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+1:name=systemd:/cgroup456/f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
++ CHECK_RESULT 0 0 0 'configure the Cgroup path failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='configure the Cgroup path failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Jul 19 16:08:15 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Jul 19 16:08:15 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Jul 19 16:08:15 2023 - INFO  - Start to restore the test environment.
++ isula stop 3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62 f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
++ isula rm 3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62 f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
+3c62151af8679321682b1796c6f0395ba165fba1abd806d49c5b58c2a28a1d62
+f031b49c6776695745a02fc838b03fb0566aa19cbfea181a133a3b00ecc0418f
++ isula rmi busybox
+Image "busybox" removed
++ iSulad_remove
++ systemctl stop isulad
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpmc1xcbqb ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpmc1xcbqb
++ '[' 0 -ne 0 ']'
++ rm -rf /etc/isulad
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Jul 19 16:08:46 2023 - INFO  - End to restore the test environment.
