@@ -1,0 +1,206 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Mon Jul 24 06:41:52 2023 - INFO  - Start to prepare the database config.
++ point_list=($(CREATE_FS xfs))
+++ CREATE_FS xfs
+++ fs_type=xfs
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230724064152
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230724064152
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vda
++++ disk_name=/dev/vda
++++ pvcreate /dev/vda -f
++++ [[ 5 -eq 0 ]]
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
+++++ pvcreate /dev/vda
++++ vggroup=
++++ printf
+printf: usage: printf [-v var] format [arguments]
+++ vggroup=
+++ count=1
+++ msg=' '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230724064152
+++ point=/tmp/point120230724064152
+++ lvcreate -n test_lv120230724064152 -L 512M -y
+  No command with matching syntax recognised.  Run 'lvcreate --help' for more information.
+  Nearest similar command has syntax:
+++ mkfs -t xfs /dev//test_lv120230724064152
+Error accessing specified device /dev//test_lv120230724064152: No such file or directory
+Usage: mkfs.xfs
+/* blocksize */		[-b size=num]
+/* config file */	[-c options=xxx]
+/* metadata */		[-m crc=0|1,finobt=0|1,uuid=xxx,rmapbt=0|1,reflink=0|1,
+			    inobtcount=0|1,bigtime=0|1]
+/* data subvol */	[-d agcount=n,agsize=n,file,name=xxx,size=num,
+			    (sunit=value,swidth=value|su=num,sw=num|noalign),
+			    sectsize=num
+/* force overwrite */	[-f]
+/* inode size */	[-i perblock=n|size=num,maxpct=n,attr=0|1|2,
+			    projid32bit=0|1,sparse=0|1,nrext64=0|1]
+/* no discard */	[-K]
+/* log subvol */	[-l agnum=n,internal,size=num,logdev=xxx,version=n
+			    sunit=value|su=num,sectsize=num,lazy-count=0|1]
+/* label */		[-L label (maximum 12 characters)]
+/* naming */		[-n size=num,version=2|ci,ftype=0|1]
+/* no-op info only */	[-N]
+/* prototype file */	[-p fname]
+/* quiet */		[-q]
+/* realtime subvol */	[-r extsize=num,size=num,rtdev=xxx]
+/* sectorsize */	[-s size=num]
+/* version */		[-V]
+			devicename
+<devicename> is required unless -d name=xxx is given.
+<num> is xxx (bytes), xxxs (sectors), xxxb (fs blocks), xxxk (xxx KiB),
+      xxxm (xxx MiB), xxxg (xxx GiB), xxxt (xxx TiB) or xxxp (xxx PiB).
+<value> is xxx (512 byte blocks).
+++ mkdir /tmp/point120230724064152
+++ mount /dev//test_lv120230724064152 /tmp/point120230724064152
+mount: /tmp/point120230724064152: special device /dev//test_lv120230724064152 does not exist.
+++ msg=' /tmp/point120230724064152 '
+++ count=2
+++ echo /tmp/point120230724064152
++ vggroup=/tmp/point120230724064152
++ xfs_point=
+++ lsblk
+++ grep /tmp/point120230724064152
+++ cut -d - -f 2
+++ awk '{print $1}'
++ lv=
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Mon Jul 24 06:41:53 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jul 24 06:41:54 2023 - INFO  - Start to run test.
+++ df -i
+++ grep /dev/mapper//tmp/point120230724064152-
+++ awk '{print $2}'
++ size1=
++ lvextend -L +1G /dev//tmp/point120230724064152/
+  "tmp/point120230724064152/": Invalid path for Logical Volume.
++ xfs_growfs /dev//tmp/point120230724064152/
+xfs_growfs: path resolution failed for /dev//tmp/point120230724064152/: No such file or directory
++ CHECK_RESULT 1 0 0 'Change size of xfs failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Change size of xfs failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Change size of xfs failed.'
++ LOG_ERROR 'Change size of xfs failed.'
++ message='Change size of xfs failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Change size of xfs failed.'
+Mon Jul 24 06:41:54 2023 - ERROR - Change size of xfs failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_xfs_resize2fs.sh line 35'
++ message='oe_test_FSIO_xfs_resize2fs.sh line 35'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_xfs_resize2fs.sh line 35'
+Mon Jul 24 06:41:55 2023 - ERROR - oe_test_FSIO_xfs_resize2fs.sh line 35
++ return 0
+++ df -i
+++ grep /dev/mapper//tmp/point120230724064152-
+++ awk '{print $2}'
++ size2=
++ [[ '' -ne '' ]]
++ CHECK_RESULT 1 0 0 'Resize for xfs failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Resize for xfs failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Resize for xfs failed.'
++ LOG_ERROR 'Resize for xfs failed.'
++ message='Resize for xfs failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Resize for xfs failed.'
+Mon Jul 24 06:41:55 2023 - ERROR - Resize for xfs failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_xfs_resize2fs.sh line 38'
++ message='oe_test_FSIO_xfs_resize2fs.sh line 38'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_xfs_resize2fs.sh line 38'
+Mon Jul 24 06:41:56 2023 - ERROR - oe_test_FSIO_xfs_resize2fs.sh line 38
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jul 24 06:41:56 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Jul 24 06:41:56 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jul 24 06:41:57 2023 - INFO  - Start to restore the test environment.
+++ echo /tmp/point120230724064152
++ list=/tmp/point120230724064152
++ REMOVE_FS /tmp/point120230724064152
++ point_list=($1)
+++ seq 0 0
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230724064152
+++ df -T
+++ grep /tmp/point120230724064152
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jul 24 06:41:57 2023 - INFO  - End to restore the test environment.
