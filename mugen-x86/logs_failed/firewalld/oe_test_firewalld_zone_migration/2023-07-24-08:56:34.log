@@ -1,0 +1,285 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Jul 24 08:56:34 2023 - INFO  - Start to prepare the test environment.
++ P_SSH_CMD --node 2 --cmd 'which sshpass'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'which sshpass'
+which: no sshpass in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin)
++ [[ x1 != \x\0 ]]
++ P_SSH_CMD --node 2 --cmd 'yum install sshpass -y'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'yum install sshpass -y'
+Last metadata expiration check: 0:06:27 ago on Mon 24 Jul 2023 08:50:08 AM UTC.
+Dependencies resolved.
+================================================================================
+ Package         Architecture   Version                Repository          Size
+================================================================================
+Installing:
+ sshpass         x86_64         1.09-1.oe2303          everything          24 k
+
+Transaction Summary
+================================================================================
+Install  1 Package
+
+Total download size: 24 k
+Installed size: 45 k
+Downloading Packages:
+sshpass-1.09-1.oe2303.x86_64.rpm                141 kB/s |  24 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                           139 kB/s |  24 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : sshpass-1.09-1.oe2303.x86_64                           1/1 
+  Running scriptlet: sshpass-1.09-1.oe2303.x86_64                           1/1 
+  Verifying        : sshpass-1.09-1.oe2303.x86_64                           1/1 
+
+Installed:
+  sshpass-1.09-1.oe2303.x86_64                                                  
+
+Complete!
++ sshpass_status=0
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Mon Jul 24 08:56:35 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Jul 24 08:56:36 2023 - INFO  - Start to run test.
+++ firewall-cmd --state
+oe_test_firewalld_zone_migration.sh: line 33: firewall-cmd: command not found
++ CHECK_RESULT '' running 0 'firewalld.service not running'
++ actual_result=
++ expect_result=running
++ mode=0
++ error_log='firewalld.service not running'
++ exit_mode=0
++ '[' -z '' ']'
++ LOG_ERROR 'Missing actual error code.'
++ message='Missing actual error code.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Missing actual error code.'
+Mon Jul 24 08:56:36 2023 - ERROR - Missing actual error code.
++ return 1
++ firewall-cmd --delete-zone=zonetest --permanent
+oe_test_firewalld_zone_migration.sh: line 34: firewall-cmd: command not found
++ firewall-cmd --reload
+oe_test_firewalld_zone_migration.sh: line 35: firewall-cmd: command not found
++ firewall-cmd --get-zones
++ grep zonetest
+oe_test_firewalld_zone_migration.sh: line 36: firewall-cmd: command not found
++ CHECK_RESULT 1 0 1 'default firewall zone check fail'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='default firewall zone check fail'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ CMD_String='sshpass -p openEuler12#$ ssh -o '\''StrictHostKeyChecking no'\'' root@10.0.0.1 '\''cat /etc/os-release'\'''
++ P_SSH_CMD --node 2 --cmd 'sshpass -p openEuler12#$ ssh -o '\''StrictHostKeyChecking no'\'' root@10.0.0.1 '\''cat /etc/os-release'\'''
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'sshpass -p openEuler12#$ ssh -o '\''StrictHostKeyChecking no'\'' root@10.0.0.1 '\''cat /etc/os-release'\'''
+NAME="openEuler"
+VERSION="23.03"
+ID="openEuler"
+VERSION_ID="23.03"
+PRETTY_NAME="openEuler 23.03"
+ANSI_COLOR="0;31"
++ CHECK_RESULT 0 0 0 'ssh NODE1_IPV4 fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ssh NODE1_IPV4 fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ firewall-cmd --new-zone=zonetest --permanent
+oe_test_firewalld_zone_migration.sh: line 42: firewall-cmd: command not found
++ firewall-cmd --reload
+oe_test_firewalld_zone_migration.sh: line 43: firewall-cmd: command not found
++ firewall-cmd --get-zones
+oe_test_firewalld_zone_migration.sh: line 44: firewall-cmd: command not found
++ grep zonetest
++ CHECK_RESULT 1 0 0 'add firewall zone check fail'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='add firewall zone check fail'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'add firewall zone check fail'
++ LOG_ERROR 'add firewall zone check fail'
++ message='add firewall zone check fail'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'add firewall zone check fail'
+Mon Jul 24 08:56:36 2023 - ERROR - add firewall zone check fail
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_zone_migration.sh line 45'
++ message='oe_test_firewalld_zone_migration.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_zone_migration.sh line 45'
+Mon Jul 24 08:56:36 2023 - ERROR - oe_test_firewalld_zone_migration.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ firewall-cmd --zone=zonetest --add-source=10.0.0.4
+oe_test_firewalld_zone_migration.sh: line 47: firewall-cmd: command not found
++ firewall-cmd --zone=zonetest --add-port=65535/tcp
+oe_test_firewalld_zone_migration.sh: line 48: firewall-cmd: command not found
+++ firewall-cmd --list-all --zone=zonetest
+++ grep sources
+oe_test_firewalld_zone_migration.sh: line 49: firewall-cmd: command not found
+++ awk '{print $NF}'
++ CHECK_RESULT '' 10.0.0.4 0 'add source fail for zonetest'
++ actual_result=
++ expect_result=10.0.0.4
++ mode=0
++ error_log='add source fail for zonetest'
++ exit_mode=0
++ '[' -z '' ']'
++ LOG_ERROR 'Missing actual error code.'
++ message='Missing actual error code.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Missing actual error code.'
+Mon Jul 24 08:56:36 2023 - ERROR - Missing actual error code.
++ return 1
+++ firewall-cmd --list-all --zone=zonetest
+++ grep '^  ports'
+++ awk '{print $NF}'
+oe_test_firewalld_zone_migration.sh: line 50: firewall-cmd: command not found
++ CHECK_RESULT '' 65535/tcp 0 'add ports fail for zonetest'
++ actual_result=
++ expect_result=65535/tcp
++ mode=0
++ error_log='add ports fail for zonetest'
++ exit_mode=0
++ '[' -z '' ']'
++ LOG_ERROR 'Missing actual error code.'
++ message='Missing actual error code.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Missing actual error code.'
+Mon Jul 24 08:56:36 2023 - ERROR - Missing actual error code.
++ return 1
++ P_SSH_CMD --node 2 --cmd 'sshpass -p openEuler12#$ ssh -o '\''StrictHostKeyChecking no'\'' root@10.0.0.1 '\''cat /etc/os-release'\'''
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'sshpass -p openEuler12#$ ssh -o '\''StrictHostKeyChecking no'\'' root@10.0.0.1 '\''cat /etc/os-release'\'''
+NAME="openEuler"
+VERSION="23.03"
+ID="openEuler"
+VERSION_ID="23.03"
+PRETTY_NAME="openEuler 23.03"
+ANSI_COLOR="0;31"
++ CHECK_RESULT 0 0 1 'ssh NODE1_IPV4 fail. Firewalld zone migration is not supported'
++ actual_result=0
++ expect_result=0
++ mode=1
++ error_log='ssh NODE1_IPV4 fail. Firewalld zone migration is not supported'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 1 -eq 0 ']'
++ test 0x == 0x
++ test -n 'ssh NODE1_IPV4 fail. Firewalld zone migration is not supported'
++ LOG_ERROR 'ssh NODE1_IPV4 fail. Firewalld zone migration is not supported'
++ message='ssh NODE1_IPV4 fail. Firewalld zone migration is not supported'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'ssh NODE1_IPV4 fail. Firewalld zone migration is not supported'
+Mon Jul 24 08:56:37 2023 - ERROR - ssh NODE1_IPV4 fail. Firewalld zone migration is not supported
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_zone_migration.sh line 52'
++ message='oe_test_firewalld_zone_migration.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_zone_migration.sh line 52'
+Mon Jul 24 08:56:37 2023 - ERROR - oe_test_firewalld_zone_migration.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ firewall-cmd --delete-zone=zonetest --permanent
+oe_test_firewalld_zone_migration.sh: line 54: firewall-cmd: command not found
++ firewall-cmd --reload
+oe_test_firewalld_zone_migration.sh: line 55: firewall-cmd: command not found
++ P_SSH_CMD --node 2 --cmd 'sshpass -p openEuler12#$ ssh -o '\''StrictHostKeyChecking no'\'' root@10.0.0.1 '\''cat /etc/os-release'\'''
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'sshpass -p openEuler12#$ ssh -o '\''StrictHostKeyChecking no'\'' root@10.0.0.1 '\''cat /etc/os-release'\'''
+NAME="openEuler"
+VERSION="23.03"
+ID="openEuler"
+VERSION_ID="23.03"
+PRETTY_NAME="openEuler 23.03"
+ANSI_COLOR="0;31"
++ CHECK_RESULT 0 0 0 'ssh NODE1_IPV4 fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ssh NODE1_IPV4 fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Jul 24 08:56:38 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Jul 24 08:56:38 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Jul 24 08:56:38 2023 - INFO  - Start to restore the test environment.
++ [[ x0 == \x\0 ]]
++ P_SSH_CMD --node 2 --cmd 'yum remove sshpass -y'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'yum remove sshpass -y'
+Dependencies resolved.
+================================================================================
+ Package         Architecture   Version               Repository           Size
+================================================================================
+Removing:
+ sshpass         x86_64         1.09-1.oe2303         @everything          45 k
+
+Transaction Summary
+================================================================================
+Remove  1 Package
+
+Freed space: 45 k
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Erasing          : sshpass-1.09-1.oe2303.x86_64                           1/1 
+  Running scriptlet: sshpass-1.09-1.oe2303.x86_64                           1/1 
+  Verifying        : sshpass-1.09-1.oe2303.x86_64                           1/1 
+
+Removed:
+  sshpass-1.09-1.oe2303.x86_64                                                  
+
+Complete!
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Mon Jul 24 08:56:39 2023 - INFO  - End to restore the test environment.
