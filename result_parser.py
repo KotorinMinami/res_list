@@ -180,7 +180,7 @@ class classifier(object):
         return value
 
 if __name__ == "__main__":
-    result = TestResults('.')
+    result = TestResults('./mugen-riscv')
     result.parseResults()
     result.parseUnsupportedCase(addDisk=True , multiMachine=True , addNic=True)
     result.classifyResults()

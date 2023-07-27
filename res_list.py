@@ -24,7 +24,10 @@ class testRes():
         for suite in allSuites:
             if suite not in withFailedSuites:
                 for case in os.listdir(self.logsDir+'/'+suite):
-                    self.testResult.append({'suite name':suite , 'case name':case , 'status':'success'})
+                    if self.csvtestResult.get(case , None) is not None and self.csvtestResult[case]['status'] == 'success':
+                        self.testResult.append({'suite name':suite , 'case name':case , 'status':'success' , 'reason':self.csvtestResult[case]['reason']})
+                    else:
+                        self.testResult.append({'suite name':suite , 'case name':case , 'status':'success'})
     
     def csvRead(self):
         if self.curCsv is not None:
@@ -34,7 +37,7 @@ class testRes():
                 rows = rows[1:]
                 keys = ['suite name' , 'case name' , 'status' , 'logFile' , 'reason']
                 for row in rows:
-                    if row[2] == 'fail' and row[4] != '':
+                    if row and (row[4] != '' and row[4] != 'None' and row[4] != 'x86 fail'):
                         self.csvtestResult[row[1]] = dict(zip(keys , row))
 
     def exprotToCsv(self, filename = 'failureCause.csv'):
@@ -52,12 +55,12 @@ class testRes():
                 suiteName = ''
             if self.testResult[i]['suite name'] != '':
                 suite = self.testResult[i]['suite name']
-            if self.testResult[i]['status'] == 'success':
-                reason = 'None'
+            if self.testResult[i].get('reason' , None) is not None:
+                reason = self.testResult[i]['reason']
             elif self.testResult[i]['status'] == 'x86 fail':
                 reason = 'x86 fail'
-            elif self.testResult[i].get('reason' , None) is not None:
-                reason = self.testResult[i]['reason']
+            elif self.testResult[i]['status'] == 'success':
+                reason = 'None'
             else:
                 reason = ''
             logfile = sorted(os.listdir(self.logsDir+'/'+suite+'/'+self.testResult[i]['case name']))[0]
@@ -87,10 +90,10 @@ class testRes():
                     suiteName = self.testResult[i]['suite name']
                 else:
                     suiteName = ''
-                if self.testResult[i]['status'] == 'success':
-                    reason = 'None'
-                elif self.testResult[i].get('reason' , None) is not None:
+                if self.testResult[i].get('reason' , None) is not None:
                     reason = self.testResult[i]['reason']
+                elif self.testResult[i]['status'] == 'success' :
+                    reason = 'None'
                 elif self.testResult[i]['status'] == 'x86 fail':
                     reason = 'x86 fail'
                 else:
@@ -113,7 +116,10 @@ def findRealFail(riscv:testRes , x86:testRes):
     for suite in riscvFailedSuite:
         for case in os.listdir(riscv.logsDir+'/'+suite):
             if case not in os.listdir(riscv.failedLogsDir+'/'+suite):
-                riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'success'})
+                if riscv.csvtestResult.get(case , None) is not None and riscv.csvtestResult[case]['status'] == 'success':
+                    riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'success' , 'reason':riscv.csvtestResult[case]['reason']})
+                else:
+                    riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'success'})
         if suite not in x86FailedSuite:
             for case in os.listdir(riscv.failedLogsDir+'/'+suite):
                 if riscv.csvtestResult.get(case , None) is not None:
@@ -123,7 +129,10 @@ def findRealFail(riscv:testRes , x86:testRes):
         else:
             for case in os.listdir(riscv.failedLogsDir+'/'+suite):
                 if case in os.listdir(x86.failedLogsDir+'/'+suite):
-                    riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'x86 fail'})
+                    if riscv.csvtestResult.get(case , None) is not None and riscv.csvtestResult[case]['status'] == 'x86 fail':
+                        riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'x86 fail' , 'reason':riscv.csvtestResult[case]['reason']})
+                    else:
+                        riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'x86 fail'})
             for case in os.listdir(riscv.failedLogsDir+'/'+suite):
                 if case not in os.listdir(x86.failedLogsDir+'/'+suite):
                     reason = None
