@@ -180,7 +180,21 @@ class classifier(object):
         return value
 
 if __name__ == "__main__":
-    result = TestResults('./mugen-riscv')
+    if len(sys.argv) < 2:
+        sys.exit('Usage: python3 result_parser.py <directory>')
+
+    dir = sys.argv[1]
+
+    if not os.path.exists(dir):
+        sys.exit(f"Error: The directory '{dir}' does not exist.")
+
+    for folder in ['logs', 'logs_failed']:
+        folder_path = os.path.join(dir, folder)
+
+        if not os.path.exists(folder_path) or not os.path.isdir(folder_path):
+            sys.exit(f"Invalid directory: {dir}: missing '{folder}' folder.")
+    
+    result = TestResults(dir)
     result.parseResults()
     result.parseUnsupportedCase(addDisk=True , multiMachine=True , addNic=True)
     result.classifyResults()
