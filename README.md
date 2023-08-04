@@ -15,10 +15,10 @@ $ python3 res_list.py
 
 ### 用法
 
-在运行之前，需要将 mugen 目录下的 `logs` 和 `logs_failed` 文件夹复制到脚本目录下的 `mugen-riscv` 文件夹。然后，使用运行脚本：
+在运行该脚本之前，需要先使用 mugen 完成测试，即 mugen 的目录下要有 `logs` 和 `logs_failed` 两个文件夹。然后再将 mugen 的路径作为脚本的第一个参数：
 
 ```shell-session
-$ python3 result_parser.py
-```
+$ python3 result_parser.py <mugen directory>
+``` 
 
-运行之后，结果文件将在 `mugen-riscv` 目录下生成。
+运行之后，结果文件将在 mugen 的目录下生成。
