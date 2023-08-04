@@ -1,0 +1,166 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Aug  3 23:55:11 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL iSulad
++ pkgs=iSulad
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iSulad --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpf4zz65t7
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpf4zz65t7
++ cp /etc/isulad/daemon.json /etc/isulad/daemon.json.bak
++ sed -i '/registry-mirrors/a\"https:\/\/ariq8blp.mirror.aliyuncs.com\"' /etc/isulad/daemon.json
++ systemctl restart isulad.service
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Aug  3 23:56:07 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Aug  3 23:56:08 2023 - INFO  - Start to run test.
++ isula pull busybox
+Image "busybox" pulling
+Failed to pull image busybox with error: Invalid data fetched for /v2/library/busybox/manifests/sha256:22b3bb958147afeb0db0122c91cb7d8b3a9d691b0d4e532e0cf79078cc80916f, this mainly caused by server error
++ isula images
++ grep -i busybox
++ CHECK_RESULT 1 0 0 'Mirror pull failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Mirror pull failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Mirror pull failed'
++ LOG_ERROR 'Mirror pull failed'
++ message='Mirror pull failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Mirror pull failed'
+Thu Aug  3 23:57:14 2023 - ERROR - Mirror pull failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_container.sh line 35'
++ message='oe_test_iSulad_container.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_container.sh line 35'
+Thu Aug  3 23:57:15 2023 - ERROR - oe_test_iSulad_container.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
++ isula create -it busybox
+Unable to find image 'busybox' locally
+Image "busybox" pulling
+Failed to pull image busybox with error: Invalid data fetched for /v2/library/busybox/manifests/sha256:22b3bb958147afeb0db0122c91cb7d8b3a9d691b0d4e532e0cf79078cc80916f, this mainly caused by server error
++ grep -vi NAMES
++ isula ps -a
++ CHECK_RESULT 1 0 0 'Container creation failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Container creation failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Container creation failed'
++ LOG_ERROR 'Container creation failed'
++ message='Container creation failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Container creation failed'
+Thu Aug  3 23:58:35 2023 - ERROR - Container creation failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_container.sh line 38'
++ message='oe_test_iSulad_container.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_container.sh line 38'
+Thu Aug  3 23:58:36 2023 - ERROR - oe_test_iSulad_container.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
+++ isula ps -a
+++ grep -vi NAMES
+++ awk '{print $NF}'
++ container_id=
++ isula start ''
++ isula inspect -f '{{.State.Status}}' ''
++ grep -i running
+Inspect error: No such object:
++ CHECK_RESULT 1 0 0 'Container startup failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Container startup failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Container startup failed'
++ LOG_ERROR 'Container startup failed'
++ message='Container startup failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Container startup failed'
+Thu Aug  3 23:58:37 2023 - ERROR - Container startup failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_container.sh line 42'
++ message='oe_test_iSulad_container.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_container.sh line 42'
+Thu Aug  3 23:58:38 2023 - ERROR - oe_test_iSulad_container.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Aug  3 23:58:39 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Aug  3 23:58:39 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Aug  3 23:58:40 2023 - INFO  - Start to restore the test environment.
++ isula ps -a
++ grep -vi NAMES
++ xargs -I '{}' isula stop '{}'
++ awk '{print $NF}'
++ isula ps -a
++ grep -vi NAMES
++ xargs -I '{}' isula rm -f '{}'
++ awk '{print $NF}'
++ isula rmi busybox
+Error response from daemon: No such image:busybox
++ mv -f /etc/isulad/daemon.json.bak /etc/isulad/daemon.json
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpf4zz65t7 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpf4zz65t7
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Aug  3 23:58:59 2023 - INFO  - End to restore the test environment.
