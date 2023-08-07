@@ -1,6 +1,6 @@
 # openEuler 23.09 baseOS Mugen 测试说明
 ## 测试要求
-- 从./task/oe2309test*中自选一个进行测试
+- 从./task/oe2309test*中自选一个进行测试，最后一行为总测试例数，使用时可自行删除，或者脚本也会自动过滤
 - 对失败样例进行分析，对比[2303 baseOS 结果](https://gitee.com/yunxiangluo/oerv-2303-test/tree/master/BasicTest/function/mugen),重点分析2303版本的缺陷是否已经修复，是否出现新的缺陷,结果格式参考上面报告。
 - 最后结果表格提交至此仓库oe-rv2309文件夹下
 ## 测试环境
