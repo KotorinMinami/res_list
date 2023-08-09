@@ -1,0 +1,164 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 0 -eq 0 ]]
++++ lsblk
++++ grep test_vggroup
++++ awk '{print $1}'
++++ head -n 1
++++ cut -d - -f 1
+++ vggroup=└─test_vggroup20230809023557
+++ vggroup=test_vggroup20230809023557
+++ vgremove test_vggroup20230809023557 -y
+  Logical volume "test_lv20230809023557" successfully removed.
+  Volume group "test_vggroup20230809023557" successfully removed
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Aug  9 02:36:19 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230809023619
+++ CREATE_VG
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230809023619
++++ lsblk
++++ grep disk
++++ awk '{print $1}'
++++ tail -n 1
+++ free_disk=vdb
+++ disk_name=/dev/vdb
+++ pvcreate /dev/vdb -f
+++ [[ 0 -eq 0 ]]
+++ vggroup=test_vggroup20230809023619
+++ vgcreate test_vggroup20230809023619 /dev/vdb
+++ printf test_vggroup20230809023619
++ vggroup=test_vggroup20230809023619
++ lv=test_lv20230809023619
++ lvcreate -n test_lv20230809023619 -L 2G test_vggroup20230809023619 -y
++ mkfs.xfs /dev/test_vggroup20230809023619/test_lv20230809023619
+oe_test_FSIO_mount_xfs_sync.sh: line 27: mkfs.xfs: command not found
++ xfs_point=/mnt/test20230809023619
++ mkdir /mnt/test20230809023619
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Wed Aug  9 02:36:21 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Aug  9 02:36:22 2023 - INFO  - Start to run test.
++ mount -t xfs -o sync /dev/test_vggroup20230809023619/test_lv20230809023619 /mnt/test20230809023619
+mount: /mnt/test20230809023619: wrong fs type, bad option, bad superblock on /dev/mapper/test_vggroup20230809023619-test_lv20230809023619, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
++ CHECK_RESULT 32 0 0 'Mount xfs by sync failed.'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Mount xfs by sync failed.'
++ exit_mode=0
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Mount xfs by sync failed.'
++ LOG_ERROR 'Mount xfs by sync failed.'
++ message='Mount xfs by sync failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Mount xfs by sync failed.'
+Wed Aug  9 02:36:23 2023 - ERROR - Mount xfs by sync failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_xfs_sync.sh line 36'
++ message='oe_test_FSIO_mount_xfs_sync.sh line 36'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_xfs_sync.sh line 36'
+Wed Aug  9 02:36:24 2023 - ERROR - oe_test_FSIO_mount_xfs_sync.sh line 36
++ '[' 0 -eq 1 ']'
++ return 0
++ dd if=/dev/zero of=/mnt/test20230809023619/testFile bs=1M count=1024
+1024+0 records in
+1024+0 records out
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 40.5735 s, 26.5 MB/s
++ CHECK_RESULT 0 0 0 'Write file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Write file failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount -f /dev/test_vggroup20230809023619/test_lv20230809023619
+umount: /dev/test_vggroup20230809023619/test_lv20230809023619: not mounted.
++ CHECK_RESULT 32 0 0 'Umount failed.'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Umount failed.'
++ exit_mode=0
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Umount failed.'
++ LOG_ERROR 'Umount failed.'
++ message='Umount failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Umount failed.'
+Wed Aug  9 02:37:05 2023 - ERROR - Umount failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_xfs_sync.sh line 40'
++ message='oe_test_FSIO_mount_xfs_sync.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_xfs_sync.sh line 40'
+Wed Aug  9 02:37:06 2023 - ERROR - oe_test_FSIO_mount_xfs_sync.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Aug  9 02:37:07 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Aug  9 02:37:08 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Aug  9 02:37:09 2023 - INFO  - Start to restore the test environment.
++ rm -rf /mnt/test20230809023619
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Aug  9 02:37:12 2023 - INFO  - End to restore the test environment.

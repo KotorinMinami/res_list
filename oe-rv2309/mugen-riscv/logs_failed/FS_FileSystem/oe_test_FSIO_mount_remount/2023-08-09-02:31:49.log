@@ -1,0 +1,407 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 0 -eq 0 ]]
++++ lsblk
++++ grep test_vggroup
++++ awk '{print $1}'
++++ head -n 1
++++ cut -d - -f 1
+++ vggroup=├─test_vggroup20230809023123
+++ vggroup=test_vggroup20230809023123
+++ vgremove test_vggroup20230809023123 -y
+  Logical volume "lv120230809023123" successfully removed.
+  Logical volume "lv220230809023123" successfully removed.
+  Logical volume "lv320230809023123" successfully removed.
+  Volume group "test_vggroup20230809023123" successfully removed
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Aug  9 02:31:53 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230809023153
+++ CREATE_VG
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230809023153
++++ lsblk
++++ grep disk
++++ awk '{print $1}'
++++ tail -n 1
+++ free_disk=vdb
+++ disk_name=/dev/vdb
+++ pvcreate /dev/vdb -f
+++ [[ 0 -eq 0 ]]
+++ vggroup=test_vggroup20230809023153
+++ vgcreate test_vggroup20230809023153 /dev/vdb
+++ printf test_vggroup20230809023153
++ vggroup=test_vggroup20230809023153
++ lv1=test_lv120230809023153
++ lv2=test_lv220230809023153
++ lv3=test_lv320230809023153
++ lvcreate -n test_lv120230809023153 -L 2G test_vggroup20230809023153 -y
++ lvcreate -n test_lv220230809023153 -L 2G test_vggroup20230809023153 -y
++ lvcreate -n test_lv320230809023153 -L 2G test_vggroup20230809023153 -y
++ mkfs.ext3 /dev/test_vggroup20230809023153/test_lv120230809023153
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524288             done                            
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: 5f4565c9-1329-485a-a20f-41739b94a765
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ mkfs.ext4 /dev/test_vggroup20230809023153/test_lv220230809023153
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524288             done                            
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: 367a59bc-f00e-425c-8dfa-3275bd8bcc95
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ mkfs.xfs /dev/test_vggroup20230809023153/test_lv320230809023153
+oe_test_FSIO_mount_remount.sh: line 33: mkfs.xfs: command not found
++ point=/mnt/point20230809023153
++ mkdir /mnt/point20230809023153
++ mount /dev/test_vggroup20230809023153/test_lv120230809023153 /mnt/point20230809023153
++ echo 'test ext3'
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Wed Aug  9 02:32:00 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Aug  9 02:32:01 2023 - INFO  - Start to run test.
++ mount /dev/test_vggroup20230809023153/test_lv220230809023153 /mnt/point20230809023153
++ CHECK_RESULT 0 0 0 'Mount ext4 on /mnt/point20230809023153 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount ext4 on /mnt/point20230809023153 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo 'test ext4'
++ df -T
++ grep /mnt/point20230809023153
++ grep ext4
+/dev/mapper/test_vggroup20230809023153-test_lv220230809023153 ext4       1992552        28   1871284   1% /mnt/point20230809023153
++ CHECK_RESULT 0 0 0 'The fs type of /mnt/point20230809023153 is not ext4.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The fs type of /mnt/point20230809023153 is not ext4.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mount /dev/test_vggroup20230809023153/test_lv320230809023153 /mnt/point20230809023153
+mount: /mnt/point20230809023153: wrong fs type, bad option, bad superblock on /dev/mapper/test_vggroup20230809023153-test_lv320230809023153, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
++ CHECK_RESULT 32 0 0 'Mount xfs on /mnt/point20230809023153 failed.'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Mount xfs on /mnt/point20230809023153 failed.'
++ exit_mode=0
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Mount xfs on /mnt/point20230809023153 failed.'
++ LOG_ERROR 'Mount xfs on /mnt/point20230809023153 failed.'
++ message='Mount xfs on /mnt/point20230809023153 failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Mount xfs on /mnt/point20230809023153 failed.'
+Wed Aug  9 02:32:03 2023 - ERROR - Mount xfs on /mnt/point20230809023153 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_remount.sh line 49'
++ message='oe_test_FSIO_mount_remount.sh line 49'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_remount.sh line 49'
+Wed Aug  9 02:32:04 2023 - ERROR - oe_test_FSIO_mount_remount.sh line 49
++ '[' 0 -eq 1 ']'
++ return 0
++ echo 'test xfs'
++ df -T
++ grep /mnt/point20230809023153
++ grep xfs
++ CHECK_RESULT 1 0 0 'The fs type of /mnt/point20230809023153 is not xfs.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The fs type of /mnt/point20230809023153 is not xfs.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The fs type of /mnt/point20230809023153 is not xfs.'
++ LOG_ERROR 'The fs type of /mnt/point20230809023153 is not xfs.'
++ message='The fs type of /mnt/point20230809023153 is not xfs.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The fs type of /mnt/point20230809023153 is not xfs.'
+Wed Aug  9 02:32:04 2023 - ERROR - The fs type of /mnt/point20230809023153 is not xfs.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_remount.sh line 52'
++ message='oe_test_FSIO_mount_remount.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_remount.sh line 52'
+Wed Aug  9 02:32:05 2023 - ERROR - oe_test_FSIO_mount_remount.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ test -f /mnt/point20230809023153/testxfs
++ CHECK_RESULT 0 0 0 'The testxfs doesn'\''t exist.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The testxfs doesn'\''t exist.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f /mnt/point20230809023153/testext4
++ CHECK_RESULT 0 1 0 'The testext4 exists unexpectly.'
++ actual_result=0
++ expect_result=1
++ mode=0
++ error_log='The testext4 exists unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 1x
++ test -n 'The testext4 exists unexpectly.'
++ LOG_ERROR 'The testext4 exists unexpectly.'
++ message='The testext4 exists unexpectly.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The testext4 exists unexpectly.'
+Wed Aug  9 02:32:06 2023 - ERROR - The testext4 exists unexpectly.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_remount.sh line 56'
++ message='oe_test_FSIO_mount_remount.sh line 56'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_remount.sh line 56'
+Wed Aug  9 02:32:07 2023 - ERROR - oe_test_FSIO_mount_remount.sh line 56
++ '[' 0 -eq 1 ']'
++ return 0
++ test -f /mnt/point20230809023153/testext3
++ CHECK_RESULT 1 1 0 'The testext3 exists unexpectly.'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='The testext3 exists unexpectly.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ umount /mnt/point20230809023153
++ df -T
++ grep /mnt/point20230809023153
++ grep ext4
++ CHECK_RESULT 1 0 0 'The fs type of /mnt/point20230809023153 is not ext4.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The fs type of /mnt/point20230809023153 is not ext4.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The fs type of /mnt/point20230809023153 is not ext4.'
++ LOG_ERROR 'The fs type of /mnt/point20230809023153 is not ext4.'
++ message='The fs type of /mnt/point20230809023153 is not ext4.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The fs type of /mnt/point20230809023153 is not ext4.'
+Wed Aug  9 02:32:08 2023 - ERROR - The fs type of /mnt/point20230809023153 is not ext4.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_remount.sh line 61'
++ message='oe_test_FSIO_mount_remount.sh line 61'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_remount.sh line 61'
+Wed Aug  9 02:32:09 2023 - ERROR - oe_test_FSIO_mount_remount.sh line 61
++ '[' 0 -eq 1 ']'
++ return 0
++ test -f /mnt/point20230809023153/testext4
++ CHECK_RESULT 1 0 0 'The testext4 doesn'\''t exist.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The testext4 doesn'\''t exist.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The testext4 doesn'\''t exist.'
++ LOG_ERROR 'The testext4 doesn'\''t exist.'
++ message='The testext4 doesn'\''t exist.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The testext4 doesn'\''t exist.'
+Wed Aug  9 02:32:10 2023 - ERROR - The testext4 doesn't exist.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_remount.sh line 63'
++ message='oe_test_FSIO_mount_remount.sh line 63'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_remount.sh line 63'
+Wed Aug  9 02:32:11 2023 - ERROR - oe_test_FSIO_mount_remount.sh line 63
++ '[' 0 -eq 1 ']'
++ return 0
++ test -f /mnt/point20230809023153/testxfs
++ CHECK_RESULT 1 1 0 'The testxfs exists unexpectly.'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='The testxfs exists unexpectly.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ test -f /mnt/point20230809023153/testext3
++ CHECK_RESULT 0 1 0 'The testext3 exists unexpectly.'
++ actual_result=0
++ expect_result=1
++ mode=0
++ error_log='The testext3 exists unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 1x
++ test -n 'The testext3 exists unexpectly.'
++ LOG_ERROR 'The testext3 exists unexpectly.'
++ message='The testext3 exists unexpectly.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The testext3 exists unexpectly.'
+Wed Aug  9 02:32:12 2023 - ERROR - The testext3 exists unexpectly.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_remount.sh line 67'
++ message='oe_test_FSIO_mount_remount.sh line 67'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_remount.sh line 67'
+Wed Aug  9 02:32:13 2023 - ERROR - oe_test_FSIO_mount_remount.sh line 67
++ '[' 0 -eq 1 ']'
++ return 0
++ umount /mnt/point20230809023153
++ df -T
++ grep /mnt/point20230809023153
++ grep ext3
++ CHECK_RESULT 1 0 0 'The fs type of /mnt/point20230809023153 is not ext3.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The fs type of /mnt/point20230809023153 is not ext3.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The fs type of /mnt/point20230809023153 is not ext3.'
++ LOG_ERROR 'The fs type of /mnt/point20230809023153 is not ext3.'
++ message='The fs type of /mnt/point20230809023153 is not ext3.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The fs type of /mnt/point20230809023153 is not ext3.'
+Wed Aug  9 02:32:14 2023 - ERROR - The fs type of /mnt/point20230809023153 is not ext3.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_remount.sh line 70'
++ message='oe_test_FSIO_mount_remount.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_remount.sh line 70'
+Wed Aug  9 02:32:15 2023 - ERROR - oe_test_FSIO_mount_remount.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
++ test -f /mnt/point20230809023153/testext3
++ CHECK_RESULT 1 0 0 'The testext3 doesn'\''t exist.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The testext3 doesn'\''t exist.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The testext3 doesn'\''t exist.'
++ LOG_ERROR 'The testext3 doesn'\''t exist.'
++ message='The testext3 doesn'\''t exist.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The testext3 doesn'\''t exist.'
+Wed Aug  9 02:32:16 2023 - ERROR - The testext3 doesn't exist.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_remount.sh line 72'
++ message='oe_test_FSIO_mount_remount.sh line 72'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_remount.sh line 72'
+Wed Aug  9 02:32:17 2023 - ERROR - oe_test_FSIO_mount_remount.sh line 72
++ '[' 0 -eq 1 ']'
++ return 0
++ test -f /mnt/point20230809023153/testxfs
++ CHECK_RESULT 1 1 0 'The testxfs exists unexpectly.'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='The testxfs exists unexpectly.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ test -f /mnt/point20230809023153/testext4
++ CHECK_RESULT 1 1 0 'The testext4 exists unexpectly.'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='The testext4 exists unexpectly.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Aug  9 02:32:18 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 8
++ test 8 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Aug  9 02:32:18 2023 - ERROR - failed to execute the case.
++ exit 8
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Aug  9 02:32:19 2023 - INFO  - Start to restore the test environment.
++ umount /mnt/point20230809023153
+umount: /mnt/point20230809023153: not mounted.
++ rm -rf /mnt/point20230809023153
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Aug  9 02:32:20 2023 - INFO  - End to restore the test environment.

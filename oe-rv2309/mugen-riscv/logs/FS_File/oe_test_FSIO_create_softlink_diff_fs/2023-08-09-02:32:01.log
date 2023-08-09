@@ -1,0 +1,239 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start parameters preparation.'
++ message='Start parameters preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start parameters preparation.'
+Wed Aug  9 02:32:04 2023 - INFO  - Start parameters preparation.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230809023204
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230809023204
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 0 -eq 0 ]]
++++ vggroup=test_vggroup20230809023204
++++ vgcreate test_vggroup20230809023204 /dev/vdb
++++ printf test_vggroup20230809023204
+++ vggroup=test_vggroup20230809023204
+++ count=1
+++ msg='test_vggroup20230809023204 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230809023204
+++ point=/tmp/point120230809023204
+++ lvcreate -n test_lv120230809023204 -L 512M test_vggroup20230809023204 -y
+++ mkfs -t ext3 /dev/test_vggroup20230809023204/test_lv120230809023204
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point120230809023204
+++ mount /dev/test_vggroup20230809023204/test_lv120230809023204 /tmp/point120230809023204
+++ msg='test_vggroup20230809023204 /tmp/point120230809023204 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230809023204
+++ point=/tmp/point220230809023204
+++ lvcreate -n test_lv220230809023204 -L 512M test_vggroup20230809023204 -y
+++ mkfs -t ext4 /dev/test_vggroup20230809023204/test_lv220230809023204
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point220230809023204
+++ mount /dev/test_vggroup20230809023204/test_lv220230809023204 /tmp/point220230809023204
+++ msg='test_vggroup20230809023204 /tmp/point120230809023204 /tmp/point220230809023204 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230809023204
+++ point=/tmp/point320230809023204
+++ lvcreate -n test_lv320230809023204 -L 512M test_vggroup20230809023204 -y
+++ mkfs -t xfs /dev/test_vggroup20230809023204/test_lv320230809023204
+mkfs: failed to execute mkfs.xfs: No such file or directory
+++ mkdir /tmp/point320230809023204
+++ mount /dev/test_vggroup20230809023204/test_lv320230809023204 /tmp/point320230809023204
+mount: /tmp/point320230809023204: wrong fs type, bad option, bad superblock on /dev/mapper/test_vggroup20230809023204-test_lv320230809023204, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
+++ msg='test_vggroup20230809023204 /tmp/point120230809023204 /tmp/point220230809023204 /tmp/point320230809023204 '
+++ count=4
+++ echo test_vggroup20230809023204 /tmp/point120230809023204 /tmp/point220230809023204 /tmp/point320230809023204
++ ext3_point=/tmp/point120230809023204
++ ext4_point=/tmp/point220230809023204
++ xfs_point=/tmp/point320230809023204
++ echo 'test ext3'
++ mkdir -p /tmp/point120230809023204/testDir/test1
++ LOG_INFO 'End of parameters preparation!'
++ message='End of parameters preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of parameters preparation!'
+Wed Aug  9 02:32:10 2023 - INFO  - End of parameters preparation!
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Aug  9 02:32:12 2023 - INFO  - Start to run test.
++ ln -s /tmp/point120230809023204/testFile /tmp/point220230809023204/testSoft1
++ ln -s /tmp/point120230809023204/testDir /tmp/point220230809023204/testSoft2
++ grep ext3 /tmp/point220230809023204/testSoft1
+test ext3
++ CHECK_RESULT 0 0 0 'The sort link file on ext4 has some errors.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The sort link file on ext4 has some errors.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ls /tmp/point220230809023204/testSoft2
++ grep test1
+test1
++ CHECK_RESULT 0 0 0 'The sort link directory on ext4 has some errors.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The sort link directory on ext4 has some errors.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ln -s /tmp/point120230809023204/testFile /tmp/point320230809023204/testSoft3
++ ln -s /tmp/point120230809023204/testDir /tmp/point320230809023204/testSoft4
++ grep ext3 /tmp/point320230809023204/testSoft3
+test ext3
++ CHECK_RESULT 0 0 0 'The sort link file on xfs has some errors.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The sort link file on xfs has some errors.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ls /tmp/point320230809023204/testSoft4
++ grep test1
+test1
++ CHECK_RESULT 0 0 0 'The sort link directory on xfs has some errors.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The sort link directory on xfs has some errors.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Aug  9 02:32:13 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Aug  9 02:32:14 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Aug  9 02:32:15 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230809023204 /tmp/point120230809023204 /tmp/point220230809023204 /tmp/point320230809023204
++ list='test_vggroup20230809023204 /tmp/point120230809023204 /tmp/point220230809023204 /tmp/point320230809023204'
++ REMOVE_FS 'test_vggroup20230809023204 /tmp/point120230809023204 /tmp/point220230809023204 /tmp/point320230809023204'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230809023204
+++ df -T
+++ grep test_vggroup20230809023204
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20230809023204-test_lv120230809023204
+/dev/mapper/test_vggroup20230809023204-test_lv220230809023204'
++ [[ /dev/mapper/test_vggroup20230809023204-test_lv120230809023204
+/dev/mapper/test_vggroup20230809023204-test_lv220230809023204 == '' ]]
++ umount -f test_vggroup20230809023204
+umount: test_vggroup20230809023204: no mount point specified.
++ rm -rf test_vggroup20230809023204
++ DELETE_LV /dev/mapper/test_vggroup20230809023204-test_lv120230809023204 /dev/mapper/test_vggroup20230809023204-test_lv220230809023204
++ lvname=/dev/mapper/test_vggroup20230809023204-test_lv120230809023204
++ lvremove /dev/mapper/test_vggroup20230809023204-test_lv120230809023204 -y
+  Logical volume test_vggroup20230809023204/test_lv120230809023204 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230809023204
+++ df -T
+++ grep /tmp/point120230809023204
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230809023204-test_lv120230809023204
++ [[ /dev/mapper/test_vggroup20230809023204-test_lv120230809023204 == '' ]]
++ umount -f /tmp/point120230809023204
++ rm -rf /tmp/point120230809023204
++ DELETE_LV /dev/mapper/test_vggroup20230809023204-test_lv120230809023204
++ lvname=/dev/mapper/test_vggroup20230809023204-test_lv120230809023204
++ lvremove /dev/mapper/test_vggroup20230809023204-test_lv120230809023204 -y
+  Logical volume "test_lv120230809023204" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230809023204
+++ df -T
+++ grep /tmp/point220230809023204
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230809023204-test_lv220230809023204
++ [[ /dev/mapper/test_vggroup20230809023204-test_lv220230809023204 == '' ]]
++ umount -f /tmp/point220230809023204
++ rm -rf /tmp/point220230809023204
++ DELETE_LV /dev/mapper/test_vggroup20230809023204-test_lv220230809023204
++ lvname=/dev/mapper/test_vggroup20230809023204-test_lv220230809023204
++ lvremove /dev/mapper/test_vggroup20230809023204-test_lv220230809023204 -y
+  Logical volume "test_lv220230809023204" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230809023204
+++ df -T
+++ grep /tmp/point320230809023204
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Aug  9 02:32:18 2023 - INFO  - End to restore the test environment.

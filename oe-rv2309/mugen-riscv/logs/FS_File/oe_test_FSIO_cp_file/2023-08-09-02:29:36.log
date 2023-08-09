@@ -1,0 +1,361 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Aug  9 02:29:39 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230809022940
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230809022940
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 0 -eq 0 ]]
++++ vggroup=test_vggroup20230809022940
++++ vgcreate test_vggroup20230809022940 /dev/vdb
++++ printf test_vggroup20230809022940
+++ vggroup=test_vggroup20230809022940
+++ count=1
+++ msg='test_vggroup20230809022940 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230809022940
+++ point=/tmp/point120230809022940
+++ lvcreate -n test_lv120230809022940 -L 512M test_vggroup20230809022940 -y
+++ mkfs -t ext3 /dev/test_vggroup20230809022940/test_lv120230809022940
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point120230809022940
+++ mount /dev/test_vggroup20230809022940/test_lv120230809022940 /tmp/point120230809022940
+++ msg='test_vggroup20230809022940 /tmp/point120230809022940 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230809022940
+++ point=/tmp/point220230809022940
+++ lvcreate -n test_lv220230809022940 -L 512M test_vggroup20230809022940 -y
+++ mkfs -t ext4 /dev/test_vggroup20230809022940/test_lv220230809022940
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point220230809022940
+++ mount /dev/test_vggroup20230809022940/test_lv220230809022940 /tmp/point220230809022940
+++ msg='test_vggroup20230809022940 /tmp/point120230809022940 /tmp/point220230809022940 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230809022940
+++ point=/tmp/point320230809022940
+++ lvcreate -n test_lv320230809022940 -L 512M test_vggroup20230809022940 -y
+++ mkfs -t xfs /dev/test_vggroup20230809022940/test_lv320230809022940
+mkfs: failed to execute mkfs.xfs: No such file or directory
+++ mkdir /tmp/point320230809022940
+++ mount /dev/test_vggroup20230809022940/test_lv320230809022940 /tmp/point320230809022940
+mount: /tmp/point320230809022940: wrong fs type, bad option, bad superblock on /dev/mapper/test_vggroup20230809022940-test_lv320230809022940, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
+++ msg='test_vggroup20230809022940 /tmp/point120230809022940 /tmp/point220230809022940 /tmp/point320230809022940 '
+++ count=4
+++ echo test_vggroup20230809022940 /tmp/point120230809022940 /tmp/point220230809022940 /tmp/point320230809022940
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Aug  9 02:29:45 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Aug  9 02:29:46 2023 - INFO  - Start to run test.
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point120230809022940
++ echo test
+++ stat /tmp/point120230809022940/testfile1
+++ grep Inode
+++ cut -d : -f 3
+++ awk '{print $1}'
++ inode1=12
++ cp /tmp/point120230809022940/testfile1 /tmp/point120230809022940/testfile2
+++ stat /tmp/point120230809022940/testfile2
+++ grep Inode
+++ awk '{print $1}'
+++ cut -d : -f 3
++ inode2=13
++ [[ 12 -ne 13 ]]
++ CHECK_RESULT 0 0 0 'Check inode failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ chmod 777 /tmp/point120230809022940/testfile2
++ cp -p /tmp/point120230809022940/testfile2 /tmp/point120230809022940/testfile3
+++ ls -l /tmp/point120230809022940/
+++ grep testfile3
+++ awk '{print $1}'
++ per01=-rwxrwxrwx
++ [[ -rwxrwxrwx =~ -rwxrwxrwx\. ]]
++ mkdir -p /tmp/point120230809022940/testdir1/testdir2
++ cp /tmp/point120230809022940/testfile2 /tmp/point120230809022940/testdir1/testdir2
++ cp -r /tmp/point120230809022940/testdir1 /tmp/point120230809022940/testdir3
++ ls /tmp/point120230809022940/testdir3/testdir2/testfile2
+/tmp/point120230809022940/testdir3/testdir2/testfile2
++ CHECK_RESULT 0 0 0 'Check /tmp/point120230809022940/testdir1//tmp/point120230809022940/testdir1/testfile2 file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check /tmp/point120230809022940/testdir1//tmp/point120230809022940/testdir1/testfile2 file failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo test1111
++ cp -f /tmp/point120230809022940/testfile2 /tmp/point120230809022940/testdir3/testdir2/testfile2
++ grep -q test1111 /tmp/point120230809022940/testdir3/testdir2/testfile2
++ CHECK_RESULT 0 0 0 'Check file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220230809022940
++ echo test
+++ grep Inode
+++ stat /tmp/point220230809022940/testfile1
+++ cut -d : -f 3
+++ awk '{print $1}'
++ inode1=12
++ cp /tmp/point220230809022940/testfile1 /tmp/point220230809022940/testfile2
+++ stat /tmp/point220230809022940/testfile2
+++ grep Inode
+++ cut -d : -f 3
+++ awk '{print $1}'
++ inode2=13
++ [[ 12 -ne 13 ]]
++ CHECK_RESULT 0 0 0 'Check inode failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ chmod 777 /tmp/point220230809022940/testfile2
++ cp -p /tmp/point220230809022940/testfile2 /tmp/point220230809022940/testfile3
+++ ls -l /tmp/point220230809022940/
+++ grep testfile3
+++ awk '{print $1}'
++ per01=-rwxrwxrwx
++ [[ -rwxrwxrwx =~ -rwxrwxrwx\. ]]
++ mkdir -p /tmp/point220230809022940/testdir1/testdir2
++ cp /tmp/point220230809022940/testfile2 /tmp/point220230809022940/testdir1/testdir2
++ cp -r /tmp/point220230809022940/testdir1 /tmp/point220230809022940/testdir3
++ ls /tmp/point220230809022940/testdir3/testdir2/testfile2
+/tmp/point220230809022940/testdir3/testdir2/testfile2
++ CHECK_RESULT 0 0 0 'Check /tmp/point220230809022940/testdir1//tmp/point220230809022940/testdir1/testfile2 file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check /tmp/point220230809022940/testdir1//tmp/point220230809022940/testdir1/testfile2 file failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo test1111
++ cp -f /tmp/point220230809022940/testfile2 /tmp/point220230809022940/testdir3/testdir2/testfile2
++ grep -q test1111 /tmp/point220230809022940/testdir3/testdir2/testfile2
++ CHECK_RESULT 0 0 0 'Check file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320230809022940
++ echo test
+++ stat /tmp/point320230809022940/testfile1
+++ grep Inode
+++ cut -d : -f 3
+++ awk '{print $1}'
++ inode1=1144
++ cp /tmp/point320230809022940/testfile1 /tmp/point320230809022940/testfile2
+++ stat /tmp/point320230809022940/testfile2
+++ grep Inode
+++ cut -d : -f 3
+++ awk '{print $1}'
++ inode2=1145
++ [[ 1144 -ne 1145 ]]
++ CHECK_RESULT 0 0 0 'Check inode failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ chmod 777 /tmp/point320230809022940/testfile2
++ cp -p /tmp/point320230809022940/testfile2 /tmp/point320230809022940/testfile3
+++ ls -l /tmp/point320230809022940/
+++ grep testfile3
+++ awk '{print $1}'
++ per01=-rwxrwxrwx
++ [[ -rwxrwxrwx =~ -rwxrwxrwx\. ]]
++ mkdir -p /tmp/point320230809022940/testdir1/testdir2
++ cp /tmp/point320230809022940/testfile2 /tmp/point320230809022940/testdir1/testdir2
++ cp -r /tmp/point320230809022940/testdir1 /tmp/point320230809022940/testdir3
++ ls /tmp/point320230809022940/testdir3/testdir2/testfile2
+/tmp/point320230809022940/testdir3/testdir2/testfile2
++ CHECK_RESULT 0 0 0 'Check /tmp/point320230809022940/testdir1//tmp/point320230809022940/testdir1/testfile2 file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check /tmp/point320230809022940/testdir1//tmp/point320230809022940/testdir1/testfile2 file failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo test1111
++ cp -f /tmp/point320230809022940/testfile2 /tmp/point320230809022940/testdir3/testdir2/testfile2
++ grep -q test1111 /tmp/point320230809022940/testdir3/testdir2/testfile2
++ CHECK_RESULT 0 0 0 'Check file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Aug  9 02:29:50 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Aug  9 02:29:51 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Aug  9 02:29:52 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230809022940 /tmp/point120230809022940 /tmp/point220230809022940 /tmp/point320230809022940
++ list='test_vggroup20230809022940 /tmp/point120230809022940 /tmp/point220230809022940 /tmp/point320230809022940'
++ REMOVE_FS 'test_vggroup20230809022940 /tmp/point120230809022940 /tmp/point220230809022940 /tmp/point320230809022940'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230809022940
+++ df -T
+++ grep test_vggroup20230809022940
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20230809022940-test_lv120230809022940
+/dev/mapper/test_vggroup20230809022940-test_lv220230809022940'
++ [[ /dev/mapper/test_vggroup20230809022940-test_lv120230809022940
+/dev/mapper/test_vggroup20230809022940-test_lv220230809022940 == '' ]]
++ umount -f test_vggroup20230809022940
+umount: test_vggroup20230809022940: no mount point specified.
++ rm -rf test_vggroup20230809022940
++ DELETE_LV /dev/mapper/test_vggroup20230809022940-test_lv120230809022940 /dev/mapper/test_vggroup20230809022940-test_lv220230809022940
++ lvname=/dev/mapper/test_vggroup20230809022940-test_lv120230809022940
++ lvremove /dev/mapper/test_vggroup20230809022940-test_lv120230809022940 -y
+  Logical volume test_vggroup20230809022940/test_lv120230809022940 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230809022940
+++ df -T
+++ grep /tmp/point120230809022940
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230809022940-test_lv120230809022940
++ [[ /dev/mapper/test_vggroup20230809022940-test_lv120230809022940 == '' ]]
++ umount -f /tmp/point120230809022940
++ rm -rf /tmp/point120230809022940
++ DELETE_LV /dev/mapper/test_vggroup20230809022940-test_lv120230809022940
++ lvname=/dev/mapper/test_vggroup20230809022940-test_lv120230809022940
++ lvremove /dev/mapper/test_vggroup20230809022940-test_lv120230809022940 -y
+  Logical volume "test_lv120230809022940" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230809022940
+++ df -T
+++ grep /tmp/point220230809022940
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230809022940-test_lv220230809022940
++ [[ /dev/mapper/test_vggroup20230809022940-test_lv220230809022940 == '' ]]
++ umount -f /tmp/point220230809022940
++ rm -rf /tmp/point220230809022940
++ DELETE_LV /dev/mapper/test_vggroup20230809022940-test_lv220230809022940
++ lvname=/dev/mapper/test_vggroup20230809022940-test_lv220230809022940
++ lvremove /dev/mapper/test_vggroup20230809022940-test_lv220230809022940 -y
+  Logical volume "test_lv220230809022940" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230809022940
+++ grep /tmp/point320230809022940
+++ df -T
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Aug  9 02:29:55 2023 - INFO  - End to restore the test environment.

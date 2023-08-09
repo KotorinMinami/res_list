@@ -1,0 +1,264 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 0 -eq 0 ]]
++++ lsblk
++++ grep test_vggroup
++++ awk '{print $1}'
++++ head -n 1
++++ cut -d - -f 1
+++ vggroup=└─test_vggroup20230809023032
+++ vggroup=test_vggroup20230809023032
+++ vgremove test_vggroup20230809023032 -y
+  Logical volume "test_lv320230809023032" successfully removed.
+  Volume group "test_vggroup20230809023032" successfully removed
+++ rm -rf /tmp/point320230809023032
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Aug  9 02:30:58 2023 - INFO  - Start environment preparation.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230809023058
++ point_list=($(CREATE_FS "ext3 ext4 xfs"))
+++ CREATE_FS 'ext3 ext4 xfs'
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230809023058
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230809023058
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 0 -eq 0 ]]
++++ vggroup=test_vggroup20230809023058
++++ vgcreate test_vggroup20230809023058 /dev/vdb
++++ printf test_vggroup20230809023058
+++ vggroup=test_vggroup20230809023058
+++ count=1
+++ msg='test_vggroup20230809023058 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230809023058
+++ point=/tmp/point120230809023058
+++ lvcreate -n test_lv120230809023058 -L 512M test_vggroup20230809023058 -y
+++ mkfs -t ext3 /dev/test_vggroup20230809023058/test_lv120230809023058
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point120230809023058
+++ mount /dev/test_vggroup20230809023058/test_lv120230809023058 /tmp/point120230809023058
+++ msg='test_vggroup20230809023058 /tmp/point120230809023058 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230809023058
+++ point=/tmp/point220230809023058
+++ lvcreate -n test_lv220230809023058 -L 512M test_vggroup20230809023058 -y
+++ mkfs -t ext4 /dev/test_vggroup20230809023058/test_lv220230809023058
+mke2fs 1.46.5 (30-Dec-2021)
+++ mkdir /tmp/point220230809023058
+++ mount /dev/test_vggroup20230809023058/test_lv220230809023058 /tmp/point220230809023058
+++ msg='test_vggroup20230809023058 /tmp/point120230809023058 /tmp/point220230809023058 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230809023058
+++ point=/tmp/point320230809023058
+++ lvcreate -n test_lv320230809023058 -L 512M test_vggroup20230809023058 -y
+++ mkfs -t xfs /dev/test_vggroup20230809023058/test_lv320230809023058
+mkfs: failed to execute mkfs.xfs: No such file or directory
+++ mkdir /tmp/point320230809023058
+++ mount /dev/test_vggroup20230809023058/test_lv320230809023058 /tmp/point320230809023058
+mount: /tmp/point320230809023058: wrong fs type, bad option, bad superblock on /dev/mapper/test_vggroup20230809023058-test_lv320230809023058, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
+++ msg='test_vggroup20230809023058 /tmp/point120230809023058 /tmp/point220230809023058 /tmp/point320230809023058 '
+++ count=4
+++ echo test_vggroup20230809023058 /tmp/point120230809023058 /tmp/point220230809023058 /tmp/point320230809023058
++ ext3_point=/tmp/point120230809023058
++ ext4_point=/tmp/point220230809023058
++ xfs_point=/tmp/point320230809023058
++ echo 'test ext3'
++ echo 'test ext4'
++ echo 'test xfs'
++ mkdir /tmp/point120230809023058/testDir
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Aug  9 02:31:04 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Aug  9 02:31:05 2023 - INFO  - Start to run test.
++ ln /tmp/point120230809023058/testDir /tmp/hard_link20230809023058
++ grep 'hard link not allowed for directory'
+ln: /tmp/point120230809023058/testDir: hard link not allowed for directory
++ CHECK_RESULT 0 0 0 'Create hard link for directory unexpectly.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Create hard link for directory unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ln /tmp/point120230809023058/testnonexist /tmp/hard_link20230809023058
++ grep 'No such file or directory'
+ln: failed to access '/tmp/point120230809023058/testnonexist': No such file or directory
++ CHECK_RESULT 0 0 0 'Create hard link for non-exist directory unexpectly.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Create hard link for non-exist directory unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ln /tmp/point120230809023058/testFile1 /tmp/point220230809023058/hardFile
++ grep 'Invalid cross-device link'
+ln: failed to create hard link '/tmp/point220230809023058/hardFile' => '/tmp/point120230809023058/testFile1': Invalid cross-device link
++ CHECK_RESULT 0 0 0 'Create hard link between ext3 and ext4 unexpectly.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Create hard link between ext3 and ext4 unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ln /tmp/point220230809023058/testFile1 /tmp/point320230809023058/hardFile
++ grep 'Invalid cross-device link'
+ln: failed to create hard link '/tmp/point320230809023058/hardFile' => '/tmp/point220230809023058/testFile1': Invalid cross-device link
++ CHECK_RESULT 0 0 0 'Create hard link between ext4 and xfs unexpectly.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Create hard link between ext4 and xfs unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ln /tmp/point320230809023058/testFile1 /tmp/point120230809023058/hardFile
++ grep 'Invalid cross-device link'
+ln: failed to create hard link '/tmp/point120230809023058/hardFile' => '/tmp/point320230809023058/testFile1': Invalid cross-device link
++ CHECK_RESULT 0 0 0 'Create hard link between xfs and ext3 unexpectly.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Create hard link between xfs and ext3 unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Aug  9 02:31:06 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Aug  9 02:31:07 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Aug  9 02:31:08 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230809023058 /tmp/point120230809023058 /tmp/point220230809023058 /tmp/point320230809023058
++ list='test_vggroup20230809023058 /tmp/point120230809023058 /tmp/point220230809023058 /tmp/point320230809023058'
++ REMOVE_FS 'test_vggroup20230809023058 /tmp/point120230809023058 /tmp/point220230809023058 /tmp/point320230809023058'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230809023058
+++ df -T
+++ grep test_vggroup20230809023058
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20230809023058-test_lv120230809023058
+/dev/mapper/test_vggroup20230809023058-test_lv220230809023058'
++ [[ /dev/mapper/test_vggroup20230809023058-test_lv120230809023058
+/dev/mapper/test_vggroup20230809023058-test_lv220230809023058 == '' ]]
++ umount -f test_vggroup20230809023058
+umount: test_vggroup20230809023058: no mount point specified.
++ rm -rf test_vggroup20230809023058
++ DELETE_LV /dev/mapper/test_vggroup20230809023058-test_lv120230809023058 /dev/mapper/test_vggroup20230809023058-test_lv220230809023058
++ lvname=/dev/mapper/test_vggroup20230809023058-test_lv120230809023058
++ lvremove /dev/mapper/test_vggroup20230809023058-test_lv120230809023058 -y
+  Logical volume test_vggroup20230809023058/test_lv120230809023058 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230809023058
+++ df -T
+++ grep /tmp/point120230809023058
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230809023058-test_lv120230809023058
++ [[ /dev/mapper/test_vggroup20230809023058-test_lv120230809023058 == '' ]]
++ umount -f /tmp/point120230809023058
++ rm -rf /tmp/point120230809023058
++ DELETE_LV /dev/mapper/test_vggroup20230809023058-test_lv120230809023058
++ lvname=/dev/mapper/test_vggroup20230809023058-test_lv120230809023058
++ lvremove /dev/mapper/test_vggroup20230809023058-test_lv120230809023058 -y
+  Logical volume "test_lv120230809023058" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230809023058
+++ df -T
+++ grep /tmp/point220230809023058
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230809023058-test_lv220230809023058
++ [[ /dev/mapper/test_vggroup20230809023058-test_lv220230809023058 == '' ]]
++ umount -f /tmp/point220230809023058
++ rm -rf /tmp/point220230809023058
++ DELETE_LV /dev/mapper/test_vggroup20230809023058-test_lv220230809023058
++ lvname=/dev/mapper/test_vggroup20230809023058-test_lv220230809023058
++ lvremove /dev/mapper/test_vggroup20230809023058-test_lv220230809023058 -y
+  Logical volume "test_lv220230809023058" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230809023058
+++ df -T
+++ grep /tmp/point320230809023058
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Aug  9 02:31:11 2023 - INFO  - End to restore the test environment.

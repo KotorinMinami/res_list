@@ -1,0 +1,254 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Aug  9 02:38:51 2023 - INFO  - Start to prepare the database config.
++ DNF_INSTALL xfsdump
++ pkgs=xfsdump
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs xfsdump --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp5boedbri
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp5boedbri
+++ date +%Y%m%d%H%M%S
++ cur_date=20230809023944
++ point_list=($(CREATE_FS xfs))
+++ CREATE_FS xfs
+++ fs_type=xfs
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230809023944
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230809023944
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20230809023817
++++ printf test_vggroup20230809023817
+++ vggroup=test_vggroup20230809023817
+++ count=1
+++ msg='test_vggroup20230809023817 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230809023944
+++ point=/tmp/point120230809023944
+++ lvcreate -n test_lv120230809023944 -L 512M test_vggroup20230809023817 -y
+++ mkfs -t xfs /dev/test_vggroup20230809023817/test_lv120230809023944
+++ mkdir /tmp/point120230809023944
+++ mount /dev/test_vggroup20230809023817/test_lv120230809023944 /tmp/point120230809023944
+++ msg='test_vggroup20230809023817 /tmp/point120230809023944 '
+++ count=2
+++ echo test_vggroup20230809023817 /tmp/point120230809023944
++ xfs_point=/tmp/point120230809023944
++ testFile1=testFile120230809023944
++ testFile2=testFile220230809023944
++ echo 'Test xfs tmp1'
++ echo 'Test xfs tmp2'
++ temp=/tmp/test_tmp20230809023944
++ mkdir /tmp/test_tmp20230809023944
+++ lsblk
+++ grep disk
+++ awk '{print $1}'
+++ tail -n 1
++ disk=vdb
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Wed Aug  9 02:39:47 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Aug  9 02:39:48 2023 - INFO  - Start to run test.
++ xfsdump -f /tmp/test_tmp20230809023944/xfs_dump /tmp/point120230809023944 -L dump_test -M vdb
+xfsdump: using file dump (drive_simple) strategy
+xfsdump: version 3.1.12 (dump format 3.0)
+xfsdump: level 0 dump of openeuler-riscv64:/tmp/point120230809023944
+xfsdump: dump date: Wed Aug  9 02:39:48 2023
+xfsdump: session id: 48d4e18c-f1b7-489a-9a63-12893d1575da
+xfsdump: session label: "dump_test"
+xfsdump: ino map phase 1: constructing initial dump list
+xfsdump: ino map phase 2: skipping (no pruning necessary)
+xfsdump: ino map phase 3: skipping (only one dump stream)
+xfsdump: ino map construction complete
+xfsdump: estimated dump size: 29632 bytes
+xfsdump: creating dump session media file 0 (media 0, file 0)
+xfsdump: dumping ino map
+xfsdump: dumping directories
+xfsdump: dumping non-directory files
+xfsdump: ending media file
+xfsdump: media file size 22776 bytes
+xfsdump: dump size (non-dir files) : 1088 bytes
+xfsdump: dump complete: 0 seconds elapsed
+xfsdump: Dump Summary:
+xfsdump:   stream 0 /tmp/test_tmp20230809023944/xfs_dump OK (success)
+xfsdump: Dump Status: SUCCESS
++ rm -rf /tmp/point120230809023944/testFile220230809023944
++ xfsrestore -f /tmp/test_tmp20230809023944/xfs_dump /tmp/point120230809023944
+xfsrestore: using file dump (drive_simple) strategy
+xfsrestore: version 3.1.12 (dump format 3.0)
+xfsrestore: searching media for dump
+xfsrestore: examining media file 0
+xfsrestore: dump description: 
+xfsrestore: hostname: openeuler-riscv64
+xfsrestore: mount point: /tmp/point120230809023944
+xfsrestore: volume: /dev/mapper/test_vggroup20230809023817-test_lv120230809023944
+xfsrestore: session time: Wed Aug  9 02:39:48 2023
+xfsrestore: level: 0
+xfsrestore: session label: "dump_test"
+xfsrestore: media label: "vdb"
+xfsrestore: file system id: 675e45df-fc8a-4afd-8b16-d4722981dea3
+xfsrestore: session id: 48d4e18c-f1b7-489a-9a63-12893d1575da
+xfsrestore: media id: c4ebfe83-005f-40fa-8ecb-91c70ccd3b0e
+xfsrestore: using online session inventory
+xfsrestore: searching media for directory dump
+xfsrestore: reading directories
+xfsrestore: 1 directories and 2 entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-directory files
+xfsrestore: restore complete: 0 seconds elapsed
+xfsrestore: Restore Summary:
+xfsrestore:   stream 0 /tmp/test_tmp20230809023944/xfs_dump OK (success)
+xfsrestore: Restore Status: SUCCESS
++ CHECK_RESULT 0 0 0 'Restore data for xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Restore data for xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ls /tmp/point120230809023944
++ grep testFile220230809023944
+testFile220230809023944
++ CHECK_RESULT 0 0 0 'Check file exist for xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file exist for xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'xfs tmp2' /tmp/point120230809023944/testFile220230809023944
+Test xfs tmp2
++ CHECK_RESULT 0 0 0 'Check files for xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files for xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Aug  9 02:39:50 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Aug  9 02:39:50 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Aug  9 02:39:51 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230809023817 /tmp/point120230809023944
++ list='test_vggroup20230809023817 /tmp/point120230809023944'
++ REMOVE_FS 'test_vggroup20230809023817 /tmp/point120230809023944'
++ point_list=($1)
+++ seq 0 1
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230809023817
+++ df -T
+++ grep test_vggroup20230809023817
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230809023817-test_lv120230809023944
++ [[ /dev/mapper/test_vggroup20230809023817-test_lv120230809023944 == '' ]]
++ umount -f test_vggroup20230809023817
+umount: test_vggroup20230809023817: no mount point specified.
++ rm -rf test_vggroup20230809023817
++ DELETE_LV /dev/mapper/test_vggroup20230809023817-test_lv120230809023944
++ lvname=/dev/mapper/test_vggroup20230809023817-test_lv120230809023944
++ lvremove /dev/mapper/test_vggroup20230809023817-test_lv120230809023944 -y
+  Logical volume test_vggroup20230809023817/test_lv120230809023944 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230809023944
+++ df -T
+++ grep /tmp/point120230809023944
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230809023817-test_lv120230809023944
++ [[ /dev/mapper/test_vggroup20230809023817-test_lv120230809023944 == '' ]]
++ umount -f /tmp/point120230809023944
++ rm -rf /tmp/point120230809023944
++ DELETE_LV /dev/mapper/test_vggroup20230809023817-test_lv120230809023944
++ lvname=/dev/mapper/test_vggroup20230809023817-test_lv120230809023944
++ lvremove /dev/mapper/test_vggroup20230809023817-test_lv120230809023944 -y
+  Logical volume "test_lv120230809023944" successfully removed.
++ rm -rf /tmp/test_tmp20230809023944
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp5boedbri ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp5boedbri
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Aug  9 02:40:08 2023 - INFO  - End to restore the test environment.

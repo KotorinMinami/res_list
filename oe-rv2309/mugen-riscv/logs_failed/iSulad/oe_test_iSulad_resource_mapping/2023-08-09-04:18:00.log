@@ -1,0 +1,322 @@
++ source ./common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Aug  9 04:18:03 2023 - INFO  - Start to prepare the test environment.
++ iSulad_install
++ DNF_INSTALL iSulad
++ pkgs=iSulad
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iSulad --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 2:30:11 ago on Wed Aug  9 01:48:20 2023.
+Error: 
+ Problem: conflicting requests
+  - nothing provides libabsl_synchronization.so.2206.0.0()(64bit) needed by iSulad-2.1.2-4.oe2309.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 2:30:11 ago on Wed Aug  9 01:48:20 2023.
+Error: 
+ Problem: conflicting requests
+  - nothing provides libabsl_synchronization.so.2206.0.0()(64bit) needed by iSulad-2.1.2-4.oe2309.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ sed -i '/registry-mirrors/a\"docker.io"' /etc/isulad/daemon.json
+sed: can't read /etc/isulad/daemon.json: No such file or directory
++ systemctl restart isulad
+Failed to restart isulad.service: Unit isulad.service not found.
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Aug  9 04:18:33 2023 - INFO  - Start to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Aug  9 04:18:33 2023 - INFO  - Start to run test.
+++ hostname
++ isula run -itd -h openeuler-riscv64 --name volume -v vol:/vol:rw,nocopy centos
+oe_test_iSulad_resource_mapping.sh: line 30: isula: command not found
++ CHECK_RESULT 127 0 0 'create container failed'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='create container failed'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'create container failed'
++ LOG_ERROR 'create container failed'
++ message='create container failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'create container failed'
+Wed Aug  9 04:18:34 2023 - ERROR - create container failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_mapping.sh line 31'
++ message='oe_test_iSulad_resource_mapping.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_mapping.sh line 31'
+Wed Aug  9 04:18:35 2023 - ERROR - oe_test_iSulad_resource_mapping.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+++ hostname
+++ hostname
+++ hostname
+spawn isula exec -it volume
+couldn't execute "isula": no such file or directory
+    while executing
+"spawn isula exec -it volume"
++ grep 'hello world' /var/lib/isulad/volumes/vol/_data/test
+grep: /var/lib/isulad/volumes/vol/_data/test: No such file or directory
++ CHECK_RESULT 2 0 0 'resource mapping failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='resource mapping failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'resource mapping failed'
++ LOG_ERROR 'resource mapping failed'
++ message='resource mapping failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'resource mapping failed'
+Wed Aug  9 04:18:37 2023 - ERROR - resource mapping failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_mapping.sh line 52'
++ message='oe_test_iSulad_resource_mapping.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_mapping.sh line 52'
+Wed Aug  9 04:18:37 2023 - ERROR - oe_test_iSulad_resource_mapping.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
+++ hostname
++ isula run -itd -h openeuler-riscv64 --name volume1 --mount type=volume,src=vol1,dst=/vol1,volume-nocopy=true centos
+oe_test_iSulad_resource_mapping.sh: line 53: isula: command not found
++ CHECK_RESULT 127 0 0 'create container failed'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='create container failed'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'create container failed'
++ LOG_ERROR 'create container failed'
++ message='create container failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'create container failed'
+Wed Aug  9 04:18:38 2023 - ERROR - create container failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_mapping.sh line 54'
++ message='oe_test_iSulad_resource_mapping.sh line 54'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_mapping.sh line 54'
+Wed Aug  9 04:18:39 2023 - ERROR - oe_test_iSulad_resource_mapping.sh line 54
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+++ hostname
+++ hostname
+++ hostname
+spawn isula exec -it volume1
+couldn't execute "isula": no such file or directory
+    while executing
+"spawn isula exec -it volume1"
++ grep 'hello world' /var/lib/isulad/volumes/vol1/_data/test
+grep: /var/lib/isulad/volumes/vol1/_data/test: No such file or directory
++ CHECK_RESULT 2 0 0 'resource mapping failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='resource mapping failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'resource mapping failed'
++ LOG_ERROR 'resource mapping failed'
++ message='resource mapping failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'resource mapping failed'
+Wed Aug  9 04:18:41 2023 - ERROR - resource mapping failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_mapping.sh line 75'
++ message='oe_test_iSulad_resource_mapping.sh line 75'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_mapping.sh line 75'
+Wed Aug  9 04:18:41 2023 - ERROR - oe_test_iSulad_resource_mapping.sh line 75
++ '[' 0 -eq 1 ']'
++ return 0
+++ hostname
++ isula run -itd -h openeuler-riscv64 --name volume2 --volumes-from volume --volumes-from volume1 centos
+oe_test_iSulad_resource_mapping.sh: line 76: isula: command not found
++ CHECK_RESULT 127 0 0 'create container failed'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='create container failed'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'create container failed'
++ LOG_ERROR 'create container failed'
++ message='create container failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'create container failed'
+Wed Aug  9 04:18:42 2023 - ERROR - create container failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_mapping.sh line 77'
++ message='oe_test_iSulad_resource_mapping.sh line 77'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_mapping.sh line 77'
+Wed Aug  9 04:18:43 2023 - ERROR - oe_test_iSulad_resource_mapping.sh line 77
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+++ hostname
+++ hostname
+++ hostname
+spawn isula exec -it volume2
+couldn't execute "isula": no such file or directory
+    while executing
+"spawn isula exec -it volume2"
+++ grep -c 'hello world' /tmp/log_volume
++ test 0 -eq 4
++ CHECK_RESULT 1 0 0 'resource mapping failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='resource mapping failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'resource mapping failed'
++ LOG_ERROR 'resource mapping failed'
++ message='resource mapping failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'resource mapping failed'
+Wed Aug  9 04:18:45 2023 - ERROR - resource mapping failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_mapping.sh line 99'
++ message='oe_test_iSulad_resource_mapping.sh line 99'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_mapping.sh line 99'
+Wed Aug  9 04:18:45 2023 - ERROR - oe_test_iSulad_resource_mapping.sh line 99
++ '[' 0 -eq 1 ']'
++ return 0
++ isula stop volume volume1 volume2
+oe_test_iSulad_resource_mapping.sh: line 100: isula: command not found
++ isula rm volume volume1 volume2
+oe_test_iSulad_resource_mapping.sh: line 101: isula: command not found
++ grep 'hello world' /var/lib/isulad/volumes/vol/_data/test
+grep: /var/lib/isulad/volumes/vol/_data/test: No such file or directory
++ CHECK_RESULT 2 0 0 'resource mapping failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='resource mapping failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'resource mapping failed'
++ LOG_ERROR 'resource mapping failed'
++ message='resource mapping failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'resource mapping failed'
+Wed Aug  9 04:18:46 2023 - ERROR - resource mapping failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_mapping.sh line 103'
++ message='oe_test_iSulad_resource_mapping.sh line 103'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_mapping.sh line 103'
+Wed Aug  9 04:18:47 2023 - ERROR - oe_test_iSulad_resource_mapping.sh line 103
++ '[' 0 -eq 1 ']'
++ return 0
++ grep 'hello world' /var/lib/isulad/volumes/vol1/_data/test
+grep: /var/lib/isulad/volumes/vol1/_data/test: No such file or directory
++ CHECK_RESULT 2 0 0 'resource mapping failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='resource mapping failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'resource mapping failed'
++ LOG_ERROR 'resource mapping failed'
++ message='resource mapping failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'resource mapping failed'
+Wed Aug  9 04:18:48 2023 - ERROR - resource mapping failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_mapping.sh line 105'
++ message='oe_test_iSulad_resource_mapping.sh line 105'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_mapping.sh line 105'
+Wed Aug  9 04:18:49 2023 - ERROR - oe_test_iSulad_resource_mapping.sh line 105
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Aug  9 04:18:49 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 8
++ test 8 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Aug  9 04:18:50 2023 - ERROR - failed to execute the case.
++ exit 8
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Aug  9 04:18:51 2023 - INFO  - Start to restore the test environment.
++ isula rmi centos
+oe_test_iSulad_resource_mapping.sh: line 111: isula: command not found
++ iSulad_remove
++ systemctl stop isulad
+Failed to stop isulad.service: Unit isulad.service not loaded.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 2:30:11 ago on Wed Aug  9 01:48:20 2023.
+Error: 
+ Problem: conflicting requests
+  - nothing provides libabsl_synchronization.so.2206.0.0()(64bit) needed by iSulad-2.1.2-4.oe2309.riscv64
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 2:30:11 ago on Wed Aug  9 01:48:20 2023.
+Error: 
+ Problem: conflicting requests
+  - nothing provides libabsl_synchronization.so.2206.0.0()(64bit) needed by iSulad-2.1.2-4.oe2309.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 2:30:11 ago on Wed Aug  9 01:48:20 2023.\nError: \n Problem: conflicting requests\n  - nothing provides libabsl_synchronization.so.2206.0.0()(64bit) needed by iSulad-2.1.2-4.oe2309.riscv64\n(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ rm -rf /etc/isulad
++ rm -rf /tmp/log_volume
++ LOG_INFO 'End to restore the test environment'
++ message='End to restore the test environment'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment'
+Wed Aug  9 04:18:55 2023 - INFO  - End to restore the test environment
