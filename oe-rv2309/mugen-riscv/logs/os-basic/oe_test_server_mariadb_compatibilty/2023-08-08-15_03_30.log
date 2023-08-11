@@ -1,0 +1,103 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Aug  8 15:03:47 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'net-tools mariadb-server'
++ pkgs='net-tools mariadb-server'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'net-tools mariadb-server' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 3:46:11 ago on Tue Aug  8 11:20:24 2023.
+Package net-tools-2.10-3.oe2309.riscv64 is already installed.
+Error: 
+ Problem: problem with installed package mysql-server-8.0.30-4.oe2309.riscv64
+  - package mysql-server-8.0.30-4.oe2309.riscv64 conflicts with mariadb-server provided by mariadb-server-4:10.5.16-3.oe2309.riscv64
+  - conflicting requests
+(try to add '\''--allowerasing'\'' to command line to replace conflicting packages or '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 3:46:11 ago on Tue Aug  8 11:20:24 2023.
+Package net-tools-2.10-3.oe2309.riscv64 is already installed.
+Error: 
+ Problem: problem with installed package mysql-server-8.0.30-4.oe2309.riscv64
+  - package mysql-server-8.0.30-4.oe2309.riscv64 conflicts with mariadb-server provided by mariadb-server-4:10.5.16-3.oe2309.riscv64
+  - conflicting requests
+(try to add '\''--allowerasing'\'' to command line to replace conflicting packages or '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ rm -rf '/var/lib/mysql/*'
++ systemctl start mariadb.service
+Failed to start mariadb.service: Unit mariadb.service not found.
++ systemctl status mariadb.service
++ grep running
+Unit mariadb.service could not be found.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug  8 15:06:48 2023 - INFO  - Start to restore the test environment.
++ rm -rf /var/lib/mysql mariadb_remote
++ SSH_CMD 'yum remove mariadb-server expect -y;rm -rf /opt/mugen/mariadb_remote /root/testlog' 10.0.0.6 'openEuler12#$' root
++ cmd='yum remove mariadb-server expect -y;rm -rf /opt/mugen/mariadb_remote /root/testlog'
++ remoteip=10.0.0.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'yum remove mariadb-server expect -y;rm -rf /opt/mugen/mariadb_remote /root/testlog' -i 10.0.0.6 -u root -p 'openEuler12#$' -t 300 -o 22
+1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 1ms
+Tue Aug  8 15:06:59 2023 - ERROR - connection to 10.0.0.6 failed.
++ ret=101
++ test 101 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:101'
++ message='Failed in remote CMD operation:101'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:101'
+Tue Aug  8 15:07:04 2023 - ERROR - Failed in remote CMD operation:101
++ return 101
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 3:46:11 ago on Tue Aug  8 11:20:24 2023.
+Package net-tools-2.10-3.oe2309.riscv64 is already installed.
+Error: 
+ Problem: problem with installed package mysql-server-8.0.30-4.oe2309.riscv64
+  - package mysql-server-8.0.30-4.oe2309.riscv64 conflicts with mariadb-server provided by mariadb-server-4:10.5.16-3.oe2309.riscv64
+  - conflicting requests
+(try to add '--allowerasing' to command line to replace conflicting packages or '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 3:46:11 ago on Tue Aug  8 11:20:24 2023.
+Package net-tools-2.10-3.oe2309.riscv64 is already installed.
+Error: 
+ Problem: problem with installed package mysql-server-8.0.30-4.oe2309.riscv64
+  - package mysql-server-8.0.30-4.oe2309.riscv64 conflicts with mariadb-server provided by mariadb-server-4:10.5.16-3.oe2309.riscv64
+  - conflicting requests
+(try to add '\''--allowerasing'\'' to command line to replace conflicting packages or '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 3:46:11 ago on Tue Aug  8 11:20:24 2023.\nPackage net-tools-2.10-3.oe2309.riscv64 is already installed.\nError: \n Problem: problem with installed package mysql-server-8.0.30-4.oe2309.riscv64\n  - package mysql-server-8.0.30-4.oe2309.riscv64 conflicts with mariadb-server provided by mariadb-server-4:10.5.16-3.oe2309.riscv64\n  - conflicting requests\n(try to add '--allowerasing' to command line to replace conflicting packages or '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug  8 15:07:26 2023 - INFO  - End to restore the test environment.

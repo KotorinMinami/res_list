@@ -1,0 +1,155 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Aug  8 20:14:21 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'chrony ntpstat ntp'
++ pkgs='chrony ntpstat ntp'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'chrony ntpstat ntp' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp5394fm3d
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp5394fm3d
++ systemctl start ntpd
+systemctl: error while loading shared libraries: libsystemd-shared-253.so: cannot open shared object file: No such file or directory
++ systemctl start chronyd
+systemctl: error while loading shared libraries: libsystemd-shared-253.so: cannot open shared object file: No such file or directory
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Aug  8 20:15:40 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug  8 20:15:41 2023 - INFO  - Start to run test.
++ systemctl status chronyd
++ grep running
+systemctl: error while loading shared libraries: libsystemd-shared-253.so: cannot open shared object file: No such file or directory
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_chrony_chronyc_ntpstat.sh line 32'
++ message='oe_test_chrony_chronyc_ntpstat.sh line 32'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_chrony_chronyc_ntpstat.sh line 32'
+Tue Aug  8 20:15:43 2023 - ERROR - oe_test_chrony_chronyc_ntpstat.sh line 32
++ '[' 0 -eq 1 ']'
++ return 0
+++ chronyc -n tracking
+++ grep -icE 'utc|RMS offset|Last offset'
++ CHECK_RESULT 0 3
++ actual_result=0
++ expect_result=3
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 3x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_chrony_chronyc_ntpstat.sh line 33'
++ message='oe_test_chrony_chronyc_ntpstat.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_chrony_chronyc_ntpstat.sh line 33'
+Tue Aug  8 20:15:45 2023 - ERROR - oe_test_chrony_chronyc_ntpstat.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ cp /etc/ntp.conf /etc/ntp.conf_bak
++ echo 'server 127.127.1.0 iburst prefer minpoll 3 maxpoll 3'
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl restart ntpd
+systemctl: error while loading shared libraries: libsystemd-shared-253.so: cannot open shared object file: No such file or directory
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ ntpstat
++ grep 'polling server'
+Unable to talk to NTP daemon. Is it running?
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_chrony_chronyc_ntpstat.sh line 40'
++ message='oe_test_chrony_chronyc_ntpstat.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_chrony_chronyc_ntpstat.sh line 40'
+Tue Aug  8 20:15:53 2023 - ERROR - oe_test_chrony_chronyc_ntpstat.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug  8 20:15:54 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Aug  8 20:15:56 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug  8 20:15:58 2023 - INFO  - Start to restore the test environment.
++ mv -f /etc/ntp.conf_bak /etc/ntp.conf
++ systemctl stop chronyd
+systemctl: error while loading shared libraries: libsystemd-shared-253.so: cannot open shared object file: No such file or directory
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp5394fm3d ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp5394fm3d
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug  8 20:16:27 2023 - INFO  - End to restore the test environment.
