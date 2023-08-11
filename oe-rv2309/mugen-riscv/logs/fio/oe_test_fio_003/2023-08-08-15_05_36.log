@@ -1,0 +1,231 @@
++ source ./common/disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment!'
++ message='Start to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment!'
+Tue Aug  8 15:07:19 2023 - INFO  - Start to prepare the test environment!
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks=vdb
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=
++ local_disk2=
++ local_disk3=
++ DNF_INSTALL fio
++ pkgs=fio
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs fio --node 1 --tempfile ''
+Tue Aug  8 15:13:07 2023 - INFO  - pkgs:(fio) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ echo dsafdsfdddddddddddddddddddddddddddddddddddddddddd
++ LOG_INFO 'End to prepare the test environment!'
++ message='End to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment!'
+Tue Aug  8 15:13:32 2023 - INFO  - End to prepare the test environment!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Tue Aug  8 15:13:48 2023 - INFO  - Start executing testcase!
++ fio-dedupe -o 1 /dev/vdb
++ grep 'Will check </dev/vdb>'
+Will check </dev/vdb>, size <524288000>, using 4 threads
++ CHECK_RESULT 0 0 0 'check disk failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check disk failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -c 1 /dev/vdb
++ grep 'Will check </dev/vdb>'
+Will check </dev/vdb>, size <524288000>, using 4 threads
++ CHECK_RESULT 0 0 0 'check disk failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check disk failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'Will check </dev/vdb>'
++ fio-dedupe -B 1 /dev/vdb
+Will check </dev/vdb>, size <524288000>, using 4 threads
++ CHECK_RESULT 0 0 0 'check disk failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check disk failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -p 1 /dev/vdb
++ grep 'Will check </dev/vdb>'
+Will check </dev/vdb>, size <524288000>, using 4 threads
++ CHECK_RESULT 0 0 0 'check disk failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='check disk failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio --filename=test_file --direct=1 --rw=randwrite --numjobs=1 --iodepth=16 --ioengine=libaio --bs=4k --group_reporting --name=zhangyi --log_avg_msec=500 --write_bw_log=test-fio --size=1G
++ grep 'Starting 1 process'
+Tue Aug  8 15:36:14 2023 - ERROR - Timeout : Command 'bash -x oe_test_fio_003.sh' timed out after 1799.9983342000005 seconds
+Starting 1 process
+++ post_test
+++ LOG_INFO 'Start environment cleanup.'
+++ message='Start environment cleanup.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment cleanup.'
+Tue Aug  8 15:38:49 2023 - INFO  - Start environment cleanup.
+++ rm -rf test_file test.txt test-fio_bw.1.log dellr720-day2
+++ DNF_REMOVE
+++ node=1
+++ pkg_list=
+++ mode=0
+++ [[ -z '' ]]
+++ [[ -z '' ]]
+++ LOG_WARN 'no thing to do.'
+++ message='no thing to do.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Tue Aug  8 15:38:52 2023 - WARN  - no thing to do.
+++ return 0
+++ LOG_INFO 'Finish environment cleanup.'
+++ message='Finish environment cleanup.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Tue Aug  8 15:38:55 2023 - INFO  - Finish environment cleanup.
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=959842/0, merge=0/0, ticks=1946629/0, in_queue=1946629, util=82.86%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=write -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=262/959841, merge=0/2, ticks=274/2010994, in_queue=2011268, util=88.87%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep vdb
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=randread -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
+  vdb: ios=959533/0, merge=0/0, ticks=2189548/0, in_queue=2189549, util=82.20%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=randwrite -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=407/959924, merge=0/0, ticks=333/1506079, in_queue=1506412, util=91.27%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest --output test.txt
++ test -f ./test_file
++ CHECK_RESULT 1 0 0 'fio --filename=test_file option failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'fio --filename=test_file option failed'
++ LOG_ERROR 'fio --filename=test_file option failed'
++ message='fio --filename=test_file option failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'fio --filename=test_file option failed'
+Tue Aug  8 15:58:30 2023 - ERROR - fio --filename=test_file option failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fio_003.sh line 50'
++ message='oe_test_fio_003.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fio_003.sh line 50'
+Tue Aug  8 15:58:33 2023 - ERROR - oe_test_fio_003.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ genfio -d /dev/vdb,/dev/,/dev/ -a -b 4k,128k,1m -r 100 -a -x dellr720-day2/
+Generating dellr720-day2/openeuler-riscv64-4k,128k,1m-all-write,randwrite,read,randread-vdb,dev,dev.fio
+Estimated Time = 4800 seconds : 1 hour 20 minutes
++ test -d dellr720-day2
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
