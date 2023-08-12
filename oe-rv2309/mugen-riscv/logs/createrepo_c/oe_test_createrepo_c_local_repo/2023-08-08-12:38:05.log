@@ -1,0 +1,193 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue Aug  8 12:38:07 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL createrepo_c
++ pkgs=createrepo_c
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs createrepo_c --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp9y6pxdbj
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp9y6pxdbj
++ test_path=/tmp/test
++ repo_path=/etc/yum.repos.d
++ mkdir /tmp/test /etc/yum.repos.d/bak
++ cd /tmp/test
++ yum download git git-core perl-Error perl-Git perl-TermReadKey
+No such command: download. Please use /usr/bin/yum --help
+It could be a YUM plugin command, try: "yum install 'dnf-command(download)'"
++ mv /etc/yum.repos.d/oe-riscv64.repo /etc/yum.repos.d/bak
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Aug  8 12:38:34 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue Aug  8 12:38:34 2023 - INFO  - Start testing...
++ createrepo_c .
+Directory walk started
+Directory walk done - 0 packages
+Temporary output repo path: ./.repodata/
+Preparing sqlite DBs
+Pool started (with 5 workers)
+Pool finished
++ test -e repodata
++ CHECK_RESULT 0 0 0 'Generation failure'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Generation failure'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ cat
++ yum '--disablerepo=*' --enablerepo=local list available
+local repo                                      6.7 kB/s | 257  B     00:00    
++ CHECK_RESULT 0 0 0 'Repo error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Repo error'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ yum clean all
+15 files removed
++ yum install git -y
+local repo                                      8.3 kB/s | 257  B     00:00    
+Package git-2.39.1-8.oe2309.riscv64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
++ CHECK_RESULT 0 0 0 'Package install fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Package install fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ yum remove git -y
+Dependencies resolved.
+================================================================================
+ Package               Architecture Version                    Repository  Size
+================================================================================
+Removing:
+ git                   riscv64      2.39.1-8.oe2309            @base      388 k
+Removing unused dependencies:
+ git-core              riscv64      2.39.1-8.oe2309            @base       29 M
+ libedit               riscv64      3.1-29.oe2309              @base      258 k
+ libsecret             riscv64      0.20.5-1.oe2309            @base      586 k
+ openssh-clients       riscv64      9.1p1-6.oe2309             @base      1.9 M
+ perl-Error            noarch       1:0.17029-3.oe2309         @base       68 k
+ perl-Git              noarch       2.39.1-8.oe2309            @base       65 k
+ perl-TermReadKey      riscv64      2.38-2.oe2309              @base      136 k
+
+Transaction Summary
+================================================================================
+Remove  8 Packages
+
+Freed space: 32 M
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Erasing          : git-2.39.1-8.oe2309.riscv64                            1/8 
+  Erasing          : perl-Git-2.39.1-8.oe2309.noarch                        2/8 
+  Erasing          : git-core-2.39.1-8.oe2309.riscv64                       3/8 
+  Erasing          : perl-Error-1:0.17029-3.oe2309.noarch                   4/8 
+  Erasing          : openssh-clients-9.1p1-6.oe2309.riscv64                 5/8 
+  Erasing          : libedit-3.1-29.oe2309.riscv64                          6/8 
+  Erasing          : libsecret-0.20.5-1.oe2309.riscv64                      7/8 
+  Erasing          : perl-TermReadKey-2.38-2.oe2309.riscv64                 8/8 
+  Running scriptlet: perl-TermReadKey-2.38-2.oe2309.riscv64                 8/8 
+  Verifying        : git-2.39.1-8.oe2309.riscv64                            1/8 
+  Verifying        : git-core-2.39.1-8.oe2309.riscv64                       2/8 
+  Verifying        : libedit-3.1-29.oe2309.riscv64                          3/8 
+  Verifying        : libsecret-0.20.5-1.oe2309.riscv64                      4/8 
+  Verifying        : openssh-clients-9.1p1-6.oe2309.riscv64                 5/8 
+  Verifying        : perl-Error-1:0.17029-3.oe2309.noarch                   6/8 
+  Verifying        : perl-Git-2.39.1-8.oe2309.noarch                        7/8 
+  Verifying        : perl-TermReadKey-2.38-2.oe2309.riscv64                 8/8 
+
+Removed:
+  git-2.39.1-8.oe2309.riscv64            git-core-2.39.1-8.oe2309.riscv64      
+  libedit-3.1-29.oe2309.riscv64          libsecret-0.20.5-1.oe2309.riscv64     
+  openssh-clients-9.1p1-6.oe2309.riscv64 perl-Error-1:0.17029-3.oe2309.noarch  
+  perl-Git-2.39.1-8.oe2309.noarch        perl-TermReadKey-2.38-2.oe2309.riscv64
+
+Complete!
++ CHECK_RESULT 0 0 0 'Package remove fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Package remove fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue Aug  8 12:38:49 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Aug  8 12:38:50 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Tue Aug  8 12:38:51 2023 - INFO  - start environment cleanup.
++ mv /etc/yum.repos.d/bak/oe-riscv64.repo /etc/yum.repos.d
++ rm -rf /tmp/test /etc/yum.repos.d/local.repo /etc/yum.repos.d/bak
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp9y6pxdbj ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp9y6pxdbj
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Tue Aug  8 12:38:57 2023 - INFO  - Finish environment cleanup!
