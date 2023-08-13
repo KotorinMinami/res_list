@@ -29,6 +29,8 @@ class testRes():
                     else:
                         self.testResult.append({'suite name':suite , 'case name':case , 'status':'success'})
     
+    
+
     def csvRead(self):
         if self.curCsv is not None:
             with open(self.curCsv , 'r') as f:
@@ -37,8 +39,7 @@ class testRes():
                 rows = rows[1:]
                 keys = ['suite name' , 'case name' , 'status' , 'logFile' , 'reason']
                 for row in rows:
-                    if row and (row[4] != '' and row[4] != 'None' and row[4] != 'x86 fail'):
-                        self.csvtestResult[row[1]] = dict(zip(keys , row))
+                    self.csvtestResult[row[1]] = dict(zip(keys , row))
 
     def exprotToCsv(self, filename = 'failureCause.csv'):
         csvfile = open('./'+filename,'w')
@@ -69,8 +70,8 @@ class testRes():
         cw.writerows(row)
         csvfile.close()
 
-    def exportToMarkdown(self):
-        with open("table.md", "w") as md_file:
+    def exportToMarkdown(self , filename = 'table.md'):
+        with open(filename, "w") as md_file:
             title = ['测试套/软件包名','测试用例名','状态','日志文件','原因']
             md_file.write("| ")
             for header in title:
@@ -102,6 +103,13 @@ class testRes():
                 logPath = self.logsDir+'/'+suite+'/'+self.testResult[i]['case name']+'/'+logfile
                 md_file.write('| '+suiteName+' | '+self.testResult[i]['case name']+' | '+self.testResult[i]['status']+' | ['+logPath+']('+logPath+') | '+reason+' |\n')
 
+    
+    def statNum(self):
+        self.totalCaseNum = len(self.testResult)
+        for case in self.testResult:
+            if case['status'] == 'success':
+                self.totalPassedCaseNum += 1
+        self.totalFailedCaseNum = self.totalCaseNum - self.totalPassedCaseNum
 
     
 
