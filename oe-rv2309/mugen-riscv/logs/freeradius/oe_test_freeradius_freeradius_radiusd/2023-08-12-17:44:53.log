@@ -1,0 +1,247 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sat Aug 12 17:44:58 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL freeradius
++ pkgs=freeradius
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs freeradius --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp8bjvmb96
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp8bjvmb96
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Sat Aug 12 17:51:42 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sat Aug 12 17:51:43 2023 - INFO  - Start to run test.
++ radiusd -d /etc/raddb
++ ps -ef
++ grep 'radiusd -d'
++ grep -v grep
+root         978       1 75 17:51 ?        00:00:00 radiusd -d /etc/raddb
++ CHECK_RESULT 0 0 0 'radiusd -d execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -d execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'radiusd -d'
++ kill -9 978
++ radiusd -D /usr/share/freeradius
++ ps -ef
++ grep 'radiusd -D'
++ grep -v grep
+root         990       1 76 17:51 ?        00:00:00 radiusd -D /usr/share/freeradius
++ CHECK_RESULT 0 0 0 'radiusd -D execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -D execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'radiusd -D'
++ kill -9 990
++ radiusd -f
++ ps -ef
++ grep 'radiusd -f'
++ grep -v grep
+root        1000     852 99 17:51 ?        00:00:00 radiusd -f
++ CHECK_RESULT 0 0 0 'radiusd -f execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -f execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'radiusd -f'
++ kill -9 1000
++ radiusd -h
++ grep -i usage
+  -d <raddb>    Set configuration directory (defaults to /etc/raddb).
+  -D <dictdir>  Set main dictionary directory (defaults to /usr/share/freeradius).
+Usage: radiusd [options]
+oe_test_freeradius_freeradius_radiusd.sh: line 27:  1000 Killed                  radiusd -f
++ CHECK_RESULT 0 0 0 'radiusd -h execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -h execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ GET_FREE_PORT 127.0.0.1
+++ ip=127.0.0.1
+++ start_port=1000
+++ end_port=10000
+++ python3 /root/mugen/libs/locallibs/free_port.py get --ip 127.0.0.1 --start 1000 --end 10000
+/root/mugen/libs/locallibs/free_port.py:26: DeprecationWarning: 'telnetlib' is deprecated and slated for removal in Python 3.13
+  import telnetlib
++ rdport=8281
++ radiusd -i 127.0.0.1 -p 8281
++ ps -ef
++ grep 'radiusd -i'
++ grep -v grep
+root        1012       1 73 17:51 ?        00:00:00 radiusd -i 127.0.0.1 -p 8281
++ CHECK_RESULT 0 0 0 'radiusd -i -p execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -i -p execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'radiusd -i'
++ kill -9 1012
++ radiusd -l /tmp/test.log
++ ps -ef
++ grep 'radiusd -l'
++ grep -v grep
+root        1024       1 75 17:51 ?        00:00:00 radiusd -l /tmp/test.log
++ '[' -s /tmp/test.log ']'
++ CHECK_RESULT 0 0 0 'radiusd -l execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -l execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'radiusd -l'
++ kill -9 1024
++ cp /etc/raddb/radiusd.conf /etc/raddb/test.conf
++ radiusd -n test
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ ps -ef
++ grep 'radiusd -n'
++ grep -v grep
+root        1037       1  9 17:51 ?        00:00:00 radiusd -n test
++ CHECK_RESULT 0 0 0 'radiusd -n execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -n execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'radiusd -n'
++ kill -9 1037
++ radiusd -P
+++ cat /var/run/radiusd/radiusd.pid
++ result1=1050
+++ ps -ef
+++ grep 'radiusd -P'
+++ grep -v grep
+++ awk '{print $2}'
++ result2=1050
++ '[' 1050 -eq 1050 ']'
++ CHECK_RESULT 0 0 0 'radiusd -P execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -P execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 1050
++ radiusd -s
+++ ps -ef
+++ grep 'radiusd -s'
+++ grep -v grep
+++ awk '{print $3}'
++ '[' 852 -ne 1 ']'
++ CHECK_RESULT 0 0 0 'radiusd -s execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radiusd -s execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'radiusd -s'
++ kill -9 1062
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Sat Aug 12 17:52:12 2023 - INFO  - End to run test.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 19:  1062 Killed                  radiusd -s
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Sat Aug 12 17:52:13 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Sat Aug 12 17:52:15 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp8bjvmb96 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp8bjvmb96
++ '[' 0 -ne 0 ']'
++ rm -rf /etc/raddb
++ rm -rf /var/log/radius
++ rm -rf /tmp/test.log
++ rm -rf /var/run/radiusd
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Sat Aug 12 17:52:44 2023 - INFO  - End to restore the test environment.

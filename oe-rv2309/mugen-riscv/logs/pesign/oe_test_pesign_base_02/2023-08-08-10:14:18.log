@@ -1,0 +1,276 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue Aug  8 10:14:20 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL pesign
++ pkgs=pesign
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs pesign --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpjbr_63l0
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpjbr_63l0
++ mkdir pesigntest
++ cd pesigntest
++ cp ../common/baidu.zip ./
++ cp ../common/grubx64.efi ./
++ unzip baidu.zip
+Archive:  baidu.zip
+   creating: baidu/
+  inflating: baidu/cert9.db          
+  inflating: baidu/key4.db           
+  inflating: baidu/pkcs11.txt        
++ pesign -i grubx64.efi -o grubx64.efi.signed -c 'ALT Linux UEFI SB CA' -s -n ./baidu -t 'NSS Certificate DB' -a -v -p -P -N
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Aug  8 10:14:48 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug  8 10:14:48 2023 - INFO  - Start to run test.
++ pesign -i grubx64.efi.signed --show-signature
+---------------------------------------------
+certificate address is 0xffffff9c463008
+Content was not encrypted.
+Content is detached; signature cannot be verified.
+The signer's common name is ALT UEFI SB CA 2013
+No signer email address.
+Signing time: Tue Aug 08, 2023
+There were certs or crls included.
+---------------------------------------------
++ CHECK_RESULT 0 0 0 'Check pesign -i grubx64.efi.signed --show-signature failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign -i grubx64.efi.signed --show-signature failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign -u 'ALT UEFI SB CA 2013' -r -i grubx64.efi.signed -o out
++ test -f ./out
++ CHECK_RESULT 0 0 0 'Check pesign -r failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign -r failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign '--signature-number=ALT UEFI SB CA 2013' --remove-signature -i grubx64.efi.signed -o out1
++ test -f ./out1
++ CHECK_RESULT 0 0 0 'Check pesign --remove-signature failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign --remove-signature failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign -i grubx64.efi.signed -n ./baidu -K out2 -c 'ALT Linux UEFI SB CA'
++ test -f ./out2
++ CHECK_RESULT 0 0 0 'Check pesign -K failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign -K failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign -i grubx64.efi.signed -n ./baidu --export-pubkey=out3 -c 'ALT Linux UEFI SB CA'
++ test -f ./out3
++ CHECK_RESULT 0 0 0 'Check pesign --export-pubkey failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign --export-pubkey failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign -i grubx64.efi.signed -n ./baidu -C out4 -c 'ALT Linux UEFI SB CA'
+cms_common.c:find_certificate:711: could not find certificate:SEC_ERROR_INVALID_ARGS:security library: invalid arguments.
+pesign: Could not find certificate ALT Linux UEFI SB CA
++ CHECK_RESULT 1 0 0 'Check pesign -C failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign -C failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign -C failed'
++ LOG_ERROR 'Check pesign -C failed'
++ message='Check pesign -C failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign -C failed'
+Tue Aug  8 10:14:51 2023 - ERROR - Check pesign -C failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_base_02.sh line 47'
++ message='oe_test_pesign_base_02.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_base_02.sh line 47'
+Tue Aug  8 10:14:51 2023 - ERROR - oe_test_pesign_base_02.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ pesign -i grubx64.efi.signed -n ./baidu --export-cert=out5 -c 'ALT Linux UEFI SB CA'
+cms_common.c:find_certificate:711: could not find certificate:SEC_ERROR_INVALID_ARGS:security library: invalid arguments.
+pesign: Could not find certificate ALT Linux UEFI SB CA
++ CHECK_RESULT 1 0 0 'Check pesign --export-cert failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign --export-cert failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign --export-cert failed'
++ LOG_ERROR 'Check pesign --export-cert failed'
++ message='Check pesign --export-cert failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign --export-cert failed'
+Tue Aug  8 10:14:52 2023 - ERROR - Check pesign --export-cert failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_base_02.sh line 49'
++ message='oe_test_pesign_base_02.sh line 49'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_base_02.sh line 49'
+Tue Aug  8 10:14:53 2023 - ERROR - oe_test_pesign_base_02.sh line 49
++ '[' 0 -eq 1 ']'
++ return 0
++ pesign -i grubx64.efi -n ./baidu -D
+pesignd starting (pid 0)
++ CHECK_RESULT 0 0 0 'Check pesign -D failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign -D failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign -i grubx64.efi -n ./baidu --daemonize
+pesignd starting (pid 0)
++ CHECK_RESULT 0 0 0 'Check pesign --daemonize failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign --daemonize failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign -i grubx64.efi.signed -n ./baidu -C out6 -f -c 'ALT Linux UEFI SB CA'
+cms_common.c:find_certificate:711: could not find certificate:SEC_ERROR_INVALID_ARGS:security library: invalid arguments.
+pesign: Could not find certificate ALT Linux UEFI SB CA
++ CHECK_RESULT 1 0 0 'Check pesign -f failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign -f failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign -f failed'
++ LOG_ERROR 'Check pesign -f failed'
++ message='Check pesign -f failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign -f failed'
+Tue Aug  8 10:14:58 2023 - ERROR - Check pesign -f failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_base_02.sh line 55'
++ message='oe_test_pesign_base_02.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_base_02.sh line 55'
+Tue Aug  8 10:14:58 2023 - ERROR - oe_test_pesign_base_02.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ pesign -i grubx64.efi.signed -n ./baidu -C out7 --force -c 'ALT Linux UEFI SB CA'
+cms_common.c:find_certificate:711: could not find certificate:SEC_ERROR_INVALID_ARGS:security library: invalid arguments.
+pesign: Could not find certificate ALT Linux UEFI SB CA
++ CHECK_RESULT 1 0 0 'Check pesign --force failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign --force failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign --force failed'
++ LOG_ERROR 'Check pesign --force failed'
++ message='Check pesign --force failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign --force failed'
+Tue Aug  8 10:14:59 2023 - ERROR - Check pesign --force failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_base_02.sh line 57'
++ message='oe_test_pesign_base_02.sh line 57'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_base_02.sh line 57'
+Tue Aug  8 10:15:00 2023 - ERROR - oe_test_pesign_base_02.sh line 57
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug  8 10:15:00 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Aug  8 10:15:01 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug  8 10:15:01 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpjbr_63l0 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpjbr_63l0
++ '[' 0 -ne 0 ']'
++ ps -ef
++ grep grubx64.efi
++ grep -v grep
++ xargs kill -9
++ awk '{print $2}'
++ cd ..
++ rm -rf pesigntest
++ LOG_INFO 'Finish restore the test environment.'
++ message='Finish restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restore the test environment.'
+Tue Aug  8 10:15:13 2023 - INFO  - Finish restore the test environment.

@@ -1,0 +1,620 @@
++ source ../common/common_libmemcached.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sat Aug 12 19:39:30 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'libmemcached memcached telnet net-tools'
++ pkgs='libmemcached memcached telnet net-tools'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'libmemcached memcached telnet net-tools' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpbxkgzro2
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpbxkgzro2
++ memcached -d -u root -m 512 -p 11211
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ netstat -an
++ grep 11211
+tcp        0      0 0.0.0.0:11211           0.0.0.0:*               LISTEN     
+tcp6       0      0 :::11211                :::*                    LISTEN     
++ pgrep -f 'memcached -d -u'
+445
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Sat Aug 12 19:42:24 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sat Aug 12 19:42:25 2023 - INFO  - Start to run test.
++ memaslap --help
++ grep -
+    memslap -hV | -s servers [-F config_file] [-t time | -x exe_num] [...]
+    -s, --servers=
+        threads count. e.g.: --servers=localhost:1234,localhost:11211
+    -T, --threads=
+    -c, --concurrency=
+    -n, --conn_sock=
+    -x, --execute_number=
+    -t, --time=
+        How long the test to run, suffix: s-seconds, m-minutes, h-hours,
+        d-days e.g.: --time=2h.
+    -F, --cfg_cmd=
+    -w, --win_size=
+        Task window size of each concurrency, suffix: K, M e.g.: --win_size=10k.
+    -X, --fixed_size=
+    -v, --verify=
+        The proportion of date verification, e.g.: --verify=0.01
+    -d, --division=
+        Number of keys to multi-get once. Default 1, means single get.
+    -S, --stat_freq=
+        Frequency of dumping statistic information. suffix: s-seconds,
+        m-minutes, e.g.: --resp_freq=10s.
+    -e, --exp_verify=
+        The proportion of objects with expire time, e.g.: --exp_verify=0.01.
+    -o, --overwrite=
+        The proportion of objects need overwrite, e.g.: --overwrite=0.01.
+    -R, --reconnect 
+    -U, --udp 
+    -a, --facebook 
+        Whether it enables facebook test feature, set with TCP and multi-get with UDP.
+    -B, --binary 
+    -P, --tps=
+        Expected throughput, suffix: K, e.g.: --tps=10k.
+    -p, --rep_write=
+        The first nth servers can write data, e.g.: --rep_write=2.
+    -b, --verbose 
+    -h, --help 
+    -V, --version 
+    memslap -s 127.0.0.1:11211 -S 5s
+    memslap -s 127.0.0.1:11211 -t 2m -v 0.2 -e 0.05 -b
+    memslap -s 127.0.0.1:11211 -F config -t 2m -w 40k -S 20s -o 0.2
+    memslap -s 127.0.0.1:11211 -F config -t 2m -T 4 -c 128 -d 20 -P 40k
+    memslap -s 127.0.0.1:11211 -F config -t 2m -d 50 -a -n 40
+    memslap -s 127.0.0.1:11211,127.0.0.1:11212 -F config -t 2m
+    memslap -s 127.0.0.1:11211,127.0.0.1:11212 -F config -t 2m -p 2
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memaslap -V
++ grep 'memslap.*.[0-9]'
+memslap v1.0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memaslap -s 127.0.0.1:11211 -S 5s -t 15s
++ tee log
+servers : 127.0.0.1:11211
+threads count: 1
+concurrency: 16
+run time: 15s
+windows size: 10k
+set proportion: set_prop=0.10
+get proportion: get_prop=0.90
+[1;1H[2J
+Get Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        5747         1149         1.2        0          3095     39827      12388      3662.17    11992.29
+Global   5        5747         1149         1.2        0          3095     39827      12388      3662.17    11992.29
+
+Set Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        647          129          0.1        0          3154     56683      13234      5478.06    12544.05
+Global   5        647          129          0.1        0          3154     56683      13234      5478.06    12544.05
+
+Total Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        6400         1280         1.3        0          3095     56683      12474      3891.46    12046.70
+Global   5        6400         1280         1.3        0          3095     56683      12474      3891.46    12046.70
+
+[1;1H[2J
+Get Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        5838         1167         1.2        0          2122     43674      12339      3831.57    11815.19
+Global   10       11585        1158         1.2        0          2122     43674      12369      3740.37    11951.11
+
+Set Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        646          129          0.1        0          2480     45892      12452      4209.57    11974.30
+Global   10       1293         129          0.1        0          2480     56683      12843      4900.19    12256.08
+
+Total Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        6478         1295         1.3        0          2122     45892      12360      3857.58    11917.20
+Global   10       12878        1287         1.3        0          2122     56683      12417      3873.62    11981.38
+
+[1;1H[2J
+Get Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        5806         1161         1.2        0          2418     55635      12405      3865.12    11957.56
+Global   15       17391        1159         1.2        0          2122     55635      12381      3782.46    11953.26
+
+Set Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        647          129          0.1        0          5910     47483      12583      4403.82    12067.28
+Global   15       1940         129          0.1        0          2480     56683      12757      4738.96    12192.79
+
+Total Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   5        6453         1290         1.3        0          2418     55635      12421      3925.20    11951.03
+Global   15       19331        1288         1.3        0          2122     56683      12419      3889.73    11977.09
+
+Get Statistics (17405 events)
+   Min:      2122
+   Max:     57701
+   Avg:     12395
+   Geo:  11961.17
+   Std:   3833.00
+   Log2 Dist:
+      12:       25      141    15471     1747
+      16:       21
+
+Set Statistics (1942 events)
+   Min:      2480
+   Max:     56683
+   Avg:     12777
+   Geo:  12202.79
+   Std:   4811.58
+   Log2 Dist:
+      12:        2       11     1716      195
+      16:       18
+
+Total Statistics (19347 events)
+   Min:      2122
+   Max:     57701
+   Avg:     12434
+   Geo:  11985.20
+   Std:   3941.67
+   Log2 Dist:
+      12:       27      152    17187     1942
+      16:       39
+
+cmd_get: 17420
+cmd_set: 1943
+get_misses: 0
+written_bytes: 3364260
+read_bytes: 19335086
+object_bytes: 2113984
+
+Run time: 15.1s Ops: 19363 TPS: 1286 Net_rate: 1.4M/s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'servers : 127.0.0.1:11211|run time: 15s|Period.*5' log
+servers : 127.0.0.1:11211
+run time: 15s
+Period   5        5747         1149         1.2        0          3095     39827      12388      3662.17    11992.29
+Period   5        647          129          0.1        0          3154     56683      13234      5478.06    12544.05
+Period   5        6400         1280         1.3        0          3095     56683      12474      3891.46    12046.70
+Period   5        5838         1167         1.2        0          2122     43674      12339      3831.57    11815.19
+Period   5        646          129          0.1        0          2480     45892      12452      4209.57    11974.30
+Period   5        6478         1295         1.3        0          2122     45892      12360      3857.58    11917.20
+Period   5        5806         1161         1.2        0          2418     55635      12405      3865.12    11957.56
+Period   5        647          129          0.1        0          5910     47483      12583      4403.82    12067.28
+Period   5        6453         1290         1.3        0          2418     55635      12421      3925.20    11951.03
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memaslap -s 127.0.0.1:11211 -t 10s -v 0.2 -e 0.05 -b
++ tee log
+servers : 127.0.0.1:11211
+threads count: 1
+concurrency: 16
+run time: 10s
+windows size: 10k
+set proportion: set_prop=0.10
+get proportion: get_prop=0.90
+cmd_get: 12118
+cmd_set: 1354
+get_misses: 0
+verify_misses: 0
+verify_failed: 0
+expired_get: 0
+unexpired_unget: 0
+written_bytes: 2343386
+read_bytes: 13444052
+object_bytes: 1473152
+
+Run time: 10.0s Ops: 13472 TPS: 1343 Net_rate: 1.5M/s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'servers : 127.0.0.1:11211|run time: 10s' log
+servers : 127.0.0.1:11211
+run time: 10s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memaslap -s 127.0.0.1:11211 -F config -t 12s -w 40k -S 3s -o 0.2
++ tee log
+servers : 127.0.0.1:11211
+threads count: 1
+concurrency: 16
+run time: 12s
+windows size: 40k
+set proportion: set_prop=0.10
+get proportion: get_prop=0.00
+[1;1H[2J
+Set Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   3        3482         1160         2.4        0          2162     49676      13682      5054.55    13089.49
+Global   3        3482         1160         2.4        0          2162     49676      13682      5054.55    13089.49
+
+Total Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   3        3484         1161         2.4        0          2162     49676      13684      5051.34    13054.68
+Global   3        3484         1161         2.4        0          2162     49676      13684      5051.34    13054.68
+
+[1;1H[2J
+Set Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   3        3412         1137         2.4        0          2612     52616      14055      4901.06    13412.58
+Global   6        6894         1149         2.4        0          2162     52616      13871      4977.40    13267.03
+
+Total Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   3        3410         1136         2.4        0          2612     52616      14063      4891.36    13487.55
+Global   6        6894         1149         2.4        0          2162     52616      13871      4977.40    13267.03
+
+[1;1H[2J
+Set Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   3        3436         1145         2.4        0          2447     47068      13976      4696.73    13406.09
+Global   9        10330        1147         2.4        0          2162     52616      13906      4885.64    13313.12
+
+Total Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   3        3436         1145         2.4        0          2447     47068      13973      4701.24    13369.51
+Global   9        10330        1147         2.4        0          2162     52616      13906      4885.64    13313.12
+
+[1;1H[2J
+Set Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   3        3424         1141         2.4        0          2433     49201      14006      4687.79    13423.81
+Global   12       13754        1146         2.4        0          2162     52616      13931      4836.86    13340.59
+
+Total Statistics
+Type     Time(s)  Ops          TPS(ops/s)   Net(M/s)   Get_miss   Min(us)  Max(us)    Avg(us)    Std_dev    Geo_dist  
+Period   3        3423         1141         2.4        0          2433     49201      14006      4688.54    13461.13
+Global   12       13753        1146         2.4        0          2162     52616      13931      4837.04    13349.81
+
+Set Statistics (13770 events)
+   Min:      2162
+   Max:     69385
+   Avg:     13964
+   Geo:  13366.37
+   Std:   4968.03
+   Log2 Dist:
+      12:       16      102    11924     1573
+      16:      153        2
+
+Total Statistics (13770 events)
+   Min:      2162
+   Max:     69385
+   Avg:     13964
+   Geo:  13366.37
+   Std:   4968.03
+   Log2 Dist:
+      12:       16      102    11924     1573
+      16:      153        2
+
+cmd_get: 0
+cmd_set: 13786
+get_misses: 0
+written_bytes: 30197610
+read_bytes: 110160
+object_bytes: 29998336
+
+Run time: 12.0s Ops: 13786 TPS: 1145 Net_rate: 2.4M/s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'servers : 127.0.0.1:11211|run time: 12s|windows size: 40k|Period.*3' log
+servers : 127.0.0.1:11211
+run time: 12s
+windows size: 40k
+Period   3        3482         1160         2.4        0          2162     49676      13682      5054.55    13089.49
+Period   3        3484         1161         2.4        0          2162     49676      13684      5051.34    13054.68
+Period   3        3412         1137         2.4        0          2612     52616      14055      4901.06    13412.58
+Period   3        3410         1136         2.4        0          2612     52616      14063      4891.36    13487.55
+Period   3        3436         1145         2.4        0          2447     47068      13976      4696.73    13406.09
+Period   3        3436         1145         2.4        0          2447     47068      13973      4701.24    13369.51
+Period   3        3424         1141         2.4        0          2433     49201      14006      4687.79    13423.81
+Period   3        3423         1141         2.4        0          2433     49201      14006      4688.54    13461.13
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memaslap -s 127.0.0.1:11211 -F config -t 5s
++ tee log
+servers : 127.0.0.1:11211
+threads count: 1
+concurrency: 16
+run time: 5s
+windows size: 10k
+set proportion: set_prop=0.10
+get proportion: get_prop=0.00
+cmd_get: 0
+cmd_set: 5784
+get_misses: 0
+written_bytes: 12649224
+read_bytes: 46144
+object_bytes: 12585984
+
+Run time: 5.0s Ops: 5784 TPS: 1155 Net_rate: 2.4M/s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'servers : 127.0.0.1:11211|run time: 5s' log
+servers : 127.0.0.1:11211
+run time: 5s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memaslap -s 127.0.0.1:11211 -F config -t 2s -T 4 -c 128 -d 20 -P 40k
++ tee log
+servers : 127.0.0.1:11211
+threads count: 4
+concurrency: 128
+run time: 2s
+windows size: 10k
+set proportion: set_prop=0.10
+get proportion: get_prop=0.00
+cmd_get: 0
+cmd_set: 4001
+get_misses: 0
+written_bytes: 8493489
+read_bytes: 30984
+object_bytes: 8706176
+
+Run time: 2.0s Ops: 4001 TPS: 1986 Net_rate: 4.0M/s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'servers : 127.0.0.1:11211|run time: 2s|threads count: 4|concurrency: 128' log
+servers : 127.0.0.1:11211
+threads count: 4
+concurrency: 128
+run time: 2s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memaslap -s 127.0.0.1:11211 -F config -t 4s -d 50 -a -n 40
++ tee log
+servers : 127.0.0.1:11211
+threads count: 1
+concurrency: 16
+run time: 4s
+windows size: 10k
+set proportion: set_prop=0.10
+get proportion: get_prop=0.00
+cmd_get: 0
+cmd_set: 2698
+get_misses: 0
+written_bytes: 5881626
+read_bytes: 21456
+object_bytes: 5870848
+packet_disorder: 0
+packet_drop: 0
+udp_timeout: 0
+
+Run time: 4.0s Ops: 2698 TPS: 673 Net_rate: 1.4M/s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'servers : 127.0.0.1:11211|run time: 4s' log
+servers : 127.0.0.1:11211
+run time: 4s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memcached -d -u root -m 512 -l 127.0.0.1 -p 11212
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ memaslap -s 127.0.0.1:11211,127.0.0.1:11212 -F config -t 5s -p 2
++ tee log
+servers : 127.0.0.1:11211,127.0.0.1:11212
+threads count: 1
+concurrency: 16
+run time: 5s
+windows size: 10k
+set proportion: set_prop=0.10
+get proportion: get_prop=0.00
+cmd_get: 0
+cmd_set: 3372
+get_misses: 0
+written_bytes: 7359708
+read_bytes: 26848
+object_bytes: 7337472
+
+Run time: 5.0s Ops: 3372 TPS: 672 Net_rate: 1.4M/s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -E 'servers : 127.0.0.1:11211,127.0.0.1:11212|run time: 5s' log
+servers : 127.0.0.1:11211,127.0.0.1:11212
+run time: 5s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Sat Aug 12 19:43:51 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Sat Aug 12 19:43:52 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Sat Aug 12 19:43:53 2023 - INFO  - Start to restore the test environment.
++ clear_env
+++ pgrep -f 'memcached -d -u'
++ kill -9 445 494
+++ ls
+++ grep -vE '.sh|config'
++ rm -rf log
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpbxkgzro2 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpbxkgzro2
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Sat Aug 12 19:44:19 2023 - INFO  - Finish restoring the test environment.
