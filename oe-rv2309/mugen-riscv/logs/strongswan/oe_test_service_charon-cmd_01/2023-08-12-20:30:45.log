@@ -1,0 +1,270 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sat Aug 12 20:30:49 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'strongswan podman tar'
++ pkgs='strongswan podman tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'strongswan podman tar' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:15:15 ago on Sat Aug 12 20:16:20 2023.
+Package strongswan-5.9.10-1.oe2309.riscv64 is already installed.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides containernetworking-plugins >= 0.7.3-2 needed by podman-1:4.5.1-1.oe2309.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:15:15 ago on Sat Aug 12 20:16:20 2023.
+Package strongswan-5.9.10-1.oe2309.riscv64 is already installed.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides containernetworking-plugins >= 0.7.3-2 needed by podman-1:4.5.1-1.oe2309.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ tar -xvf ./common/data.tar.gz
++ podman stop -all
+oe_test_service_charon-cmd_01.sh: line 26: podman: command not found
+++ podman ps -qa
+oe_test_service_charon-cmd_01.sh: line 27: podman: command not found
++ podman rm -f
+oe_test_service_charon-cmd_01.sh: line 27: podman: command not found
++ podman load
+oe_test_service_charon-cmd_01.sh: line 28: podman: command not found
++ podman run -itd --name vpn --env-file ./test_file/vpn.env -p 700:700/udp -p 4700:4700/udp -d --privileged docker.io/hwdsl2/ipsec-vpn-server:latest
+oe_test_service_charon-cmd_01.sh: line 29: podman: command not found
++ SLEEP_WAIT 5 'strongswan stop'
++ wait_time=5
++ cmd='strongswan stop'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd 'strongswan stop' --mode 1
+Stopping strongSwan IPsec failed: starter is not running
++ SLEEP_WAIT 3 'rm -rf strongswan_test*.log'
++ wait_time=3
++ cmd='rm -rf strongswan_test*.log'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd 'rm -rf strongswan_test*.log' --mode 1
+++ date '+%Y-%m-%d %T'
++ log_time='2023-08-12 20:31:44'
++ grep shared /etc/strongswan/ipsec.conf
+conn shared 
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Sat Aug 12 20:31:46 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sat Aug 12 20:31:47 2023 - INFO  - Start to run test.
++ strongswan start
+Starting strongSwan 5.9.10 IPsec [starter]...
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ grep 'Usage: charon-cmd'
++ charon-cmd --help
+Usage: charon-cmd
++ CHECK_RESULT 0 0 0 'Failed to check the --help'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --help'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ charon-cmd --version
++ grep 'charon-cmd, strongSwan'
+charon-cmd, strongSwan 5.9.10
++ CHECK_RESULT 0 0 0 'Failed to check the --version'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --version'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pgrep -f 'charon-cmd --host'
++ charon-cmd --host 114.114.114.114 --identity shared
+2202
++ CHECK_RESULT 0 0 0 'Failed to check the --host and --identity'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --host and --identity'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pgrep -f 'charon-cmd --host 114.114.114.114 --identity shared --eap-identity'
++ charon-cmd --host 114.114.114.114 --identity shared --eap-identity shared
+2204
++ CHECK_RESULT 0 0 0 'Failed to check the --eap-identity'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --eap-identity'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'charon-cmd --host 114.114.114.114 --identity shared --eap-identity'
++ kill -9 2204
++ pgrep -f '\-\-xauth-username test_sun'
++ charon-cmd --host 114.114.114.114 --identity shared --xauth-username test_sun
+2243
+oe_test_service_charon-cmd_01.sh: line 37:  2204 Killed                  charon-cmd --host 114.114.114.114 --identity shared --eap-identity shared > strongswan_test_charon-cmd-host-eapidentity.log 2>&1
++ CHECK_RESULT 0 0 0 0 'Failed to check the --xauth-username'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=0
++ exit_mode='Failed to check the --xauth-username'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'xauth-username test_sun'
++ kill -9 2243
++ charon-cmd --host 114.114.114.114 --identity shared --remote-identity shared
++ pgrep -f '\-\-remote-identity'
+2263
+oe_test_service_charon-cmd_01.sh: line 37:  2243 Killed                  charon-cmd --host 114.114.114.114 --identity shared --xauth-username test_sun > strongswan_test_charon-cmd-host-eapidentity.log 2>&1
++ CHECK_RESULT 0 0 0 'Failed to check the --xauth-username'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --xauth-username'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f remote-identity
++ kill -9 2263
++ pgrep -f 'test_file\/test_strongswan.pem'
++ charon-cmd --host 114.114.114.114 --identity shared --cert ./test_file/test_strongswan.pem
+2274
+oe_test_service_charon-cmd_01.sh: line 37:  2263 Killed                  charon-cmd --host 114.114.114.114 --identity shared --remote-identity shared > strongswan_test_charon-cmd-remote-identity.log 2>&1
++ CHECK_RESULT 0 0 0 'Failed to check the --cert'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --cert'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'test_file\/test_strongswan.pem'
++ kill -9 2274
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Sat Aug 12 20:32:01 2023 - INFO  - End to run test.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 19:  2274 Killed                  charon-cmd --host 114.114.114.114 --identity shared --cert ./test_file/test_strongswan.pem > strongswan_test_charon-cmd-cert.log 2>&1
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Sat Aug 12 20:32:02 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Sat Aug 12 20:32:04 2023 - INFO  - Start to restore the test environment.
++ pgrep -f strongswan
+2073
+2074
+2076
+2176
+2177
++ strongswan stop
+Stopping strongSwan IPsec...
++ SLEEP_WAIT 3 'podman stop -all'
++ wait_time=3
++ cmd='podman stop -all'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd 'podman stop -all' --mode 1
+/bin/sh: line 1: podman: command not found
+++ podman ps -qa
+oe_test_service_charon-cmd_01.sh: line 71: podman: command not found
++ podman rm -f
+oe_test_service_charon-cmd_01.sh: line 71: podman: command not found
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:15:15 ago on Sat Aug 12 20:16:20 2023.
+Package strongswan-5.9.10-1.oe2309.riscv64 is already installed.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides containernetworking-plugins >= 0.7.3-2 needed by podman-1:4.5.1-1.oe2309.riscv64
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:15:15 ago on Sat Aug 12 20:16:20 2023.
+Package strongswan-5.9.10-1.oe2309.riscv64 is already installed.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64
+  - nothing provides containernetworking-plugins >= 0.7.3-2 needed by podman-1:4.5.1-1.oe2309.riscv64
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 0:15:15 ago on Sat Aug 12 20:16:20 2023.\nPackage strongswan-5.9.10-1.oe2309.riscv64 is already installed.\nPackage tar-2:1.35-1.oe2309.riscv64 is already installed.\nError: \n Problem: conflicting requests\n  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64\n  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64\n  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64\n  - nothing provides containernetworking-plugins >= 0.7.3-2 needed by podman-1:4.5.1-1.oe2309.riscv64\n(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ rm -rf strongswan_test_charon-cmd-cert.log strongswan_test_charon-cmd-host-eapidentity.log strongswan_test_charon-cmd-host-identity.log strongswan_test_charon-cmd-remote-identity.log test_file
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Sat Aug 12 20:32:13 2023 - INFO  - End to restore the test environment.
