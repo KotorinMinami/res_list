@@ -16,172 +16,58 @@
 + LOG_INFO 'Start to prepare the test environment.'
 + message='Start to prepare the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
-Tue Aug  8 20:15:35 2023 - INFO  - Start to prepare the test environment.
+Tue Aug 15 08:08:01 2023 - INFO  - Start to prepare the test environment.
 + DNF_INSTALL qperf
 + pkgs=qperf
 + node=1
 + '[' -z '' ']'
 + tmpfile=
 ++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs qperf --node 1 --tempfile ''
-+ tmpfile2=/tmp/tmpys1_dsr9
++ tmpfile2=/tmp/tmp6_y0vu3t
 + '[' -z '' ']'
-+ tmpfile=/tmp/tmpys1_dsr9
++ tmpfile=/tmp/tmp6_y0vu3t
 + DNF_INSTALL qperf 2
 + pkgs=qperf
 + node=2
-+ '[' -z /tmp/tmpys1_dsr9 ']'
-++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs qperf --node 2 --tempfile /tmp/tmpys1_dsr9
-Traceback (most recent call last):
-  File "/root/mugen/libs/locallibs/rpm_manage.py", line 187, in <module>
-    exitcode, output = rpm_install(args.pkgs, args.node, args.tempfile)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/root/mugen/libs/locallibs/rpm_manage.py", line 66, in rpm_install
-    conn = ssh_cmd.pssh_conn(
-           ^^^^^^^^^^^^^^^^^^
-  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
-    conn.connect(ip, port, user, password, timeout=timeout)
-  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 377, in connect
-    to_try = list(self._families_and_addresses(hostname, port))
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 202, in _families_and_addresses
-    addrinfos = socket.getaddrinfo(
-                ^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib64/python3.11/socket.py", line 962, in getaddrinfo
-    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-socket.gaierror: [Errno -2] Name or service not known
-+ tmpfile2=
-+ '[' -z /tmp/tmpys1_dsr9 ']'
-+ SSH_CMD 'systemctl stop firewalld && nohup qperf &'
++ '[' -z /tmp/tmp6_y0vu3t ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs qperf --node 2 --tempfile /tmp/tmp6_y0vu3t
++ tmpfile2=/tmp/tmp6_y0vu3t
++ '[' -z /tmp/tmp6_y0vu3t ']'
++ SSH_CMD 'systemctl stop firewalld && nohup qperf &' 10.0.0.7 'openEuler12#$' root
 + cmd='systemctl stop firewalld && nohup qperf &'
-+ remoteip=
++ remoteip=10.0.0.7
 + remotepasswd='openEuler12#$'
 + remoteuser=root
 + timeout=300
 + connport=22
-+ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl stop firewalld && nohup qperf &' -i '' -u root -p 'openEuler12#$' -t 300 -o 22
-Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
-+ test 1 -ne 0
-+ LOG_ERROR 'Failed in remote CMD operation:1'
-+ message='Failed in remote CMD operation:1'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
-Tue Aug  8 20:16:12 2023 - ERROR - Failed in remote CMD operation:1
-+ return 1
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl stop firewalld && nohup qperf &' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Aug 15 08:12:29 2023 - WARN  - the remote user uses the default configuration.
+Tue Aug 15 08:12:32 2023 - WARN  - the remote password uses the default configuration.
+Tue Aug 15 08:12:36 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=0 -p 22 root@10.0.0.7 systemctl stop firewalld && nohup qperf &
+The authenticity of host '10.0.0.7 (10.0.0.7)' can't be established.
+ED25519 key fingerprint is SHA256:8Bi0EbHfxfbEqAtkCAkmOXQAektv3QhPjsGVTlzQoV4.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.0.0.7' (ED25519) to the list of known hosts.
+root@10.0.0.7's password: 
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ ret=0
++ test 0 -ne 0
++ return 0
 + LOG_INFO 'End to prepare the test environment.'
 + message='End to prepare the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
-Tue Aug  8 20:16:13 2023 - INFO  - End to prepare the test environment.
+Tue Aug 15 08:12:44 2023 - INFO  - End to prepare the test environment.
 ++ type -t run_test
 + '[' -n function ']'
 + run_test
 + LOG_INFO 'Start to run test.'
 + message='Start to run test.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
-Tue Aug  8 20:16:13 2023 - INFO  - Start to run test.
-+ qperf tcp_bw
+Tue Aug 15 08:12:46 2023 - INFO  - Start to run test.
++ qperf 10.0.0.7 tcp_bw
 + grep tcp_bw:
-+ CHECK_RESULT 1
-+ actual_result=1
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 1 ']'
-+ '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_qperf_01.sh line 30'
-+ message='oe_test_qperf_01.sh line 30'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_qperf_01.sh line 30'
-Tue Aug  8 20:16:14 2023 - ERROR - oe_test_qperf_01.sh line 30
-+ '[' 0 -eq 1 ']'
-+ return 0
-+ qperf tcp_lat
-+ grep tcp_lat:
-+ CHECK_RESULT 1
-+ actual_result=1
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 1 ']'
-+ '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_qperf_01.sh line 32'
-+ message='oe_test_qperf_01.sh line 32'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_qperf_01.sh line 32'
-Tue Aug  8 20:16:14 2023 - ERROR - oe_test_qperf_01.sh line 32
-+ '[' 0 -eq 1 ']'
-+ return 0
-+ qperf udp_bw
-+ grep udp_bw:
-+ CHECK_RESULT 1
-+ actual_result=1
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 1 ']'
-+ '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_qperf_01.sh line 34'
-+ message='oe_test_qperf_01.sh line 34'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_qperf_01.sh line 34'
-Tue Aug  8 20:16:15 2023 - ERROR - oe_test_qperf_01.sh line 34
-+ '[' 0 -eq 1 ']'
-+ return 0
-+ qperf udp_lat
-+ grep udp_lat:
-+ CHECK_RESULT 1
-+ actual_result=1
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 1 ']'
-+ '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_qperf_01.sh line 36'
-+ message='oe_test_qperf_01.sh line 36'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_qperf_01.sh line 36'
-Tue Aug  8 20:16:15 2023 - ERROR - oe_test_qperf_01.sh line 36
-+ '[' 0 -eq 1 ']'
-+ return 0
-+ qperf -t 60 --use_bits_per_sec tcp_bw tcp_lat
-+ grep -E 'tcp_bw:|tcp_lat:'
-tcp_lat:
-+ CHECK_RESULT 0
-+ actual_result=0
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 0 ']'
-+ '[' 0 -eq 0 ']'
-+ test 0x '!=' 0x
-+ return 0
-+ qperf -t 60 --use_bits_per_sec udp_bw udp_lat
-+ grep -E 'udp_bw:|udp_lat:'
-udp_lat:
-+ CHECK_RESULT 0
-+ actual_result=0
-+ expect_result=0
-+ mode=0
-+ error_log=
-+ exit_mode=0
-+ '[' -z 0 ']'
-+ '[' 0 -eq 0 ']'
-+ test 0x '!=' 0x
-+ return 0
-+ qperf -t 60 --use_bits_per_sec udp_bw tcp_bw
-+ grep -E 'udp_bw:|tcp_bw:'
 tcp_bw:
 + CHECK_RESULT 0
 + actual_result=0
@@ -193,8 +79,8 @@ tcp_bw:
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ qperf -t 60 --use_bits_per_sec udp_lat tcp_lat
-+ grep -E 'udp_lat:|tcp_lat:'
++ qperf 10.0.0.7 tcp_lat
++ grep tcp_lat:
 tcp_lat:
 + CHECK_RESULT 0
 + actual_result=0
@@ -206,8 +92,21 @@ tcp_lat:
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ qperf -t 10 -vvu tcp_lat udp_lat conf
-+ grep -E 'tcp_lat:|udp_lat:|conf:'
++ qperf 10.0.0.7 udp_bw
++ grep udp_bw:
+udp_bw:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep udp_lat:
++ qperf 10.0.0.7 udp_lat
 udp_lat:
 + CHECK_RESULT 0
 + actual_result=0
@@ -219,9 +118,9 @@ udp_lat:
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ qperf -oo 'msg_size:1:64K:*2' -vu tcp_bw tcp_lat
++ qperf -t 60 --use_bits_per_sec 10.0.0.7 tcp_bw tcp_lat
 + grep -E 'tcp_bw:|tcp_lat:'
-tcp_lat:
+tcp_bw:
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -232,8 +131,34 @@ tcp_lat:
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ qperf -oo 'msg_size:1:64K:*2' -vu udp_bw udp_lat
++ qperf -t 60 --use_bits_per_sec 10.0.0.7 udp_bw udp_lat
 + grep -E 'udp_bw:|udp_lat:'
+udp_bw:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ qperf -t 60 --use_bits_per_sec 10.0.0.7 udp_bw tcp_bw
++ grep -E 'udp_bw:|tcp_bw:'
+udp_bw:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ qperf -t 60 --use_bits_per_sec 10.0.0.7 udp_lat tcp_lat
++ grep -E 'udp_lat:|tcp_lat:'
 udp_lat:
 + CHECK_RESULT 0
 + actual_result=0
@@ -245,9 +170,48 @@ udp_lat:
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ qperf udp_lat quit
++ qperf 10.0.0.7 -t 10 -vvu tcp_lat udp_lat conf
++ grep -E 'tcp_lat:|udp_lat:|conf:'
+tcp_lat:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ qperf 10.0.0.7 -oo 'msg_size:1:64K:*2' -vu tcp_bw tcp_lat
++ grep -E 'tcp_bw:|tcp_lat:'
+tcp_bw:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ qperf 10.0.0.7 -oo 'msg_size:1:64K:*2' -vu udp_bw udp_lat
++ grep -E 'udp_bw:|udp_lat:'
+udp_bw:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ qperf 10.0.0.7 udp_lat quit
 + grep -E 'udp_lat:|quit:'
-quit:
+udp_lat:
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -572,46 +536,53 @@ Synopsis
 + LOG_INFO 'End to run test.'
 + message='End to run test.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
-Tue Aug  8 20:16:25 2023 - INFO  - End to run test.
+Tue Aug 15 08:13:52 2023 - INFO  - End to run test.
 + CASE_RESULT 0
 + case_re=0
-+ test -z 4
-+ test 4 -gt 0
-+ LOG_ERROR 'failed to execute the case.'
-+ message='failed to execute the case.'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
-Tue Aug  8 20:16:26 2023 - ERROR - failed to execute the case.
-+ exit 4
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Aug 15 08:13:54 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
 + post_test
 + LOG_INFO 'Start to restore the test environment.'
 + message='Start to restore the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
-Tue Aug  8 20:16:26 2023 - INFO  - Start to restore the test environment.
+Tue Aug 15 08:13:56 2023 - INFO  - Start to restore the test environment.
 + DNF_REMOVE
 + node=1
 + pkg_list=
 + mode=0
-+ [[ -z /tmp/tmpys1_dsr9 ]]
++ [[ -z /tmp/tmp6_y0vu3t ]]
 + '[' 0 -ne 0 ']'
 + '[' 1 == 0 ']'
-+ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpys1_dsr9
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp6_y0vu3t
 + '[' 0 -ne 0 ']'
-+ SSH_CMD 'systemctl start firewalld'
++ SSH_CMD 'systemctl start firewalld' 10.0.0.7 'openEuler12#$' root
 + cmd='systemctl start firewalld'
-+ remoteip=
++ remoteip=10.0.0.7
 + remotepasswd='openEuler12#$'
 + remoteuser=root
 + timeout=300
 + connport=22
-+ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl start firewalld' -i '' -u root -p 'openEuler12#$' -t 300 -o 22
-Usage: sshcmd.sh -c "command" -i "remote machinet ip" [-u login_user] [-p login_password] [-o port] [-t timeout]+ ret=1
-+ test 1 -ne 0
-+ LOG_ERROR 'Failed in remote CMD operation:1'
-+ message='Failed in remote CMD operation:1'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
-Tue Aug  8 20:16:38 2023 - ERROR - Failed in remote CMD operation:1
-+ return 1
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl start firewalld' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Aug 15 08:14:41 2023 - WARN  - the remote user uses the default configuration.
+Tue Aug 15 08:14:43 2023 - WARN  - the remote password uses the default configuration.
+Tue Aug 15 08:14:46 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl start firewalld
+root@10.0.0.7's password: 
+Failed to start firewalld.service: Unit firewalld.service not found.
++ ret=5
++ test 5 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:5'
++ message='Failed in remote CMD operation:5'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:5'
+Tue Aug 15 08:14:56 2023 - ERROR - Failed in remote CMD operation:5
++ return 5
 + LOG_INFO 'End to restore the test environment.'
 + message='End to restore the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
-Tue Aug  8 20:16:38 2023 - INFO  - End to restore the test environment.
+Tue Aug 15 08:14:58 2023 - INFO  - End to restore the test environment.
