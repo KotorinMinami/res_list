@@ -16,53 +16,34 @@
 + LOG_INFO 'Start to prepare the test environment.'
 + message='Start to prepare the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
-Tue Aug  8 20:18:03 2023 - INFO  - Start to prepare the test environment.
+Tue Aug 15 08:07:59 2023 - INFO  - Start to prepare the test environment.
 + DNF_INSTALL openvpn
 + pkgs=openvpn
 + node=1
 + '[' -z '' ']'
 + tmpfile=
 ++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs openvpn --node 1 --tempfile ''
-+ tmpfile2=/tmp/tmpmfldj2or
++ tmpfile2=/tmp/tmpibz_0kgo
 + '[' -z '' ']'
-+ tmpfile=/tmp/tmpmfldj2or
++ tmpfile=/tmp/tmpibz_0kgo
 + DNF_INSTALL openvpn 2
 + pkgs=openvpn
 + node=2
-+ '[' -z /tmp/tmpmfldj2or ']'
-++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs openvpn --node 2 --tempfile /tmp/tmpmfldj2or
-Traceback (most recent call last):
-  File "/root/mugen/libs/locallibs/rpm_manage.py", line 187, in <module>
-    exitcode, output = rpm_install(args.pkgs, args.node, args.tempfile)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/root/mugen/libs/locallibs/rpm_manage.py", line 66, in rpm_install
-    conn = ssh_cmd.pssh_conn(
-           ^^^^^^^^^^^^^^^^^^
-  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
-    conn.connect(ip, port, user, password, timeout=timeout)
-  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 377, in connect
-    to_try = list(self._families_and_addresses(hostname, port))
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 202, in _families_and_addresses
-    addrinfos = socket.getaddrinfo(
-                ^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib64/python3.11/socket.py", line 962, in getaddrinfo
-    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-socket.gaierror: [Errno -2] Name or service not known
-+ tmpfile2=
-+ '[' -z /tmp/tmpmfldj2or ']'
++ '[' -z /tmp/tmpibz_0kgo ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs openvpn --node 2 --tempfile /tmp/tmpibz_0kgo
++ tmpfile2=/tmp/tmpibz_0kgo
++ '[' -z /tmp/tmpibz_0kgo ']'
 + LOG_INFO 'Finish preparing the test environment.'
 + message='Finish preparing the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
-Tue Aug  8 20:18:39 2023 - INFO  - Finish preparing the test environment.
+Tue Aug 15 08:12:26 2023 - INFO  - Finish preparing the test environment.
 ++ type -t run_test
 + '[' -n function ']'
 + run_test
 + LOG_INFO 'Start to run test.'
 + message='Start to run test.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
-Tue Aug  8 20:18:39 2023 - INFO  - Start to run test.
+Tue Aug 15 08:12:28 2023 - INFO  - Start to run test.
 + openvpn --help
 + grep '\--'
 --config file   : Read configuration options from file.
@@ -403,13 +384,13 @@ Copyright (C) 2002-2023 OpenVPN Inc <sales@openvpn.net>
 + test 0x '!=' 0x
 + return 0
 + SLEEP_WAIT 5
++ nohup openvpn --local 127.0.0.1 --config tt.vpn --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 9
 + wait_time=5
 + cmd=
 + mode=1
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
-+ nohup openvpn --local 127.0.0.1 --config tt.vpn --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 9
 + pgrep -f 'openvpn --local'
-538
+581
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -432,13 +413,13 @@ Copyright (C) 2002-2023 OpenVPN Inc <sales@openvpn.net>
 + test 0x '!=' 0x
 + return 0
 ++ pgrep -f 'openvpn --local'
-+ kill -9 538
++ kill -9 581
 + SLEEP_WAIT 15
 + wait_time=15
 + cmd=
 + mode=1
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 15 --cmd '' --mode 1
-/root/mugen/libs/locallibs/common_lib_python.sh: line 164:   538 Killed                  nohup openvpn --local 127.0.0.1 --config tt.vpn --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 9 > /dev/null 2>&1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:   581 Killed                  nohup openvpn --local 127.0.0.1 --config tt.vpn --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 9 > /dev/null 2>&1
 + pgrep -f 'openvpn --local'
 + CHECK_RESULT 1 1
 + actual_result=1
@@ -453,6 +434,7 @@ Copyright (C) 2002-2023 OpenVPN Inc <sales@openvpn.net>
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
++ nohup openvpn --remote 10.0.0.6 --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 9
 + mode=0
 + error_log=
 + exit_mode=0
@@ -460,51 +442,36 @@ Copyright (C) 2002-2023 OpenVPN Inc <sales@openvpn.net>
 + '[' 0 -eq 0 ']'
 + test 0x '!=' 0x
 + return 0
-+ nohup openvpn --remote --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 9
 + pgrep -f 'openvpn --remote'
-+ CHECK_RESULT 1
-+ actual_result=1
+611
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 53'
-+ message='oe_test_openvpn.sh line 53'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 53'
-Tue Aug  8 20:19:04 2023 - ERROR - oe_test_openvpn.sh line 53
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
-+ P_SSH_CMD --node 2 --cmd 'nohup openvpn --remote 10.198.101.4 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --verb 9 >/dev/null 2>&1 &'
-+ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'nohup openvpn --remote 10.198.101.4 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --verb 9 >/dev/null 2>&1 &'
-Tue Aug  8 20:19:07 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
-+ CHECK_RESULT 1
-+ actual_result=1
++ P_SSH_CMD --node 2 --cmd 'nohup openvpn --remote 10.0.0.1 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --verb 9 >/dev/null 2>&1 &'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'nohup openvpn --remote 10.0.0.1 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --verb 9 >/dev/null 2>&1 &'
+
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 56'
-+ message='oe_test_openvpn.sh line 56'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 56'
-Tue Aug  8 20:19:08 2023 - ERROR - oe_test_openvpn.sh line 56
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 ++ P_SSH_CMD --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
 ++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
 ++ tail -n 1
 ++ awk -F '\r' '{print $1}'
-Tue Aug  8 20:19:11 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
-+ remote_pid=
++ remote_pid=529
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -516,51 +483,37 @@ Tue Aug  8 20:19:11 2023 - ERROR - You need to check the environment configurati
 + test 0x '!=' 0x
 + return 0
 + ping -c 3 10.4.0.2
-+ CHECK_RESULT 1
-+ actual_result=1
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 61'
-+ message='oe_test_openvpn.sh line 61'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 61'
-Tue Aug  8 20:19:24 2023 - ERROR - oe_test_openvpn.sh line 61
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 + P_SSH_CMD --node 2 --cmd 'ping -c 3 10.4.0.1 >/dev/null'
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'ping -c 3 10.4.0.1 >/dev/null'
-Tue Aug  8 20:19:26 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
-+ CHECK_RESULT 1
-+ actual_result=1
+
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 63'
-+ message='oe_test_openvpn.sh line 63'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 63'
-Tue Aug  8 20:19:27 2023 - ERROR - oe_test_openvpn.sh line 63
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 ++ pgrep -f 'openvpn --remote'
-+ kill -9
-kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ kill -9 611
 + SLEEP_WAIT 15
 + wait_time=15
 + cmd=
 + mode=1
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 15 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:   611 Killed                  nohup openvpn --remote ${NODE2_IPV4} --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 9 > /dev/null 2>&1
 + pgrep -f 'openvpn --remote'
 + CHECK_RESULT 1 1
 + actual_result=1
@@ -572,9 +525,9 @@ kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill 
 + '[' 0 -eq 0 ']'
 + test 1x '!=' 1x
 + return 0
-+ P_SSH_CMD --node 2 --cmd 'kill -9 '
-+ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'kill -9 '
-Tue Aug  8 20:19:46 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ P_SSH_CMD --node 2 --cmd 'kill -9 529'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'kill -9 529'
+
 + SLEEP_WAIT 15
 + wait_time=15
 + cmd=
@@ -582,7 +535,7 @@ Tue Aug  8 20:19:46 2023 - ERROR - You need to check the environment configurati
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 15 --cmd '' --mode 1
 + P_SSH_CMD --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
-Tue Aug  8 20:20:04 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+
 + CHECK_RESULT 1 1
 + actual_result=1
 + expect_result=1
@@ -594,8 +547,8 @@ Tue Aug  8 20:20:04 2023 - ERROR - You need to check the environment configurati
 + test 1x '!=' 1x
 + return 0
 + openvpn --genkey --secret key
-2023-08-08 20:20:04 DEPRECATED OPTION: The option --secret is deprecated.
-2023-08-08 20:20:04 WARNING: Using --genkey --secret filename is DEPRECATED.  Use --genkey secret filename instead.
+2023-08-15 08:14:43 DEPRECATED OPTION: The option --secret is deprecated.
+2023-08-15 08:14:43 WARNING: Using --genkey --secret filename is DEPRECATED.  Use --genkey secret filename instead.
 + CHECK_RESULT 0
 + actual_result=0
 + expect_result=0
@@ -609,22 +562,22 @@ Tue Aug  8 20:20:04 2023 - ERROR - You need to check the environment configurati
 + grep -iE '[a-z0-9]|openvpn' key
 # 2048 bit OpenVPN static key
 -----BEGIN OpenVPN Static key V1-----
-60c00077a841b6b24345298b294b7227
-604f9118c1da3c089462ee977ec65fef
-b0715e0476f31149c74a0833241b4c0e
-ce7a906b7242276a0ad36cf8720faedd
-9c4d137b5ea306ea8e7f0fd45dd35f6e
-ba3c600e198d8b965f4a54d69f7db428
-83ee5d5cbb5392d456c57756253e7da5
-5c8fe6a6d0668760582074b35124c8a0
-25f56468a168dff107624da23eb389e8
-eb703c859f9c272a383ea5cfb3be391d
-7a5702dfc684af706469ce3adc2b3032
-671ea8a0f6b8db91203887a29f86824d
-faf722df7cc4e9cf2bd40fc7d83f6ed0
-301130b7bcc0a4a0b2eee48f3af1d208
-9e47e57acc24e0bff905df90b7d2db56
-204637bc69907bb2d11fc707860b503a
+fc4fa194d51d036fe7b6e2eaa0a96d24
+3f08bba2966790f219ad6b0a5b87a463
+44d040d782b9ce2959f29e441f443af0
+79a9a2ec7f3fd8c5aa6f835b5f4fa9bd
+2e20a966c82c95ae928be95c72e5526e
+37576c0d583cc31bad6875862ac61db9
+6e0d17ab108128cb4e658c34c1a224c1
+d42e4c371a3e6099ffd4318d693fba87
+1ab472dbb6e9a9f6cac3d16e5cbf8f3e
+9cd236c254ea48ae118246c42a5ff38e
+e17d982240e45f3744d812f01243a7dc
+8149584f2130a8f1bc4233896c009ed0
+eb9e0b002c5f8a141df47e1ac3777716
+4a584ffc63adb9adc311849224a49c6d
+ac41c58de2d75340e49f848bb25a2d5b
+7aea74e0a6504aee9562ca023a7052bc
 -----END OpenVPN Static key V1-----
 + CHECK_RESULT 0
 + actual_result=0
@@ -638,50 +591,36 @@ faf722df7cc4e9cf2bd40fc7d83f6ed0
 + return 0
 + SFTP put --localdir ./ --localfile key --remotedir /root --node 2
 + python3 /root/mugen/libs/locallibs/sftp.py put --localdir ./ --localfile key --remotedir /root --node 2
-Tue Aug  8 20:20:07 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
-+ CHECK_RESULT 1
-+ actual_result=1
+Tue Aug 15 08:14:59 2023 - INFO  - start to put file:./key......
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 79'
-+ message='oe_test_openvpn.sh line 79'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 79'
-Tue Aug  8 20:20:07 2023 - ERROR - oe_test_openvpn.sh line 79
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 + P_SSH_CMD --node 2 --cmd 'test -f key'
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'test -f key'
-Tue Aug  8 20:20:10 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
-+ CHECK_RESULT 1
-+ actual_result=1
+
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 81'
-+ message='oe_test_openvpn.sh line 81'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 81'
-Tue Aug  8 20:20:10 2023 - ERROR - oe_test_openvpn.sh line 81
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 + SLEEP_WAIT 5
 + wait_time=5
 + cmd=
 + mode=1
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
-+ nohup openvpn --remote --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 5 --secret key
++ nohup openvpn --remote 10.0.0.6 --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --verb 5 --secret key
 + pgrep -f 'openvpn --remote'
 + CHECK_RESULT 1
 + actual_result=1
@@ -697,34 +636,26 @@ Tue Aug  8 20:20:10 2023 - ERROR - oe_test_openvpn.sh line 81
 + LOG_ERROR 'oe_test_openvpn.sh line 87'
 + message='oe_test_openvpn.sh line 87'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 87'
-Tue Aug  8 20:20:17 2023 - ERROR - oe_test_openvpn.sh line 87
+Tue Aug 15 08:15:23 2023 - ERROR - oe_test_openvpn.sh line 87
 + '[' 0 -eq 1 ']'
 + return 0
-+ P_SSH_CMD --node 2 --cmd 'nohup openvpn --remote 10.198.101.4 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --verb 5 --secret key >/dev/null 2>&1 &'
-+ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'nohup openvpn --remote 10.198.101.4 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --verb 5 --secret key >/dev/null 2>&1 &'
-Tue Aug  8 20:20:19 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
-+ CHECK_RESULT 1
-+ actual_result=1
++ P_SSH_CMD --node 2 --cmd 'nohup openvpn --remote 10.0.0.1 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --verb 5 --secret key >/dev/null 2>&1 &'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'nohup openvpn --remote 10.0.0.1 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --verb 5 --secret key >/dev/null 2>&1 &'
+
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 89'
-+ message='oe_test_openvpn.sh line 89'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 89'
-Tue Aug  8 20:20:20 2023 - ERROR - oe_test_openvpn.sh line 89
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 ++ P_SSH_CMD --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
 ++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
-++ tail -n 1
 ++ awk -F '\r' '{print $1}'
-Tue Aug  8 20:20:22 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+++ tail -n 1
 + remote_pid=
 + CHECK_RESULT 0
 + actual_result=0
@@ -751,12 +682,12 @@ Tue Aug  8 20:20:22 2023 - ERROR - You need to check the environment configurati
 + LOG_ERROR 'oe_test_openvpn.sh line 94'
 + message='oe_test_openvpn.sh line 94'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 94'
-Tue Aug  8 20:20:35 2023 - ERROR - oe_test_openvpn.sh line 94
+Tue Aug 15 08:16:02 2023 - ERROR - oe_test_openvpn.sh line 94
 + '[' 0 -eq 1 ']'
 + return 0
 + P_SSH_CMD --node 2 --cmd 'ping -c 3 10.4.0.1 >/dev/null'
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'ping -c 3 10.4.0.1 >/dev/null'
-Tue Aug  8 20:20:38 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+
 + CHECK_RESULT 1
 + actual_result=1
 + expect_result=0
@@ -771,7 +702,7 @@ Tue Aug  8 20:20:38 2023 - ERROR - You need to check the environment configurati
 + LOG_ERROR 'oe_test_openvpn.sh line 96'
 + message='oe_test_openvpn.sh line 96'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 96'
-Tue Aug  8 20:20:38 2023 - ERROR - oe_test_openvpn.sh line 96
+Tue Aug 15 08:16:25 2023 - ERROR - oe_test_openvpn.sh line 96
 + '[' 0 -eq 1 ']'
 + return 0
 ++ pgrep -f 'openvpn --remote'
@@ -795,7 +726,7 @@ kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill 
 + return 0
 + P_SSH_CMD --node 2 --cmd 'kill -9 '
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'kill -9 '
-Tue Aug  8 20:20:57 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
 + SLEEP_WAIT 15
 + wait_time=15
 + cmd=
@@ -803,7 +734,7 @@ Tue Aug  8 20:20:57 2023 - ERROR - You need to check the environment configurati
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 15 --cmd '' --mode 1
 + P_SSH_CMD --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
-Tue Aug  8 20:21:15 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+
 + CHECK_RESULT 1 1
 + actual_result=1
 + expect_result=1
@@ -816,8 +747,8 @@ Tue Aug  8 20:21:15 2023 - ERROR - You need to check the environment configurati
 + return 0
 + expect
 spawn openssl req -nodes -new -x509 -keyout client.key -out ca.crt
-.+....+........+.+.....+....+.....+...+....+.........+......+.....+..........+......+..+..........+......+..+..........+.........+...+....................+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*........+..+...+...+......+.+..+......+.+.........+............+..+...............+.+............+...+..+...+......+...+.......+.....+..........+..............+......+.+.....+...+.......+..+......................+...+.....+......+.+...+......+.....+.+...........+...+....+.....+..........+..+....+...........+.............+..+...................+.....+......+...+.+............+.....+.......+.....+......+....+..+....+.........+........+.........+.........+....+...+.........+.....+...................+......+.....+.+..+...+.......+......+.....+......+.+.....+....+...+.....+......+.+...+...+..+.+..+.......+..+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+......+.....+.+.....+...+............+....+.....+....+........+....+......+.....+...+....+......+..+.......+...............+...............+...+........+......+.+..+.+..+....+......+.....+.........+......+...+....+............+.....+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*........+......+...+...........+......+.+.....+.........+.+..+................+..+...+..........+.....+....+..+...+......+.+........+.......+......+..+............+......+...+......+...............+...+................+...........+...................+.........+...........+.......+...+.....+....+...+............+.....+......+.+......+..+...+...+.+...+......+.....+.......+..+...+............+.............+...+............+..+............+...+.+......+...+........+.........+.........................+......+..+...+.......+..+......+......................+....................+.+.....+.+...+...+........+.+.....+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+....+.......+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+....+.................+.......+...+............+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...........+...+......+........+......+....+.................+.+..+...+.......+........+....+......+...+.........+..+.+.........+.....+.+...+.........+...........+.......+...+..+...............+....+.....+....+.....+....+.....+.+.........+.....+............+..................+.............+.....+.......+...+...+..+.........+....+..+............+.+............+..+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.......+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+..+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+...+..+...................+.....+.......+..+......+......................+...+......+.....+....+..+....+.........+.....+.+.........+.....+...............+.......+.........+.........+............+...+......+........+.+.................+...+.+.....+.+........+.......+...+..+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -----
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
@@ -835,8 +766,8 @@ Common Name (e.g. server FQDN or YOUR name) []:
 Email Address []:
 + expect
 spawn openssl req -nodes -new -x509 -keyout client.key -out client.crt
-.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+......+....+...+......+.....+.+.....+...+.+.....+......+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..+..+.+.....+....+.......................+.........+...+.+.........+......+..+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-...+..+...+.........+...............+...+...+....+.....+.............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+..........+..+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+.......+..+....+.........+...........+.........+.+..............+......+......+...+...+...+......+.+...............+........+....+...+..+...+....+...+..+..........+...+..................+..+......+......+...+.+............+.....+..........+...+.........+..+...............+...+.+.....+.+......+..+.......+...+...+...............+........+...............+.......+........+....+..+...+.+..+.......+...........+.......+..+.......+....................+....+..+...............+...+......+......+...+................+........+...+...+.+...+...+........+......+.+.........+.....+...+.....................+.+.....+.........+.........+.+......+.....+...+.+......+.........+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+..+...+..........+............+..+....+.........+..+....+..+.........+....+.........+.....+.......+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.........+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...+......+..........+........+.............+.....+....+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+..........+......+.+......+...............+..+.......+.....+...+.+..+.......+......+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*..............+...+.......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+..........+.........+..+..........+......+........+....+..+..........+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -----
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
@@ -865,54 +796,41 @@ Email Address []:
 + return 0
 + SLEEP_WAIT 5
 + wait_time=5
-+ nohup openvpn --remote --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --tls-client --ca ca.crt --cert client.crt --key client.key --reneg-sec 60 --verb 5
 + cmd=
++ nohup openvpn --remote 10.0.0.6 --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --tls-client --ca ca.crt --cert client.crt --key client.key --reneg-sec 60 --verb 5
 + mode=1
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
 + pgrep -f 'openvpn --remote'
-+ CHECK_RESULT 1
-+ actual_result=1
+714
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 134'
-+ message='oe_test_openvpn.sh line 134'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 134'
-Tue Aug  8 20:21:31 2023 - ERROR - oe_test_openvpn.sh line 134
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 + ping -c 3 10.4.0.1
-+ CHECK_RESULT 1
-+ actual_result=1
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 136'
-+ message='oe_test_openvpn.sh line 136'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 136'
-Tue Aug  8 20:21:44 2023 - ERROR - oe_test_openvpn.sh line 136
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 ++ pgrep -f 'openvpn --remote'
-+ kill -9
-kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ kill -9 714
 + SLEEP_WAIT 15
 + wait_time=15
 + cmd=
 + mode=1
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 15 --cmd '' --mode 1
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:   714 Killed                  nohup openvpn --remote ${NODE2_IPV4} --dev tun1 --ifconfig 10.4.0.1 10.4.0.2 --tls-client --ca ca.crt --cert client.crt --key client.key --reneg-sec 60 --verb 5 > /dev/null 2>&1
 + pgrep -f 'openvpn --remote'
 + CHECK_RESULT 1 1
 + actual_result=1
@@ -925,32 +843,53 @@ kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill 
 + test 1x '!=' 1x
 + return 0
 + expect
-spawn ssh -2 @
-usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface]
-           [-b bind_address] [-c cipher_spec] [-D [bind_address:]port]
-           [-E log_file] [-e escape_char] [-F configfile] [-I pkcs11]
-           [-i identity_file] [-J [user@]host[:port]] [-L address]
-           [-l login_name] [-m mac_spec] [-O ctl_cmd] [-o option] [-p port]
-           [-Q query_option] [-R address] [-S ctl_path] [-W host:port]
-           [-w local_tun[:remote_tun]] destination [command [argument ...]]
-expect: spawn id exp3 not open
-    while executing
-"expect "*password" { send "\r"}"
-+ expect
-spawn ssh -2 @
-usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface]
-           [-b bind_address] [-c cipher_spec] [-D [bind_address:]port]
-           [-E log_file] [-e escape_char] [-F configfile] [-I pkcs11]
-           [-i identity_file] [-J [user@]host[:port]] [-L address]
-           [-l login_name] [-m mac_spec] [-O ctl_cmd] [-o option] [-p port]
-           [-Q query_option] [-R address] [-S ctl_path] [-W host:port]
-           [-w local_tun[:remote_tun]] destination [command [argument ...]]
-expect: spawn id exp3 not open
-    while executing
-"expect "*password" { send "\r"}"
-+ P_SSH_CMD --node 2 --cmd 'test -f ca.crt -a -f server.crt -a -f server.key'
+spawn ssh -2 root@10.0.0.6
+The authenticity of host '10.0.0.6 (10.0.0.6)' can't be established.
+ED25519 key fingerprint is SHA256:8Bi0EbHfxfbEqAtkCAkmOXQAektv3QhPjsGVTlzQoV4.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.0.0.6' (ED25519) to the list of known hosts.
+root@10.0.0.6's password: 
+Last login: Fri Aug 11 00:12:17 2023
+
+
+Welcome to 6.4.0-1.0.0.4.oe2309.riscv64
+
+System information as of time: 	Tue Aug 15 08:18:17 CST 2023
+
+System load: 	[0;33;40m0.29[0m
+Processes: 	95
+Memory used: 	2.2%
+Swap used: 	0.0%
+Usage On: 	17%
+IP address: 	10.0.0.6
+IP address: 	10.0.2.15
+Users online: 	1
+
+
+[root@openeuler-riscv64 ~]# + expect
+spawn ssh -2 root@10.0.0.6
+root@10.0.0.6's password: 
+Last login: Tue Aug 15 08:18:08 2023 from 10.0.0.1
+
+
+Welcome to 6.4.0-1.0.0.4.oe2309.riscv64
+
+System information as of time: 	Tue Aug 15 08:19:57 CST 2023
+
+System load: 	[0;33;40m0.21[0m
+Processes: 	93
+Memory used: 	2.2%
+Swap used: 	0.0%
+Usage On: 	17%
+IP address: 	10.0.0.6
+IP address: 	10.0.2.15
+Users online: 	1
+
+
+[root@openeuler-riscv64 ~]# + P_SSH_CMD --node 2 --cmd 'test -f ca.crt -a -f server.crt -a -f server.key'
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'test -f ca.crt -a -f server.crt -a -f server.key'
-Tue Aug  8 20:22:03 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+
 + CHECK_RESULT 1
 + actual_result=1
 + expect_result=0
@@ -965,12 +904,12 @@ Tue Aug  8 20:22:03 2023 - ERROR - You need to check the environment configurati
 + LOG_ERROR 'oe_test_openvpn.sh line 173'
 + message='oe_test_openvpn.sh line 173'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 173'
-Tue Aug  8 20:22:04 2023 - ERROR - oe_test_openvpn.sh line 173
+Tue Aug 15 08:21:32 2023 - ERROR - oe_test_openvpn.sh line 173
 + '[' 0 -eq 1 ']'
 + return 0
 + P_SSH_CMD --node 2 --cmd 'openssl dhparam -out dh1024.pem 1024'
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'openssl dhparam -out dh1024.pem 1024'
-Tue Aug  8 20:22:07 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+
 + SLEEP_WAIT 15
 + wait_time=15
 + cmd=
@@ -978,49 +917,34 @@ Tue Aug  8 20:22:07 2023 - ERROR - You need to check the environment configurati
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 15 --cmd '' --mode 1
 + P_SSH_CMD --node 2 --cmd 'test -f dh1024.pem'
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'test -f dh1024.pem'
-Tue Aug  8 20:22:25 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
-+ CHECK_RESULT 1
-+ actual_result=1
+
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 177'
-+ message='oe_test_openvpn.sh line 177'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 177'
-Tue Aug  8 20:22:26 2023 - ERROR - oe_test_openvpn.sh line 177
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
-+ P_SSH_CMD --node 2 --cmd 'nohup openvpn --remote 10.198.101.4 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --tls-server --dh dh1024.pem --ca ca.crt --cert server.crt --key server.key --reneg-sec 60 --verb 5 >/dev/null 2>&1 &'
-+ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'nohup openvpn --remote 10.198.101.4 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --tls-server --dh dh1024.pem --ca ca.crt --cert server.crt --key server.key --reneg-sec 60 --verb 5 >/dev/null 2>&1 &'
-Tue Aug  8 20:22:28 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
-+ CHECK_RESULT 1
-+ actual_result=1
++ P_SSH_CMD --node 2 --cmd 'nohup openvpn --remote 10.0.0.1 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --tls-server --dh dh1024.pem --ca ca.crt --cert server.crt --key server.key --reneg-sec 60 --verb 5 >/dev/null 2>&1 &'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'nohup openvpn --remote 10.0.0.1 --dev tun1 --ifconfig 10.4.0.2 10.4.0.1 --tls-server --dh dh1024.pem --ca ca.crt --cert server.crt --key server.key --reneg-sec 60 --verb 5 >/dev/null 2>&1 &'
+
++ CHECK_RESULT 0
++ actual_result=0
 + expect_result=0
 + mode=0
 + error_log=
 + exit_mode=0
-+ '[' -z 1 ']'
++ '[' -z 0 ']'
 + '[' 0 -eq 0 ']'
-+ test 1x '!=' 0x
-+ test -n ''
-+ (( exec_result++ ))
-+ LOG_ERROR 'oe_test_openvpn.sh line 179'
-+ message='oe_test_openvpn.sh line 179'
-+ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 179'
-Tue Aug  8 20:22:29 2023 - ERROR - oe_test_openvpn.sh line 179
-+ '[' 0 -eq 1 ']'
++ test 0x '!=' 0x
 + return 0
 ++ P_SSH_CMD --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
-++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
 ++ tail -n 1
+++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
 ++ awk -F '\r' '{print $1}'
-Tue Aug  8 20:22:32 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
 + remote_pid=
 + CHECK_RESULT 0
 + actual_result=0
@@ -1034,7 +958,7 @@ Tue Aug  8 20:22:32 2023 - ERROR - You need to check the environment configurati
 + return 0
 + P_SSH_CMD --node 2 --cmd 'ping -c 3 10.4.0.2 >/dev/null'
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'ping -c 3 10.4.0.2 >/dev/null'
-Tue Aug  8 20:22:35 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+
 + CHECK_RESULT 1
 + actual_result=1
 + expect_result=0
@@ -1049,12 +973,12 @@ Tue Aug  8 20:22:35 2023 - ERROR - You need to check the environment configurati
 + LOG_ERROR 'oe_test_openvpn.sh line 183'
 + message='oe_test_openvpn.sh line 183'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openvpn.sh line 183'
-Tue Aug  8 20:22:35 2023 - ERROR - oe_test_openvpn.sh line 183
+Tue Aug 15 08:22:56 2023 - ERROR - oe_test_openvpn.sh line 183
 + '[' 0 -eq 1 ']'
 + return 0
 + P_SSH_CMD --node 2 --cmd 'kill -9 '
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'kill -9 '
-Tue Aug  8 20:22:38 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
 + SLEEP_WAIT 15
 + wait_time=15
 + cmd=
@@ -1062,7 +986,7 @@ Tue Aug  8 20:22:38 2023 - ERROR - You need to check the environment configurati
 + python3 /root/mugen/libs/locallibs/sleep_wait.py --time 15 --cmd '' --mode 1
 + P_SSH_CMD --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'pgrep -f '\''openvpn --remote'\'''
-Tue Aug  8 20:22:56 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+
 + CHECK_RESULT 1 1
 + actual_result=1
 + expect_result=1
@@ -1076,37 +1000,37 @@ Tue Aug  8 20:22:56 2023 - ERROR - You need to check the environment configurati
 + LOG_INFO 'End of the test.'
 + message='End of the test.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
-Tue Aug  8 20:22:57 2023 - INFO  - End of the test.
+Tue Aug 15 08:23:40 2023 - INFO  - End of the test.
 + CASE_RESULT 0
 + case_re=0
-+ test -z 16
-+ test 16 -gt 0
++ test -z 5
++ test 5 -gt 0
 + LOG_ERROR 'failed to execute the case.'
 + message='failed to execute the case.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
-Tue Aug  8 20:22:58 2023 - ERROR - failed to execute the case.
-+ exit 16
+Tue Aug 15 08:23:42 2023 - ERROR - failed to execute the case.
++ exit 5
 + post_test
 + LOG_INFO 'Start to restore the test environment.'
 + message='Start to restore the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
-Tue Aug  8 20:22:58 2023 - INFO  - Start to restore the test environment.
+Tue Aug 15 08:23:44 2023 - INFO  - Start to restore the test environment.
 ++ ls
 ++ grep -v .sh
 + rm -rf ca.crt client.crt client.key key tt.vpn
 + P_SSH_CMD --node 2 --cmd 'rm -rf ca.crt dh1024.pem key server.crt server.key'
 + python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'rm -rf ca.crt dh1024.pem key server.crt server.key'
-Tue Aug  8 20:23:01 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
+
 + DNF_REMOVE
 + node=1
 + pkg_list=
 + mode=0
-+ [[ -z /tmp/tmpmfldj2or ]]
++ [[ -z /tmp/tmpibz_0kgo ]]
 + '[' 0 -ne 0 ']'
 + '[' 1 == 0 ']'
-+ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpmfldj2or
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpibz_0kgo
 + '[' 0 -ne 0 ']'
 + LOG_INFO 'Finish restoring the test environment.'
 + message='Finish restoring the test environment.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
-Tue Aug  8 20:23:12 2023 - INFO  - Finish restoring the test environment.
+Tue Aug 15 08:24:34 2023 - INFO  - Finish restoring the test environment.
