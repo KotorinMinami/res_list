@@ -16,28 +16,28 @@
 + LOG_INFO 'Start environment preparation.'
 + message='Start environment preparation.'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
-Tue Aug  8 16:13:42 2023 - INFO  - Start environment preparation.
+Wed Aug 16 14:59:35 2023 - INFO  - Start environment preparation.
 + DNF_INSTALL sos
 + pkgs=sos
 + node=1
 + '[' -z '' ']'
 + tmpfile=
 ++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs sos --node 1 --tempfile ''
-+ tmpfile2=/tmp/tmpwg46yw12
++ tmpfile2=/tmp/tmphy957z19
 + '[' -z '' ']'
-+ tmpfile=/tmp/tmpwg46yw12
++ tmpfile=/tmp/tmphy957z19
 + rm -rf '/var/tmp/*.tar.xz'
 + LOG_INFO 'End of environmental preparation!'
 + message='End of environmental preparation!'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
-Tue Aug  8 16:16:09 2023 - INFO  - End of environmental preparation!
+Wed Aug 16 15:00:23 2023 - INFO  - End of environmental preparation!
 ++ type -t run_test
 + '[' -n function ']'
 + run_test
 + LOG_INFO 'Start testing...'
 + message='Start testing...'
 + python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
-Tue Aug  8 16:16:12 2023 - INFO  - Start testing...
+Wed Aug 16 15:00:24 2023 - INFO  - Start testing...
 + sosreport -l
 Please note the 'sosreport' command has been deprecated in favor of the new 'sos' command, E.G. 'sos report'.
 Redirecting to 'sos report -l'
@@ -48,7 +48,6 @@ The following plugins are currently enabled:
 
  alternatives         System alternatives
  anacron              Anacron job scheduling service
- auditd               Audit daemon information
  block                Block device information
  cgroups              Control groups subsystem
  console              Console and keyboard information
@@ -62,8 +61,6 @@ The following plugins are currently enabled:
  dracut               Dracut initramfs generator
  ebpf                 eBPF tool
  filesys              Local file systems
- firewall_tables      firewall tables
- firewalld            Firewall daemon
  hardware             General hardware information
  host                 Host information
  hts                  Red Hat Hardware Test Suite
@@ -81,7 +78,6 @@ The following plugins are currently enabled:
  md                   MD RAID subsystem
  memory               Memory configuration and use
  multipath            Device-mapper multipath tools
- mysql                MySQL and MariaDB RDBMS
  networking           Network and networking devices configuration
  networkmanager       NetworkManager service configuration
  nis                  Network Information Service
@@ -110,7 +106,6 @@ The following plugins are currently enabled:
  unbound              Unbound DNS resolver
  unpackaged           Collects a list of files that are not handled by the package manager
  usb                  USB devices
- vsftpd               Vsftpd server
  x11                  X windowing system
  xen                  Xen virtualization
 
@@ -125,6 +120,7 @@ The following plugins are currently disabled:
  arcconf              inactive       arcconf Integrated RAID adapter information
  ata                  inactive       ATA and IDE information
  atomichost           inactive       Atomic Host
+ auditd               inactive       Audit daemon information
  autofs               inactive       Autofs on-demand automounter
  azure                inactive       Microsoft Azure client
  bcache               inactive       Bcache statistics
@@ -178,6 +174,8 @@ The following plugins are currently disabled:
  fapolicyd            inactive       Fapolicyd framework
  fcoe                 inactive       Fibre Channel over Ethernet
  fibrechannel         inactive       Collect information on fibrechannel devices
+ firewall_tables      inactive       firewall tables
+ firewalld            inactive       Firewall daemon
  flatpak              inactive       Flatpak
  foreman              inactive       Foreman/Satellite systems management
  foreman_installer    inactive       Foreman installer and maintainer
@@ -233,6 +231,7 @@ The following plugins are currently disabled:
  mpt                  inactive       LSI Message Passing Technology
  mssql                inactive       Microsoft SQL Server on Linux
  mvcli                inactive       mvCLI Integrated RAID adapter information
+ mysql                inactive       MySQL and MariaDB RDBMS
  named                inactive       BIND named server
  navicli              inactive       EMC Navicli
  nfs                  inactive       Network file system information
@@ -372,6 +371,7 @@ The following plugins are currently disabled:
  virsh                inactive       client for libvirt virtualization API
  virtwho              inactive       Virt-Who agent
  vmware               inactive       VMWare client information
+ vsftpd               inactive       Vsftpd server
  vulkan               inactive       Vulkan
  watchdog             inactive       Watchdog information.
  wireless             inactive       Wireless Device Information
@@ -399,9 +399,6 @@ The following plugin options are available:
  libraries.ldconfigv       off             collect verbose ldconfig output
  lvm2.lvmdump              off             collect an lvmdump tarball
  lvm2.lvmdump-am           off             attempt to collect lvmdump with advanced options and raw metadata
- mysql.dbuser              mysql           username for database dump collection
- mysql.dbpass                              password for data dump collection (password visible in process listings)
- mysql.dbdump              off             Collect a database dump
  networking.traceroute     off             collect a traceroute to www.example.com
  networking.namespace_pattern                 Specific namespace names or patterns to collect, whitespace delimited.
  networking.namespaces     0               Number of namespaces to collect, 0 for unlimited
@@ -425,7 +422,7 @@ The following plugin options are available:
            security, services, storage, sysmgmt, system, virt, 
            webserver
 
- 20 profiles, 67 plugins
+ 20 profiles, 62 plugins
 
 + CHECK_RESULT 0 0 0 'sosreport -l failed'
 + actual_result=0
@@ -442,7 +439,7 @@ The following plugin options are available:
 The following plugins are currently enabled:
 The following plugins are currently disabled:
 The following options are available for ALL plugins:
- 20 profiles, 67 plugins
+ 20 profiles, 62 plugins
 + CHECK_RESULT 0 0 0 'sosreport -l | grep plugins failed'
 + actual_result=0
 + expect_result=0
@@ -475,4 +472,79 @@ No changes will be made to system configuration.
 
 
 Press ENTER to continue, or CTRL-C to quit.
-Tue Aug  8 16:43:37 2023 - ERROR - Timeout : Command 'bash -x oe_test_sos.sh' timed out after 1799.9992582999985 seconds
++ test -f '/var/tmp/sosreport-*.tar.xz'
++ CHECK_RESULT 1 0 0 'compression failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='compression failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'compression failed'
++ LOG_ERROR 'compression failed'
++ message='compression failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'compression failed'
+Wed Aug 16 15:31:49 2023 - ERROR - compression failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_sos.sh line 51'
++ message='oe_test_sos.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_sos.sh line 51'
+Wed Aug 16 15:31:52 2023 - ERROR - oe_test_sos.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
++ xz -d '/var/tmp/*.tar.xz'
+xz: /var/tmp/*.tar.xz: No such file or directory
++ CHECK_RESULT 1 0 0 'xz -d /var/tmp/*.tar.xz failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='xz -d /var/tmp/*.tar.xz failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'xz -d /var/tmp/*.tar.xz failed'
++ LOG_ERROR 'xz -d /var/tmp/*.tar.xz failed'
++ message='xz -d /var/tmp/*.tar.xz failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'xz -d /var/tmp/*.tar.xz failed'
+Wed Aug 16 15:31:54 2023 - ERROR - xz -d /var/tmp/*.tar.xz failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_sos.sh line 53'
++ message='oe_test_sos.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_sos.sh line 53'
+Wed Aug 16 15:31:57 2023 - ERROR - oe_test_sos.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Wed Aug 16 15:31:59 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Aug 16 15:32:00 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Aug 16 15:32:02 2023 - INFO  - start environment cleanup.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmphy957z19 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmphy957z19
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Aug 16 15:32:38 2023 - INFO  - Finish environment cleanup!
