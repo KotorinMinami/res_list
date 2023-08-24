@@ -1,0 +1,149 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Aug 22 14:29:05 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL iSulad
++ pkgs=iSulad
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iSulad --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpjfrnm8pb
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpjfrnm8pb
++ cp /etc/isulad/daemon.json /etc/isulad/daemon.json.bak
++ sed -i '/registry-mirrors/a\"https:\/\/ariq8blp.mirror.aliyuncs.com\"' /etc/isulad/daemon.json
++ systemctl restart isulad.service
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Aug 22 14:29:18 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug 22 14:29:18 2023 - INFO  - Start to run test.
++ isula pull busybox
+Image "busybox" pulling
+Image "beae173ccac6ad749f76713cf4440fe3d21d1043fe616dfbe30775815d1d0f6a" pulled
++ isula images
++ grep -i busybox
+busybox                        latest     beae173ccac6         2021-12-30 19:19:41  1.184MB    
++ CHECK_RESULT 0 0 0 'Mirror pull failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mirror pull failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ isula create -it busybox
+a5c4857866d47e8b9b5d5b6b63614e95067328680ad1a25a2aff9babfb5fb06e
++ isula ps -a
++ grep -vi NAMES
+a5c4857866d4	busybox	"sh"   		Created	     	a5c4857866d47e8b9b5d5b6b63614e95067328680ad1a25a2aff9babfb5fb06e
++ CHECK_RESULT 0 0 0 'Container creation failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Container creation failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ isula ps -a
+++ grep -vi NAMES
+++ awk '{print $NF}'
++ container_id=a5c4857866d47e8b9b5d5b6b63614e95067328680ad1a25a2aff9babfb5fb06e
++ isula start a5c4857866d47e8b9b5d5b6b63614e95067328680ad1a25a2aff9babfb5fb06e
+Error response from daemon: shim-log error: {"level": "error", "msg": "runtime error"}
+
+runtime-log error: 
+
++ isula inspect -f '{{.State.Status}}' a5c4857866d47e8b9b5d5b6b63614e95067328680ad1a25a2aff9babfb5fb06e
++ grep -i running
++ CHECK_RESULT 1 0 0 'Container startup failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Container startup failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Container startup failed'
++ LOG_ERROR 'Container startup failed'
++ message='Container startup failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Container startup failed'
+Tue Aug 22 14:29:21 2023 - ERROR - Container startup failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_container.sh line 42'
++ message='oe_test_iSulad_container.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_container.sh line 42'
+Tue Aug 22 14:29:21 2023 - ERROR - oe_test_iSulad_container.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug 22 14:29:21 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Aug 22 14:29:21 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug 22 14:29:21 2023 - INFO  - Start to restore the test environment.
++ isula ps -a
++ xargs -I '{}' isula stop '{}'
++ awk '{print $NF}'
++ grep -vi NAMES
+a5c4857866d47e8b9b5d5b6b63614e95067328680ad1a25a2aff9babfb5fb06e
++ isula ps -a
++ grep -vi NAMES
++ awk '{print $NF}'
++ xargs -I '{}' isula rm -f '{}'
+a5c4857866d47e8b9b5d5b6b63614e95067328680ad1a25a2aff9babfb5fb06e
++ isula rmi busybox
+Image "busybox" removed
++ mv -f /etc/isulad/daemon.json.bak /etc/isulad/daemon.json
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpjfrnm8pb ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpjfrnm8pb
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug 22 14:29:22 2023 - INFO  - End to restore the test environment.
