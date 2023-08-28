@@ -1,0 +1,209 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n '' ']'
++ trap POST_TEST_DEFAULT EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Sat Aug 26 17:34:21 2023 - INFO  - Start testing...
++ pstree -V
+pstree (PSmisc) 23.6
+Copyright (C) 1993-2021 Werner Almesberger and Craig Small
+
+PSmisc comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under
+the terms of the GNU General Public License.
+For more information about these matters, see the files named COPYING.
++ CHECK_RESULT 0 0 0 'pstree -V fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -V fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -a
++ grep systemd
+systemd --switched-root --system --deserialize 31
+  |-dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+  |               |               |-grep systemd
+  |-systemd-journal
+  |-systemd-logind
+  `-systemd-udevd
++ CHECK_RESULT 0 0 0 'pstree -a fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -a fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -A
++ grep systemd-+-
+systemd-+-NetworkManager-+-dhclient
++ CHECK_RESULT 0 0 0 'pstree -A fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -A fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -p
++ grep 'systemd(1)'
+systemd(1)-+-NetworkManager(25470)-+-dhclient(25488)
++ CHECK_RESULT 0 0 0 'pstree -p fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -p fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -g
+systemd(1)-+-NetworkManager(25470)-+-dhclient(25488)
+           |                       `-3*[{NetworkManager}(25470)]
+           |-2*[agetty(568)]
+           |-anacron(14634)
+           |-crond(36044)
+           |-dbus-daemon(16723)
+           |-ping(3406)
+           |-rpc.statd(9541)
+           |-rsyslogd(36068)---2*[{rsyslogd}(36068)]
+           |-sshd(3402)---sshd(3402)---python3(3406)---sh(3406)-+-sudo(3406)---bash(3406)---python3(3406)---bash(3406)---pstree(340+
+           |                                                    `-tee(3406)
+           |-sshd(36588)
+           |-systemd-journal(34681)
+           |-systemd-logind(550)
+           `-systemd-udevd(451)
++ CHECK_RESULT 0 0 0 'pstree -g fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -g fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -s
+systemd-+-NetworkManager-+-dhclient
+        |                `-3*[{NetworkManager}]
+        |-2*[agetty]
+        |-anacron
+        |-crond
+        |-dbus-daemon
+        |-ping
+        |-rpc.statd
+        |-rsyslogd---2*[{rsyslogd}]
+        |-sshd---sshd---python3---sh-+-sudo---bash---python3---bash---pstree
+        |                            `-tee
+        |-sshd
+        |-systemd-journal
+        |-systemd-logind
+        `-systemd-udevd
++ CHECK_RESULT 0 0 0 'pstree -s fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -s fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -t
+systemd-+-NetworkManager-+-dhclient
+        |                |-{gdbus}
+        |                |-{gmain}
+        |                `-{pool-spawner}
+        |-2*[agetty]
+        |-anacron
+        |-crond
+        |-dbus-daemon
+        |-ping
+        |-rpc.statd
+        |-rsyslogd-+-{in:imjournal}
+        |          `-{rs:main Q:Reg}
+        |-sshd---sshd---python3---sh-+-sudo---bash---python3---bash---pstree
+        |                            `-tee
+        |-sshd
+        |-systemd-journal
+        |-systemd-logind
+        `-systemd-udevd
++ CHECK_RESULT 0 0 0 'pstree -t fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -t fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -u
+systemd-+-NetworkManager-+-dhclient
+        |                `-3*[{NetworkManager}]
+        |-2*[agetty]
+        |-anacron
+        |-crond
+        |-dbus-daemon(dbus)
+        |-ping
+        |-rpc.statd(rpcuser)
+        |-rsyslogd---2*[{rsyslogd}]
+        |-sshd---sshd---python3---sh-+-sudo---bash---python3---bash---pstree
+        |                            `-tee
+        |-sshd
+        |-systemd-journal
+        |-systemd-logind
+        `-systemd-udevd
++ CHECK_RESULT 0 0 0 'pstree -u fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -u fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Sat Aug 26 17:34:21 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Sat Aug 26 17:34:21 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ POST_TEST_DEFAULT
++ LOG_INFO 'oe_test_pstree.sh post_test'
++ message='oe_test_pstree.sh post_test'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'oe_test_pstree.sh post_test'
+Sat Aug 26 17:34:21 2023 - INFO  - oe_test_pstree.sh post_test
