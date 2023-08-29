@@ -1,0 +1,614 @@
++ source common/common_dnf.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Aug 28 12:24:51 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ OLD_LANG=en_US.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL tree
++ pkgs=tree
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs tree --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpx4u2y_bx
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpx4u2y_bx
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Mon Aug 28 12:24:55 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Aug 28 12:24:55 2023 - INFO  - Start to run test.
++ dnf -y reinstall tree
++ grep Reinstalled
+Reinstalled:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rpm -q tree
++ grep tree
+tree-2.1.1-1.oe2309.x86_64
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf remove -y tree
++ grep Removed
+Removed:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf reinstall -y tree
++ grep 'Package tree available, but not installed'
+Package tree available, but not installed.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf --repo=everything repolist
++ grep everything
+everything                              everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ dnf --repo=everything repolist
+++ wc -l
++ ret=2
++ CHECK_RESULT 2 2 0
++ actual_result=2
++ expect_result=2
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 2x
++ return 0
++ grep everything
++ dnf --repoid=everything repolist
+everything                              everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoinfo
++ grep Repo-id
+Last metadata expiration check: 0:00:13 ago on Mon 28 Aug 2023 12:24:45 PM UTC.
+Repo-id            : EPOL
+Repo-id            : OS
+Repo-id            : debuginfo
+Repo-id            : everything
+Repo-id            : source
+Repo-id            : update
+Repo-id            : update-source
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'repo id'
++ dnf repolist
+repo id                                 repo name
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoquery tree
++ grep tree
+Last metadata expiration check: 0:00:14 ago on Mon 28 Aug 2023 12:24:45 PM UTC.
+tree-0:2.1.1-1.oe2309.src
+tree-0:2.1.1-1.oe2309.x86_64
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoquery -all
++ grep /usr/bin/tree
+Last metadata expiration check: 0:00:14 ago on Mon 28 Aug 2023 12:24:45 PM UTC.
+Package basesystem-12-3.oe2309.noarch contains no files
+Package fftw-libs-3.3.10-1.oe2309.x86_64 contains no files
+Package gnome-packagekit-3.32.0-1.oe2309.x86_64 contains no files
+Package gperftools-2.10-3.oe2309.x86_64 contains no files
+Package libvirt-6.2.0-59.oe2309.x86_64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-59.oe2309.x86_64 contains no files
+Package libvirt-daemon-kvm-6.2.0-59.oe2309.x86_64 contains no files
+Package libvirt-daemon-qemu-6.2.0-59.oe2309.x86_64 contains no files
+Package texlive-collection-basic-9:svn59159-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn54074-1.oe2309.noarch contains no files
+Package xorg-x11-drivers-7.7-29.oe2309.x86_64 contains no files
+Package R-4.0.5-2.oe2309.x86_64 contains no files
+Package R-devel-4.0.5-2.oe2309.x86_64 contains no files
+Package R-java-4.0.5-2.oe2309.x86_64 contains no files
+Package R-java-devel-4.0.5-2.oe2309.x86_64 contains no files
+Package abrt-cli-2.16.1-1.oe2309.x86_64 contains no files
+Package abrt-desktop-2.16.1-1.oe2309.x86_64 contains no files
+Package basesystem-12-3.oe2309.noarch contains no files
+Package ceph-2:16.2.7-21.oe2309.x86_64 contains no files
+Package custom_build_tool-nodebug-1.0.0-22.oe2309.noarch contains no files
+Package dpdk-doc-21.11-55.oe2309.noarch contains no files
+Package erlang-23.3.4.9-4.oe2309.x86_64 contains no files
+Package erlang-otp_mibs-23.3.4.9-4.oe2309.x86_64 contains no files
+Package esc-help-1.1.2-6.oe2309.noarch contains no files
+Package fence-agents-all-4.5.0-2.oe2309.noarch contains no files
+Package fftw-libs-3.3.10-1.oe2309.x86_64 contains no files
+Package gala-ops-1.0.1-3.oe2309.x86_64 contains no files
+Package gcc_secure-1.0-0.12.oe2309.x86_64 contains no files
+Package gnome-packagekit-3.32.0-1.oe2309.x86_64 contains no files
+Package gperftools-2.10-3.oe2309.x86_64 contains no files
+Package hsqldb-demo-1:2.4.0-4.oe2309.noarch contains no files
+Package hunspell-es-1:2.6-1.oe2309.noarch contains no files
+Package ibus-table-chinese-1.8.2-13.oe2309.noarch contains no files
+Package kata-integration-v1.0.0-9.oe2309.x86_64 contains no files
+Package kiwi-systemdeps-9.24.1-1.oe2309.x86_64 contains no files
+Package libknet1-compress-plugins-all-1.24-1.oe2309.x86_64 contains no files
+Package libknet1-crypto-plugins-all-1.24-1.oe2309.x86_64 contains no files
+Package libknet1-plugins-all-1.24-1.oe2309.x86_64 contains no files
+Package libvirt-6.2.0-59.oe2309.x86_64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-59.oe2309.x86_64 contains no files
+Package libvirt-daemon-kvm-6.2.0-59.oe2309.x86_64 contains no files
+Package libvirt-daemon-qemu-6.2.0-59.oe2309.x86_64 contains no files
+Package lorax-lmc-novirt-34.1-4.oe2309.x86_64 contains no files
+Package maven-local-5.3.0-5.oe2309.noarch contains no files
+Package mesa-vulkan-devel-23.1.3-2.oe2309.x86_64 contains no files
+Package moby-20.10.24-3.oe2309.x86_64 contains no files
+Package nagios-plugins-all-2.3.3-4.oe2309.x86_64 contains no files
+Package native-turbo-1.0.0-5.oe2309.x86_64 contains no files
+Package nbdkit-1.29.11-1.oe2309.x86_64 contains no files
+Package nginx-all-modules-1:1.23.3-1.oe2309.noarch contains no files
+Package obs-env-1.0-7.oe2309.x86_64 contains no files
+Package pseudo-df1d1321fb093283485c387e3c933d2d264e509c-1.oe2309.x86_64 contains no files
+Package python-pygments-help-2.15.1-1.oe2309.noarch contains no files
+Package python3-pillow-help-10.0.0-1.oe2309.noarch contains no files
+Package rpmlint-help-2.4.0-1.oe2309.noarch contains no files
+Package setools-4.4.3-1.oe2309.x86_64 contains no files
+Package texlive-9:2021-2.oe2309.noarch contains no files
+Package texlive-babel-bahasa-doc-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-babel-bahasa-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-bibtexperllibs-9:svn57137-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-2.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn58896-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-2.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-2.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-2.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-2.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-2.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-2.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-2.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-2.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-2.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-2.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-2.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-2.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-2.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-2.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-2.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-2.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-2.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-2.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-2.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-2.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-2.oe2309.noarch contains no files
+Package texlive-collection-texworks-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-gloss-occitan-9:svn52593-1.oe2309.noarch contains no files
+Package texlive-hyphen-arabic-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-hyphen-farsi-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-obsolete-9:2021-1.oe2309.noarch contains no files
+Package texlive-scheme-basic-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-minimal-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-small-9:svn54191-1.oe2309.noarch contains no files
+Package uthash-help-2.1.0-1.oe2309.noarch contains no files
+Package xorg-x11-drivers-7.7-29.oe2309.x86_64 contains no files
+Package yaffs2-9d9b662-1.oe2309.x86_64 contains no files
+Package yocto-poky-3.3.6-1.oe2309.noarch contains no files
+Package biometric-authentication-0.9.72-8.oe2309.x86_64 contains no files
+Package claws-mail-plugins-4.0.0-2.oe2309.x86_64 contains no files
+Package dde-qt5wayland-plugin-5.0.71-1.oe2309.x86_64 contains no files
+Package fastdfs-6.9.4-1.oe2309.x86_64 contains no files
+Package kf5-kross-5.108.0-1.oe2309.x86_64 contains no files
+Package kiran-themes-0.8.1-3.kb1.oe2309.noarch contains no files
+Package kubernetes-1.25.3-1.oe2309.x86_64 contains no files
+Package libkysdk-applications-2.0.0-3.oe2309.x86_64 contains no files
+Package libkysdk-base-2.0.0-3.oe2309.x86_64 contains no files
+Package libkysdk-system-2.0.0.0-2.oe2309.x86_64 contains no files
+Package mate-utils-1.24.0-4.oe2309.x86_64 contains no files
+Package python-msgpack-debuginfo-1.0.5-1.oe2309.x86_64 contains no files
+Package python-msgpack-debugsource-1.0.5-1.oe2309.x86_64 contains no files
+Package python-scandir-debuginfo-1.10.0-2.oe2309.x86_64 contains no files
+Package python-scandir-debugsource-1.10.0-2.oe2309.x86_64 contains no files
+Package python-selenium-debuginfo-3.141.0-3.oe2309.x86_64 contains no files
+Package python-selenium-debugsource-3.141.0-3.oe2309.x86_64 contains no files
+Package python-ujson-debuginfo-5.1.0-3.oe2309.x86_64 contains no files
+Package python-ujson-debugsource-5.1.0-3.oe2309.x86_64 contains no files
+Package python-watchdog-debuginfo-3.0.0-1.oe2309.x86_64 contains no files
+Package python-watchdog-debugsource-3.0.0-1.oe2309.x86_64 contains no files
+Package stb-devel-0.20220908git8b5f1f3-0.4.oe2309.x86_64 contains no files
+Package zathura-plugins-all-0.5.2-1.oe2309.x86_64 contains no files
+Package basesystem-12-3.oe2309.noarch contains no files
+Package perl-Spreadsheet-ParseExcel-debuginfo-0.65-1.oe2309.x86_64 contains no files
+Package perl-Spreadsheet-ParseExcel-debugsource-0.65-1.oe2309.x86_64 contains no files
+Package python-mypy-debuginfo-1.4.1-1.oe2309.x86_64 contains no files
+Package python-mypy-debugsource-1.4.1-1.oe2309.x86_64 contains no files
+Package python-pyinstaller-debuginfo-5.13.0-1.oe2309.x86_64 contains no files
+Package python-pyinstaller-debugsource-5.13.0-1.oe2309.x86_64 contains no files
+Package pytorch-debugsource-2.0.1-2.oe2309.x86_64 contains no files
+/usr/bin/tree
+/usr/lib/debug/usr/bin/tree-2.1.1-1.oe2309.x86_64.debug
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf -y install sysstat
++ rpm -q sysstat
++ grep sysstat
+package sysstat is not installed
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf search vim
++ grep vim-enhanced
+Waiting for process with pid 4072 to finish.
+Last metadata expiration check: 0:00:26 ago on Mon 28 Aug 2023 12:24:45 PM UTC.
+Dependencies resolved.
+================================================================================
+ Package                         Arch      Version                  Repo   Size
+================================================================================
+Installing:
+ sysstat                         x86_64    12.7.4-1.oe2309          OS    456 k
+Installing dependencies:
+ efi-srpm-macros                 noarch    4-9.oe2309               OS     22 k
+ lm_sensors                      x86_64    3.6.0-6.oe2309           OS    140 k
+ openEuler-rpm-config            x86_64    30-40.oe2309             OS     55 k
+ perl                            x86_64    4:5.38.0-1.oe2309        OS    3.3 M
+ perl-Algorithm-Diff             noarch    1:1.201-2.oe2309         OS     26 k
+ perl-Archive-Tar                noarch    3.02-1.oe2309            OS     42 k
+ perl-B-Debug                    noarch    1.26-6.oe2309            OS     18 k
+ perl-CPAN-Meta                  noarch    2.150010-420.oe2309      OS    107 k
+ perl-CPAN-Meta-Requirements     noarch    2.143-1.oe2309           OS     26 k
+ perl-CPAN-Meta-YAML             noarch    0.018-421.oe2309         OS     23 k
+ perl-Carp                       noarch    1.50-419.oe2309          OS     21 k
+ perl-Compress-Raw-Bzip2         x86_64    2.205-1.oe2309           OS     25 k
+ perl-Compress-Raw-Zlib          x86_64    1:2.205-1.oe2309         OS     43 k
+ perl-Config-Perl-V              noarch    0.36-1.oe2309            OS     16 k
+ perl-Data-Dumper                x86_64    2.183-2.oe2309           OS     45 k
+ perl-Devel-PPPort               x86_64    3.68-1.oe2309            OS    193 k
+ perl-Digest                     noarch    1.20-3.oe2309            OS     16 k
+ perl-Digest-MD5                 x86_64    2.58-2.oe2309            OS     28 k
+ perl-Digest-SHA                 x86_64    1:6.02-8.oe2309          OS     49 k
+ perl-Encode                     x86_64    4:3.19-1.oe2309          OS    1.4 M
+ perl-Encode-devel               x86_64    4:3.19-1.oe2309          OS     46 k
+ perl-Env                        noarch    1.04-398.oe2309          OS     16 k
+ perl-Exporter                   noarch    5.77-1.oe2309            OS     21 k
+ perl-ExtUtils-Command           noarch    1:7.62-2.oe2309          OS     11 k
+ perl-ExtUtils-Install           noarch    2.22-1.oe2309            OS     32 k
+ perl-ExtUtils-MakeMaker         noarch    1:7.62-2.oe2309          OS    168 k
+ perl-ExtUtils-Manifest          noarch    1:1.75-1.oe2309          OS     22 k
+ perl-ExtUtils-ParseXS           noarch    2:3.44-1.oe2309          OS     54 k
+ perl-File-Fetch                 noarch    1.04-1.oe2309            OS     21 k
+ perl-File-Path                  noarch    2.18-2.oe2309            OS     21 k
+ perl-File-Temp                  noarch    1:0.2311-3.oe2309        OS     49 k
+ perl-Filter                     x86_64    2:1.64-1.oe2309          OS     49 k
+ perl-Filter-Simple              noarch    1:0.94-1.oe2309          OS     15 k
+ perl-Getopt-Long                noarch    1:2.54-1.oe2309          OS     45 k
+ perl-HTTP-Tiny                  noarch    0.088-1.oe2309           OS     35 k
+ perl-IO-Compress                noarch    2.205-1.oe2309           OS    113 k
+ perl-IO-Socket-IP               noarch    0.41-3.oe2309            OS     31 k
+ perl-IPC-Cmd                    noarch    2:1.04-4.oe2309          OS     32 k
+ perl-IPC-SysV                   x86_64    2.09-2.oe2309            OS     23 k
+ perl-IPC-System-Simple          noarch    1.30-3.oe2309            OS     30 k
+ perl-JSON-PP                    noarch    1:4.16-1.oe2309          OS     44 k
+ perl-Locale-Codes               noarch    3.74-1.oe2309            OS    265 k
+ perl-Locale-Maketext            noarch    1:1.29-2.oe2309          OS     52 k
+ perl-MIME-Base64                x86_64    3.16-2.oe2309            OS     19 k
+ perl-Math-BigInt                noarch    1:1.9998.39-1.oe2309     OS    124 k
+ perl-Math-BigInt-FastCalc       x86_64    0.5014-1.oe2309          OS     19 k
+ perl-Math-BigRat                noarch    0.2624-1.oe2309          OS     27 k
+ perl-Module-CoreList            noarch    1:5.20230520-1.oe2309    OS     88 k
+ perl-Module-Load                noarch    1:0.36-2.oe2309          OS     13 k
+ perl-Module-Load-Conditional    noarch    0.74-2.oe2309            OS     17 k
+ perl-Module-Metadata            noarch    1.000037-2.oe2309        OS     30 k
+ perl-Net-SSLeay                 x86_64    1.92-2.oe2309            OS    242 k
+ perl-Params-Check               noarch    1:0.38-419.oe2309        OS     14 k
+ perl-PathTools                  x86_64    3.89-1.oe2309            OS     59 k
+ perl-Perl-OSType                noarch    1.010-422.oe2309         OS     19 k
+ perl-PerlIO-via-QuotedPrint     noarch    0.10-1.oe2309            OS    9.7 k
+ perl-Pod-Checker                noarch    4:1.74-2.oe2309          OS     22 k
+ perl-Pod-Escapes                noarch    1:1.07_01-1.oe2309       OS     13 k
+ perl-Pod-Parser                 noarch    1.66-1.oe2309            OS     56 k
+ perl-Pod-Perldoc                noarch    1:3.28-5.oe2309          OS     42 k
+ perl-Pod-Simple                 noarch    1:3.45-1.oe2309          OS    136 k
+ perl-Pod-Usage                  noarch    4:2.03-2.oe2309          OS     24 k
+ perl-Scalar-List-Utils          x86_64    4:1.63-1.oe2309          OS     52 k
+ perl-Socket                     x86_64    4:2.037-1.oe2309         OS     43 k
+ perl-Storable                   x86_64    1:3.25-3.oe2309          OS     79 k
+ perl-Sys-Syslog                 x86_64    0.36-2.oe2309            OS     36 k
+ perl-Term-ANSIColor             noarch    5.01-2.oe2309            OS     29 k
+ perl-Term-Cap                   noarch    1.17-511.oe2309          OS     17 k
+ perl-Test-Harness               noarch    2:3.44-1.oe2309          OS    130 k
+ perl-Test-Simple                noarch    2:1.302195-1.oe2309      OS    201 k
+ perl-Text-Balanced              noarch    2.06-1.oe2309            OS     29 k
+ perl-Text-Diff                  noarch    1.45-8.oe2309            OS     26 k
+ perl-Text-ParseWords            noarch    3.30-420.oe2309          OS     11 k
+ perl-Text-Tabs+Wrap             noarch    2023.0511-1.oe2309       OS     13 k
+ perl-Thread-Queue               noarch    3.13-4.oe2309            OS     13 k
+ perl-Time-HiRes                 x86_64    4:1.9767-3.oe2309        OS     46 k
+ perl-Time-Local                 noarch    2:1.300-2.oe2309         OS     21 k
+ perl-URI                        noarch    5.10-2.oe2309            OS     71 k
+ perl-Unicode-Collate            x86_64    1.31-2.oe2309            OS    686 k
+ perl-Unicode-Normalize          x86_64    1.28-2.oe2309            OS     74 k
+ perl-autodie                    noarch    2.36-1.oe2309            OS     55 k
+ perl-bignum                     noarch    0.66-1.oe2309            OS     21 k
+ perl-constant                   noarch    1.33-422.oe2309          OS     16 k
+ perl-experimental               noarch    0.031-1.oe2309           OS     20 k
+ perl-libnet                     noarch    3.15-1.oe2309            OS     75 k
+ perl-libs                       x86_64    4:5.38.0-1.oe2309        OS    1.9 M
+ perl-parent                     noarch    1:0.241-1.oe2309         OS     11 k
+ perl-perlfaq                    noarch    5.20230701-1.oe2309      OS    177 k
+ perl-podlators                  noarch    1:5.01-1.oe2309          OS     64 k
+ perl-threads                    x86_64    2:2.26-2.oe2309          OS     36 k
+ perl-threads-shared             x86_64    1.62-2.oe2309            OS     31 k
+ perl-version                    x86_64    8:0.99.29-2.oe2309       OS     45 k
+ python3-pyparsing               noarch    3.0.9-1.oe2309           OS    267 k
+ qt5-srpm-macros                 noarch    5.15.2-1.oe2309          OS    8.2 k
+ systemtap-sdt-devel             x86_64    4.5-7.oe2309             OS     19 k
+ zip                             x86_64    3.0-30.oe2309            OS    223 k
+Installing weak dependencies:
+ perl-Encode-Locale              noarch    1.05-14.oe2309           OS     13 k
+ perl-IO-Socket-SSL              noarch    2.083-1.oe2309           OS    184 k
+ perl-Mozilla-CA                 noarch    1:20211001-2.oe2309      OS    9.4 k
+ perl-devel                      x86_64    4:5.38.0-1.oe2309        OS    2.3 M
+
+Transaction Summary
+================================================================================
+Install  101 Packages
+
+Total download size: 15 M
+Installed size: 71 M
+Downloading Packages:
+(1/101): efi-srpm-macros-4-9.oe2309.noarch.rpm  177 kB/s |  22 kB     00:00    
+(2/101): openEuler-rpm-config-30-40.oe2309.x86_ 272 kB/s |  55 kB     00:00    
+(3/101): perl-Algorithm-Diff-1.201-2.oe2309.noa 360 kB/s |  26 kB     00:00    
+(4/101): lm_sensors-3.6.0-6.oe2309.x86_64.rpm   422 kB/s | 140 kB     00:00    
+(5/101): perl-B-Debug-1.26-6.oe2309.noarch.rpm  458 kB/s |  18 kB     00:00    
+(6/101): perl-Archive-Tar-3.02-1.oe2309.noarch. 394 kB/s |  42 kB     00:00    
+(7/101): perl-CPAN-Meta-Requirements-2.143-1.oe 363 kB/s |  26 kB     00:00    
+(8/101): perl-CPAN-Meta-YAML-0.018-421.oe2309.n 325 kB/s |  23 kB     00:00    
+(9/101): perl-CPAN-Meta-2.150010-420.oe2309.noa 600 kB/s | 107 kB     00:00    
+(10/101): perl-Carp-1.50-419.oe2309.noarch.rpm  294 kB/s |  21 kB     00:00    
+(11/101): perl-Compress-Raw-Bzip2-2.205-1.oe230 382 kB/s |  25 kB     00:00    
+(12/101): perl-Config-Perl-V-0.36-1.oe2309.noar 408 kB/s |  16 kB     00:00    
+(13/101): perl-Compress-Raw-Zlib-2.205-1.oe2309 424 kB/s |  43 kB     00:00    
+(14/101): perl-Data-Dumper-2.183-2.oe2309.x86_6 644 kB/s |  45 kB     00:00    
+(15/101): perl-Digest-1.20-3.oe2309.noarch.rpm  402 kB/s |  16 kB     00:00    
+(16/101): perl-Digest-MD5-2.58-2.oe2309.x86_64. 426 kB/s |  28 kB     00:00    
+Last metadata expiration check: 0:00:27 ago on Mon 28 Aug 2023 12:24:45 PM UTC.
+(17/101): perl-Digest-SHA-6.02-8.oe2309.x86_64. 711 kB/s |  49 kB     00:00    
+(18/101): perl-Devel-PPPort-3.68-1.oe2309.x86_6 753 kB/s | 193 kB     00:00    
+vim-enhanced.x86_64 : This is a package containing enhanced vim editor.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf update-minimal --assumeno
++ grep Upgrading:
+(19/101): perl-Encode-Locale-1.05-14.oe2309.noa 330 kB/s |  13 kB     00:00    
+(20/101): perl-Encode-devel-3.19-1.oe2309.x86_6 626 kB/s |  46 kB     00:00    
+(21/101): perl-Env-1.04-398.oe2309.noarch.rpm   376 kB/s |  16 kB     00:00    
+(22/101): perl-Exporter-5.77-1.oe2309.noarch.rp 492 kB/s |  21 kB     00:00    
+(23/101): perl-ExtUtils-Command-7.62-2.oe2309.n 260 kB/s |  11 kB     00:00    
+(24/101): perl-ExtUtils-Install-2.22-1.oe2309.n 454 kB/s |  32 kB     00:00    
+(25/101): perl-ExtUtils-MakeMaker-7.62-2.oe2309 1.0 MB/s | 168 kB     00:00    
+(26/101): perl-ExtUtils-Manifest-1.75-1.oe2309. 520 kB/s |  22 kB     00:00    
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 59'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 59'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 59'
+(27/101): perl-ExtUtils-ParseXS-3.44-1.oe2309.n 729 kB/s |  54 kB     00:00    
+(28/101): perl-File-Fetch-1.04-1.oe2309.noarch. 507 kB/s |  21 kB     00:00    
+Mon Aug 28 12:25:13 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 59
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf --version
++ grep -B 1 dnf
+(29/101): perl-File-Path-2.18-2.oe2309.noarch.r 484 kB/s |  21 kB     00:00    
+(30/101): perl-File-Temp-0.2311-3.oe2309.noarch 684 kB/s |  49 kB     00:00    
+(31/101): perl-Encode-3.19-1.oe2309.x86_64.rpm  1.6 MB/s | 1.4 MB     00:00    
+(32/101): perl-Filter-1.64-1.oe2309.x86_64.rpm  657 kB/s |  49 kB     00:00    
+(33/101): perl-Filter-Simple-0.94-1.oe2309.noar 364 kB/s |  15 kB     00:00    
+(34/101): perl-HTTP-Tiny-0.088-1.oe2309.noarch. 882 kB/s |  35 kB     00:00    
+(35/101): perl-Getopt-Long-2.54-1.oe2309.noarch 591 kB/s |  45 kB     00:00    
+(36/101): perl-IO-Socket-IP-0.41-3.oe2309.noarc 697 kB/s |  31 kB     00:00    
+(37/101): perl-IO-Compress-2.205-1.oe2309.noarc 1.6 MB/s | 113 kB     00:00    
+4.16.2
+  Installed: dnf-0:4.16.2-1.oe2309.noarch at Wed 23 Aug 2023 12:07:23 PM GMT
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+(38/101): perl-IPC-Cmd-1.04-4.oe2309.noarch.rpm 768 kB/s |  32 kB     00:00    
+Mon Aug 28 12:25:13 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+(39/101): perl-IPC-SysV-2.09-2.oe2309.x86_64.rp 395 kB/s |  23 kB     00:00    
+Mon Aug 28 12:25:13 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+(40/101): perl-IPC-System-Simple-1.30-3.oe2309. 732 kB/s |  30 kB     00:00    
+Mon Aug 28 12:25:14 2023 - INFO  - Start to restore the test environment.
+(41/101): perl-IO-Socket-SSL-2.083-1.oe2309.noa 1.1 MB/s | 184 kB     00:00    
++ clear_env
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_REMOVE 1 'tree sysstat'
++ node=1
++ pkg_list='tree sysstat'
++ mode=0
++ [[ -z /tmp/tmpx4u2y_bx ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs 'tree sysstat' --tempfile /tmp/tmpx4u2y_bx
+(42/101): perl-JSON-PP-4.16-1.oe2309.noarch.rpm 1.0 MB/s |  44 kB     00:00    
+(43/101): perl-Locale-Maketext-1.29-2.oe2309.no 1.2 MB/s |  52 kB     00:00    
+(44/101): perl-MIME-Base64-3.16-2.oe2309.x86_64 474 kB/s |  19 kB     00:00    
+(45/101): perl-Math-BigInt-1.9998.39-1.oe2309.n 1.6 MB/s | 124 kB     00:00    
+(46/101): perl-Locale-Codes-3.74-1.oe2309.noarc 1.3 MB/s | 265 kB     00:00    
+(47/101): perl-Math-BigInt-FastCalc-0.5014-1.oe 456 kB/s |  19 kB     00:00    
+(48/101): perl-Math-BigRat-0.2624-1.oe2309.noar 617 kB/s |  27 kB     00:00    
+(49/101): perl-5.38.0-1.oe2309.x86_64.rpm       1.5 MB/s | 3.3 MB     00:02    
+(50/101): perl-Module-CoreList-5.20230520-1.oe2 996 kB/s |  88 kB     00:00    
+(51/101): perl-Module-Load-0.36-2.oe2309.noarch 155 kB/s |  13 kB     00:00    
+(52/101): perl-Module-Load-Conditional-0.74-2.o 364 kB/s |  17 kB     00:00    
+(53/101): perl-Module-Metadata-1.000037-2.oe230 720 kB/s |  30 kB     00:00    
+(54/101): perl-Mozilla-CA-20211001-2.oe2309.noa 177 kB/s | 9.4 kB     00:00    
+(55/101): perl-Params-Check-0.38-419.oe2309.noa 331 kB/s |  14 kB     00:00    
+(56/101): perl-Net-SSLeay-1.92-2.oe2309.x86_64. 2.6 MB/s | 242 kB     00:00    
+(57/101): perl-PathTools-3.89-1.oe2309.x86_64.r 771 kB/s |  59 kB     00:00    
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+(58/101): perl-Perl-OSType-1.010-422.oe2309.noa 352 kB/s |  19 kB     00:00    
+Mon Aug 28 12:25:14 2023 - INFO  - Finish restoring the test environment.
+(59/101): perl-PerlIO-via-QuotedPrint-0.10-1.oe 209 kB/s | 9.7 kB     00:00    
+(60/101): perl-Pod-Checker-1.74-2.oe2309.noarch 520 kB/s |  22 kB     00:00    
+(61/101): perl-Pod-Escapes-1.07_01-1.oe2309.noa 248 kB/s |  13 kB     00:00    
+(62/101): perl-Pod-Parser-1.66-1.oe2309.noarch. 1.0 MB/s |  56 kB     00:00    
+(63/101): perl-Pod-Perldoc-3.28-5.oe2309.noarch 961 kB/s |  42 kB     00:00    
+(64/101): perl-Pod-Usage-2.03-2.oe2309.noarch.r 500 kB/s |  24 kB     00:00    
+(65/101): perl-Scalar-List-Utils-1.63-1.oe2309. 1.2 MB/s |  52 kB     00:00    
+(66/101): perl-Pod-Simple-3.45-1.oe2309.noarch. 1.3 MB/s | 136 kB     00:00    

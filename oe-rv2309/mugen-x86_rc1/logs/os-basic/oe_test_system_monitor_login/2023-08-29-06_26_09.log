@@ -1,0 +1,247 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Aug 29 06:26:09 2023 - INFO  - Start to prepare the test environment.
++ SSH_CMD 'useradd -m test1;echo openEuler12#$|passwd --stdin test1;
+	useradd -m test2;echo openEuler12#$|passwd --stdin test2' 10.0.0.6 'openEuler12#$' root
++ cmd='useradd -m test1;echo openEuler12#$|passwd --stdin test1;
+	useradd -m test2;echo openEuler12#$|passwd --stdin test2'
++ remoteip=10.0.0.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'useradd -m test1;echo openEuler12#$|passwd --stdin test1;
+	useradd -m test2;echo openEuler12#$|passwd --stdin test2' -i 10.0.0.6 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Aug 29 06:26:09 2023 - WARN  - the remote user uses the default configuration.
+Tue Aug 29 06:26:09 2023 - WARN  - the remote password uses the default configuration.
+Tue Aug 29 06:26:09 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.6 useradd -m test1;echo openEuler12#$|passwd --stdin test1;
+	useradd -m test2;echo openEuler12#$|passwd --stdin test2
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.6's password: 
+Changing password for user test1.
+passwd: all authentication tokens updated successfully.
+Changing password for user test2.
+passwd: all authentication tokens updated successfully.
++ ret=0
++ test 0 -ne 0
++ return 0
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Aug 29 06:26:10 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug 29 06:26:10 2023 - INFO  - Start to run test.
++ expect -c '
+	spawn ssh root@10.0.0.6
+  	expect {
+  		"*)?" {
+        send "yes\r"
+        exp_continue
+		}
+        "*assword*" {
+        send "openEuler12#$\r"
+        expect "*localhost*" {send "exit\r"}
+        exp_continue
+		}
+	}
+'
+spawn ssh root@10.0.0.6
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.6's password: 
+
+Authorized users only. All activities may be monitored and reported.
+Last login: Tue Aug 29 06:11:49 2023
+
+
+Welcome to 6.4.0-1.0.2.6.oe2309.x86_64
+
+System information as of time: 	Tue Aug 29 06:26:17 AM UTC 2023
+
+System load: 	[0;33;40m0.24[0m
+Processes: 	109
+Memory used: 	2.8%
+Swap used: 	0.0%
+Usage On: 	9%
+IP address: 	10.0.0.6
+IP address: 	10.0.2.15
+Users online: 	1
+
+
+[?2004h[root@new_host ~]# + expect -c '
+	spawn ssh test1@10.0.0.6
+  	expect {
+  		"*)?" {
+        send "yes\r"
+        exp_continue
+		}
+        "*assword*" {
+        send "openEuler12#$\r"
+        expect "*localhost*" {send "exit\r"}
+        exp_continue
+		}
+	}
+'
+spawn ssh test1@10.0.0.6
+
+Authorized users only. All activities may be monitored and reported.
+test1@10.0.0.6's password: 
+
+Authorized users only. All activities may be monitored and reported.
+
+
+Welcome to 6.4.0-1.0.2.6.oe2309.x86_64
+
+System information as of time: 	Tue Aug 29 06:26:38 AM UTC 2023
+
+System load: 	[0;33;40m0.17[0m
+Processes: 	109
+Memory used: 	2.8%
+Swap used: 	0.0%
+Usage On: 	9%
+IP address: 	10.0.0.6
+IP address: 	10.0.2.15
+Users online: 	1
+To run a command as administrator(user "root"),use "sudo <command>".
+[?2004h[test1@new_host ~]$ yes
+[?2004ly
+y
+y
+y
+y
+y
+y
+y
+y
+y
+y
+y
+y
+y
+y
++ SSH_CMD 'last -f /var/log/wtmp>/tmp/rebootlog1' 10.0.0.6 'openEuler12#$' root
++ cmd='last -f /var/log/wtmp>/tmp/rebootlog1'
++ remoteip=10.0.0.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'last -f /var/log/wtmp>/tmp/rebootlog1' -i 10.0.0.6 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Aug 29 06:27:10 2023 - WARN  - the remote user uses the default configuration.
+Tue Aug 29 06:27:10 2023 - WARN  - the remote password uses the default configuration.
+Tue Aug 29 06:27:10 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.6 last -f /var/log/wtmp>/tmp/rebootlog1
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.6's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ SSH_SCP root@10.0.0.6:/tmp/rebootlog1 . 'openEuler12#$'
++ src=root@10.0.0.6:/tmp/rebootlog1
++ dest=.
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s root@10.0.0.6:/tmp/rebootlog1 -d .
+Tue Aug 29 06:27:10 2023 - WARN  - the remote password uses the default configuration.
+Tue Aug 29 06:27:10 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r root@10.0.0.6:/tmp/rebootlog1 .
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.6's password: 
+rebootlog1                                      0%    0     0.0KB/s   --:-- ETArebootlog1                                    100% 5001     2.2MB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ cat rebootlog1
+++ grep -iE 'test1|test2|root'
+++ awk '{print$1}'
+++ wc -l
+++ sort -u
++ num_user=3
++ test 3 -eq 3
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug 29 06:27:10 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Aug 29 06:27:10 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug 29 06:27:10 2023 - INFO  - Start to restore the test environment.
++ rm -rf rebootlog1
++ SSH_CMD 'userdel -r test1;userdel -r test2;rm -rf /tmp/rebootlog1' 10.0.0.6 'openEuler12#$' root
++ cmd='userdel -r test1;userdel -r test2;rm -rf /tmp/rebootlog1'
++ remoteip=10.0.0.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'userdel -r test1;userdel -r test2;rm -rf /tmp/rebootlog1' -i 10.0.0.6 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Aug 29 06:27:10 2023 - WARN  - the remote user uses the default configuration.
+Tue Aug 29 06:27:10 2023 - WARN  - the remote password uses the default configuration.
+Tue Aug 29 06:27:10 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.6 userdel -r test1;userdel -r test2;rm -rf /tmp/rebootlog1
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.6's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug 29 06:27:12 2023 - INFO  - End to restore the test environment.

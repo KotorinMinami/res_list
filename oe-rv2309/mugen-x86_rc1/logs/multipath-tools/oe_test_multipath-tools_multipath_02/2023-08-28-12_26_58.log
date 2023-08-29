@@ -1,0 +1,451 @@
++ source common_multipath-tools.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Aug 28 12:26:59 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
+++ TEST_DISK 2
+++ id=2
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 2
++ remote_disks='sr0 vdb vdc vdd'
+++ echo sr0 vdb vdc vdd
+++ awk -F ' ' '{for(i=1;i<=NF;i++) if ($i!~/[0-9]/)j=i;print $j}'
++ remote_disk=/dev/vdd
++ P_SSH_CMD --node 2 --cmd 'dnf install -y scsi-target-utils; 
+        echo -e '\''n\np\n1\n\n+2000M\nw'\'' | fdisk /dev/vdd; 
+        echo -e '\''<target iqn.2013-12.com.make:ws.httpd>\nbacking-store /dev/vdd\n</target>'\'' >>/etc/tgt/targets.conf; 
+        systemctl restart tgtd; 
+        systemctl stop firewalld;'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'dnf install -y scsi-target-utils; 
+        echo -e '\''n\np\n1\n\n+2000M\nw'\'' | fdisk /dev/vdd; 
+        echo -e '\''<target iqn.2013-12.com.make:ws.httpd>\nbacking-store /dev/vdd\n</target>'\'' >>/etc/tgt/targets.conf; 
+        systemctl restart tgtd; 
+        systemctl stop firewalld;'
+Value out of range.
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ DNF_REMOVE iscsi-initiator-utils
++ node=iscsi-initiator-utils
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Mon Aug 28 12:27:21 2023 - WARN  - no thing to do.
++ return 0
++ DNF_INSTALL 'iscsi-initiator-utils multipath-tools device-mapper-event device-mapper'
++ pkgs='iscsi-initiator-utils multipath-tools device-mapper-event device-mapper'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'iscsi-initiator-utils multipath-tools device-mapper-event device-mapper' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpkg8_j04a
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpkg8_j04a
++ systemctl restart iscsid
++ iscsiadm -m discovery -t sendtargets -p 10.0.0.7
+10.0.0.7:3260,1 iqn.2013-12.com.make:ws.httpd
++ iscsiadm -m node -T iqn.2013-12.com.make:ws.httpd -l
+Logging in to [iface: default, target: iqn.2013-12.com.make:ws.httpd, portal: 10.0.0.7,3260]
+Login to [iface: default, target: iqn.2013-12.com.make:ws.httpd, portal: 10.0.0.7,3260] successful.
++ mpathconf --enable --with_multipathd y
++ service multipathd start
+Redirecting to /bin/systemctl start multipathd.service
++ multipath -v2
++ multipath -ll
+mpatha (360000000000000000e00000000010001) dm-0 IET,VIRTUAL-DISK
+size=500M features='0' hwhandler='0' wp=rw
+`-+- policy='service-time 0' prio=1 status=active
+  `- 2:0:0:1 sda 8:0 active ready running
++ echo '
+defaults {
+       user_friendly_names       yes
+       max_fds                   max
+       queue_without_daemon      no
+       flush_on_last_del         yes
+}
+
+devices {
+       device {
+               vendor                  "IET "
+               product                 "VIRTUAL-DISK"
+               path_grouping_policy    multibus
+               getuid_callout          "/sbin/scsi_id -g -u -s/block/%n"
+               path_checker            directio
+               path_selector           "round-robin 0"
+               hardware_handler        "0"
+               failback                15
+               rr_weight               priorities
+               no_path_retry           queue
+               rr_min_io               100
+               product_blacklist       LUNZ
+       }
+}'
++ lsmod
++ grep dm_multipath
+dm_multipath           45056  2 dm_service_time
+dm_mod                217088  4 dm_multipath
++ modprobe dm_multipath
++ service multipathd restart
+Redirecting to /bin/systemctl restart multipathd.service
++ chkconfig --level 345 multipathd on
+Note: Forwarding request to 'systemctl enable multipathd.service'.
+Created symlink /etc/systemd/system/sysinit.target.wants/multipathd.service → /usr/lib/systemd/system/multipathd.service.
+Created symlink /etc/systemd/system/sockets.target.wants/multipathd.socket → /usr/lib/systemd/system/multipathd.socket.
+++ TEST_DISK 1
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ local_disks='sda sr0 vdb vdc vdd'
+++ echo sda sr0 vdb vdc vdd
+++ awk -F ' ' '/sd[a-z]/ {for(i=1;i<=NF;i++) if ($i~/sd/ && $i!~/[0-9]/)j=i;print $j}'
++ local_disk=sda
+++ ls /dev/mapper
+++ grep mpath
+++ head -n 1
++ test_mapper=mpatha
+++ ls -l /dev/mapper/
+++ grep mpatha
+++ awk -F / '{print $2}'
+++ head -n 1
++ test_dm=dm-0
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Mon Aug 28 12:27:26 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Aug 28 12:27:26 2023 - INFO  - Start to run test.
++ multipath -t
++ grep -E 'devices|blacklist_exceptions|blacklist|defaults|overrides'
+defaults {
+	allow_usb_devices "no"
+blacklist {
+blacklist_exceptions {
+devices {
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "LUNZ"
+		product_blacklist "LUNZ"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "S/390"
+		product_blacklist "S/390"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "Universal Xport"
+		product_blacklist "VTrak V-LUN"
+		product_blacklist "VTrak V-LUN"
+		product_blacklist "Vess V-LUN"
+		product_blacklist "LUNZ"
+overrides {
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -r -v3
++ grep delegating
+447.177304 | delegating command to multipathd
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -i -v3 /dev/mapper/mpatha
++ grep 'scope limited to 3600'
+447.182409 | scope limited to 360000000000000000e00000000010001
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ cd /etc/multipath/
++ multipath -B bindings -v3
++ grep binding
+447.195258 | No matching alias [bindings] in bindings file.
+447.195271 | scope limited to bindings
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -b bindings -v3 /dev/mapper/mpatha
++ grep 'setting: multipath'
+447.213120 | sda: uid_attribute = ID_SERIAL (setting: multipath internal)
+447.213123 | sda: recheck_wwid = 1 (setting: multipath.conf defaults/devices section)
+447.213320 | sda: vpd_vendor_id = 0 "undef" (setting: multipath internal)
+447.213343 | sda: detect_checker = yes (setting: multipath internal)
+447.213749 | sda: path_checker = tur (setting: multipath internal)
+447.213970 | sda: detect_prio = yes (setting: multipath internal)
+447.213976 | sda: prio = const (setting: multipath internal)
+447.213979 | sda: prio args = "" (setting: multipath internal)
+447.215405 | sda: vpd_vendor_id = 0 "undef" (setting: multipath internal)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ cd -
+/root/mugen/testcases/cli-test/multipath-tools
++ multipath -v3 -p multibus
++ grep multipath
+447.219696 | loading /lib64/multipath/libchecktur.so checker
+447.219878 | loading /lib64/multipath/libprioconst.so prioritizer
+447.224972 | sda: uid_attribute = ID_SERIAL (setting: multipath internal)
+447.224975 | sda: recheck_wwid = 1 (setting: multipath.conf defaults/devices section)
+447.225157 | sda: vpd_vendor_id = 0 "undef" (setting: multipath internal)
+447.225176 | sda: detect_checker = yes (setting: multipath internal)
+447.225459 | sda: path_checker = tur (setting: multipath internal)
+447.225797 | sda: detect_prio = yes (setting: multipath internal)
+447.225801 | sda: prio = const (setting: multipath internal)
+447.225803 | sda: prio args = "" (setting: multipath internal)
+447.226115 | multipath-tools v0.8.7 (09/08, 2021)
+447.226233 | DM multipath kernel driver v1.14.0
+447.226962 | sda: vpd_vendor_id = 0 "undef" (setting: multipath internal)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -c /dev/sda
++ grep MULTIPATH
+DM_MULTIPATH_DEVICE_PATH="1"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -W /dev/dm-0
++ grep 'successfully reset wwids'
+successfully reset wwids
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -w /dev/dm-0
++ grep removed
+wwid '360000000000000000e00000000010001' removed
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Aug 28 12:27:26 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Mon Aug 28 12:27:26 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Aug 28 12:27:26 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ P_SSH_CMD --node 2 --cmd 'dnf remove -y scsi-target-utils; echo -e '\''d\nw\n'\'' | fdisk /dev/vdd'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'dnf remove -y scsi-target-utils; echo -e '\''d\nw\n'\'' | fdisk /dev/vdd'
+Dependencies resolved.
+================================================================================
+ Package                      Arch   Version                  Repository   Size
+================================================================================
+Removing:
+ scsi-target-utils            x86_64 1.0.79-4.oe2309          @everything 569 k
+Removing unused dependencies:
+ efi-srpm-macros              noarch 4-9.oe2309               @OS          39 k
+ libaio                       x86_64 0.3.113-9.oe2309         @OS          40 k
+ libnl3                       x86_64 3.7.0-2.oe2309           @OS         1.9 M
+ lsof                         x86_64 4.97.0-3.oe2309          @OS         188 k
+ openEuler-rpm-config         x86_64 30-40.oe2309             @OS         149 k
+ pciutils                     x86_64 3.9.0-1.oe2309           @OS         303 k
+ perl                         x86_64 4:5.38.0-1.oe2309        @OS          13 M
+ perl-Algorithm-Diff          noarch 1:1.201-2.oe2309         @OS          63 k
+ perl-Archive-Tar             noarch 3.02-1.oe2309            @OS         110 k
+ perl-B-Debug                 noarch 1.26-6.oe2309            @OS          31 k
+ perl-CPAN-Meta               noarch 2.150010-420.oe2309      @OS         524 k
+ perl-CPAN-Meta-Requirements  noarch 2.143-1.oe2309           @OS          72 k
+ perl-CPAN-Meta-YAML          noarch 0.018-421.oe2309         @OS          49 k
+ perl-Carp                    noarch 1.50-419.oe2309          @OS          37 k
+ perl-Compress-Raw-Bzip2      x86_64 2.205-1.oe2309           @OS          57 k
+ perl-Compress-Raw-Zlib       x86_64 1:2.205-1.oe2309         @OS         131 k
+ perl-Config-General          noarch 2.65-1.oe2309            @everything 108 k
+ perl-Config-Perl-V           noarch 0.36-1.oe2309            @OS          21 k
+ perl-Data-Dumper             x86_64 2.183-2.oe2309           @OS         102 k
+ perl-Devel-PPPort            x86_64 3.68-1.oe2309            @OS         851 k
+ perl-Digest                  noarch 1.20-3.oe2309            @OS          28 k
+ perl-Digest-MD5              x86_64 2.58-2.oe2309            @OS          54 k
+ perl-Digest-SHA              x86_64 1:6.02-8.oe2309          @OS         106 k
+ perl-Encode                  x86_64 4:3.19-1.oe2309          @OS         9.7 M
+ perl-Encode-Locale           noarch 1.05-14.oe2309           @OS          15 k
+ perl-Encode-devel            x86_64 4:3.19-1.oe2309          @OS         120 k
+ perl-Env                     noarch 1.04-398.oe2309          @OS          24 k
+ perl-Exporter                noarch 5.77-1.oe2309            @OS          46 k
+ perl-ExtUtils-Command        noarch 1:7.62-2.oe2309          @OS         7.6 k
+ perl-ExtUtils-Install        noarch 2.22-1.oe2309            @OS          76 k
+ perl-ExtUtils-MakeMaker      noarch 1:7.62-2.oe2309          @OS         545 k
+ perl-ExtUtils-Manifest       noarch 1:1.75-1.oe2309          @OS          42 k
+ perl-ExtUtils-ParseXS        noarch 2:3.44-1.oe2309          @OS         155 k
+ perl-File-Fetch              noarch 1.04-1.oe2309            @OS          47 k
+ perl-File-Path               noarch 2.18-2.oe2309            @OS          43 k
+ perl-File-Temp               noarch 1:0.2311-3.oe2309        @OS         151 k
+ perl-Filter                  x86_64 2:1.64-1.oe2309          @OS         135 k
+ perl-Filter-Simple           noarch 1:0.94-1.oe2309          @OS          23 k
+ perl-Getopt-Long             noarch 1:2.54-1.oe2309          @OS         123 k
+ perl-HTTP-Tiny               noarch 0.088-1.oe2309           @OS          97 k
+ perl-IO-Compress             noarch 2.205-1.oe2309           @OS         683 k
+ perl-IO-Socket-IP            noarch 0.41-3.oe2309            @OS          70 k
+ perl-IO-Socket-SSL           noarch 2.083-1.oe2309           @OS         580 k
+ perl-IPC-Cmd                 noarch 2:1.04-4.oe2309          @OS          78 k
+ perl-IPC-SysV                x86_64 2.09-2.oe2309            @OS          49 k
+ perl-IPC-System-Simple       noarch 1.30-3.oe2309            @OS          65 k
+ perl-JSON-PP                 noarch 1:4.16-1.oe2309          @OS         120 k
+ perl-Locale-Codes            noarch 3.74-1.oe2309            @OS         2.3 M
+ perl-Locale-Maketext         noarch 1:1.29-2.oe2309          @OS         130 k
+ perl-MIME-Base64             x86_64 3.16-2.oe2309            @OS          32 k
+ perl-Math-BigInt             noarch 1:1.9998.39-1.oe2309     @OS         629 k
+ perl-Math-BigInt-FastCalc    x86_64 0.5014-1.oe2309          @OS          27 k
+ perl-Math-BigRat             noarch 0.2624-1.oe2309          @OS          90 k
+ perl-Module-CoreList         noarch 1:5.20230520-1.oe2309    @OS         1.1 M
+ perl-Module-Load             noarch 1:0.36-2.oe2309          @OS          12 k
+ perl-Module-Load-Conditional noarch 0.74-2.oe2309            @OS          25 k
+ perl-Module-Metadata         noarch 1.000037-2.oe2309        @OS          62 k
+ perl-Mozilla-CA              noarch 1:20211001-2.oe2309      @OS         4.3 k
+ perl-Net-SSLeay              x86_64 1.92-2.oe2309            @OS         1.1 M
+ perl-Params-Check            noarch 1:0.38-419.oe2309        @OS          20 k
+ perl-PathTools               x86_64 3.89-1.oe2309            @OS         168 k
+ perl-Perl-OSType             noarch 1.010-422.oe2309         @OS          31 k
+ perl-PerlIO-via-QuotedPrint  noarch 0.10-1.oe2309            @OS         5.6 k
+ perl-Pod-Checker             noarch 4:1.74-2.oe2309          @OS          43 k
+ perl-Pod-Escapes             noarch 1:1.07_01-1.oe2309       @OS          17 k
+ perl-Pod-Parser              noarch 1.66-1.oe2309            @OS         187 k
+ perl-Pod-Perldoc             noarch 1:3.28-5.oe2309          @OS         116 k
+ perl-Pod-Simple              noarch 1:3.45-1.oe2309          @OS         485 k
+ perl-Pod-Usage               noarch 4:2.03-2.oe2309          @OS          58 k
+ perl-Scalar-List-Utils       x86_64 4:1.63-1.oe2309          @OS         124 k
+ perl-Socket                  x86_64 4:2.037-1.oe2309         @OS         114 k
+ perl-Storable                x86_64 1:3.25-3.oe2309          @OS         214 k
+ perl-Sys-Syslog              x86_64 0.36-2.oe2309            @OS          90 k
+ perl-Term-ANSIColor          noarch 5.01-2.oe2309            @OS          64 k
+ perl-Term-Cap                noarch 1.17-511.oe2309          @OS          25 k
+ perl-Test-Harness            noarch 2:3.44-1.oe2309          @OS         422 k
+ perl-Test-Simple             noarch 2:1.302195-1.oe2309      @OS         694 k
+ perl-Text-Balanced           noarch 2.06-1.oe2309            @OS          84 k
+ perl-Text-Diff               noarch 1.45-8.oe2309            @OS          59 k
+ perl-Text-ParseWords         noarch 3.30-420.oe2309          @OS         8.0 k
+ perl-Text-Tabs+Wrap          noarch 2023.0511-1.oe2309       @OS          12 k
+ perl-Thread-Queue            noarch 3.13-4.oe2309            @OS          18 k
+ perl-Time-HiRes              x86_64 4:1.9767-3.oe2309        @OS         110 k
+ perl-Time-Local              noarch 2:1.300-2.oe2309         @OS          44 k
+ perl-URI                     noarch 5.10-2.oe2309            @OS         176 k
+ perl-Unicode-Collate         x86_64 1.31-2.oe2309            @OS         4.9 M
+ perl-Unicode-Normalize       x86_64 1.28-2.oe2309            @OS         642 k
+ perl-autodie                 noarch 2.36-1.oe2309            @OS         147 k
+ perl-bignum                  noarch 0.66-1.oe2309            @OS          98 k
+ perl-constant                noarch 1.33-422.oe2309          @OS          21 k
+ perl-devel                   x86_64 4:5.38.0-1.oe2309        @OS          14 M
+ perl-experimental            noarch 0.031-1.oe2309           @OS          35 k
+ perl-libnet                  noarch 3.15-1.oe2309            @OS         241 k
+ perl-libs                    x86_64 4:5.38.0-1.oe2309        @OS         9.1 M
+ perl-parent                  noarch 1:0.241-1.oe2309         @OS         7.8 k
+ perl-perlfaq                 noarch 5.20230701-1.oe2309      @OS         525 k
+ perl-podlators               noarch 1:5.01-1.oe2309          @OS         216 k
+ perl-threads                 x86_64 2:2.26-2.oe2309          @OS          80 k
+ perl-threads-shared          x86_64 1.62-2.oe2309            @OS          63 k
+ perl-version                 x86_64 8:0.99.29-2.oe2309       @OS         115 k
+ python3-pyparsing            noarch 3.0.9-1.oe2309           @OS         1.0 M
+ qt5-srpm-macros              noarch 5.15.2-1.oe2309          @OS         803  
+ rdma-core                    x86_64 41.0-9.oe2309            @OS         3.2 M
+ sg3_utils                    x86_64 1.47-3.oe2309            @OS         2.5 M
+ systemtap-sdt-devel          x86_64 4.5-7.oe2309             @OS          37 k
+ zip                          x86_64 3.0-3
