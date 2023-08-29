@@ -1,0 +1,911 @@
++ source common_multipath-tools.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Aug 28 12:24:45 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
+++ TEST_DISK 2
+++ id=2
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 2
++ remote_disks='sr0 vdb vdc vdd'
+++ echo sr0 vdb vdc vdd
+++ awk -F ' ' '{for(i=1;i<=NF;i++) if ($i!~/[0-9]/)j=i;print $j}'
++ remote_disk=/dev/vdd
++ P_SSH_CMD --node 2 --cmd 'dnf install -y scsi-target-utils; 
+        echo -e '\''n\np\n1\n\n+2000M\nw'\'' | fdisk /dev/vdd; 
+        echo -e '\''<target iqn.2013-12.com.make:ws.httpd>\nbacking-store /dev/vdd\n</target>'\'' >>/etc/tgt/targets.conf; 
+        systemctl restart tgtd; 
+        systemctl stop firewalld;'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'dnf install -y scsi-target-utils; 
+        echo -e '\''n\np\n1\n\n+2000M\nw'\'' | fdisk /dev/vdd; 
+        echo -e '\''<target iqn.2013-12.com.make:ws.httpd>\nbacking-store /dev/vdd\n</target>'\'' >>/etc/tgt/targets.conf; 
+        systemctl restart tgtd; 
+        systemctl stop firewalld;'
+Value out of range.
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ DNF_REMOVE iscsi-initiator-utils
++ node=iscsi-initiator-utils
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Mon Aug 28 12:25:04 2023 - WARN  - no thing to do.
++ return 0
++ DNF_INSTALL 'iscsi-initiator-utils multipath-tools device-mapper-event device-mapper'
++ pkgs='iscsi-initiator-utils multipath-tools device-mapper-event device-mapper'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'iscsi-initiator-utils multipath-tools device-mapper-event device-mapper' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpuq7mspcd
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpuq7mspcd
++ systemctl restart iscsid
++ iscsiadm -m discovery -t sendtargets -p 10.0.0.7
+10.0.0.7:3260,1 iqn.2013-12.com.make:ws.httpd
++ iscsiadm -m node -T iqn.2013-12.com.make:ws.httpd -l
+Logging in to [iface: default, target: iqn.2013-12.com.make:ws.httpd, portal: 10.0.0.7,3260]
+Login to [iface: default, target: iqn.2013-12.com.make:ws.httpd, portal: 10.0.0.7,3260] successful.
++ mpathconf --enable --with_multipathd y
++ service multipathd start
+Redirecting to /bin/systemctl start multipathd.service
++ multipath -v2
++ multipath -ll
+mpatha (360000000000000000e00000000010001) dm-0 IET,VIRTUAL-DISK
+size=500M features='0' hwhandler='0' wp=rw
+`-+- policy='service-time 0' prio=1 status=active
+  `- 2:0:0:1 sda 8:0 active ready running
++ echo '
+defaults {
+       user_friendly_names       yes
+       max_fds                   max
+       queue_without_daemon      no
+       flush_on_last_del         yes
+}
+
+devices {
+       device {
+               vendor                  "IET "
+               product                 "VIRTUAL-DISK"
+               path_grouping_policy    multibus
+               getuid_callout          "/sbin/scsi_id -g -u -s/block/%n"
+               path_checker            directio
+               path_selector           "round-robin 0"
+               hardware_handler        "0"
+               failback                15
+               rr_weight               priorities
+               no_path_retry           queue
+               rr_min_io               100
+               product_blacklist       LUNZ
+       }
+}'
++ lsmod
++ grep dm_multipath
+dm_multipath           45056  2 dm_service_time
+dm_mod                217088  4 dm_multipath
++ modprobe dm_multipath
++ service multipathd restart
+Redirecting to /bin/systemctl restart multipathd.service
++ chkconfig --level 345 multipathd on
+Note: Forwarding request to 'systemctl enable multipathd.service'.
+Created symlink /etc/systemd/system/sysinit.target.wants/multipathd.service → /usr/lib/systemd/system/multipathd.service.
+Created symlink /etc/systemd/system/sockets.target.wants/multipathd.socket → /usr/lib/systemd/system/multipathd.socket.
+++ TEST_DISK 1
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ local_disks='sda sr0 vdb vdc vdd'
+++ echo sda sr0 vdb vdc vdd
+++ awk -F ' ' '/sd[a-z]/ {for(i=1;i<=NF;i++) if ($i~/sd/ && $i!~/[0-9]/)j=i;print $j}'
++ local_disk=sda
+++ ls /dev/mapper
+++ grep mpath
+++ head -n 1
++ test_mapper=mpatha
+++ ls -l /dev/mapper/
+++ grep mpatha
+++ awk -F / '{print $2}'
+++ head -n 1
++ test_dm=dm-0
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Mon Aug 28 12:25:12 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Aug 28 12:25:12 2023 - INFO  - Start to run test.
++ multipath -v3
++ grep sda
+313.226910 | set open fds limit to 1073741816/1073741816
+313.226931 | loading /lib64/multipath/libchecktur.so checker
+313.227056 | checker tur: message table size = 3
+313.227073 | loading /lib64/multipath/libprioconst.so prioritizer
+313.227254 | _init_foreign: foreign library "nvme" is not enabled
+313.231791 | sr0: device node name blacklisted
+313.231923 | vda: device node name blacklisted
+313.232249 | vdb: device node name blacklisted
+313.232376 | vdc: device node name blacklisted
+313.232482 | vdd: device node name blacklisted
+313.232624 | sda: size = 1024000
+313.232790 | sda: vendor = IET
+313.232817 | sda: product = VIRTUAL-DISK
+313.232841 | sda: rev = 0001
+313.234051 | sda: h:b:t:l = 2:0:0:1
+313.234410 | sda: tgt_node_name = iqn.2013-12.com.make:ws.httpd
+313.234424 | sda: uid_attribute = ID_SERIAL (setting: multipath internal)
+313.234429 | sda: recheck_wwid = 1 (setting: multipath.conf defaults/devices section)
+313.234574 | sda: 1020 cyl, 17 heads, 59 sectors/track, start at 0
+313.234581 | sda: vpd_vendor_id = 0 "undef" (setting: multipath internal)
+313.234599 | sda: serial = beaf11
+313.234604 | sda: detect_checker = yes (setting: multipath internal)
+313.235182 | sda: path_checker = tur (setting: multipath internal)
+313.235194 | sda: checker timeout = 30 s (setting: kernel sysfs)
+313.235507 | sda: tur state = up
+313.235523 | sda: uid = 360000000000000000e00000000010001 (udev)
+313.235530 | sda: detect_prio = yes (setting: multipath internal)
+313.235536 | sda: prio = const (setting: multipath internal)
+313.235540 | sda: prio args = "" (setting: multipath internal)
+313.235546 | sda: const prio = 1
+313.235657 | dm-0: device node name blacklisted
+313.236023 | multipath-tools v0.8.7 (09/08, 2021)
+313.236041 | libdevmapper version 1.02.195
+313.236173 | kernel device mapper v4.48.0
+313.236189 | DM multipath kernel driver v1.14.0
+313.236308 | sda: size = 1024000
+313.236318 | sda: vendor = IET
+313.236334 | sda: product = VIRTUAL-DISK
+313.236340 | sda: rev = 0001
+313.236978 | sda: h:b:t:l = 2:0:0:1
+313.237184 | sda: tgt_node_name = iqn.2013-12.com.make:ws.httpd
+313.237207 | sda: 1020 cyl, 17 heads, 59 sectors/track, start at 0
+313.237214 | sda: vpd_vendor_id = 0 "undef" (setting: multipath internal)
+313.237231 | sda: serial = beaf11
+313.237580 | sda: tur state = up
+313.237593 | sda 8:0: start coalesce
+313.237798 | unloading tur checker
+313.237833 | unloading const prioritizer
+360000000000000000e00000000010001 2:0:0:1 sda 8:0   1   undef undef  IET,VIRTUAL-DISK unknown
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -ll
++ grep mpath -A 10
+mpatha (360000000000000000e00000000010001) dm-0 IET,VIRTUAL-DISK
+size=500M features='0' hwhandler='0' wp=rw
+`-+- policy='service-time 0' prio=1 status=active
+  `- 2:0:0:1 sda 8:0 active ready running
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -l
++ grep mpath -A 10
+mpatha (360000000000000000e00000000010001) dm-0 IET,VIRTUAL-DISK
+size=500M features='0' hwhandler='0' wp=rw
+`-+- policy='service-time 0' prio=0 status=active
+  `- 2:0:0:1 sda 8:0 active undef running
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -v3 -f /dev/dm-0
+313.267968 | set open fds limit to 1073741816/1073741816
+313.268014 | loading /lib64/multipath/libchecktur.so checker
+313.268149 | checker tur: message table size = 3
+313.268166 | loading /lib64/multipath/libprioconst.so prioritizer
+313.268323 | _init_foreign: foreign library "nvme" is not enabled
+313.268363 | delegating command to multipathd
+313.268566 | multipath-tools v0.8.7 (09/08, 2021)
+313.268587 | libdevmapper version 1.02.195
+313.268625 | kernel device mapper v4.48.0
+313.268640 | DM multipath kernel driver v1.14.0
+313.298213 | unloading tur checker
+313.298274 | unloading const prioritizer
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -L /dev/mapper/mpatha1
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ service multipathd restart
+Redirecting to /bin/systemctl restart multipathd.service
++ sleep 10
++ multipath -v3 -R 1 -F
+323.387485 | set open fds limit to 1073741816/1073741816
+323.387516 | loading /lib64/multipath/libchecktur.so checker
+323.387650 | checker tur: message table size = 3
+323.387663 | loading /lib64/multipath/libprioconst.so prioritizer
+323.387775 | _init_foreign: foreign library "nvme" is not enabled
+323.387860 | delegating command to multipathd
+323.403464 | unloading tur checker
+323.403517 | unloading const prioritizer
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -L /dev/mapper/mpatha
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ service multipathd restart
+Redirecting to /bin/systemctl restart multipathd.service
++ multipath -a /dev/dm-0
++ grep added
+323.492233 | libdevmapper: libdm-common.c(662): Device dm-0 not found
+wwid '/dev/dm-0' added
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 0000 /etc/multipath/wwids
+/360000000000000000e00000000010001/
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -v3 -C /dev/dm-0
++ grep -E 'checker|sda|/dev/dm-0'
+323.499150 | loading /lib64/multipath/libchecktur.so checker
+323.499261 | checker tur: message table size = 3
+323.500041 | sda: size = 1024000
+323.500158 | sda: vendor = IET
+323.500178 | sda: product = VIRTUAL-DISK
+323.500197 | sda: rev = 0001
+323.501204 | sda: h:b:t:l = 2:0:0:1
+323.501600 | sda: tgt_node_name = iqn.2013-12.com.make:ws.httpd
+323.501615 | sda: uid_attribute = ID_SERIAL (setting: multipath internal)
+323.501618 | sda: recheck_wwid = 1 (setting: multipath.conf defaults/devices section)
+323.501836 | sda: uid = 360000000000000000e00000000010001 (udev)
+323.501845 | mpatha: adding new path sda
+323.502027 | sda: size = 1024000
+323.502153 | sda: vendor = IET
+323.502175 | sda: product = VIRTUAL-DISK
+323.502196 | sda: rev = 0001
+323.503131 | sda: h:b:t:l = 2:0:0:1
+323.503430 | sda: tgt_node_name = iqn.2013-12.com.make:ws.httpd
+323.503448 | /dev/dm-0: path sda is usable
+323.503451 | /dev/dm-0: usable paths found
+323.503506 | unloading tur checker
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -v3 -q
++ grep -C 10 'paths list'
+323.519404 | sda: rev = 0001
+323.521026 | sda: h:b:t:l = 2:0:0:1
+323.521217 | sda: tgt_node_name = iqn.2013-12.com.make:ws.httpd
+323.521251 | sda: 1020 cyl, 17 heads, 59 sectors/track, start at 0
+323.521256 | sda: vpd_vendor_id = 0 "undef" (setting: multipath internal)
+323.521280 | sda: serial = beaf11
+323.521590 | sda: tur state = up
+323.521607 | sda 8:0: start coalesce
+323.521973 | unloading tur checker
+323.522044 | unloading const prioritizer
+===== paths list =====
+uuid                              hcil    dev dev_t pri dm_st chk_st vend/prod/rev    dev_st 
+360000000000000000e00000000010001 2:0:0:1 sda 8:0   1   undef undef  IET,VIRTUAL-DISK unknown
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ multipath -v3 -d
++ grep -i dev
+323.532776 | sr0: device node name blacklisted
+323.532929 | vda: device node name blacklisted
+323.533337 | vdb: device node name blacklisted
+323.533454 | vdc: device node name blacklisted
+323.533570 | vdd: device node name blacklisted
+323.535720 | sda: recheck_wwid = 1 (setting: multipath.conf defaults/devices section)
+323.536989 | sda: uid = 360000000000000000e00000000010001 (udev)
+323.537266 | dm-0: device node name blacklisted
+323.537759 | libdevmapper version 1.02.195
+323.537938 | kernel device mapper v4.48.0
+uuid                              hcil    dev dev_t pri dm_st chk_st vend/prod/rev    dev_st 
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Mon Aug 28 12:25:22 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Mon Aug 28 12:25:22 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Aug 28 12:25:22 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ P_SSH_CMD --node 2 --cmd 'dnf remove -y scsi-target-utils; echo -e '\''d\nw\n'\'' | fdisk /dev/vdd'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'dnf remove -y scsi-target-utils; echo -e '\''d\nw\n'\'' | fdisk /dev/vdd'
+Dependencies resolved.
+================================================================================
+ Package                      Arch   Version                  Repository   Size
+================================================================================
+Removing:
+ scsi-target-utils            x86_64 1.0.79-4.oe2309          @everything 569 k
+Removing unused dependencies:
+ efi-srpm-macros              noarch 4-9.oe2309               @OS          39 k
+ libaio                       x86_64 0.3.113-9.oe2309         @OS          40 k
+ libnl3                       x86_64 3.7.0-2.oe2309           @OS         1.9 M
+ lsof                         x86_64 4.97.0-3.oe2309          @OS         188 k
+ openEuler-rpm-config         x86_64 30-40.oe2309             @OS         149 k
+ pciutils                     x86_64 3.9.0-1.oe2309           @OS         303 k
+ perl                         x86_64 4:5.38.0-1.oe2309        @OS          13 M
+ perl-Algorithm-Diff          noarch 1:1.201-2.oe2309         @OS          63 k
+ perl-Archive-Tar             noarch 3.02-1.oe2309            @OS         110 k
+ perl-B-Debug                 noarch 1.26-6.oe2309            @OS          31 k
+ perl-CPAN-Meta               noarch 2.150010-420.oe2309      @OS         524 k
+ perl-CPAN-Meta-Requirements  noarch 2.143-1.oe2309           @OS          72 k
+ perl-CPAN-Meta-YAML          noarch 0.018-421.oe2309         @OS          49 k
+ perl-Carp                    noarch 1.50-419.oe2309          @OS          37 k
+ perl-Compress-Raw-Bzip2      x86_64 2.205-1.oe2309           @OS          57 k
+ perl-Compress-Raw-Zlib       x86_64 1:2.205-1.oe2309         @OS         131 k
+ perl-Config-General          noarch 2.65-1.oe2309            @everything 108 k
+ perl-Config-Perl-V           noarch 0.36-1.oe2309            @OS          21 k
+ perl-Data-Dumper             x86_64 2.183-2.oe2309           @OS         102 k
+ perl-Devel-PPPort            x86_64 3.68-1.oe2309            @OS         851 k
+ perl-Digest                  noarch 1.20-3.oe2309            @OS          28 k
+ perl-Digest-MD5              x86_64 2.58-2.oe2309            @OS          54 k
+ perl-Digest-SHA              x86_64 1:6.02-8.oe2309          @OS         106 k
+ perl-Encode                  x86_64 4:3.19-1.oe2309          @OS         9.7 M
+ perl-Encode-Locale           noarch 1.05-14.oe2309           @OS          15 k
+ perl-Encode-devel            x86_64 4:3.19-1.oe2309          @OS         120 k
+ perl-Env                     noarch 1.04-398.oe2309          @OS          24 k
+ perl-Exporter                noarch 5.77-1.oe2309            @OS          46 k
+ perl-ExtUtils-Command        noarch 1:7.62-2.oe2309          @OS         7.6 k
+ perl-ExtUtils-Install        noarch 2.22-1.oe2309            @OS          76 k
+ perl-ExtUtils-MakeMaker      noarch 1:7.62-2.oe2309          @OS         545 k
+ perl-ExtUtils-Manifest       noarch 1:1.75-1.oe2309          @OS          42 k
+ perl-ExtUtils-ParseXS        noarch 2:3.44-1.oe2309          @OS         155 k
+ perl-File-Fetch              noarch 1.04-1.oe2309            @OS          47 k
+ perl-File-Path               noarch 2.18-2.oe2309            @OS          43 k
+ perl-File-Temp               noarch 1:0.2311-3.oe2309        @OS         151 k
+ perl-Filter                  x86_64 2:1.64-1.oe2309          @OS         135 k
+ perl-Filter-Simple           noarch 1:0.94-1.oe2309          @OS          23 k
+ perl-Getopt-Long             noarch 1:2.54-1.oe2309          @OS         123 k
+ perl-HTTP-Tiny               noarch 0.088-1.oe2309           @OS          97 k
+ perl-IO-Compress             noarch 2.205-1.oe2309           @OS         683 k
+ perl-IO-Socket-IP            noarch 0.41-3.oe2309            @OS          70 k
+ perl-IO-Socket-SSL           noarch 2.083-1.oe2309           @OS         580 k
+ perl-IPC-Cmd                 noarch 2:1.04-4.oe2309          @OS          78 k
+ perl-IPC-SysV                x86_64 2.09-2.oe2309            @OS          49 k
+ perl-IPC-System-Simple       noarch 1.30-3.oe2309            @OS          65 k
+ perl-JSON-PP                 noarch 1:4.16-1.oe2309          @OS         120 k
+ perl-Locale-Codes            noarch 3.74-1.oe2309            @OS         2.3 M
+ perl-Locale-Maketext         noarch 1:1.29-2.oe2309          @OS         130 k
+ perl-MIME-Base64             x86_64 3.16-2.oe2309            @OS          32 k
+ perl-Math-BigInt             noarch 1:1.9998.39-1.oe2309     @OS         629 k
+ perl-Math-BigInt-FastCalc    x86_64 0.5014-1.oe2309          @OS          27 k
+ perl-Math-BigRat             noarch 0.2624-1.oe2309          @OS          90 k
+ perl-Module-CoreList         noarch 1:5.20230520-1.oe2309    @OS         1.1 M
+ perl-Module-Load             noarch 1:0.36-2.oe2309          @OS          12 k
+ perl-Module-Load-Conditional noarch 0.74-2.oe2309            @OS          25 k
+ perl-Module-Metadata         noarch 1.000037-2.oe2309        @OS          62 k
+ perl-Mozilla-CA              noarch 1:20211001-2.oe2309      @OS         4.3 k
+ perl-Net-SSLeay              x86_64 1.92-2.oe2309            @OS         1.1 M
+ perl-Params-Check            noarch 1:0.38-419.oe2309        @OS          20 k
+ perl-PathTools               x86_64 3.89-1.oe2309            @OS         168 k
+ perl-Perl-OSType             noarch 1.010-422.oe2309         @OS          31 k
+ perl-PerlIO-via-QuotedPrint  noarch 0.10-1.oe2309            @OS         5.6 k
+ perl-Pod-Checker             noarch 4:1.74-2.oe2309          @OS          43 k
+ perl-Pod-Escapes             noarch 1:1.07_01-1.oe2309       @OS          17 k
+ perl-Pod-Parser              noarch 1.66-1.oe2309            @OS         187 k
+ perl-Pod-Perldoc             noarch 1:3.28-5.oe2309          @OS         116 k
+ perl-Pod-Simple              noarch 1:3.45-1.oe2309          @OS         485 k
+ perl-Pod-Usage               noarch 4:2.03-2.oe2309          @OS          58 k
+ perl-Scalar-List-Utils       x86_64 4:1.63-1.oe2309          @OS         124 k
+ perl-Socket                  x86_64 4:2.037-1.oe2309         @OS         114 k
+ perl-Storable                x86_64 1:3.25-3.oe2309          @OS         214 k
+ perl-Sys-Syslog              x86_64 0.36-2.oe2309            @OS          90 k
+ perl-Term-ANSIColor          noarch 5.01-2.oe2309            @OS          64 k
+ perl-Term-Cap                noarch 1.17-511.oe2309          @OS          25 k
+ perl-Test-Harness            noarch 2:3.44-1.oe2309          @OS         422 k
+ perl-Test-Simple             noarch 2:1.302195-1.oe2309      @OS         694 k
+ perl-Text-Balanced           noarch 2.06-1.oe2309            @OS          84 k
+ perl-Text-Diff               noarch 1.45-8.oe2309            @OS          59 k
+ perl-Text-ParseWords         noarch 3.30-420.oe2309          @OS         8.0 k
+ perl-Text-Tabs+Wrap          noarch 2023.0511-1.oe2309       @OS          12 k
+ perl-Thread-Queue            noarch 3.13-4.oe2309            @OS          18 k
+ perl-Time-HiRes              x86_64 4:1.9767-3.oe2309        @OS         110 k
+ perl-Time-Local              noarch 2:1.300-2.oe2309         @OS          44 k
+ perl-URI                     noarch 5.10-2.oe2309            @OS         176 k
+ perl-Unicode-Collate         x86_64 1.31-2.oe2309            @OS         4.9 M
+ perl-Unicode-Normalize       x86_64 1.28-2.oe2309            @OS         642 k
+ perl-autodie                 noarch 2.36-1.oe2309            @OS         147 k
+ perl-bignum                  noarch 0.66-1.oe2309            @OS          98 k
+ perl-constant                noarch 1.33-422.oe2309          @OS          21 k
+ perl-devel                   x86_64 4:5.38.0-1.oe2309        @OS          14 M
+ perl-experimental            noarch 0.031-1.oe2309           @OS          35 k
+ perl-libnet                  noarch 3.15-1.oe2309            @OS         241 k
+ perl-libs                    x86_64 4:5.38.0-1.oe2309        @OS         9.1 M
+ perl-parent                  noarch 1:0.241-1.oe2309         @OS         7.8 k
+ perl-perlfaq                 noarch 5.20230701-1.oe2309      @OS         525 k
+ perl-podlators               noarch 1:5.01-1.oe2309          @OS         216 k
+ perl-threads                 x86_64 2:2.26-2.oe2309          @OS          80 k
+ perl-threads-shared          x86_64 1.62-2.oe2309            @OS          63 k
+ perl-version                 x86_64 8:0.99.29-2.oe2309       @OS         115 k
+ python3-pyparsing            noarch 3.0.9-1.oe2309           @OS         1.0 M
+ qt5-srpm-macros              noarch 5.15.2-1.oe2309          @OS         803  
+ rdma-core                    x86_64 41.0-9.oe2309            @OS         3.2 M
+ sg3_utils                    x86_64 1.47-3.oe2309            @OS         2.5 M
+ systemtap-sdt-devel          x86_64 4.5-7.oe2309             @OS          37 k
+ zip                          x86_64 3.0-30.oe2309            @OS         789 k
+
+Transaction Summary
+================================================================================
+Remove  107 Packages
+
+Freed space: 77 M
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Running scriptlet: scsi-target-utils-1.0.79-4.oe2309.x86_64               1/1 
+  Running scriptlet: scsi-target-utils-1.0.79-4.oe2309.x86_64             1/107 
+  Erasing          : scsi-target-utils-1.0.79-4.oe2309.x86_64             1/107 
+warning: /etc/tgt/targets.conf saved as /etc/tgt/targets.conf.rpmsave
+
+  Running scriptlet: scsi-target-utils-1.0.79-4.oe2309.x86_64             1/107 
+  Erasing          : perl-Config-General-2.65-1.oe2309.noarch             2/107 
+  Running scriptlet: rdma-core-41.0-9.oe2309.x86_64                       3/107 
+  Erasing          : rdma-core-41.0-9.oe2309.x86_64                       3/107 
+  Running scriptlet: rdma-core-41.0-9.oe2309.x86_64                       3/107 
+  Erasing          : perl-Algorithm-Diff-1:1.201-2.oe2309.noarch          4/107 
+  Erasing          : perl-Text-Diff-1.45-8.oe2309.noarch                  5/107 
+  Erasing          : perl-Archive-Tar-3.02-1.oe2309.noarch                6/107 
+  Erasing          : perl-Digest-SHA-1:6.02-8.oe2309.x86_64               7/107 
+  Erasing          : perl-File-Fetch-1.04-1.oe2309.noarch                 8/107 
+  Erasing          : perl-Filter-Simple-1:0.94-1.oe2309.noarch            9/107 
+  Erasing          : perl-Compress-Raw-Bzip2-2.205-1.oe2309.x86_64       10/107 
+  Erasing          : perl-Compress-Raw-Zlib-1:2.205-1.oe2309.x86_64      11/107 
+  Erasing          : perl-IO-Compress-2.205-1.oe2309.noarch              12/107 
+  Erasing          : perl-IPC-Cmd-2:1.04-4.oe2309.noarch                 13/107 
+  Running scriptlet: perl-Locale-Codes-3.74-1.oe2309.noarch              14/107 
+  Erasing          : perl-Locale-Codes-3.74-1.oe2309.noarch              14/107 
+  Running scriptlet: perl-Locale-Codes-3.74-1.oe2309.noarch              14/107 
+  Running scriptlet: perl-Math-BigInt-FastCalc-0.5014-1.oe2309.x86_64    15/107 
+  Erasing          : perl-Math-BigInt-FastCalc-0.5014-1.oe2309.x86_64    15/107 
+  Running scriptlet: perl-Math-BigInt-FastCalc-0.5014-1.oe2309.x86_64    15/107 
+  Erasing          : perl-Module-CoreList-1:5.20230520-1.oe2309.noarc    16/107 
+  Erasing          : perl-Module-Load-1:0.36-2.oe2309.noarch             17/107 
+  Erasing          : perl-Module-Load-Conditional-0.74-2.oe2309.noarc    18/107 
+  Erasing          : perl-Module-Metadata-1.000037-2.oe2309.noarch       19/107 
+  Erasing          : perl-Params-Check-1:0.38-419.oe2309.noarch          20/107 
+  Erasing          : perl-Pod-Checker-4:1.74-2.oe2309.noarch             21/107 
+  Erasing          : perl-Pod-Parser-1.66-1.oe2309.noarch                22/107 
+  Erasing          : perl-Sys-Syslog-0.36-2.oe2309.x86_64                23/107 
+  Erasing          : perl-Test-Simple-2:1.302195-1.oe2309.noarch         24/107 
+  Erasing          : perl-Text-Balanced-2.06-1.oe2309.noarch             25/107 
+  Erasing          : perl-Thread-Queue-3.13-4.oe2309.noarch              26/107 
+  Erasing          : perl-Unicode-Collate-1.31-2.oe2309.x86_64           27/107 
+  Erasing          : perl-IPC-System-Simple-1.30-3.oe2309.noarch         28/107 
+  Erasing          : perl-autodie-2.36-1.oe2309.noarch                   29/107 
+  Running scriptlet: perl-Math-BigRat-0.2624-1.oe2309.noarch             30/107 
+  Erasing          : perl-Math-BigRat-0.2624-1.oe2309.noarch             30/107 
+  Running scriptlet: perl-Math-BigRat-0.2624-1.oe2309.noarch             30/107 
+  Erasing          : perl-bignum-0.66-1.oe2309.noarch                    31/107 
+  Erasing          : perl-Filter-2:1.64-1.oe2309.x86_64                  32/107 
+  Erasing          : perl-ExtUtils-Command-1:7.62-2.oe2309.noarch        33/107 
+  Erasing          : perl-ExtUtils-Manifest-1:1.75-1.oe2309.noarch       34/107 
+  Erasing          : perl-Test-Harness-2:3.44-1.oe2309.noarch            35/107 
+  Erasing          : perl-Encode-Locale-1.05-14.oe2309.noarch            36/107 
+  Running scriptlet: perl-CPAN-Meta-Requirements-2.143-1.oe2309.noarc    37/107 
+  Erasing          : perl-CPAN-Meta-Requirements-2.143-1.oe2309.noarc    37/107 
+  Running scriptlet: perl-CPAN-Meta-Requirements-2.143-1.oe2309.noarc    37/107 
+  Erasing          : perl-CPAN-Meta-YAML-0.018-421.oe2309.noarch         38/107 
+  Running scriptlet: perl-CPAN-Meta-2.150010-420.oe2309.noarch           39/107 
+  Erasing          : perl-CPAN-Meta-2.150010-420.oe2309.noarch           39/107 
+  Running scriptlet: perl-CPAN-Meta-2.150010-420.oe2309.noarch           39/107 
+  Running scriptlet: perl-Math-BigInt-1:1.9998.39-1.oe2309.noarch        40/107 
+  Erasing          : perl-Math-BigInt-1:1.9998.39-1.oe2309.noarch        40/107 
+  Running scriptlet: perl-Math-BigInt-1:1.9998.39-1.oe2309.noarch        40/107 
+  Running scriptlet: perl-JSON-PP-1:4.16-1.oe2309.noarch                 41/107 
+  Erasing          : perl-JSON-PP-1:4.16-1.oe2309.noarch                 41/107 
+  Running scriptlet: perl-JSON-PP-1:4.16-1.oe2309.noarch                 41/107 
+  Erasing          : perl-ExtUtils-MakeMaker-1:7.62-2.oe2309.noarch      42/107 
+  Erasing          : perl-ExtUtils-Install-2.22-1.oe2309.noarch          43/107 
+  Erasing          : perl-ExtUtils-ParseXS-2:3.44-1.oe2309.noarch        44/107 
+  Erasing          : perl-devel-4:5.38.0-1.oe2309.x86_64                 45/107 
+  Erasing          : perl-Encode-devel-4:3.19-1.oe2309.x86_64            46/107 
+  Erasing          : perl-experimental-0.031-1.oe2309.noarch             47/107 
+  Erasing          : perl-File-Path-2.18-2.oe2309.noarch                 48/107 
+  Erasing          : perl-File-Temp-1:0.2311-3.oe2309.noarch             49/107 
+  Erasing          : perl-Net-SSLeay-1.92-2.oe2309.x86_64                50/107 
+  Running scriptlet: perl-Data-Dumper-2.183-2.oe2309.x86_64              51/107 
+  Erasing          : perl-Data-Dumper-2.183-2.oe2309.x86_64              51/107 
+  Running scriptlet: perl-Data-Dumper-2.183-2.oe2309.x86_64              51/107 
+  Running scriptlet: perl-Storable-1:3.25-3.oe2309.x86_64                52/107 
+  Erasing          : perl-Storable-1:3.25-3.oe2309.x86_64                52/107 
+  Running scriptlet: perl-Storable-1:3.25-3.oe2309.x86_64                52/107 
+  Erasing          : perl-Encode-4:3.19-1.oe2309.x86_64                  53/107 
+  Erasing          : perl-IO-Socket-IP-0.41-3.oe2309.noarch              54/107 
+  Running scriptlet: perl-Socket-4:2.037-1.oe2309.x86_64                 55/107 
+  Erasing          : perl-Socket-4:2.037-1.oe2309.x86_64                 55/107 
+  Running scriptlet: perl-Socket-4:2.037-1.oe2309.x86_64                 55/107 
+  Erasing          : perl-Time-Local-2:1.300-2.oe2309.noarch             56/107 
+  Erasing          : perl-libnet-3.15-1.oe2309.noarch                    57/107 
+  Erasing          : perl-URI-5.10-2.oe2309.noarch                       58/107 
+  Erasing          : perl-IO-Socket-SSL-2.083-1.oe2309.noarch            59/107 
+  Erasing          : perl-PathTools-3.89-1.oe2309.x86_64                 60/107 
+  Erasing          : perl-Mozilla-CA-1:20211001-2.oe2309.noarch          61/107 
+  Erasing          : perl-HTTP-Tiny-0.088-1.oe2309.noarch                62/107 
+  Erasing          : perl-Pod-Perldoc-1:3.28-5.oe2309.noarch             63/107 
+  Erasing          : perl-Pod-Usage-4:2.03-2.oe2309.noarch               64/107 
+  Running scriptlet: perl-Getopt-Long-1:2.54-1.oe2309.noarch             65/107 
+  Erasing          : perl-Getopt-Long-1:2.54-1.oe2309.noarch             65/107 
+  Running scriptlet: perl-Getopt-Long-1:2.54-1.oe2309.noarch             65/107 
+  Erasing          : perl-Text-Tabs+Wrap-2023.0511-1.oe2309.noarch       66/107 
+  Erasing          : perl-Pod-Simple-1:3.45-1.oe2309.noarch              67/107 
+  Erasing          : perl-podlators-1:5.01-1.oe2309.noarch               68/107 
+  Erasing          : perl-threads-shared-1.62-2.oe2309.x86_64            69/107 
+  Running scriptlet: perl-constant-1.33-422.oe2309.noarch                70/107 
+  Erasing          : perl-constant-1.33-422.oe2309.noarch                70/107 
+  Running scriptlet: perl-constant-1.33-422.oe2309.noarch                70/107 
+  Erasing          : perl-version-8:0.99.29-2.oe2309.x86_64              71/107 
+  Erasing          : perl-4:5.38.0-1.oe2309.x86_64                       72/107 
+  Running scriptlet: perl-Locale-Maketext-1:1.29-2.oe2309.noarch         73/107 
+  Erasing          : perl-Locale-Maketext-1:1.29-2.oe2309.noarch         73/107 
+  Running scriptlet: perl-Locale-Maketext-1:1.29-2.oe2309.noarch         73/107 
+  Running scriptlet: perl-Config-Perl-V-0.36-1.oe2309.noarch             74/107 
+  Erasing          : perl-Config-Perl-V-0.36-1.oe2309.noarch             74/107 
+  Running scriptlet: perl-Config-Perl-V-0.36-1.oe2309.noarch             74/107 
+  Erasing          : perl-Pod-Escapes-1:1.07_01-1.oe2309.noarch          75/107 
+  Erasing          : perl-Term-ANSIColor-5.01-2.oe2309.noarch            76/107 
+  Erasing          : perl-Text-ParseWords-3.30-420.oe2309.noarch         77/107 
+  Erasing          : perl-Perl-OSType-1.010-422.oe2309.noarch            78/107 
+  Erasing          : perl-PerlIO-via-QuotedPrint-0.10-1.oe2309.noarch    79/107 
+  Erasing          : perl-B-Debug-1.26-6.oe2309.noarch                   80/107 
+  Erasing          : perl-Term-Cap-1.17-511.oe2309.noarch                81/107 
+  Erasing          : perl-perlfaq-5.20230701-1.oe2309.noarch             82/107 
+  Erasing          : openEuler-rpm-config-30-40.oe2309.x86_64            83/107 
+  Erasing          : perl-parent-1:0.241-1.oe2309.noarch                 84/107 
+  Erasing          : perl-Env-1.04-398.oe2309.noarch                     85/107 
+  Erasing          : systemtap-sdt-devel-4.5-7.oe2309.x86_64             86/107 
+  Running scriptlet: perl-Unicode-Normalize-1.28-2.oe2309.x86_64         87/107 
+  Erasing          : perl-Unicode-Normalize-1.28-2.oe2309.x86_64         87/107 
+  Running scriptlet: perl-Unicode-Normalize-1.28-2.oe2309.x86_64         87/107 
+  Erasing          : perl-Digest-MD5-2.58-2.oe2309.x86_64                88/107 
+  Running scriptlet: perl-Scalar-List-Utils-4:1.63-1.oe2309.x86_64       89/107 
+  Erasing          : perl-Scalar-List-Utils-4:1.63-1.oe2309.x86_64       89/107 
+  Running scriptlet: perl-Scalar-List-Utils-4:1.63-1.oe2309.x86_64       89/107 
+  Erasing          : perl-threads-2:2.26-2.oe2309.x86_64                 90/107 
+  Erasing          : perl-Digest-1.20-3.oe2309.noarch                    91/107 
+  Running scriptlet: perl-MIME-Base64-3.16-2.oe2309.x86_64               92/107 
+  Erasing          : perl-MIME-Base64-3.16-2.oe2309.x86_64               92/107 
+  Running scriptlet: perl-MIME-Base64-3.16-2.oe2309.x86_64               92/107 
+  Running scriptlet: perl-Time-HiRes-4:1.9767-3.oe2309.x86_64            93/107 
+  Erasing          : perl-Time-HiRes-4:1.9767-3.oe2309.x86_64            93/107 
+  Running scriptlet: perl-Time-HiRes-4:1.9767-3.oe2309.x86_64            93/107 
+  Erasing          : perl-IPC-SysV-2.09-2.oe2309.x86_64                  94/107 
+  Erasing          : perl-Devel-PPPort-3.68-1.oe2309.x86_64              95/107 
+  Erasing          : python3-pyparsing-3.0.9-1.oe2309.noarch             96/107 
+  Erasing          : efi-srpm-macros-4-9.oe2309.noarch                   97/107 
+  Erasing          : qt5-srpm-macros-5.15.2-1.oe2309.noarch              98/107 
+  Erasing          : perl-Carp-1.50-419.oe2309.noarch                    99/107 
+  Erasing          : perl-Exporter-5.77-1.oe2309.noarch                 100/107 
+  Erasing          : perl-libs-4:5.38.0-1.oe2309.x86_64                 101/107 
+  Erasing          : zip-3.0-30.oe2309.x86_64                           102/107 
+  Erasing          : libnl3-3.7.0-2.oe2309.x86_64                       103/107 
+  Erasing          : pciutils-3.9.0-1.oe2309.x86_64                     104/107 
+  Running scriptlet: pciutils-3.9.0-1.oe2309.x86_64                     104/107 
+  Erasing          : libaio-0.3.113-9.oe2309.x86_64                     105/107 
+  Erasing          : lsof-4.97.0-3.oe2309.x86_64                        106/107 
+  Erasing          : sg3_utils-1.47-3.oe2309.x86_64                     107/107 
+  Running scriptlet: sg3_utils-1.47-3.oe2309.x86_64                     107/107 
+  Verifying        : efi-srpm-macros-4-9.oe2309.noarch                    1/107 
+  Verifying        : libaio-0.3.113-9.oe2309.x86_64                       2/107 
+  Verifying        : libnl3-3.7.0-2.oe2309.x86_64                         3/107 
+  Verifying        : lsof-4.97.0-3.oe2309.x86_64                          4/107 
+  Verifying        : openEuler-rpm-config-30-40.oe2309.x86_64             5/107 
+  Verifying        : pciutils-3.9.0-1.oe2309.x86_64                       6/107 
+  Verifying        : perl-4:5.38.0-1.oe2309.x86_64                        7/107 
+  Verifying        : perl-Algorithm-Diff-1:1.201-2.oe2309.noarch          8/107 
+  Verifying        : perl-Archive-Tar-3.02-1.oe2309.noarch                9/107 
+  Verifying        : perl-B-Debug-1.26-6.oe2309.noarch                   10/107 
+  Verifying        : perl-CPAN-Meta-2.150010-420.oe2309.noarch           11/107 
+  Verifying        : perl-CPAN-Meta-Requirements-2.143-1.oe2309.noarc    12/107 
+  Verifying        : perl-CPAN-Meta-YAML-0.018-421.oe2309.noarch         13/107 
+  Verifying        : perl-Carp-1.50-419.oe2309.noarch                    14/107 
+  Verifying        : perl-Compress-Raw-Bzip2-2.205-1.oe2309.x86_64       15/107 
+  Verifying        : perl-Compress-Raw-Zlib-1:2.205-1.oe2309.x86_64      16/107 
+  Verifying        : perl-Config-General-2.65-1.oe2309.noarch            17/107 
+  Verifying        : perl-Config-Perl-V-0.36-1.oe2309.noarch             18/107 
+  Verifying        : perl-Data-Dumper-2.183-2.oe2309.x86_64              19/107 
+  Verifying        : perl-Devel-PPPort-3.68-1.oe2309.x86_64              20/107 
+  Verifying        : perl-Digest-1.20-3.oe2309.noarch                    21/107 
+  Verifying        : perl-Digest-MD5-2.58-2.oe2309.x86_64                22/107 
+  Verifying        : perl-Digest-SHA-1:6.02-8.oe2309.x86_64              23/107 
+  Verifying        : perl-Encode-4:3.19-1.oe2309.x86_64                  24/107 
+  Verifying        : perl-Encode-Locale-1.05-14.oe2309.noarch            25/107 
+  Verifying        : perl-Encode-devel-4:3.19-1.oe2309.x86_64            26/107 
+  Verifying        : perl-Env-1.04-398.oe2309.noarch                     27/107 
+  Verifying        : perl-Exporter-5.77-1.oe2309.noarch                  28/107 
+  Verifying        : perl-ExtUtils-Command-1:7.62-2.oe2309.noarch        29/107 
+  Verifying        : perl-ExtUtils-Install-2.22-1.oe2309.noarch          30/107 
+  Verifying        : perl-ExtUtils-MakeMaker-1:7.62-2.oe2309.noarch      31/107 
+  Verifying        : perl-ExtUtils-Manifest-1:1.75-1.oe2309.noarch       32/107 
+  Verifying        : perl-ExtUtils-ParseXS-2:3.44-1.oe2309.noarch        33/107 
+  Verifying        : perl-File-Fetch-1.04-1.oe2309.noarch                34/107 
+  Verifying        : perl-File-Path-2.18-2.oe2309.noarch                 35/107 
+  Verifying        : perl-File-Temp-1:0.2311-3.oe2309.noarch             36/107 
+  Verifying        : perl-Filter-2:1.64-1.oe2309.x86_64                  37/107 
+  Verifying        : perl-Filter-Simple-1:0.94-1.oe2309.noarch           38/107 
+  Verifying        : perl-Getopt-Long-1:2.54-1.oe2309.noarch             39/107 
+  Verifying        : perl-HTTP-Tiny-0.088-1.oe2309.noarch                40/107 
+  Verifying        : perl-IO-Compress-2.205-1.oe2309.noarch              41/107 
+  Verifying        : perl-IO-Socket-IP-0.41-3.oe2309.noarch              42/107 
+  Verifying        : perl-IO-Socket-SSL-2.083-1.oe2309.noarch            43/107 
+  Verifying        : perl-IPC-Cmd-2:1.04-4.oe2309.noarch                 44/107 
+  Verifying        : perl-IPC-SysV-2.09-2.oe2309.x86_64                  45/107 
+  Verifying        : perl-IPC-System-Simple-1.30-3.oe2309.noarch         46/107 
+  Verifying        : perl-JSON-PP-1:4.16-1.oe2309.noarch                 47/107 
+  Verifying        : perl-Locale-Codes-3.74-1.oe2309.noarch              48/107 
+  Verifying        : perl-Locale-Maketext-1:1.29-2.oe2309.noarch         49/107 
+  Verifying        : perl-MIME-Base64-3.16-2.oe2309.x86_64               50/107 
+  Verifying        : perl-Math-BigInt-1:1.9998.39-1.oe2309.noarch        51/107 
+  Verifying        : perl-Math-BigInt-FastCalc-0.5014-1.oe2309.x86_64    52/107 
+  Verifying        : perl-Math-BigRat-0.2624-1.oe2309.noarch             53/107 
+  Verifying        : perl-Module-CoreList-1:5.20230520-1.oe2309.noarc    54/107 
+  Verifying        : perl-Module-Load-1:0.36-2.oe2309.noarch             55/107 
+  Verifying        : perl-Module-Load-Conditional-0.74-2.oe2309.noarc    56/107 
+  Verifying        : perl-Module-Metadata-1.000037-2.oe2309.noarch       57/107 
+  Verifying        : perl-Mozilla-CA-1:20211001-2.oe2309.noarch          58/107 
+  Verifying        : perl-Net-SSLeay-1.92-2.oe2309.x86_64                59/107 
+  Verifying        : perl-Params-Check-1:0.38-419.oe2309.noarch          60/107 
+  Verifying        : perl-PathTools-3.89-1.oe2309.x86_64                 61/107 
+  Verifying        : perl-Perl-OSType-1.010-422.oe2309.noarch            62/107 
+  Verifying        : perl-PerlIO-via-QuotedPrint-0.10-1.oe2309.noarch    63/107 
+  Verifying        : perl-Pod-Checker-4:1.74-2.oe2309.noarch             64/107 
+  Verifying        : perl-Pod-Escapes-1:1.07_01-1.oe2309.noarch          65/107 
+  Verifying        : perl-Pod-Parser-1.66-1.oe2309.noarch                66/107 
+  Verifying        : perl-Pod-Perldoc-1:3.28-5.oe2309.noarch             67/107 
+  Verifying        : perl-Pod-Simple-1:3.45-1.oe2309.noarch              68/107 
+  Verifying        : perl-Pod-Usage-4:2.03-2.oe2309.noarch               69/107 
+  Verifying        : perl-Scalar-List-Utils-4:1.63-1.oe2309.x86_64       70/107 
+  Verifying        : perl-Socket-4:2.037-1.oe2309.x86_64                 71/107 
+  Verifying        : perl-Storable-1:3.25-3.oe2309.x86_64                72/107 
+  Verifying        : perl-Sys-Syslog-0.36-2.oe2309.x86_64                73/107 
+  Verifying        : perl-Term-ANSIColor-5.01-2.oe2309.noarch            74/107 
+  Verifying        : perl-Term-Cap-1.17-511.oe2309.noarch                75/107 
+  Verifying        : perl-Test-Harness-2:3.44-1.oe2309.noarch            76/107 
+  Verifying        : perl-Test-Simple-2:1.302195-1.oe2309.noarch         77/107 
+  Verifying        : perl-Text-Balanced-2.06-1.oe2309.noarch             78/107 
+  Verifying        : perl-Text-Diff-1.45-8.oe2309.noarch                 79/107 
+  Verifying        : perl-Text-ParseWords-3.30-420.oe2309.noarch         80/107 
+  Verifying        : perl-Text-Tabs+Wrap-2023.0511-1.oe2309.noarch       81/107 
+  Verifying        : perl-Thread-Queue-3.13-4.oe2309.noarch              82/107 
+  Verifying        : perl-Time-HiRes-4:1.9767-3.oe2309.x86_64            83/107 
+  Verifying        : perl-Time-Local-2:1.300-2.oe2309.noarch             84/107 
+  Verifying        : perl-URI-5.10-2.oe2309.noarch                       85/107 
+  Verifying        : perl-Unicode-Collate-1.31-2.oe2309.x86_64           86/107 
+  Verifying        : perl-Unicode-Normalize-1.28-2.oe2309.x86_64         87/107 
+  Verifying        : perl-autodie-2.36-1.oe2309.noarch                   88/107 
+  Verifying        : perl-bignum-0.66-1.oe2309.noarch                    89/107 
+  Verifying        : perl-constant-1.33-422.oe2309.noarch                90/107 
+  Verifying        : perl-devel-4:5.38.0-1.oe2309.x86_64                 91/107 
+  Verifying        : perl-experimental-0.031-1.oe2309.noarch             92/107 
+  Verifying        : perl-libnet-3.15-1.oe2309.noarch                    93/107 
+  Verifying        : perl-libs-4:5.38.0-1.oe2309.x86_64                  94/107 
+  Verifying        : perl-parent-1:0.241-1.oe2309.noarch                 95/107 
+  Verifying        : perl-perlfaq-5.20230701-1.oe2309.noarch             96/107 
+  Verifying        : perl-podlators-1:5.01-1.oe2309.noarch               97/107 
+  Verifying        : perl-threads-2:2.26-2.oe2309.x86_64                 98/107 
+  Verifying        : perl-threads-shared-1.62-2.oe2309.x86_64            99/107 
+  Verifying        : perl-version-8:0.99.29-2.oe2309.x86_64             100/107 
+  Verifying        : python3-pyparsing-3.0.9-1.oe2309.noarch            101/107 
+  Verifying        : qt5-srpm-macros-5.15.2-1.oe2309.noarch             102/107 
+  Verifying        : rdma-core-41.0-9.oe2309.x86_64                     103/107 
+  Verifying        : scsi-target-utils-1.0.79-4.oe2309.x86_64           104/107 
+  Verifying        : sg3_utils-1.47-3.oe2309.x86_64                     105/107 
+  Verifying        : systemtap-sdt-devel-4.5-7.oe2309.x86_64            106/107 
+  Verifying        : zip-3.0-30.oe2309.x86_64                           107/107 
+
+Removed:
+  efi-srpm-macros-4-9.oe2309.noarch                                             
+  libaio-0.3.113-9.oe2309.x86_64                                                
+  libnl3-3.7.0-2.oe2309.x86_64                                                  
+  lsof-4.97.0-3.oe2309.x86_64                                                   
+  openEuler-rpm-config-30-40.oe2309.x86_64                                      
+  pciutils-3.9.0-1.oe2309.x86_64                                                
+  perl-4:5.38.0-1.oe2309.x86_64                                                 
+  perl-Algorithm-Diff-1:1.201-2.oe2309.noarch                                   
+  perl-Archive-Tar-3.02-1.oe2309.noarch                                         
+  perl-B-Debug-1.26-6.oe2309.noarch                                             
+  perl-CPAN-Meta-2.150010-420.oe2309.noarch                                     
+  perl-CPAN-Meta-Requirements-2.143-1.oe2309.noarch                             
+  perl-CPAN-Meta-YAML-0.018-421.oe2309.noarch                                   
+  perl-Carp-1.50-419.oe2309.noarch                                              
+  perl-Compress-Raw-Bzip2-2.205-1.oe2309.x86_64                                 
+  perl-Compress-Raw-Zlib-1:2.205-1.oe2309.x86_64                                
+  perl-Config-General-2.65-1.oe2309.noarch                                      
+  perl-Config-Perl-V-0.36-1.oe2309.noarch                                       
+  perl-Data-Dumper-2.183-2.oe2309.x86_64                                        
+  perl-Devel-PPPort-3.68-1.oe2309.x86_64                                        
+  perl-Digest-1.20-3.oe2309.noarch                                              
+  perl-Digest-MD5-2.58-2.oe2309.x86_64                                          
+  perl-Digest-SHA-1:6.02-8.oe2309.x86_64                                        
+  perl-Encode-4:3.19-1.oe2309.x86_64                                            
+  perl-Encode-Locale-1.05-14.oe2309.noarch                                      
+  perl-Encode-devel-4:3.19-1.oe2309.x86_64                                      
+  perl-Env-1.04-398.oe2309.noarch                                               
+  perl-Exporter-5.77-1.oe2309.noarch                                            
+  perl-ExtUtils-Command-1:7.62-2.oe2309.noarch                                  
+  perl-ExtUtils-Install-2.22-1.oe2309.noarch                                    
+  perl-ExtUtils-MakeMaker-1:7.62-2.oe2309.noarch                                
+  perl-ExtUtils-Manifest-1:1.75-1.oe2309.noarch                                 
+  perl-ExtUtils-ParseXS-2:3.44-1.oe2309.noarch                                  
+  perl-File-Fetch-1.04-1.oe2309.noarch                                          
+  perl-File-Path-2.18-2.oe2309.noarch                                           
+  perl-File-Temp-1:0.2311-3.oe2309.noarch                                       
+  perl-Filter-2:1.64-1.oe2309.x86_64                                            
+  perl-Filter-Simple-1:0.94-1.oe2309.noarch                                     
+  perl-Getopt-Long-1:2.54-1.oe2309.noarch                                       
+  perl-HTTP-Tiny-0.088-1.oe2309.noarch                                          
+  perl-IO-Compress-2.205-1.oe2309.noarch                                        
+  perl-IO-Socket-IP-0.41-3.oe2309.noarch                                        
+  perl-IO-Socket-SSL-2.083-1.oe2309.noarch                                      
+  perl-IPC-Cmd-2:1.04-4.oe2309.noarch                                           
+  perl-IPC-SysV-2.09-2.oe2309.x86_64                                            
+  perl-IPC-System-Simple-1.30-3.oe2309.noarch                                   
+  perl-JSON-PP-1:4.16-1.oe2309.noarch                                           
+  perl-Locale-Codes-3.74-1.oe2309.noarch                                        
+  perl-Locale-Maketext-1:1.29-2.oe2309.noarch                                   
+  perl-MIME-Base64-3.16-2.oe2309.x86_64                                         
+  perl-Math-BigInt-1:1.9998.39-1.oe2309.noarch                                  
+  perl-Math-BigInt-FastCalc-0.5014-1.oe2309.x86_64                              
+  perl-Math-BigRat-0.2624-1.oe2309.noarch                                       
+  perl-Module-CoreList-1:5.20230520-1.oe2309.noarch                             
+  perl-Module-Load-1:0.36-2.oe2309.noarch                                       
+  perl-Module-Load-Conditional-0.74-2.oe2309.noarch                             
+  perl-Module-Metadata-1.000037-2.oe2309.noarch                                 
+  perl-Mozilla-CA-1:20211001-2.oe2309.noarch                                    
+  perl-Net-SSLeay-1.92-2.oe2309.x86_64                                          
+  perl-Params-Check-1:0.38-419.oe2309.noarch                                    
+  perl-PathTools-3.89-1.oe2309.x86_64                                           
+  perl-Perl-OSType-1.010-422.oe2309.noarch                                      
+  perl-PerlIO-via-QuotedPrint-0.10-1.oe2309.noarch                              
+  perl-Pod-Checker-4:1.74-2.oe2309.noarch                                       
+  perl-Pod-Escapes-1:1.07_01-1.oe2309.noarch                                    
+  perl-Pod-Parser-1.66-1.oe2309.noarch                                          
+  perl-Pod-Perldoc-1:3.28-5.oe2309.noarch                                       
+  perl-Pod-Simple-1:3.45-1.oe2309.noarch                                        
+  perl-Pod-Usage-4:2.03-2.oe2309.noarch                                         
+  perl-Scalar-List-Utils-4:1.63-1.oe2309.x86_64                                 
+  perl-Socket-4:2.037-1.oe2309.x86_64                                           
+  perl-Storable-1:3.25-3.oe2309.x86_64                                          
+  perl-Sys-Syslog-0.36-2.oe2309.x86_64                                          
+  perl-Term-ANSIColor-5.01-2.oe2309.noarch                                      
+  perl-Term-Cap-1.17-511.oe2309.noarch                                          
+  perl-Test-Harness-2:3.44-1.oe2309.noarch                                      
+  perl-Test-Simple-2:1.302195-1.oe2309.noarch                                   
+  perl-Text-Balanced-2.06-1.oe2309.noarch                                       
+  perl-Text-Diff-1.45-8.oe2309.noarch                                           
+  perl-Text-ParseWords-3.30-420.oe2309.noarch                                   
+  perl-Text-Tabs+Wrap-2023.0511-1.oe2309.noarch                                 
+  perl-Thread-Queue-3.13-4.oe2309.noarch                                        
+  perl-Time-HiRes-4:1.9767-3.oe2309.x86_64                                      
+  perl-Time-Local-2:1.300-2.oe2309.noarch                                       
+  perl-URI-5.10-2.oe2309.noarch                                                 
+  perl-Unicode-Collate-1.31-2.oe2309.x86_64                                     
+  perl-Unicode-Normalize-1.28-2.oe2309.x86_64                                   
+  perl-autodie-2.36-1.oe2309.noarch                                             
+  perl-bignum-0.66-1.oe2309.noarch                                              
+  perl-constant-1.33-422.oe2309.noarch                                          
+  perl-devel-4:5.38.0-1.oe2309.x86_64                                           
+  perl-experimental-0.031-1.oe2309.noarch                                       
+  perl-libnet-3.15-1.oe2309.noarch                                              
+  perl-libs-4:5.38.0-1.oe2309.x86_64                                            
+  perl-parent-1:0.241-1.oe2309.noarch                                           
+  perl-perlfaq-5.20230701-1.oe2309.noarch                                       
+ 
