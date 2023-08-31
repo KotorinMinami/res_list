@@ -1,0 +1,245 @@
++ source ../common/common_ndisc6.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Aug 30 02:23:40 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'ndisc6 xinetd time'
++ pkgs='ndisc6 xinetd time'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs 'ndisc6 xinetd time' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp3snc9hlc
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp3snc9hlc
+++ hostname
+../common/common_ndisc6.sh: line 21: hostname: command not found
++ hostname_init=
++ hostname newlocalhost
+../common/common_ndisc6.sh: line 22: hostname: command not found
+++ ip addr show
+++ grep -w inet6
+++ awk '{print $2}'
+++ awk -F / '{print $1}'
+++ awk 'NR==1{print $1}'
++ NODE1_IPV6=::1
+++ P_SSH_CMD --node 2 --cmd 'ip addr show '
+++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --node 2 --cmd 'ip addr show '
+++ grep -w inet6
+++ awk '{print $2}'
+++ awk -F / '{print $1}'
+++ awk 'NR==1{print $1}'
+Wed Aug 30 02:23:42 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ NODE2_IPV6=
++ cp /etc/resolv.conf /etc/resolv.conf-bak
++ sed -i 's/name/#&/' /etc/resolv.conf
++ sed -i 6s/yes/no/g /etc/xinetd.d/echo-stream
++ systemctl restart xinetd
++ DNF_INSTALL xinetd 2
++ pkgs=xinetd
++ node=2
++ '[' -z /tmp/tmp3snc9hlc ']'
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs xinetd --node 2 --tempfile /tmp/tmp3snc9hlc
+Traceback (most recent call last):
+  File "/root/mugen-riscv/libs/locallibs/rpm_manage.py", line 176, in <module>
+    exitcode, output = rpm_install(args.pkgs, args.node, args.tempfile)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen-riscv/libs/locallibs/rpm_manage.py", line 66, in rpm_install
+    conn = ssh_cmd.pssh_conn(
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/mugen-riscv/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 377, in connect
+    to_try = list(self._families_and_addresses(hostname, port))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 202, in _families_and_addresses
+    addrinfos = socket.getaddrinfo(
+                ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/socket.py", line 962, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -2] Name or service not known
++ tmpfile2=
++ '[' -z /tmp/tmp3snc9hlc ']'
++ P_SSH_CMD --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
+Wed Aug 30 02:23:42 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Aug 30 02:23:42 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Aug 30 02:23:42 2023 - INFO  - Start to run test.
++ tcptraceroute6 -d -A -f 1 -i lo -m 30 -q 3 -w 5 -z 0 -t 22 -S localhost 7
++ grep '60 bytes'
+traceroute to localhost (::1) from ::1, port 7, from port 47543, 30 hops max, 60 bytes packets
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -g localhost 7
++ grep '64 bytes'
+7 port 80: Address family for hostname not supported
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_tcptraceroute6.sh line 31'
++ message='oe_test_ndisc6_tcptraceroute6.sh line 31'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_tcptraceroute6.sh line 31'
+Wed Aug 30 02:23:42 2023 - ERROR - oe_test_ndisc6_tcptraceroute6.sh line 31
++ return 0
++ tcptraceroute6 -d localhost 7
++ grep open
+ 1  localhost (::1)  0.006 ms [open]  0.002 ms  0.002 ms 
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -l 50 -S localhost 7
++ grep '50 bytes'
+traceroute to localhost (::1) from ::1, port 7, from port 47536, 30 hops max, 50 bytes packets
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -E localhost 7
++ grep 'bytes packets'
+traceroute to localhost (::1) from ::1, port 7, from port 47534, 30 hops max, 60 bytes packets
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -N localhost 7
++ grep '1  localhost (::1)'
+ 1  localhost (::1)  0.002 ms [open]  0.001 ms  0.001 ms 
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -n localhost 7
++ grep '1  localhost (::1)'
++ CHECK_RESULT 1 0 1
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log=
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
+++ rpm -qa ndisc6
+++ awk -F - '{print $2}'
++ ndisc6_version=1.0.4
++ tcptraceroute6 -V
++ grep 1.0.4
+traceroute6: TCP & UDP IPv6 traceroute tool 1.0.4 ($Rev$)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -h
++ grep tcptraceroute6
+Usage: tcptraceroute6 [options] <IPv6 hostname/address> [port number]
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Aug 30 02:23:42 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Aug 30 02:23:42 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Aug 30 02:23:42 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp3snc9hlc ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp3snc9hlc
++ '[' 0 -ne 0 ']'
++ hostname
+../common/common_ndisc6.sh: line 35: hostname: command not found
++ cp -rf /etc/resolv.conf-bak /etc/resolv.conf
++ rm -rf file runtime /etc/resolv.conf-bak
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Aug 30 02:23:43 2023 - INFO  - End to restore the test environment.
