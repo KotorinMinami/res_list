@@ -1,0 +1,158 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Tue Aug 29 10:15:00 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230829101500
+++ CREATE_VG
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230829101500
++++ lsblk
++++ grep disk
++++ awk '{print $1}'
++++ tail -n 1
+++ free_disk=vda
+++ disk_name=/dev/vda
+++ pvcreate /dev/vda -f
+++ [[ 127 -eq 0 ]]
++++ pvcreate /dev/vda
++++ grep test_vggroup
++++ cut -d '"' -f 4
+++ vggroup=
+++ printf
+printf: usage: printf [-v var] format [arguments]
++ vggroup=
++ lv=test_lv20230829101500
++ lvcreate -n test_lv20230829101500 -L 2G -y
+oe_test_FSIO_mount_ext3_setData.sh: line 26: lvcreate: command not found
++ mkfs.ext3 /dev//test_lv20230829101500
+mke2fs 1.47.0 (5-Feb-2023)
+The file /dev//test_lv20230829101500 does not exist and no size was specified.
++ ext3_point=/mnt/test20230829101500
++ mkdir /mnt/test20230829101500
+mkdir: cannot create directory ‘/mnt/test20230829101500’: File exists
++ data=('journal' 'ordered' 'writeback')
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Tue Aug 29 10:15:00 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug 29 10:15:00 2023 - INFO  - Start to run test.
++ for var in ${data[@]}
++ mount -t ext3 -o data=journal /dev//test_lv20230829101500 /mnt/test20230829101500
+mount: /mnt/test20230829101500: special device /dev//test_lv20230829101500 does not exist.
+       dmesg(1) may have more information after failed mount system call.
++ echo test
++ grep test /mnt/test20230829101500/testfile
+test
++ CHECK_RESULT 0 0 0 'Mount ext3 by data=journal failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount ext3 by data=journal failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount -f /dev//test_lv20230829101500
+umount: /dev//test_lv20230829101500: no mount point specified.
++ rm -rf /mnt/test20230829101500/testfile /mnt/test20230829101500/testFile
++ for var in ${data[@]}
++ mount -t ext3 -o data=ordered /dev//test_lv20230829101500 /mnt/test20230829101500
+mount: /mnt/test20230829101500: special device /dev//test_lv20230829101500 does not exist.
+       dmesg(1) may have more information after failed mount system call.
++ echo test
++ grep test /mnt/test20230829101500/testfile
+test
++ CHECK_RESULT 0 0 0 'Mount ext3 by data=ordered failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount ext3 by data=ordered failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount -f /dev//test_lv20230829101500
+umount: /dev//test_lv20230829101500: no mount point specified.
++ rm -rf /mnt/test20230829101500/testfile
++ for var in ${data[@]}
++ mount -t ext3 -o data=writeback /dev//test_lv20230829101500 /mnt/test20230829101500
+mount: /mnt/test20230829101500: special device /dev//test_lv20230829101500 does not exist.
+       dmesg(1) may have more information after failed mount system call.
++ echo test
++ grep test /mnt/test20230829101500/testfile
+test
++ CHECK_RESULT 0 0 0 'Mount ext3 by data=writeback failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount ext3 by data=writeback failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount -f /dev//test_lv20230829101500
+umount: /dev//test_lv20230829101500: no mount point specified.
++ rm -rf /mnt/test20230829101500/testfile
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug 29 10:15:00 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Aug 29 10:15:00 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug 29 10:15:00 2023 - INFO  - Start to restore the test environment.
++ rm -rf /mnt/test20230829101500
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug 29 10:15:00 2023 - INFO  - End to restore the test environment.
