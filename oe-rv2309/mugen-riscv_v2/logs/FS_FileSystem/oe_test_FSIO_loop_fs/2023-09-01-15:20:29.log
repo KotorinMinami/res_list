@@ -1,0 +1,288 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Fri Sep  1 15:20:31 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230901152031
++ virtualfs=/mnt/virtualfs_20230901152031
++ dd if=/dev/zero of=/mnt/virtualfs_20230901152031 bs=1024 count=30720
+30720+0 records in
+30720+0 records out
+31457280 bytes (31 MB, 30 MiB) copied, 0.966285 s, 32.6 MB/s
++ point=/mnt/point_20230901152031
++ mkdir /mnt/point_20230901152031
++ list=('ext3' 'ext4' 'xfs')
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Fri Sep  1 15:20:32 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep  1 15:20:32 2023 - INFO  - Start to run test.
++ for var in ${list[@]}
+++ losetup -f
++ loop=/dev/loop0
++ mknod -m 0660 /dev/loop0 b 7 0
+mknod: /dev/loop0: File exists
++ losetup /dev/loop0 /mnt/virtualfs_20230901152031
++ [[ ext3 =~ ext ]]
++ mkfs -t ext3 -m 1 -v /dev/loop0
+mke2fs 1.47.0 (5-Feb-2023)
+fs_types for mke2fs.conf resolution: 'ext3', 'small'
+Discarding device blocks:     0/30720           done                            
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+7680 inodes, 30720 blocks
+307 blocks (1.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=31457280
+4 block groups
+8192 blocks per group, 8192 fragments per group
+1920 inodes per group
+Filesystem UUID: 1f1e3d85-56c4-498e-b1cf-f93042796398
+Superblock backups stored on blocks: 
+	8193, 24577
+
+Allocating group tables: 0/4   done                            
+Writing inode tables: 0/4   done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: 0/4   done
+
++ CHECK_RESULT 0 0 0 'mkfs ext3 for /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='mkfs ext3 for /dev/loop0 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mount -t ext3 /dev/loop0 /mnt/point_20230901152031
++ df -T
++ grep /dev/loop0
++ grep ext3
+/dev/loop0     ext3         27404      19     27078   1% /mnt/point_20230901152031
++ CHECK_RESULT 0 0 0 'Mount fs ext3 on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount fs ext3 on /dev/loop0 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount /mnt/point_20230901152031
++ CHECK_RESULT 0 0 0 'Umount fs ext3 on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs ext3 on /dev/loop0 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ losetup -d /dev/loop0
++ rm -rf /dev/loop0
++ for var in ${list[@]}
+++ losetup -f
++ loop=/dev/loop0
++ mknod -m 0660 /dev/loop0 b 7 0
++ losetup /dev/loop0 /mnt/virtualfs_20230901152031
++ [[ ext4 =~ ext ]]
++ mkfs -t ext4 -m 1 -v /dev/loop0
+mke2fs 1.47.0 (5-Feb-2023)
+fs_types for mke2fs.conf resolution: 'ext4', 'small'
+Discarding device blocks:     0/30720           done                            
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+7680 inodes, 30720 blocks
+307 blocks (1.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=31457280
+4 block groups
+8192 blocks per group, 8192 fragments per group
+1920 inodes per group
+Filesystem UUID: b46854ac-8a5a-49cc-a4c7-35d24f40e71a
+Superblock backups stored on blocks: 
+	8193, 24577
+
+Allocating group tables: 0/4   done                            
+Writing inode tables: 0/4   done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: 0/4   done
+
++ CHECK_RESULT 0 0 0 'mkfs ext4 for /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='mkfs ext4 for /dev/loop0 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mount -t ext4 /dev/loop0 /mnt/point_20230901152031
++ df -T
++ grep /dev/loop0
++ grep ext4
+/dev/loop0     ext4         27044      14     26109   1% /mnt/point_20230901152031
++ CHECK_RESULT 0 0 0 'Mount fs ext4 on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount fs ext4 on /dev/loop0 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount /mnt/point_20230901152031
++ CHECK_RESULT 0 0 0 'Umount fs ext4 on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs ext4 on /dev/loop0 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ losetup -d /dev/loop0
++ rm -rf /dev/loop0
++ for var in ${list[@]}
+++ losetup -f
++ loop=/dev/loop0
++ mknod -m 0660 /dev/loop0 b 7 0
++ losetup /dev/loop0 /mnt/virtualfs_20230901152031
++ [[ xfs =~ ext ]]
++ mkfs -t xfs -d name=/dev/loop0 -f
+mkfs: failed to execute mkfs.xfs: No such file or directory
++ CHECK_RESULT 1 0 0 'mkfs xfs for /dev/loop0 failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='mkfs xfs for /dev/loop0 failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'mkfs xfs for /dev/loop0 failed.'
++ LOG_ERROR 'mkfs xfs for /dev/loop0 failed.'
++ message='mkfs xfs for /dev/loop0 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'mkfs xfs for /dev/loop0 failed.'
+Fri Sep  1 15:20:34 2023 - ERROR - mkfs xfs for /dev/loop0 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_loop_fs.sh line 43'
++ message='oe_test_FSIO_loop_fs.sh line 43'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_loop_fs.sh line 43'
+Fri Sep  1 15:20:34 2023 - ERROR - oe_test_FSIO_loop_fs.sh line 43
++ return 0
++ mount -t xfs /dev/loop0 /mnt/point_20230901152031
+mount: /mnt/point_20230901152031: wrong fs type, bad option, bad superblock on /dev/loop0, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
++ df -T
++ grep /dev/loop0
++ grep xfs
++ CHECK_RESULT 1 0 0 'Mount fs xfs on /dev/loop0 failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Mount fs xfs on /dev/loop0 failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Mount fs xfs on /dev/loop0 failed.'
++ LOG_ERROR 'Mount fs xfs on /dev/loop0 failed.'
++ message='Mount fs xfs on /dev/loop0 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Mount fs xfs on /dev/loop0 failed.'
+Fri Sep  1 15:20:35 2023 - ERROR - Mount fs xfs on /dev/loop0 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_loop_fs.sh line 46'
++ message='oe_test_FSIO_loop_fs.sh line 46'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_loop_fs.sh line 46'
+Fri Sep  1 15:20:35 2023 - ERROR - oe_test_FSIO_loop_fs.sh line 46
++ return 0
++ umount /mnt/point_20230901152031
+umount: /mnt/point_20230901152031: not mounted.
++ CHECK_RESULT 32 0 0 'Umount fs xfs on /dev/loop0 failed.'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Umount fs xfs on /dev/loop0 failed.'
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Umount fs xfs on /dev/loop0 failed.'
++ LOG_ERROR 'Umount fs xfs on /dev/loop0 failed.'
++ message='Umount fs xfs on /dev/loop0 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Umount fs xfs on /dev/loop0 failed.'
+Fri Sep  1 15:20:36 2023 - ERROR - Umount fs xfs on /dev/loop0 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_loop_fs.sh line 48'
++ message='oe_test_FSIO_loop_fs.sh line 48'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_loop_fs.sh line 48'
+Fri Sep  1 15:20:36 2023 - ERROR - oe_test_FSIO_loop_fs.sh line 48
++ return 0
++ losetup -d /dev/loop0
++ rm -rf /dev/loop0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep  1 15:20:37 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep  1 15:20:37 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep  1 15:20:38 2023 - INFO  - Start to restore the test environment.
++ rm -rf /dev/loop0 /mnt/point_20230901152031 /mnt/virtualfs_20230901152031
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep  1 15:20:38 2023 - INFO  - End to restore the test environment.
