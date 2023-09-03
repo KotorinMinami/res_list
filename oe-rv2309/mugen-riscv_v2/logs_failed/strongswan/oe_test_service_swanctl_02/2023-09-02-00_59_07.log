@@ -1,0 +1,525 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sat Sep  2 00:59:11 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'strongswan podman tar'
++ pkgs='strongswan podman tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'strongswan podman tar' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:09:00 ago on Sat 02 Sep 2023 12:50:59 AM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:09:00 ago on Sat 02 Sep 2023 12:50:59 AM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ tar -xvf ./common/data.tar.gz
++ podman stop -all
+oe_test_service_swanctl_02.sh: line 26: podman: command not found
+++ podman ps -qa
+oe_test_service_swanctl_02.sh: line 27: podman: command not found
++ podman rm -f
+oe_test_service_swanctl_02.sh: line 27: podman: command not found
++ podman load
+oe_test_service_swanctl_02.sh: line 28: podman: command not found
++ podman run -itd --name vpn --env-file ./test_file/vpn.env -p 700:700/udp -p 4700:4700/udp -d --privileged docker.io/hwdsl2/ipsec-vpn-server:latest
+oe_test_service_swanctl_02.sh: line 29: podman: command not found
++ SLEEP_WAIT 5 'strongswan stop'
++ wait_time=5
++ cmd='strongswan stop'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd 'strongswan stop' --mode 1
+/bin/sh: line 1: strongswan: command not found
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ grep shared /etc/strongswan/ipsec.conf
+grep: /etc/strongswan/ipsec.conf: No such file or directory
++ cat ./test_file/ipsec_add.conf
+oe_test_service_swanctl_02.sh: line 32: /etc/strongswan/ipsec.conf: No such file or directory
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Sat Sep  2 01:00:11 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sat Sep  2 01:00:12 2023 - INFO  - Start to run test.
++ strongswan start
+oe_test_service_swanctl_02.sh: line 38: strongswan: command not found
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ swanctl --list-certs
+oe_test_service_swanctl_02.sh: line 40: swanctl: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the --list-certs'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --list-certs'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the --list-certs'
++ LOG_ERROR 'Failed to check the --list-certs'
++ message='Failed to check the --list-certs'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --list-certs'
+Sat Sep  2 01:00:18 2023 - ERROR - Failed to check the --list-certs
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 41'
++ message='oe_test_service_swanctl_02.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 41'
+Sat Sep  2 01:00:19 2023 - ERROR - oe_test_service_swanctl_02.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --list-pools
+oe_test_service_swanctl_02.sh: line 42: swanctl: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the --list-pools'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --list-pools'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the --list-pools'
++ LOG_ERROR 'Failed to check the --list-pools'
++ message='Failed to check the --list-pools'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --list-pools'
+Sat Sep  2 01:00:20 2023 - ERROR - Failed to check the --list-pools
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 43'
++ message='oe_test_service_swanctl_02.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 43'
+Sat Sep  2 01:00:22 2023 - ERROR - oe_test_service_swanctl_02.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --list-algs
+oe_test_service_swanctl_02.sh: line 44: swanctl: command not found
++ grep encryption: strongswan_test_list-algs.log
++ CHECK_RESULT 1 0 0 'Failed to check the --list-algs'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --list-algs'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --list-algs'
++ LOG_ERROR 'Failed to check the --list-algs'
++ message='Failed to check the --list-algs'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --list-algs'
+Sat Sep  2 01:00:23 2023 - ERROR - Failed to check the --list-algs
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 46'
++ message='oe_test_service_swanctl_02.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 46'
+Sat Sep  2 01:00:24 2023 - ERROR - oe_test_service_swanctl_02.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --list-certs
+oe_test_service_swanctl_02.sh: line 47: swanctl: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the --list-certs'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --list-certs'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the --list-certs'
++ LOG_ERROR 'Failed to check the --list-certs'
++ message='Failed to check the --list-certs'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --list-certs'
+Sat Sep  2 01:00:26 2023 - ERROR - Failed to check the --list-certs
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 48'
++ message='oe_test_service_swanctl_02.sh line 48'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 48'
+Sat Sep  2 01:00:27 2023 - ERROR - oe_test_service_swanctl_02.sh line 48
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --list-pools
+oe_test_service_swanctl_02.sh: line 49: swanctl: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the --list-pools'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --list-pools'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the --list-pools'
++ LOG_ERROR 'Failed to check the --list-pools'
++ message='Failed to check the --list-pools'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --list-pools'
+Sat Sep  2 01:00:28 2023 - ERROR - Failed to check the --list-pools
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 50'
++ message='oe_test_service_swanctl_02.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 50'
+Sat Sep  2 01:00:30 2023 - ERROR - oe_test_service_swanctl_02.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --list-algs
+oe_test_service_swanctl_02.sh: line 51: swanctl: command not found
++ grep encryption: strongswan_test_list-algs.log
++ CHECK_RESULT 1 0 0 'Failed to check the --list-algs'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --list-algs'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --list-algs'
++ LOG_ERROR 'Failed to check the --list-algs'
++ message='Failed to check the --list-algs'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --list-algs'
+Sat Sep  2 01:00:31 2023 - ERROR - Failed to check the --list-algs
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 53'
++ message='oe_test_service_swanctl_02.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 53'
+Sat Sep  2 01:00:33 2023 - ERROR - oe_test_service_swanctl_02.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --flush-certs
+oe_test_service_swanctl_02.sh: line 54: swanctl: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the --flush-certs'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --flush-certs'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the --flush-certs'
++ LOG_ERROR 'Failed to check the --flush-certs'
++ message='Failed to check the --flush-certs'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --flush-certs'
+Sat Sep  2 01:00:34 2023 - ERROR - Failed to check the --flush-certs
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 55'
++ message='oe_test_service_swanctl_02.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 55'
+Sat Sep  2 01:00:35 2023 - ERROR - oe_test_service_swanctl_02.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --load-all
++ grep authorities strongswan_test_load-all.log
++ CHECK_RESULT 1 0 0 'Failed to check the --load-all'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --load-all'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --load-all'
++ LOG_ERROR 'Failed to check the --load-all'
++ message='Failed to check the --load-all'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --load-all'
+Sat Sep  2 01:00:37 2023 - ERROR - Failed to check the --load-all
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 58'
++ message='oe_test_service_swanctl_02.sh line 58'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 58'
+Sat Sep  2 01:00:38 2023 - ERROR - oe_test_service_swanctl_02.sh line 58
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --load-authorities
++ grep authorities strongswan_test_load-authorities.log
++ CHECK_RESULT 1 0 0 'Failed to check the --load-authorities'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --load-authorities'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --load-authorities'
++ LOG_ERROR 'Failed to check the --load-authorities'
++ message='Failed to check the --load-authorities'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --load-authorities'
+Sat Sep  2 01:00:39 2023 - ERROR - Failed to check the --load-authorities
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 61'
++ message='oe_test_service_swanctl_02.sh line 61'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 61'
+Sat Sep  2 01:00:41 2023 - ERROR - oe_test_service_swanctl_02.sh line 61
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --load-conns
++ grep connections strongswan_test_load-conns.log
++ CHECK_RESULT 1 0 0 'Failed to check the --load-conns'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --load-conns'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --load-conns'
++ LOG_ERROR 'Failed to check the --load-conns'
++ message='Failed to check the --load-conns'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --load-conns'
+Sat Sep  2 01:00:42 2023 - ERROR - Failed to check the --load-conns
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 64'
++ message='oe_test_service_swanctl_02.sh line 64'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 64'
+Sat Sep  2 01:00:43 2023 - ERROR - oe_test_service_swanctl_02.sh line 64
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --load-pools
++ grep 'files found matching' strongswan_test_load-pools.log
++ CHECK_RESULT 1 0 0 'Failed to check the --load-pools'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --load-pools'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --load-pools'
++ LOG_ERROR 'Failed to check the --load-pools'
++ message='Failed to check the --load-pools'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --load-pools'
+Sat Sep  2 01:00:44 2023 - ERROR - Failed to check the --load-pools
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 67'
++ message='oe_test_service_swanctl_02.sh line 67'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 67'
+Sat Sep  2 01:00:46 2023 - ERROR - oe_test_service_swanctl_02.sh line 67
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --load-creds
++ grep 'files found matching' strongswan_test_load-creds.log
++ CHECK_RESULT 1 0 0 'Failed to check the --load-creds'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --load-creds'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --load-creds'
++ LOG_ERROR 'Failed to check the --load-creds'
++ message='Failed to check the --load-creds'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --load-creds'
+Sat Sep  2 01:00:47 2023 - ERROR - Failed to check the --load-creds
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 70'
++ message='oe_test_service_swanctl_02.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 70'
+Sat Sep  2 01:00:48 2023 - ERROR - oe_test_service_swanctl_02.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
++ pgrep -f 'swanctl --log'
++ swanctl --log
+oe_test_service_swanctl_02.sh: line 71: swanctl: command not found
++ CHECK_RESULT 1 0 0 'Failed to check the --log'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --log'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --log'
++ LOG_ERROR 'Failed to check the --log'
++ message='Failed to check the --log'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --log'
+Sat Sep  2 01:00:50 2023 - ERROR - Failed to check the --log
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 73'
++ message='oe_test_service_swanctl_02.sh line 73'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 73'
+Sat Sep  2 01:00:51 2023 - ERROR - oe_test_service_swanctl_02.sh line 73
++ '[' 0 -eq 1 ']'
++ return 0
+++ pgrep -f 'swanctl --log'
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ swanctl --version
+oe_test_service_swanctl_02.sh: line 76: swanctl: command not found
++ grep 'strongSwan swanctl'
++ CHECK_RESULT 1 0 0 'Failed to check the --version'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --version'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --version'
++ LOG_ERROR 'Failed to check the --version'
++ message='Failed to check the --version'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --version'
+Sat Sep  2 01:00:59 2023 - ERROR - Failed to check the --version
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 77'
++ message='oe_test_service_swanctl_02.sh line 77'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 77'
+Sat Sep  2 01:01:01 2023 - ERROR - oe_test_service_swanctl_02.sh line 77
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --stats
+oe_test_service_swanctl_02.sh: line 78: swanctl: command not found
++ grep uptime strongswan_test_load-stats.log
++ CHECK_RESULT 1 0 0 'Failed to check the --stats'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --stats'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --stats'
++ LOG_ERROR 'Failed to check the --stats'
++ message='Failed to check the --stats'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --stats'
+Sat Sep  2 01:01:03 2023 - ERROR - Failed to check the --stats
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_swanctl_02.sh line 80'
++ message='oe_test_service_swanctl_02.sh line 80'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_swanctl_02.sh line 80'
+Sat Sep  2 01:01:04 2023 - ERROR - oe_test_service_swanctl_02.sh line 80
++ '[' 0 -eq 1 ']'
++ return 0
++ swanctl --reload-settings
+oe_test_service_swanctl_02.sh: line 81: swanctl: command not found
++ pgrep -f strongswan
+1898
+1899
+1901
++ CHECK_RESULT 0 0 0 'Failed to check the --reload-settings'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --reload-settings'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Sat Sep  2 01:01:06 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 15
++ test 15 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Sat Sep  2 01:01:07 2023 - ERROR - failed to execute the case.
++ exit 15
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Sat Sep  2 01:01:09 2023 - INFO  - Start to restore the test environment.
++ rm -rf strongswan_test_list-algs.log strongswan_test_load-all.log strongswan_test_load-authorities.log strongswan_test_load-conns.log strongswan_test_load-creds.log strongswan_test_load-pools.log strongswan_test_load-stats.log test_file
++ pgrep -f starter
++ SLEEP_WAIT 3 'podman stop -all'
++ wait_time=3
++ cmd='podman stop -all'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd 'podman stop -all' --mode 1
+/bin/sh: line 1: podman: command not found
+++ podman ps -qa
+oe_test_service_swanctl_02.sh: line 93: podman: command not found
++ podman rm -f
+oe_test_service_swanctl_02.sh: line 93: podman: command not found
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:09:00 ago on Sat 02 Sep 2023 12:50:59 AM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:09:00 ago on Sat 02 Sep 2023 12:50:59 AM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 0:09:00 ago on Sat 02 Sep 2023 12:50:59 AM CST.\nPackage tar-2:1.35-1.oe2309.riscv64 is already installed.\nError: \n Problem: conflicting requests\n  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Sat Sep  2 01:01:18 2023 - INFO  - End to restore the test environment.
