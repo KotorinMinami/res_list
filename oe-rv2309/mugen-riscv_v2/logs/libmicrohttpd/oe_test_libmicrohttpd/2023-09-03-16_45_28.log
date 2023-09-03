@@ -1,0 +1,99 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Sun Sep  3 16:45:32 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL 'libmicrohttpd libmicrohttpd-devel libmicrohttpd-help'
++ pkgs='libmicrohttpd libmicrohttpd-devel libmicrohttpd-help'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'libmicrohttpd libmicrohttpd-devel libmicrohttpd-help' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp36m1wdrs
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp36m1wdrs
++ mkdir /tmp/test
++ cat
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Sun Sep  3 16:47:27 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sun Sep  3 16:47:28 2023 - INFO  - Start to run test.
++ cd /tmp/test
++ gcc test.c -l microhttpd
+test.c: In function ‘main’:
+test.c:50:23: warning: passing argument 5 of ‘MHD_start_daemon’ from incompatible pointer type [-Wincompatible-pointer-types]
+   50 |                       &ahc_echo,
+      |                       ^~~~~~~~~
+      |                       |
+      |                       int (*)(void *, struct MHD_Connection *, const char *, const char *, const char *, const char *, size_t *, void **) {aka int (*)(void *, struct MHD_Connection *, const char *, const char *, const char *, const char *, long unsigned int *, void **)}
+In file included from test.c:1:
+/usr/include/microhttpd.h:2701:45: note: expected ‘MHD_AccessHandlerCallback’ {aka ‘enum MHD_Result (*)(void *, struct MHD_Connection *, const char *, const char *, const char *, const char *, long unsigned int *, void **)’} but argument is of type ‘int (*)(void *, struct MHD_Connection *, const char *, const char *, const char *, const char *, size_t *, void **)’ {aka ‘int (*)(void *, struct MHD_Connection *, const char *, const char *, const char *, const char *, long unsigned int *, void **)’}
+ 2701 |                   MHD_AccessHandlerCallback dh, void *dh_cls,
+      |                   ~~~~~~~~~~~~~~~~~~~~~~~~~~^~
++ ./a.out
++ grep './a.out PORT'
+./a.out PORT
++ CHECK_RESULT 0 0 0 'step1 failure'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='step1 failure'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Sun Sep  3 16:47:33 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Sun Sep  3 16:47:33 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Sun Sep  3 16:47:34 2023 - INFO  - start environment cleanup.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp36m1wdrs ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp36m1wdrs
++ '[' 0 -ne 0 ']'
++ rm -rf /tmp/test
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Sun Sep  3 16:47:58 2023 - INFO  - Finish environment cleanup!

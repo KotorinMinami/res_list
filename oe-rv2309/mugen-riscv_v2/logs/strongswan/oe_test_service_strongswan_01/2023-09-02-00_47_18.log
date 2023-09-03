@@ -1,0 +1,437 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sat Sep  2 00:47:23 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'strongswan podman tar'
++ pkgs='strongswan podman tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'strongswan podman tar' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 3:53:00 ago on Fri 01 Sep 2023 08:55:14 PM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 3:53:00 ago on Fri 01 Sep 2023 08:55:14 PM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ tar -xvf ./common/data.tar.gz
++ podman stop -all
+oe_test_service_strongswan_01.sh: line 26: podman: command not found
+++ podman ps -qa
+oe_test_service_strongswan_01.sh: line 27: podman: command not found
++ podman rm -f
+oe_test_service_strongswan_01.sh: line 27: podman: command not found
++ SLEEP_WAIT 5 'podman load < ./test_file/vpn-server.tar'
++ wait_time=5
++ cmd='podman load < ./test_file/vpn-server.tar'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd 'podman load < ./test_file/vpn-server.tar' --mode 1
+/bin/sh: line 1: podman: command not found
++ podman run -itd --name vpn --env-file ./test_file/vpn.env -p 700:700/udp -p 4700:4700/udp -d --privileged docker.io/hwdsl2/ipsec-vpn-server:latest
+oe_test_service_strongswan_01.sh: line 29: podman: command not found
++ pgrep -f strongswan
+968
+969
+971
+1015
+1016
++ strongswan stop
+oe_test_service_strongswan_01.sh: line 30: strongswan: command not found
++ SLEEP_WAIT 3 'rm -rf strongswan_test*.log'
++ wait_time=3
++ cmd='rm -rf strongswan_test*.log'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd 'rm -rf strongswan_test*.log' --mode 1
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-02 00:48:23'
++ grep shared /etc/strongswan/ipsec.conf
+grep: /etc/strongswan/ipsec.conf: No such file or directory
++ cat ./test_file/ipsec_add.conf
+oe_test_service_strongswan_01.sh: line 33: /etc/strongswan/ipsec.conf: No such file or directory
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Sat Sep  2 00:48:25 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sat Sep  2 00:48:26 2023 - INFO  - Start to run test.
++ strongswan --help
+oe_test_service_strongswan_01.sh: line 39: strongswan: command not found
++ grep 'strongswan command \[arguments\]'
++ CHECK_RESULT 1 0 0 'Failed to check the --help'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the --help'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the --help'
++ LOG_ERROR 'Failed to check the --help'
++ message='Failed to check the --help'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the --help'
+Sat Sep  2 00:48:27 2023 - ERROR - Failed to check the --help
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 40'
++ message='oe_test_service_strongswan_01.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 40'
+Sat Sep  2 00:48:29 2023 - ERROR - oe_test_service_strongswan_01.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan start
+oe_test_service_strongswan_01.sh: line 41: strongswan: command not found
++ CHECK_RESULT 127
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 42'
++ message='oe_test_service_strongswan_01.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 42'
+Sat Sep  2 00:48:30 2023 - ERROR - oe_test_service_strongswan_01.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ pgrep -f starter
++ CHECK_RESULT 1 0 0 'Failed to check the start'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the start'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the start'
++ LOG_ERROR 'Failed to check the start'
++ message='Failed to check the start'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the start'
+Sat Sep  2 00:48:37 2023 - ERROR - Failed to check the start
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 45'
++ message='oe_test_service_strongswan_01.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 45'
+Sat Sep  2 00:48:38 2023 - ERROR - oe_test_service_strongswan_01.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan stop
+oe_test_service_strongswan_01.sh: line 46: strongswan: command not found
++ CHECK_RESULT 127
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 47'
++ message='oe_test_service_strongswan_01.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 47'
+Sat Sep  2 00:48:40 2023 - ERROR - oe_test_service_strongswan_01.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ pgrep -f starter
++ CHECK_RESULT 1 1 0 'Failed to check the stop'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='Failed to check the stop'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ strongswan start
+oe_test_service_strongswan_01.sh: line 50: strongswan: command not found
++ strongswan restart
+oe_test_service_strongswan_01.sh: line 51: strongswan: command not found
++ pgrep -f starter
++ CHECK_RESULT 1 0 0 'Failed to check the restart'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the restart'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the restart'
++ LOG_ERROR 'Failed to check the restart'
++ message='Failed to check the restart'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the restart'
+Sat Sep  2 00:48:42 2023 - ERROR - Failed to check the restart
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 53'
++ message='oe_test_service_strongswan_01.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 53'
+Sat Sep  2 00:48:44 2023 - ERROR - oe_test_service_strongswan_01.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan update
++ grep 'Updating strongSwan IPsec configuration' strongswan_test_update.log
++ CHECK_RESULT 1 0 0 'Failed to check the update'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the update'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the update'
++ LOG_ERROR 'Failed to check the update'
++ message='Failed to check the update'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the update'
+Sat Sep  2 00:48:45 2023 - ERROR - Failed to check the update
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 56'
++ message='oe_test_service_strongswan_01.sh line 56'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 56'
+Sat Sep  2 00:48:46 2023 - ERROR - oe_test_service_strongswan_01.sh line 56
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan reload
++ grep 'Reloading strongSwan IPsec configuration' strongswan_test_reload.log
++ CHECK_RESULT 1 0 0 'Failed to check the reload'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the reload'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the reload'
++ LOG_ERROR 'Failed to check the reload'
++ message='Failed to check the reload'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the reload'
+Sat Sep  2 00:48:48 2023 - ERROR - Failed to check the reload
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 59'
++ message='oe_test_service_strongswan_01.sh line 59'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 59'
+Sat Sep  2 00:48:49 2023 - ERROR - oe_test_service_strongswan_01.sh line 59
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
+++ strongswan statusall
+++ grep Connections -A 1
+oe_test_service_strongswan_01.sh: line 61: strongswan: command not found
+++ tail -n 1
+++ awk -F: '{print $1}'
++ connectionname=
++ pgrep -f 'strongswan up'
++ strongswan up
+oe_test_service_strongswan_01.sh: line 62: strongswan: command not found
++ CHECK_RESULT 1 0 0 'Failed to check the up'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the up'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the up'
++ LOG_ERROR 'Failed to check the up'
++ message='Failed to check the up'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the up'
+Sat Sep  2 00:48:56 2023 - ERROR - Failed to check the up
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 64'
++ message='oe_test_service_strongswan_01.sh line 64'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 64'
+Sat Sep  2 00:48:57 2023 - ERROR - oe_test_service_strongswan_01.sh line 64
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ strongswan down shared
+oe_test_service_strongswan_01.sh: line 66: strongswan: command not found
++ grep 'closed successfully' strongswan_test_down.log
++ CHECK_RESULT 1 0 0 'Failed to check the down'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the down'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the down'
++ LOG_ERROR 'Failed to check the down'
++ message='Failed to check the down'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the down'
+Sat Sep  2 00:49:03 2023 - ERROR - Failed to check the down
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 68'
++ message='oe_test_service_strongswan_01.sh line 68'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 68'
+Sat Sep  2 00:49:04 2023 - ERROR - oe_test_service_strongswan_01.sh line 68
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan route
+oe_test_service_strongswan_01.sh: line 69: strongswan: command not found
++ grep ''\''shared'\'' routed' strongswan_test_route.log
++ CHECK_RESULT 1 0 0 'Failed to check the route'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the route'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the route'
++ LOG_ERROR 'Failed to check the route'
++ message='Failed to check the route'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the route'
+Sat Sep  2 00:49:06 2023 - ERROR - Failed to check the route
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 71'
++ message='oe_test_service_strongswan_01.sh line 71'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 71'
+Sat Sep  2 00:49:07 2023 - ERROR - oe_test_service_strongswan_01.sh line 71
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan unroute
+oe_test_service_strongswan_01.sh: line 72: strongswan: command not found
++ grep 'trap policy '\''shared'\'' unrouted' strongswan_test_unroute.log
++ CHECK_RESULT 1 0 0 'Failed to check the unroute'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the unroute'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the unroute'
++ LOG_ERROR 'Failed to check the unroute'
++ message='Failed to check the unroute'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the unroute'
+Sat Sep  2 00:49:08 2023 - ERROR - Failed to check the unroute
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_01.sh line 74'
++ message='oe_test_service_strongswan_01.sh line 74'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_01.sh line 74'
+Sat Sep  2 00:49:10 2023 - ERROR - oe_test_service_strongswan_01.sh line 74
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Sat Sep  2 00:49:11 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 11
++ test 11 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Sat Sep  2 00:49:12 2023 - ERROR - failed to execute the case.
++ exit 11
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Sat Sep  2 00:49:14 2023 - INFO  - start environment cleanup.
++ rm -rf strongswan_test_down.log strongswan_test_reload.log strongswan_test_route.log strongswan_test_unroute.log strongswan_test_update.log test_file
++ pgrep -f starter
++ SLEEP_WAIT 3 'podman stop -all'
++ wait_time=3
++ cmd='podman stop -all'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd 'podman stop -all' --mode 1
+/bin/sh: line 1: podman: command not found
+++ podman ps -qa
+oe_test_service_strongswan_01.sh: line 83: podman: command not found
++ podman rm -f
+oe_test_service_strongswan_01.sh: line 83: podman: command not found
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 3:53:00 ago on Fri 01 Sep 2023 08:55:14 PM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 3:53:00 ago on Fri 01 Sep 2023 08:55:14 PM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 3:53:00 ago on Fri 01 Sep 2023 08:55:14 PM CST.\nPackage tar-2:1.35-1.oe2309.riscv64 is already installed.\nError: \n Problem: conflicting requests\n  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Sat Sep  2 00:49:23 2023 - INFO  - Finish environment cleanup!

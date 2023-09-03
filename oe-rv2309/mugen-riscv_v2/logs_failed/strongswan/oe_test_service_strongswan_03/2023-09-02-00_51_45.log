@@ -1,0 +1,642 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sat Sep  2 00:51:49 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'strongswan podman tar'
++ pkgs='strongswan podman tar'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'strongswan podman tar' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:01:45 ago on Sat 02 Sep 2023 12:50:59 AM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:01:45 ago on Sat 02 Sep 2023 12:50:59 AM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ tar -xvf ./common/data.tar.gz
++ podman stop -all
+oe_test_service_strongswan_03.sh: line 26: podman: command not found
+++ podman ps -qa
+oe_test_service_strongswan_03.sh: line 27: podman: command not found
++ podman rm -f
+oe_test_service_strongswan_03.sh: line 27: podman: command not found
++ SLEEP_WAIT 5 'podman load < ./test_file/vpn-server.tar'
++ wait_time=5
++ cmd='podman load < ./test_file/vpn-server.tar'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd 'podman load < ./test_file/vpn-server.tar' --mode 1
+/bin/sh: line 1: podman: command not found
++ podman run -itd --name vpn --env-file ./test_file/vpn.env -p 700:700/udp -p 4700:4700/udp -d --privileged docker.io/hwdsl2/ipsec-vpn-server:latest
+oe_test_service_strongswan_03.sh: line 29: podman: command not found
++ SLEEP_WAIT 5 'strongswan stop'
++ wait_time=5
++ cmd='strongswan stop'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd 'strongswan stop' --mode 1
+/bin/sh: line 1: strongswan: command not found
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ grep shared /etc/strongswan/ipsec.conf
+grep: /etc/strongswan/ipsec.conf: No such file or directory
++ cat ./test_file/ipsec_add.conf
+oe_test_service_strongswan_03.sh: line 32: /etc/strongswan/ipsec.conf: No such file or directory
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Sat Sep  2 00:52:59 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sat Sep  2 00:53:00 2023 - INFO  - Start to run test.
++ strongswan start
+oe_test_service_strongswan_03.sh: line 38: strongswan: command not found
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ pgrep -f starter
++ CHECK_RESULT 1 0 0 'Failed to check the start'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the start'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the start'
++ LOG_ERROR 'Failed to check the start'
++ message='Failed to check the start'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the start'
+Sat Sep  2 00:53:06 2023 - ERROR - Failed to check the start
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 41'
++ message='oe_test_service_strongswan_03.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 41'
+Sat Sep  2 00:53:08 2023 - ERROR - oe_test_service_strongswan_03.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan listcrls
+oe_test_service_strongswan_03.sh: line 42: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the listcrls'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the listcrls'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the listcrls'
++ LOG_ERROR 'Failed to check the listcrls'
++ message='Failed to check the listcrls'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the listcrls'
+Sat Sep  2 00:53:09 2023 - ERROR - Failed to check the listcrls
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 43'
++ message='oe_test_service_strongswan_03.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 43'
+Sat Sep  2 00:53:11 2023 - ERROR - oe_test_service_strongswan_03.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan listocsp
+oe_test_service_strongswan_03.sh: line 44: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the listocsp'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the listocsp'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the listocsp'
++ LOG_ERROR 'Failed to check the listocsp'
++ message='Failed to check the listocsp'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the listocsp'
+Sat Sep  2 00:53:12 2023 - ERROR - Failed to check the listocsp
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 45'
++ message='oe_test_service_strongswan_03.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 45'
+Sat Sep  2 00:53:13 2023 - ERROR - oe_test_service_strongswan_03.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan listplugins
+oe_test_service_strongswan_03.sh: line 46: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the listplugins'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the listplugins'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the listplugins'
++ LOG_ERROR 'Failed to check the listplugins'
++ message='Failed to check the listplugins'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the listplugins'
+Sat Sep  2 00:53:14 2023 - ERROR - Failed to check the listplugins
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 47'
++ message='oe_test_service_strongswan_03.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 47'
+Sat Sep  2 00:53:16 2023 - ERROR - oe_test_service_strongswan_03.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan listcounters
+oe_test_service_strongswan_03.sh: line 48: strongswan: command not found
++ grep 'List of IKE counters:' strongswan_test_listcounters.log
++ CHECK_RESULT 1 0 0 'Failed to check the listcounters'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the listcounters'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the listcounters'
++ LOG_ERROR 'Failed to check the listcounters'
++ message='Failed to check the listcounters'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the listcounters'
+Sat Sep  2 00:53:17 2023 - ERROR - Failed to check the listcounters
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 50'
++ message='oe_test_service_strongswan_03.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 50'
+Sat Sep  2 00:53:18 2023 - ERROR - oe_test_service_strongswan_03.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan rereadocspcerts
+oe_test_service_strongswan_03.sh: line 51: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the rereadocspcerts'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the rereadocspcerts'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the rereadocspcerts'
++ LOG_ERROR 'Failed to check the rereadocspcerts'
++ message='Failed to check the rereadocspcerts'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the rereadocspcerts'
+Sat Sep  2 00:53:20 2023 - ERROR - Failed to check the rereadocspcerts
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 52'
++ message='oe_test_service_strongswan_03.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 52'
+Sat Sep  2 00:53:21 2023 - ERROR - oe_test_service_strongswan_03.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan rereadacerts
+oe_test_service_strongswan_03.sh: line 53: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the rereadacerts'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the rereadacerts'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the rereadacerts'
++ LOG_ERROR 'Failed to check the rereadacerts'
++ message='Failed to check the rereadacerts'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the rereadacerts'
+Sat Sep  2 00:53:23 2023 - ERROR - Failed to check the rereadacerts
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 54'
++ message='oe_test_service_strongswan_03.sh line 54'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 54'
+Sat Sep  2 00:53:24 2023 - ERROR - oe_test_service_strongswan_03.sh line 54
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan rereadaacerts
+oe_test_service_strongswan_03.sh: line 55: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the rereadaacerts'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the rereadaacerts'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the rereadaacerts'
++ LOG_ERROR 'Failed to check the rereadaacerts'
++ message='Failed to check the rereadaacerts'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the rereadaacerts'
+Sat Sep  2 00:53:25 2023 - ERROR - Failed to check the rereadaacerts
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 56'
++ message='oe_test_service_strongswan_03.sh line 56'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 56'
+Sat Sep  2 00:53:27 2023 - ERROR - oe_test_service_strongswan_03.sh line 56
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan resetcounters
+oe_test_service_strongswan_03.sh: line 57: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the resetcounters'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the resetcounters'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the resetcounters'
++ LOG_ERROR 'Failed to check the resetcounters'
++ message='Failed to check the resetcounters'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the resetcounters'
+Sat Sep  2 00:53:28 2023 - ERROR - Failed to check the resetcounters
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 58'
++ message='oe_test_service_strongswan_03.sh line 58'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 58'
+Sat Sep  2 00:53:29 2023 - ERROR - oe_test_service_strongswan_03.sh line 58
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan rereadsecrets
+oe_test_service_strongswan_03.sh: line 59: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the rereadsecrets'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the rereadsecrets'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the rereadsecrets'
++ LOG_ERROR 'Failed to check the rereadsecrets'
++ message='Failed to check the rereadsecrets'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the rereadsecrets'
+Sat Sep  2 00:53:31 2023 - ERROR - Failed to check the rereadsecrets
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 60'
++ message='oe_test_service_strongswan_03.sh line 60'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 60'
+Sat Sep  2 00:53:32 2023 - ERROR - oe_test_service_strongswan_03.sh line 60
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan rereadcacerts
+oe_test_service_strongswan_03.sh: line 61: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the rereadcacerts'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the rereadcacerts'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the rereadcacerts'
++ LOG_ERROR 'Failed to check the rereadcacerts'
++ message='Failed to check the rereadcacerts'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the rereadcacerts'
+Sat Sep  2 00:53:34 2023 - ERROR - Failed to check the rereadcacerts
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 62'
++ message='oe_test_service_strongswan_03.sh line 62'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 62'
+Sat Sep  2 00:53:35 2023 - ERROR - oe_test_service_strongswan_03.sh line 62
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan rereadcrls
+oe_test_service_strongswan_03.sh: line 63: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the rereadcrls'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the rereadcrls'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the rereadcrls'
++ LOG_ERROR 'Failed to check the rereadcrls'
++ message='Failed to check the rereadcrls'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the rereadcrls'
+Sat Sep  2 00:53:36 2023 - ERROR - Failed to check the rereadcrls
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 64'
++ message='oe_test_service_strongswan_03.sh line 64'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 64'
+Sat Sep  2 00:53:38 2023 - ERROR - oe_test_service_strongswan_03.sh line 64
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan rereadall
+oe_test_service_strongswan_03.sh: line 65: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the rereadall'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the rereadall'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the rereadall'
++ LOG_ERROR 'Failed to check the rereadall'
++ message='Failed to check the rereadall'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the rereadall'
+Sat Sep  2 00:53:39 2023 - ERROR - Failed to check the rereadall
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 66'
++ message='oe_test_service_strongswan_03.sh line 66'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 66'
+Sat Sep  2 00:53:40 2023 - ERROR - oe_test_service_strongswan_03.sh line 66
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan purgecerts
+oe_test_service_strongswan_03.sh: line 67: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the purgecerts'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the purgecerts'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the purgecerts'
++ LOG_ERROR 'Failed to check the purgecerts'
++ message='Failed to check the purgecerts'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the purgecerts'
+Sat Sep  2 00:53:41 2023 - ERROR - Failed to check the purgecerts
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 68'
++ message='oe_test_service_strongswan_03.sh line 68'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 68'
+Sat Sep  2 00:53:43 2023 - ERROR - oe_test_service_strongswan_03.sh line 68
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan purgecrls
+oe_test_service_strongswan_03.sh: line 69: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the purgecrls'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the purgecrls'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the purgecrls'
++ LOG_ERROR 'Failed to check the purgecrls'
++ message='Failed to check the purgecrls'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the purgecrls'
+Sat Sep  2 00:53:44 2023 - ERROR - Failed to check the purgecrls
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 70'
++ message='oe_test_service_strongswan_03.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 70'
+Sat Sep  2 00:53:46 2023 - ERROR - oe_test_service_strongswan_03.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan purgeike
+oe_test_service_strongswan_03.sh: line 71: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the purgeike'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the purgeike'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the purgeike'
++ LOG_ERROR 'Failed to check the purgeike'
++ message='Failed to check the purgeike'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the purgeike'
+Sat Sep  2 00:53:47 2023 - ERROR - Failed to check the purgeike
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 72'
++ message='oe_test_service_strongswan_03.sh line 72'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 72'
+Sat Sep  2 00:53:49 2023 - ERROR - oe_test_service_strongswan_03.sh line 72
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan purgeocsp
+oe_test_service_strongswan_03.sh: line 73: strongswan: command not found
++ CHECK_RESULT 127 0 0 'Failed to check the purgeocsp'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='Failed to check the purgeocsp'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'Failed to check the purgeocsp'
++ LOG_ERROR 'Failed to check the purgeocsp'
++ message='Failed to check the purgeocsp'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the purgeocsp'
+Sat Sep  2 00:53:50 2023 - ERROR - Failed to check the purgeocsp
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 74'
++ message='oe_test_service_strongswan_03.sh line 74'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 74'
+Sat Sep  2 00:53:52 2023 - ERROR - oe_test_service_strongswan_03.sh line 74
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan scepclient --help
++ grep 'Usage: scepclient' strongswan_test_scepclient.log
++ CHECK_RESULT 1 0 0 'Failed to check the scepclient'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the scepclient'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the scepclient'
++ LOG_ERROR 'Failed to check the scepclient'
++ message='Failed to check the scepclient'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the scepclient'
+Sat Sep  2 00:53:53 2023 - ERROR - Failed to check the scepclient
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 77'
++ message='oe_test_service_strongswan_03.sh line 77'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 77'
+Sat Sep  2 00:53:54 2023 - ERROR - oe_test_service_strongswan_03.sh line 77
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan pki
+oe_test_service_strongswan_03.sh: line 78: strongswan: command not found
++ grep 'strongSwan 5.7.2 PKI tool' strongswan_test_pki.log
++ CHECK_RESULT 1 0 0 'Failed to check the pki'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the pki'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the pki'
++ LOG_ERROR 'Failed to check the pki'
++ message='Failed to check the pki'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the pki'
+Sat Sep  2 00:53:56 2023 - ERROR - Failed to check the pki
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 80'
++ message='oe_test_service_strongswan_03.sh line 80'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 80'
+Sat Sep  2 00:53:57 2023 - ERROR - oe_test_service_strongswan_03.sh line 80
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan stroke --help
+oe_test_service_strongswan_03.sh: line 81: strongswan: command not found
++ grep 'stroke \[OPTIONS\] command \[ARGUMENTS\]' strongswan_test_stroke.log
++ CHECK_RESULT 1 0 0 'Failed to check the stroke'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the stroke'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the stroke'
++ LOG_ERROR 'Failed to check the stroke'
++ message='Failed to check the stroke'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the stroke'
+Sat Sep  2 00:53:59 2023 - ERROR - Failed to check the stroke
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 83'
++ message='oe_test_service_strongswan_03.sh line 83'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 83'
+Sat Sep  2 00:54:00 2023 - ERROR - oe_test_service_strongswan_03.sh line 83
++ '[' 0 -eq 1 ']'
++ return 0
++ strongswan version
+oe_test_service_strongswan_03.sh: line 84: strongswan: command not found
++ grep 'Linux strongSwan'
++ CHECK_RESULT 1 0 0 'Failed to check the version'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to check the version'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to check the version'
++ LOG_ERROR 'Failed to check the version'
++ message='Failed to check the version'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to check the version'
+Sat Sep  2 00:54:02 2023 - ERROR - Failed to check the version
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_strongswan_03.sh line 85'
++ message='oe_test_service_strongswan_03.sh line 85'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_strongswan_03.sh line 85'
+Sat Sep  2 00:54:04 2023 - ERROR - oe_test_service_strongswan_03.sh line 85
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Sat Sep  2 00:54:05 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 21
++ test 21 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Sat Sep  2 00:54:06 2023 - ERROR - failed to execute the case.
++ exit 21
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Sat Sep  2 00:54:08 2023 - INFO  - Start to restore the test environment.
++ rm -rf strongswan_test_listcounters.log strongswan_test_pki.log strongswan_test_scepclient.log strongswan_test_stroke.log test_file
++ strongswan stop
+oe_test_service_strongswan_03.sh: line 92: strongswan: command not found
++ SLEEP_WAIT 3 'podman stop -all'
++ wait_time=3
++ cmd='podman stop -all'
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd 'podman stop -all' --mode 1
+/bin/sh: line 1: podman: command not found
+++ podman ps -qa
+oe_test_service_strongswan_03.sh: line 94: podman: command not found
++ podman rm -f
+oe_test_service_strongswan_03.sh: line 94: podman: command not found
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:01:45 ago on Sat 02 Sep 2023 12:50:59 AM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:01:45 ago on Sat 02 Sep 2023 12:50:59 AM CST.
+Package tar-2:1.35-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem: conflicting requests
+  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 0:01:45 ago on Sat 02 Sep 2023 12:50:59 AM CST.\nPackage tar-2:1.35-1.oe2309.riscv64 is already installed.\nError: \n Problem: conflicting requests\n  - nothing provides containers-common needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n  - nothing provides catatonit needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n  - nothing provides crun needed by podman-1:4.5.1-1.oe2309.riscv64 from mainline\n(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Sat Sep  2 00:54:16 2023 - INFO  - End to restore the test environment.
