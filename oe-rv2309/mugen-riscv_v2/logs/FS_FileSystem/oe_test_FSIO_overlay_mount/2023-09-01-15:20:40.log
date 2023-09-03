@@ -1,0 +1,89 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Fri Sep  1 15:20:42 2023 - INFO  - Start environment preparation.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230901152042
++ lower=/tmp/low20230901152042
++ upper=/tmp/upper20230901152042
++ work=/tmp/work20230901152042
++ point=/mnt/point20230901152042
++ mkdir /tmp/low20230901152042 /tmp/upper20230901152042 /tmp/work20230901152042 /mnt/point20230901152042
++ echo 'test duplicate file on lower'
++ echo 'test duplicate file on upper'
++ echo 'test unique lower'
++ echo 'test unique upper'
++ mkdir -p /tmp/low20230901152042/testDir1/testDir2 /tmp/upper20230901152042/testDir1/testDir2 /tmp/low20230901152042/testDir3 /tmp/upper20230901152042/testDir4
++ touch /tmp/low20230901152042/testDir1/testDir2/testLower /tmp/upper20230901152042/testDir1/testDir2/testUpper
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Sep  1 15:20:43 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep  1 15:20:43 2023 - INFO  - Start to run test.
++ mount -t overlay overlay -o lowerdir=/tmp/low20230901152042,upperdir=/tmp/upper20230901152042,workdir=/tmp/work20230901152042 /mnt/point20230901152042
++ CHECK_RESULT 0 0 0 'Mount overlayfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount overlayfs failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep upper /mnt/point20230901152042/testFile1
+test duplicate file on upper
++ CHECK_RESULT 0 0 0 'Check file on overlayfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file on overlayfs failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep  1 15:20:43 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Sep  1 15:20:44 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep  1 15:20:44 2023 - INFO  - Start to restore the test environment.
++ umount /mnt/point20230901152042
++ rm -rf /tmp/low20230901152042 /tmp/upper20230901152042 /tmp/work20230901152042 /mnt/point20230901152042
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep  1 15:20:45 2023 - INFO  - End to restore the test environment.
