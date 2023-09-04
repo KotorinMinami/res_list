@@ -1,0 +1,712 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Mon Sep  4 00:28:57 2023 - INFO  - Start environment preparation.
++ DNF_INSTALL nfs-utils
++ pkgs=nfs-utils
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs nfs-utils --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpx00sty2p
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpx00sty2p
++ systemctl stop firewalld
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ iptables -F
+oe_test_storage_nfs_repeat_restart.sh: line 25: iptables: command not found
++ SSH_CMD 'systemctl stop firewalld;iptables -F' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl stop firewalld;iptables -F'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl stop firewalld;iptables -F' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:30:29 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:30:30 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:30:31 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl stop firewalld;iptables -F
+The authenticity of host '10.0.0.7 (10.0.0.7)' can't be established.
+ED25519 key fingerprint is SHA256:rwN1ElBBe/lVQsjBUct8/CMeGtLQWdicGp8CogqJ96Y.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.0.0.7' (ED25519) to the list of known hosts.
+root@10.0.0.7's password: 
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
+bash: line 1: iptables: command not found
++ ret=127
++ test 127 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:127'
++ message='Failed in remote CMD operation:127'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:127'
+Mon Sep  4 00:30:36 2023 - ERROR - Failed in remote CMD operation:127
++ return 127
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Mon Sep  4 00:30:37 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Mon Sep  4 00:30:38 2023 - INFO  - Start executing testcase.
++ SSH_CMD 'yum install nfs-utils -y;mkdir /home/nfs;touch /home/nfs/testnfs;chmod -R 777 /home/nfs;
+    mv /etc/exports /etc/exports.bak;echo '\''/home/nfs *(rw,sync,all_squash)'\'' >/etc/exports' 10.0.0.7 'openEuler12#$' root
++ cmd='yum install nfs-utils -y;mkdir /home/nfs;touch /home/nfs/testnfs;chmod -R 777 /home/nfs;
+    mv /etc/exports /etc/exports.bak;echo '\''/home/nfs *(rw,sync,all_squash)'\'' >/etc/exports'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'yum install nfs-utils -y;mkdir /home/nfs;touch /home/nfs/testnfs;chmod -R 777 /home/nfs;
+    mv /etc/exports /etc/exports.bak;echo '\''/home/nfs *(rw,sync,all_squash)'\'' >/etc/exports' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:30:39 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:30:40 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:30:41 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 yum install nfs-utils -y;mkdir /home/nfs;touch /home/nfs/testnfs;chmod -R 777 /home/nfs;
+    mv /etc/exports /etc/exports.bak;echo '/home/nfs *(rw,sync,all_squash)' >/etc/exports
+root@10.0.0.7's password: 
+Last metadata expiration check: 1:01:12 ago on Sun 03 Sep 2023 11:29:42 PM CST.
+Dependencies resolved.
+================================================================================
+ Package              Architecture  Version                Repository      Size
+================================================================================
+Installing:
+ nfs-utils            riscv64       2:2.6.2-4.oe2309       mainline       486 k
+Installing dependencies:
+ ding-libs            riscv64       0.6.1-45.oe2309        mainline        97 k
+ gssproxy             riscv64       0.9.1-3.oe2309         mainline       101 k
+ keyutils             riscv64       1.6.3-5.oe2309         mainline        57 k
+ krb5                 riscv64       1.21.1-1.oe2309        mainline        81 k
+ libnfsidmap          riscv64       2:2.6.2-4.oe2309       mainline        67 k
+ quota                riscv64       1:4.06-7.oe2309        mainline       255 k
+ rpcbind              riscv64       1.2.6-7.oe2309         mainline        49 k
+Installing weak dependencies:
+ nfs-utils-help       riscv64       2:2.6.2-4.oe2309       mainline       101 k
+
+Transaction Summary
+================================================================================
+Install  9 Packages
+
+Total download size: 1.3 M
+Installed size: 5.0 M
+Downloading Packages:
+(1/9): keyutils-1.6.3-5.oe2309.riscv64.rpm       45 kB/s |  57 kB     00:01    
+(2/9): gssproxy-0.9.1-3.oe2309.riscv64.rpm       76 kB/s | 101 kB     00:01    
+(3/9): krb5-1.21.1-1.oe2309.riscv64.rpm         450 kB/s |  81 kB     00:00    
+(4/9): libnfsidmap-2.6.2-4.oe2309.riscv64.rpm   365 kB/s |  67 kB     00:00    
+(5/9): ding-libs-0.6.1-45.oe2309.riscv64.rpm     43 kB/s |  97 kB     00:02    
+(6/9): nfs-utils-2.6.2-4.oe2309.riscv64.rpm     480 kB/s | 486 kB     00:01    
+(7/9): nfs-utils-help-2.6.2-4.oe2309.riscv64.rp 100 kB/s | 101 kB     00:01    
+(8/9): quota-4.06-7.oe2309.riscv64.rpm          776 kB/s | 255 kB     00:00    
+(9/9): rpcbind-1.2.6-7.oe2309.riscv64.rpm       463 kB/s |  49 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                           483 kB/s | 1.3 MB     00:02     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Running scriptlet: rpcbind-1.2.6-7.oe2309.riscv64                         1/9 
+  Installing       : rpcbind-1.2.6-7.oe2309.riscv64                         1/9 
+  Running scriptlet: rpcbind-1.2.6-7.oe2309.riscv64                         1/9 
+Created symlink /etc/systemd/system/sockets.target.wants/rpcbind.socket → /usr/lib/systemd/system/rpcbind.socket.
+Created symlink /etc/systemd/system/multi-user.target.wants/rpcbind.service → /usr/lib/systemd/system/rpcbind.service.
+
+  Installing       : keyutils-1.6.3-5.oe2309.riscv64                        2/9 
+  Installing       : quota-1:4.06-7.oe2309.riscv64                          3/9 
+  Running scriptlet: quota-1:4.06-7.oe2309.riscv64                          3/9 
+  Installing       : nfs-utils-help-2:2.6.2-4.oe2309.riscv64                4/9 
+  Installing       : libnfsidmap-2:2.6.2-4.oe2309.riscv64                   5/9 
+  Installing       : krb5-1.21.1-1.oe2309.riscv64                           6/9 
+  Running scriptlet: krb5-1.21.1-1.oe2309.riscv64                           6/9 
+  Installing       : ding-libs-0.6.1-45.oe2309.riscv64                      7/9 
+  Installing       : gssproxy-0.9.1-3.oe2309.riscv64                        8/9 
+  Running scriptlet: gssproxy-0.9.1-3.oe2309.riscv64                        8/9 
+  Running scriptlet: nfs-utils-2:2.6.2-4.oe2309.riscv64                     9/9 
+  Installing       : nfs-utils-2:2.6.2-4.oe2309.riscv64                     9/9 
+  Running scriptlet: nfs-utils-2:2.6.2-4.oe2309.riscv64                     9/9 
+/usr/lib/tmpfiles.d/dbus.conf:13: Line references path below legacy directory /var/run/, updating /var/run/dbus/containers → /run/dbus/containers; please update the tmpfiles.d/ drop-in file accordingly.
+
+  Verifying        : ding-libs-0.6.1-45.oe2309.riscv64                      1/9 
+  Verifying        : gssproxy-0.9.1-3.oe2309.riscv64                        2/9 
+  Verifying        : keyutils-1.6.3-5.oe2309.riscv64                        3/9 
+  Verifying        : krb5-1.21.1-1.oe2309.riscv64                           4/9 
+  Verifying        : libnfsidmap-2:2.6.2-4.oe2309.riscv64                   5/9 
+  Verifying        : nfs-utils-2:2.6.2-4.oe2309.riscv64                     6/9 
+  Verifying        : nfs-utils-help-2:2.6.2-4.oe2309.riscv64                7/9 
+  Verifying        : quota-1:4.06-7.oe2309.riscv64                          8/9 
+  Verifying        : rpcbind-1.2.6-7.oe2309.riscv64                         9/9 
+
+Installed:
+  ding-libs-0.6.1-45.oe2309.riscv64         gssproxy-0.9.1-3.oe2309.riscv64     
+  keyutils-1.6.3-5.oe2309.riscv64           krb5-1.21.1-1.oe2309.riscv64        
+  libnfsidmap-2:2.6.2-4.oe2309.riscv64      nfs-utils-2:2.6.2-4.oe2309.riscv64  
+  nfs-utils-help-2:2.6.2-4.oe2309.riscv64   quota-1:4.06-7.oe2309.riscv64       
+  rpcbind-1.2.6-7.oe2309.riscv64           
+
+Complete!
++ ret=0
++ test 0 -ne 0
++ return 0
++ SSH_CMD 'exportfs -avr' 10.0.0.7 'openEuler12#$' root
++ cmd='exportfs -avr'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'exportfs -avr' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:31:29 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:31:30 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:31:31 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 exportfs -avr
+root@10.0.0.7's password: 
+exportfs: /etc/exports [1]: Neither 'subtree_check' or 'no_subtree_check' specified for export "*:/home/nfs".
+  Assuming default behaviour ('no_subtree_check').
+  NOTE: this default has changed since nfs-utils version 1.0.x
+
+exporting *:/home/nfs
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'systemctl restart nfs-server rpcbind' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server rpcbind'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server rpcbind' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:31:36 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:31:37 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:31:38 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server rpcbind
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ mount -t nfs 10.0.0.7:/home/nfs /mnt
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ df -h
++ grep 10.0.0.7
+10.0.0.7:/home/nfs   20G  3.3G   15G  18% /mnt
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f /mnt/testnfs
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ seq 1 10
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:31:59 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:32:00 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:32:01 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:32:14 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:32:15 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:32:16 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:32:28 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:32:29 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:32:30 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:32:42 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:32:43 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:32:44 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:32:58 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:32:59 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:33:00 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:33:12 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:33:13 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:33:14 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:33:30 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:33:31 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:33:32 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:33:46 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:33:47 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:33:48 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:34:01 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:34:02 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:34:04 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ for count_mount in $(seq 1 10)
++ SSH_CMD 'systemctl restart nfs-server' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl restart nfs-server'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl restart nfs-server' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:34:17 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:34:18 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:34:18 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl restart nfs-server
+root@10.0.0.7's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ test -f /mnt/testnfs
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution.'
++ message='End of testcase execution.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution.'
+Mon Sep  4 00:34:34 2023 - INFO  - End of testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Mon Sep  4 00:34:35 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Mon Sep  4 00:34:36 2023 - INFO  - start environment cleanup.
++ umount /mnt
++ SSH_CMD 'rm -rf /home/nfs;yum remove -y nfs-utils;mv -f /etc/exports.bak /etc/exports' 10.0.0.7 'openEuler12#$' root
++ cmd='rm -rf /home/nfs;yum remove -y nfs-utils;mv -f /etc/exports.bak /etc/exports'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'rm -rf /home/nfs;yum remove -y nfs-utils;mv -f /etc/exports.bak /etc/exports' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 00:34:38 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 00:34:38 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 00:34:39 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 rm -rf /home/nfs;yum remove -y nfs-utils;mv -f /etc/exports.bak /etc/exports
+root@10.0.0.7's password: 
+Dependencies resolved.
+================================================================================
+ Package             Architecture Version                  Repository      Size
+================================================================================
+Removing:
+ nfs-utils           riscv64      2:2.6.2-4.oe2309         @mainline      2.0 M
+Removing unused dependencies:
+ ding-libs           riscv64      0.6.1-45.oe2309          @mainline      287 k
+ gssproxy            riscv64      0.9.1-3.oe2309           @mainline      299 k
+ keyutils            riscv64      1.6.3-5.oe2309           @mainline      166 k
+ krb5                riscv64      1.21.1-1.oe2309          @mainline      318 k
+ libnfsidmap         riscv64      2:2.6.2-4.oe2309         @mainline      284 k
+ nfs-utils-help      riscv64      2:2.6.2-4.oe2309         @mainline       87 k
+ quota               riscv64      1:4.06-7.oe2309          @mainline      1.5 M
+ rpcbind             riscv64      1.2.6-7.oe2309           @mainline      109 k
+
+Transaction Summary
+================================================================================
+Remove  9 Packages
+
+Freed space: 5.0 M
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Running scriptlet: nfs-utils-2:2.6.2-4.oe2309.riscv64                     1/1 
+  Running scriptlet: nfs-utils-2:2.6.2-4.oe2309.riscv64                     1/9 
+Removed "/etc/systemd/system/multi-user.target.wants/nfs-client.target".
+Removed "/etc/systemd/system/remote-fs.target.wants/nfs-client.target".
+
+  Erasing          : nfs-utils-2:2.6.2-4.oe2309.riscv64                     1/9 
+warning: /var/lib/nfs/etab saved as /var/lib/nfs/etab.rpmsave
+
+  Running scriptlet: nfs-utils-2:2.6.2-4.oe2309.riscv64                     1/9 
+  Erasing          : nfs-utils-help-2:2.6.2-4.oe2309.riscv64                2/9 
+  Running scriptlet: gssproxy-0.9.1-3.oe2309.riscv64                        3/9 
+  Erasing          : gssproxy-0.9.1-3.oe2309.riscv64                        3/9 
+  Running scriptlet: gssproxy-0.9.1-3.oe2309.riscv64                        3/9 
+  Running scriptlet: quota-1:4.06-7.oe2309.riscv64                          4/9 
+  Erasing          : quota-1:4.06-7.oe2309.riscv64                          4/9 
+  Running scriptlet: quota-1:4.06-7.oe2309.riscv64                          4/9 
+  Running scriptlet: rpcbind-1.2.6-7.oe2309.riscv64                         5/9 
+Removed "/etc/systemd/system/multi-user.target.wants/rpcbind.service".
+Removed "/etc/systemd/system/sockets.target.wants/rpcbind.socket".
+
+  Erasing          : rpcbind-1.2.6-7.oe2309.riscv64                         5/9 
+  Running scriptlet: rpcbind-1.2.6-7.oe2309.riscv64                         5/9 
+  Erasing          : keyutils-1.6.3-5.oe2309.riscv64                        6/9 
+  Erasing          : krb5-1.21.1-1.oe2309.riscv64                           7/9 
+  Running scriptlet: krb5-1.21.1-1.oe2309.riscv64                           7/9 
+  Erasing          : ding-libs-0.6.1-45.oe2309.riscv64                      8/9 
+  Erasing          : libnfsidmap-2:2.6.2-4.oe2309.riscv64                   9/9 
+  Running scriptlet: libnfsidmap-2:2.6.2-4.oe2309.riscv64                   9/9 
+  Verifying        : ding-libs-0.6.1-45.oe2309.riscv64                      1/9 
+  Verifying        : gssproxy-0.9.1-3.oe2309.riscv64                        2/9 
+  Verifying        : keyutils-1.6.3-5.oe2309.riscv64                        3/9 
+  Verifying        : krb5-1.21.1-1.oe2309.riscv64                           4/9 
+  Verifying        : libnfsidmap-2:2.6.2-4.oe2309.riscv64                   5/9 
+  Verifying        : nfs-utils-2:2.6.2-4.oe2309.riscv64                     6/9 
+  Verifying        : nfs-utils-help-2:2.6.2-4.oe2309.riscv64                7/9 
+  Verifying        : quota-1:4.06-7.oe2309.riscv64                          8/9 
+  Verifying        : rpcbind-1.2.6-7.oe2309.riscv64                         9/9 
+
+Removed:
+  ding-libs-0.6.1-45.oe2309.riscv64         gssproxy-0.9.1-3.oe2309.riscv64     
+  keyutils-1.6.3-5.oe2309.riscv64           krb5-1.21.1-1.oe2309.riscv64        
+  libnfsidmap-2:2.6.2-4.oe2309.riscv64      nfs-utils-2:2.6.2-4.oe2309.riscv64  
+  nfs-utils-help-2:2.6.2-4.oe2309.riscv64   quota-1:4.06-7.oe2309.riscv64       
+  rpcbind-1.2.6-7.oe2309.riscv64           
+
+Complete!
++ ret=0
++ test 0 -ne 0
++ return 0
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpx00sty2p ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpx00sty2p
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Mon Sep  4 00:35:50 2023 - INFO  - Finish environment cleanup.

@@ -1,0 +1,240 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Mon Sep  4 14:00:38 2023 - INFO  - Start environment preparation.
++ SSH_CMD 'yum install -y samba; sed -i '\''/testsamba/d'\'' /etc/security/opasswd;useradd testsamba;
+    (echo openEuler12#$;echo openEuler12#$) | smbpasswd -a testsamba -s' 10.0.0.7 'openEuler12#$' root
++ cmd='yum install -y samba; sed -i '\''/testsamba/d'\'' /etc/security/opasswd;useradd testsamba;
+    (echo openEuler12#$;echo openEuler12#$) | smbpasswd -a testsamba -s'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'yum install -y samba; sed -i '\''/testsamba/d'\'' /etc/security/opasswd;useradd testsamba;
+    (echo openEuler12#$;echo openEuler12#$) | smbpasswd -a testsamba -s' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 14:00:39 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 14:00:40 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 14:00:40 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 yum install -y samba; sed -i '/testsamba/d' /etc/security/opasswd;useradd testsamba;
+    (echo openEuler12#$;echo openEuler12#$) | smbpasswd -a testsamba -s
+ssh: connect to host 10.0.0.7 port 22: Connection refused
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:255'
++ message='Failed in remote CMD operation:255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:255'
+Mon Sep  4 14:00:41 2023 - ERROR - Failed in remote CMD operation:255
++ return 255
++ SSH_CMD 'cp -a /etc/samba/smb.conf /etc/samba/smb.conf.bak;echo  \" \" >> /etc/samba/smb.conf;
+    echo  \"\[testsamba\]\" >> /etc/samba/smb.conf;echo  \"\tcomment = public stuff\" >> /etc/samba/smb.conf;
+    echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf' 10.0.0.7 'openEuler12#$' root
++ cmd='cp -a /etc/samba/smb.conf /etc/samba/smb.conf.bak;echo  \" \" >> /etc/samba/smb.conf;
+    echo  \"\[testsamba\]\" >> /etc/samba/smb.conf;echo  \"\tcomment = public stuff\" >> /etc/samba/smb.conf;
+    echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'cp -a /etc/samba/smb.conf /etc/samba/smb.conf.bak;echo  \" \" >> /etc/samba/smb.conf;
+    echo  \"\[testsamba\]\" >> /etc/samba/smb.conf;echo  \"\tcomment = public stuff\" >> /etc/samba/smb.conf;
+    echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 14:00:42 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 14:00:43 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 14:00:44 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 cp -a /etc/samba/smb.conf /etc/samba/smb.conf.bak;echo  " " >> /etc/samba/smb.conf;
+    echo  "[testsamba]" >> /etc/samba/smb.conf;echo  "	comment = public stuff" >> /etc/samba/smb.conf;
+    echo  "	path = /home/testsamba" >> /etc/samba/smb.conf
+ssh: connect to host 10.0.0.7 port 22: Connection refused
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:255'
++ message='Failed in remote CMD operation:255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:255'
+Mon Sep  4 14:00:45 2023 - ERROR - Failed in remote CMD operation:255
++ return 255
++ SSH_CMD 'systemctl start smb;systemctl enable smb;systemctl stop firewalld;
+	setsebool samba_export_all_ro on;setsebool samba_export_all_rw on;chmod 755 /home/testsamba' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl start smb;systemctl enable smb;systemctl stop firewalld;
+	setsebool samba_export_all_ro on;setsebool samba_export_all_rw on;chmod 755 /home/testsamba'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl start smb;systemctl enable smb;systemctl stop firewalld;
+	setsebool samba_export_all_ro on;setsebool samba_export_all_rw on;chmod 755 /home/testsamba' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 14:00:46 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 14:00:47 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 14:00:47 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl start smb;systemctl enable smb;systemctl stop firewalld;
+	setsebool samba_export_all_ro on;setsebool samba_export_all_rw on;chmod 755 /home/testsamba
+ssh: connect to host 10.0.0.7 port 22: Connection refused
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:255'
++ message='Failed in remote CMD operation:255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:255'
+Mon Sep  4 14:00:49 2023 - ERROR - Failed in remote CMD operation:255
++ return 255
++ DNF_INSTALL cifs-utils
++ pkgs=cifs-utils
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs cifs-utils --node 1 --tempfile ''
+Mon Sep  4 14:00:59 2023 - INFO  - pkgs:(cifs-utils) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl stop firewalld
+Failed to stop firewalld.service: Unit firewalld.service not loaded.
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Mon Sep  4 14:01:00 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Mon Sep  4 14:01:01 2023 - INFO  - Start executing testcase.
++ expect -c '
+        set timeout 30
+        log_file testlog
+        spawn smbclient -U testsamba //10.0.0.7/testsamba
+		expect "*assword*" {send "openEuler12#$\r";
+		expect "smb*>" {send "ls\r";
+		expect "smb*>" {send "exit\r"}}}
+        expect eof
+	'
+spawn smbclient -U testsamba //10.0.0.7/testsamba
+couldn't execute "smbclient": no such file or directory
+    while executing
+"spawn smbclient -U testsamba //10.0.0.7/testsamba"
++ grep -iE 'error|fail' testlog
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ smbclient -L 10.0.0.7 -U 'testsamba%openEuler12#$'
+oe_test_storage_smb_cmd_smbclient.sh: line 50: smbclient: command not found
++ CHECK_RESULT 127
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_smb_cmd_smbclient.sh line 51'
++ message='oe_test_storage_smb_cmd_smbclient.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_smb_cmd_smbclient.sh line 51'
+Mon Sep  4 14:01:02 2023 - ERROR - oe_test_storage_smb_cmd_smbclient.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
++ smbclient -c ls //10.0.0.7/testsamba -U 'testsamba%openEuler12#$'
+oe_test_storage_smb_cmd_smbclient.sh: line 52: smbclient: command not found
++ CHECK_RESULT 127
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_smb_cmd_smbclient.sh line 53'
++ message='oe_test_storage_smb_cmd_smbclient.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_smb_cmd_smbclient.sh line 53'
+Mon Sep  4 14:01:03 2023 - ERROR - oe_test_storage_smb_cmd_smbclient.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End of testcase execution.'
++ message='End of testcase execution.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution.'
+Mon Sep  4 14:01:04 2023 - INFO  - End of testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Sep  4 14:01:05 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Mon Sep  4 14:01:05 2023 - INFO  - start environment cleanup.
++ SSH_CMD 'systemctl stop smb; rm -f /etc/samba/smb.conf;mv /etc/samba/smb.conf.bak /etc/samba/smb.conf;
+    yum remove samba -y; userdel -r testsamba; systemctl stop firewalld' 10.0.0.7 'openEuler12#$' root
++ cmd='systemctl stop smb; rm -f /etc/samba/smb.conf;mv /etc/samba/smb.conf.bak /etc/samba/smb.conf;
+    yum remove samba -y; userdel -r testsamba; systemctl stop firewalld'
++ remoteip=10.0.0.7
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl stop smb; rm -f /etc/samba/smb.conf;mv /etc/samba/smb.conf.bak /etc/samba/smb.conf;
+    yum remove samba -y; userdel -r testsamba; systemctl stop firewalld' -i 10.0.0.7 -u root -p 'openEuler12#$' -t 300 -o 22
+Mon Sep  4 14:01:06 2023 - WARN  - the remote user uses the default configuration.
+Mon Sep  4 14:01:07 2023 - WARN  - the remote password uses the default configuration.
+Mon Sep  4 14:01:08 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.7 systemctl stop smb; rm -f /etc/samba/smb.conf;mv /etc/samba/smb.conf.bak /etc/samba/smb.conf;
+    yum remove samba -y; userdel -r testsamba; systemctl stop firewalld
+ssh: connect to host 10.0.0.7 port 22: Connection refused
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:255'
++ message='Failed in remote CMD operation:255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:255'
+Mon Sep  4 14:01:09 2023 - ERROR - Failed in remote CMD operation:255
++ return 255
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Mon Sep  4 14:01:10 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf testlog
++ systemctl start firewalld
+Failed to start firewalld.service: Unit firewalld.service not found.
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Mon Sep  4 14:01:11 2023 - INFO  - Finish environment cleanup.
