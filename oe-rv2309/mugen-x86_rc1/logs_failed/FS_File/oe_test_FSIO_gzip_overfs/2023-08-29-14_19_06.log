@@ -1,0 +1,328 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf /tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Tue Aug 29 14:19:06 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS "ext3 ext4 xfs"))
+++ CREATE_FS 'ext3 ext4 xfs'
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230829141906
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230829141906
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vda
++++ disk_name=/dev/vda
++++ pvcreate /dev/vda -f
++++ [[ 127 -eq 0 ]]
+++++ pvcreate /dev/vda
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=
++++ printf
+printf: usage: printf [-v var] format [arguments]
+++ vggroup=
+++ count=1
+++ msg=' '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230829141906
+++ point=/tmp/point120230829141906
+++ lvcreate -n test_lv120230829141906 -L 512M -y
+../common_lib/fsio_lib.sh: line 107: lvcreate: command not found
+++ mkfs -t ext3 /dev//test_lv120230829141906
+mke2fs 1.47.0 (5-Feb-2023)
+The file /dev//test_lv120230829141906 does not exist and no size was specified.
+++ mkdir /tmp/point120230829141906
+++ mount /dev//test_lv120230829141906 /tmp/point120230829141906
+mount: /tmp/point120230829141906: special device /dev//test_lv120230829141906 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230829141906 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230829141906
+++ point=/tmp/point220230829141906
+++ lvcreate -n test_lv220230829141906 -L 512M -y
+../common_lib/fsio_lib.sh: line 107: lvcreate: command not found
+++ mkfs -t ext4 /dev//test_lv220230829141906
+mke2fs 1.47.0 (5-Feb-2023)
+The file /dev//test_lv220230829141906 does not exist and no size was specified.
+++ mkdir /tmp/point220230829141906
+++ mount /dev//test_lv220230829141906 /tmp/point220230829141906
+mount: /tmp/point220230829141906: special device /dev//test_lv220230829141906 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230829141906 /tmp/point220230829141906 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230829141906
+++ point=/tmp/point320230829141906
+++ lvcreate -n test_lv320230829141906 -L 512M -y
+../common_lib/fsio_lib.sh: line 107: lvcreate: command not found
+++ mkfs -t xfs /dev//test_lv320230829141906
+mkfs: failed to execute mkfs.xfs: No such file or directory
+++ mkdir /tmp/point320230829141906
+++ mount /dev//test_lv320230829141906 /tmp/point320230829141906
+mount: /tmp/point320230829141906: special device /dev//test_lv320230829141906 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906 '
+++ count=4
+++ echo /tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906
++ ext3_point=/tmp/point220230829141906
++ ext4_point=/tmp/point320230829141906
++ xfs_point=
++ echo 'test file ext3'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Aug 29 14:19:06 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug 29 14:19:06 2023 - INFO  - Start to run test.
++ gzip -c /tmp/point220230829141906/testFile1
++ ls /tmp/point320230829141906
++ grep testFile1.gz
+testFile1.gz
++ CHECK_RESULT 0 0 0 'Compress file by gzip in /tmp/point320230829141906 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by gzip in /tmp/point320230829141906 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -dv /tmp/point320230829141906/testFile1.gz
+/tmp/point320230829141906/testFile1.gz:	-13.3% -- replaced with /tmp/point320230829141906/testFile1
++ ls /tmp/point220230829141906
++ grep testFile2
+testFile2
++ CHECK_RESULT 0 0 0 'Decompress gzip file in /tmp/point220230829141906 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress gzip file in /tmp/point220230829141906 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -c /tmp/point220230829141906/testFile1
++ ls
++ grep testFile1.gz
++ CHECK_RESULT 1 0 0 'Compress file by gzip in  failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Compress file by gzip in  failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Compress file by gzip in  failed.'
++ LOG_ERROR 'Compress file by gzip in  failed.'
++ message='Compress file by gzip in  failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Compress file by gzip in  failed.'
+Tue Aug 29 14:19:06 2023 - ERROR - Compress file by gzip in  failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_gzip_overfs.sh line 41'
++ message='oe_test_FSIO_gzip_overfs.sh line 41'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_gzip_overfs.sh line 41'
+Tue Aug 29 14:19:06 2023 - ERROR - oe_test_FSIO_gzip_overfs.sh line 41
++ return 0
++ gzip -dv /testFile1.gz
+gzip: /testFile1 already exists; do you wish to overwrite (y or n)? Tue Aug 29 14:49:06 2023 - ERROR - Timeout : Command 'bash -x oe_test_FSIO_gzip_overfs.sh' timed out after 1799.9999907189995 seconds
+	not overwritten
+++ post_test
+++ LOG_INFO 'Start to restore the test environment.'
+++ message='Start to restore the test environment.'
+++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug 29 14:56:01 2023 - INFO  - Start to restore the test environment.
++++ echo /tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906
+++ list='/tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906'
+++ REMOVE_FS '/tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906'
+++ point_list=($1)
++++ seq 0 2
+++ for i in $(seq 0 $((${#point_list[@]} - 1)))
+++ tmp=/tmp/point120230829141906
++++ df -T
++++ grep /tmp/point120230829141906
++++ awk '{print $1}'
+++ lv=
+++ [[ '' == '' ]]
+++ continue
+++ for i in $(seq 0 $((${#point_list[@]} - 1)))
+++ tmp=/tmp/point220230829141906
++++ df -T
++++ grep /tmp/point220230829141906
++++ awk '{print $1}'
+++ lv=
+++ [[ '' == '' ]]
+++ continue
+++ for i in $(seq 0 $((${#point_list[@]} - 1)))
+++ tmp=/tmp/point320230829141906
++++ df -T
++++ grep /tmp/point320230829141906
++++ awk '{print $1}'
+++ lv=
+++ [[ '' == '' ]]
+++ continue
+++ LOG_INFO 'End to restore the test environment.'
+++ message='End to restore the test environment.'
+++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug 29 14:56:01 2023 - INFO  - End to restore the test environment.
++ grep testFile3
++ ls /tmp/point220230829141906
+ls: cannot access '/tmp/point220230829141906': No such file or directory
++ CHECK_RESULT 1 0 0 'Decompress gzip file in /tmp/point220230829141906 failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Decompress gzip file in /tmp/point220230829141906 failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Decompress gzip file in /tmp/point220230829141906 failed.'
++ LOG_ERROR 'Decompress gzip file in /tmp/point220230829141906 failed.'
++ message='Decompress gzip file in /tmp/point220230829141906 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Decompress gzip file in /tmp/point220230829141906 failed.'
+Tue Aug 29 14:56:01 2023 - ERROR - Decompress gzip file in /tmp/point220230829141906 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_gzip_overfs.sh line 44'
++ message='oe_test_FSIO_gzip_overfs.sh line 44'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_gzip_overfs.sh line 44'
+Tue Aug 29 14:56:01 2023 - ERROR - oe_test_FSIO_gzip_overfs.sh line 44
++ return 0
++ gzip -c /tmp/point320230829141906/testFile1
+gzip: /tmp/point320230829141906/testFile1: No such file or directory
++ ls
++ grep testFile2.gz
++ CHECK_RESULT 1 0 0 'Compress file by gzip in  failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Compress file by gzip in  failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Compress file by gzip in  failed.'
++ LOG_ERROR 'Compress file by gzip in  failed.'
++ message='Compress file by gzip in  failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Compress file by gzip in  failed.'
+Tue Aug 29 14:56:01 2023 - ERROR - Compress file by gzip in  failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_gzip_overfs.sh line 47'
++ message='oe_test_FSIO_gzip_overfs.sh line 47'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_gzip_overfs.sh line 47'
+Tue Aug 29 14:56:01 2023 - ERROR - oe_test_FSIO_gzip_overfs.sh line 47
++ return 0
++ gzip -dv /testFile2.gz
+oe_test_FSIO_gzip_overfs.sh: line 48: /tmp/point320230829141906/testFile2: No such file or directory
++ ls /tmp/point320230829141906
++ grep testFile2
+ls: cannot access '/tmp/point320230829141906': No such file or directory
++ CHECK_RESULT 1 0 0 'Decompress gzip file in /tmp/point320230829141906 failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Decompress gzip file in /tmp/point320230829141906 failed.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Decompress gzip file in /tmp/point320230829141906 failed.'
++ LOG_ERROR 'Decompress gzip file in /tmp/point320230829141906 failed.'
++ message='Decompress gzip file in /tmp/point320230829141906 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Decompress gzip file in /tmp/point320230829141906 failed.'
+Tue Aug 29 14:56:01 2023 - ERROR - Decompress gzip file in /tmp/point320230829141906 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_gzip_overfs.sh line 50'
++ message='oe_test_FSIO_gzip_overfs.sh line 50'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_gzip_overfs.sh line 50'
+Tue Aug 29 14:56:01 2023 - ERROR - oe_test_FSIO_gzip_overfs.sh line 50
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug 29 14:56:01 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Aug 29 14:56:01 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug 29 14:56:01 2023 - INFO  - Start to restore the test environment.
+++ echo /tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906
++ list='/tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906'
++ REMOVE_FS '/tmp/point120230829141906 /tmp/point220230829141906 /tmp/point320230829141906'
++ point_list=($1)
+++ seq 0 2
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230829141906
+++ df -T
+++ grep /tmp/point120230829141906
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230829141906
+++ df -T
+++ grep /tmp/point220230829141906
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230829141906
+++ df -T
+++ grep /tmp/point320230829141906
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug 29 14:56:01 2023 - INFO  - End to restore the test environment.

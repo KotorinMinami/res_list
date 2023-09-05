@@ -1,0 +1,233 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue Aug 29 10:43:46 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL libvirt-daemon
++ pkgs=libvirt-daemon
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs libvirt-daemon --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpntmll0rg
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpntmll0rg
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Aug 29 10:43:51 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug 29 10:43:51 2023 - INFO  - Start to run test.
++ test_execution libvirtd.socket
++ service=libvirtd.socket
+++ date '+%Y-%m-%d %T'
++ log_time='2023-08-29 10:43:51'
++ test_restart libvirtd.socket
++ service=libvirtd.socket
++ systemctl restart libvirtd.socket
++ CHECK_RESULT 0 0 0 'libvirtd.socket restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='libvirtd.socket restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status libvirtd.socket
++ grep 'Active: active'
+     Active: active (listening) since Tue 2023-08-29 10:43:51 UTC; 5s ago
++ CHECK_RESULT 0 0 0 'libvirtd.socket restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='libvirtd.socket restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop libvirtd.socket
++ CHECK_RESULT 0 0 0 'libvirtd.socket stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='libvirtd.socket stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'Active: inactive'
++ systemctl status libvirtd.socket
+     Active: inactive (dead) since Tue 2023-08-29 10:43:56 UTC; 5s ago
++ CHECK_RESULT 0 0 0 'libvirtd.socket stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='libvirtd.socket stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start libvirtd.socket
++ CHECK_RESULT 0 0 0 'libvirtd.socket start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='libvirtd.socket start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status libvirtd.socket
++ grep 'Active: active'
+     Active: active (listening) since Tue 2023-08-29 10:44:01 UTC; 5s ago
++ CHECK_RESULT 0 0 0 'libvirtd.socket start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='libvirtd.socket start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled libvirtd.socket
++ service=libvirtd.socket
+++ systemctl is-enabled libvirtd.socket
++ state=enabled
++ '[' enabled == enabled ']'
+++ systemctl disable libvirtd.socket
+++ awk '{print $2}'
+++ grep Removed
+++ awk '{print substr($0,1,length($0)-1)}'
++ symlink_file='"/etc/systemd/system/sockets.target.wants/libvirtd.socket"'
++ find '"/etc/systemd/system/sockets.target.wants/libvirtd.socket"'
+find: ‘"/etc/systemd/system/sockets.target.wants/libvirtd.socket"’: No such file or directory
++ CHECK_RESULT 1 0 1 'libvirtd.socket disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='libvirtd.socket disable failed'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ systemctl enable libvirtd.socket
+Created symlink /etc/systemd/system/sockets.target.wants/libvirtd.socket → /usr/lib/systemd/system/libvirtd.socket.
++ find '"/etc/systemd/system/sockets.target.wants/libvirtd.socket"'
+find: ‘"/etc/systemd/system/sockets.target.wants/libvirtd.socket"’: No such file or directory
++ CHECK_RESULT 1 0 0 'libvirtd.socket enable failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='libvirtd.socket enable failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'libvirtd.socket enable failed'
++ LOG_ERROR 'libvirtd.socket enable failed'
++ message='libvirtd.socket enable failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'libvirtd.socket enable failed'
+Tue Aug 29 10:44:06 2023 - ERROR - libvirtd.socket enable failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 70'
++ message='../common/common_lib.sh line 70'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 70'
+Tue Aug 29 10:44:06 2023 - ERROR - ../common/common_lib.sh line 70
++ return 0
++ journalctl --since '2023-08-29 10:43:51' -u libvirtd.socket
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of libvirtd.socket'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of libvirtd.socket'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload libvirtd.socket
++ service=libvirtd.socket
++ systemctl start libvirtd.socket
++ systemctl reload libvirtd.socket
++ grep 'Job type reload is not applicable'
+Failed to reload libvirtd.socket: Job type reload is not applicable for unit libvirtd.socket.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit libvirtd.socket'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit libvirtd.socket'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status libvirtd.socket
++ grep 'Active: active'
+     Active: active (listening) since Tue 2023-08-29 10:44:01 UTC; 5s ago
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Tue Aug 29 10:44:06 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Aug 29 10:44:06 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Tue Aug 29 10:44:06 2023 - INFO  - start environment cleanup.
++ systemctl stop libvirtd.socket
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpntmll0rg ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpntmll0rg
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Tue Aug 29 10:44:07 2023 - INFO  - Finish environment cleanup!

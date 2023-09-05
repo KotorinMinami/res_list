@@ -1,0 +1,101 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Sep  1 03:36:09 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL firewalld
++ pkgs=firewalld
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs firewalld --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpfwzkto1w
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpfwzkto1w
++ touch /var/lib/ebtables/lock
++ systemctl status firewalld
++ grep -E 'fail|dead'
+     Active: inactive (dead)
++ systemctl start firewalld
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Sep  1 03:37:03 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep  1 03:37:04 2023 - INFO  - Start to run test.
++ firewall-cmd --reload
++ grep success
+ERROR:dbus.proxies:Introspect error on :1.9:/org/fedoraproject/FirewallD1: dbus.exceptions.DBusException: org.freedesktop.DBus.Error.NoReply: Message recipient disconnected from message bus without replying
+Error: The name :1.9 was not provided by any .service files
++ CHECK_RESULT 1 0 0 'Failed to execute firewall-cmd'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to execute firewall-cmd'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to execute firewall-cmd'
++ LOG_ERROR 'Failed to execute firewall-cmd'
++ message='Failed to execute firewall-cmd'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to execute firewall-cmd'
+Fri Sep  1 03:37:30 2023 - ERROR - Failed to execute firewall-cmd
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_server.sh line 33'
++ message='oe_test_firewalld_server.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_server.sh line 33'
+Fri Sep  1 03:37:31 2023 - ERROR - oe_test_firewalld_server.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep  1 03:37:32 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep  1 03:37:32 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep  1 03:37:33 2023 - INFO  - Start to restore the test environment.
++ rm -rf /var/lib/ebtables/lock
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpfwzkto1w ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpfwzkto1w
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep  1 03:37:50 2023 - INFO  - End to restore the test environment.

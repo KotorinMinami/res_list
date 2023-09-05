@@ -1,0 +1,135 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Tue Aug 29 10:14:46 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230829101446
++ loop1=/mnt/loop1_20230829101446
++ loop2=/mnt/loop2_20230829101446
++ loop3=/mnt/loop3_20230829101446
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Tue Aug 29 10:14:46 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug 29 10:14:46 2023 - INFO  - Start to run test.
++ dd if=/dev/zero of=/mnt/loop1_20230829101446 bs=1M count=10
+10+0 records in
+10+0 records out
+10485760 bytes (10 MB, 10 MiB) copied, 0.00429445 s, 2.4 GB/s
++ mkfs.ext3 /mnt/loop1_20230829101446
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:     0/10240           done                            
+Creating filesystem with 10240 1k blocks and 2560 inodes
+Filesystem UUID: 0519a515-d60b-4274-91ba-a4254a64d73c
+Superblock backups stored on blocks: 
+	8193
+
+Allocating group tables: 0/2   done                            
+Writing inode tables: 0/2   done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: 0/2   done
+
++ CHECK_RESULT 0 0 0 'mkfs ext3 on virtual block failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='mkfs ext3 on virtual block failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dd if=/dev/zero of=/mnt/loop2_20230829101446 bs=1M count=10
+10+0 records in
+10+0 records out
+10485760 bytes (10 MB, 10 MiB) copied, 0.00486808 s, 2.2 GB/s
++ mkfs.ext4 /mnt/loop2_20230829101446
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:     0/10240           done                            
+Creating filesystem with 10240 1k blocks and 2560 inodes
+Filesystem UUID: e652ff42-3b9e-467a-896d-9ab5cb72d348
+Superblock backups stored on blocks: 
+	8193
+
+Allocating group tables: 0/2   done                            
+Writing inode tables: 0/2   done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: 0/2   done
+
++ CHECK_RESULT 0 0 0 'mkfs ext4 on virtual block failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='mkfs ext4 on virtual block failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dd if=/dev/zero of=/mnt/loop3_20230829101446 bs=1M count=4096
+4096+0 records in
+4096+0 records out
+4294967296 bytes (4.3 GB, 4.0 GiB) copied, 10.9597 s, 392 MB/s
++ mkfs.xfs /mnt/loop3_20230829101446
+oe_test_FSIO_dd_mkfs.sh: line 39: mkfs.xfs: command not found
++ CHECK_RESULT 127 0 0 'mkfs xfs on virtual block failed.'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='mkfs xfs on virtual block failed.'
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'mkfs xfs on virtual block failed.'
++ LOG_ERROR 'mkfs xfs on virtual block failed.'
++ message='mkfs xfs on virtual block failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'mkfs xfs on virtual block failed.'
+Tue Aug 29 10:14:57 2023 - ERROR - mkfs xfs on virtual block failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_dd_mkfs.sh line 40'
++ message='oe_test_FSIO_dd_mkfs.sh line 40'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_dd_mkfs.sh line 40'
+Tue Aug 29 10:14:57 2023 - ERROR - oe_test_FSIO_dd_mkfs.sh line 40
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug 29 10:14:57 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Aug 29 10:14:57 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug 29 10:14:57 2023 - INFO  - Start to restore the test environment.
++ rm -rf /mnt/loop1_20230829101446 /mnt/loop2_20230829101446 /mnt/loop3_20230829101446
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug 29 10:14:58 2023 - INFO  - End to restore the test environment.

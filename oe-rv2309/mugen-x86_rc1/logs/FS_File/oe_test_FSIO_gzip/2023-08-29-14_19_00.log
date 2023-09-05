@@ -1,0 +1,293 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf /tmp/point120230829141859 /tmp/point220230829141859 /tmp/point320230829141859
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Tue Aug 29 14:19:00 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230829141900
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230829141900
+++++ grep disk
+++++ lsblk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vda
++++ disk_name=/dev/vda
++++ pvcreate /dev/vda -f
++++ [[ 127 -eq 0 ]]
+++++ pvcreate /dev/vda
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=
++++ printf
+printf: usage: printf [-v var] format [arguments]
+++ vggroup=
+++ count=1
+++ msg=' '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230829141900
+++ point=/tmp/point120230829141900
+++ lvcreate -n test_lv120230829141900 -L 512M -y
+../common_lib/fsio_lib.sh: line 107: lvcreate: command not found
+++ mkfs -t ext3 /dev//test_lv120230829141900
+mke2fs 1.47.0 (5-Feb-2023)
+The file /dev//test_lv120230829141900 does not exist and no size was specified.
+++ mkdir /tmp/point120230829141900
+++ mount /dev//test_lv120230829141900 /tmp/point120230829141900
+mount: /tmp/point120230829141900: special device /dev//test_lv120230829141900 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230829141900 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230829141900
+++ point=/tmp/point220230829141900
+++ lvcreate -n test_lv220230829141900 -L 512M -y
+../common_lib/fsio_lib.sh: line 107: lvcreate: command not found
+++ mkfs -t ext4 /dev//test_lv220230829141900
+mke2fs 1.47.0 (5-Feb-2023)
+The file /dev//test_lv220230829141900 does not exist and no size was specified.
+++ mkdir /tmp/point220230829141900
+++ mount /dev//test_lv220230829141900 /tmp/point220230829141900
+mount: /tmp/point220230829141900: special device /dev//test_lv220230829141900 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230829141900 /tmp/point220230829141900 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230829141900
+++ point=/tmp/point320230829141900
+++ lvcreate -n test_lv320230829141900 -L 512M -y
+../common_lib/fsio_lib.sh: line 107: lvcreate: command not found
+++ mkfs -t xfs /dev//test_lv320230829141900
+mkfs: failed to execute mkfs.xfs: No such file or directory
+++ mkdir /tmp/point320230829141900
+++ mount /dev//test_lv320230829141900 /tmp/point320230829141900
+mount: /tmp/point320230829141900: special device /dev//test_lv320230829141900 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230829141900 /tmp/point220230829141900 /tmp/point320230829141900 '
+++ count=4
+++ echo /tmp/point120230829141900 /tmp/point220230829141900 /tmp/point320230829141900
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Aug 29 14:19:00 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug 29 14:19:00 2023 - INFO  - Start to run test.
+++ seq 1 2
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220230829141900
++ echo 'test file on /tmp/point220230829141900'
++ gzip -v /tmp/point220230829141900/testFile
+/tmp/point220230829141900/testFile:	 -5.1% -- replaced with /tmp/point220230829141900/testFile.gz
++ CHECK_RESULT 0 0 0 'Compress file by gzip in /tmp/point220230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by gzip in /tmp/point220230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -l /tmp/point220230829141900/testFile.gz
++ grep testFile
+                 68                  39  -5.1% /tmp/point220230829141900/testFile
++ CHECK_RESULT 0 0 0 'Check gzip file in /tmp/point220230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check gzip file in /tmp/point220230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -L /tmp/point220230829141900/testFile.gz
+gzip 1.12
+Copyright (C) 2018 Free Software Foundation, Inc.
+Copyright (C) 1993 Jean-loup Gailly.
+This is free software.  You may redistribute copies of it under the terms of
+the GNU General Public License <https://www.gnu.org/licenses/gpl.html>.
+There is NO WARRANTY, to the extent permitted by law.
++ CHECK_RESULT 0 0 0 'Check gzip file version in /tmp/point220230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check gzip file version in /tmp/point220230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -t /tmp/point220230829141900/testFile.gz
++ CHECK_RESULT 0 0 0 'test gzip file by gzip in /tmp/point220230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='test gzip file by gzip in /tmp/point220230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -dv /tmp/point220230829141900/testFile.gz
+/tmp/point220230829141900/testFile.gz:	 -5.1% -- replaced with /tmp/point220230829141900/testFile
++ CHECK_RESULT 0 0 0 'Decompress file by gzip in /tmp/point220230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress file by gzip in /tmp/point220230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320230829141900
++ echo 'test file on /tmp/point320230829141900'
++ gzip -v /tmp/point320230829141900/testFile
+/tmp/point320230829141900/testFile:	 -5.1% -- replaced with /tmp/point320230829141900/testFile.gz
++ CHECK_RESULT 0 0 0 'Compress file by gzip in /tmp/point320230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by gzip in /tmp/point320230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -l /tmp/point320230829141900/testFile.gz
++ grep testFile
+                 68                  39  -5.1% /tmp/point320230829141900/testFile
++ CHECK_RESULT 0 0 0 'Check gzip file in /tmp/point320230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check gzip file in /tmp/point320230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -L /tmp/point320230829141900/testFile.gz
+gzip 1.12
+Copyright (C) 2018 Free Software Foundation, Inc.
+Copyright (C) 1993 Jean-loup Gailly.
+This is free software.  You may redistribute copies of it under the terms of
+the GNU General Public License <https://www.gnu.org/licenses/gpl.html>.
+There is NO WARRANTY, to the extent permitted by law.
++ CHECK_RESULT 0 0 0 'Check gzip file version in /tmp/point320230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check gzip file version in /tmp/point320230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -t /tmp/point320230829141900/testFile.gz
++ CHECK_RESULT 0 0 0 'test gzip file by gzip in /tmp/point320230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='test gzip file by gzip in /tmp/point320230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ gzip -dv /tmp/point320230829141900/testFile.gz
+/tmp/point320230829141900/testFile.gz:	 -5.1% -- replaced with /tmp/point320230829141900/testFile
++ CHECK_RESULT 0 0 0 'Decompress file by gzip in /tmp/point320230829141900 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress file by gzip in /tmp/point320230829141900 failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug 29 14:19:00 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Aug 29 14:19:00 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug 29 14:19:00 2023 - INFO  - Start to restore the test environment.
+++ echo /tmp/point120230829141900 /tmp/point220230829141900 /tmp/point320230829141900
++ list='/tmp/point120230829141900 /tmp/point220230829141900 /tmp/point320230829141900'
++ REMOVE_FS '/tmp/point120230829141900 /tmp/point220230829141900 /tmp/point320230829141900'
++ point_list=($1)
+++ seq 0 2
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230829141900
+++ df -T
+++ grep /tmp/point120230829141900
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230829141900
+++ df -T
+++ grep /tmp/point220230829141900
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230829141900
+++ df -T
+++ grep /tmp/point320230829141900
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug 29 14:19:00 2023 - INFO  - End to restore the test environment.

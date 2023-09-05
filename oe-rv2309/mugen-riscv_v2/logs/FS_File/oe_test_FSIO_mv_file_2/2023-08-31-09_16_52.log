@@ -1,0 +1,272 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 0 -eq 0 ]]
++++ lsblk
++++ grep test_vggroup
++++ awk '{print $1}'
++++ head -n 1
++++ cut -d - -f 1
+++ vggroup=└─test_vggroup20230831091635
+++ vggroup=test_vggroup20230831091635
+++ vgremove test_vggroup20230831091635 -y
+  Logical volume "test_lv320230831091635" successfully removed.
+  Volume group "test_vggroup20230831091635" successfully removed
+++ rm -rf /tmp/point320230831091635
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Thu Aug 31 09:16:56 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS "ext3 ext4 xfs"))
+++ CREATE_FS 'ext3 ext4 xfs'
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230831091656
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230831091656
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 0 -eq 0 ]]
++++ vggroup=test_vggroup20230831091656
++++ vgcreate test_vggroup20230831091656 /dev/vdb
++++ printf test_vggroup20230831091656
+++ vggroup=test_vggroup20230831091656
+++ count=1
+++ msg='test_vggroup20230831091656 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230831091656
+++ point=/tmp/point120230831091656
+++ lvcreate -n test_lv120230831091656 -L 512M test_vggroup20230831091656 -y
+++ mkfs -t ext3 /dev/test_vggroup20230831091656/test_lv120230831091656
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point120230831091656
+++ mount /dev/test_vggroup20230831091656/test_lv120230831091656 /tmp/point120230831091656
+++ msg='test_vggroup20230831091656 /tmp/point120230831091656 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230831091656
+++ point=/tmp/point220230831091656
+++ lvcreate -n test_lv220230831091656 -L 512M test_vggroup20230831091656 -y
+++ mkfs -t ext4 /dev/test_vggroup20230831091656/test_lv220230831091656
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point220230831091656
+++ mount /dev/test_vggroup20230831091656/test_lv220230831091656 /tmp/point220230831091656
+++ msg='test_vggroup20230831091656 /tmp/point120230831091656 /tmp/point220230831091656 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230831091656
+++ point=/tmp/point320230831091656
+++ lvcreate -n test_lv320230831091656 -L 512M test_vggroup20230831091656 -y
+++ mkfs -t xfs /dev/test_vggroup20230831091656/test_lv320230831091656
+mkfs: failed to execute mkfs.xfs: No such file or directory
+++ mkdir /tmp/point320230831091656
+++ mount /dev/test_vggroup20230831091656/test_lv320230831091656 /tmp/point320230831091656
+mount: /tmp/point320230831091656: wrong fs type, bad option, bad superblock on /dev/mapper/test_vggroup20230831091656-test_lv320230831091656, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
+++ msg='test_vggroup20230831091656 /tmp/point120230831091656 /tmp/point220230831091656 /tmp/point320230831091656 '
+++ count=4
+++ echo test_vggroup20230831091656 /tmp/point120230831091656 /tmp/point220230831091656 /tmp/point320230831091656
++ ext3_point=/tmp/point120230831091656
++ ext4_point=/tmp/point220230831091656
++ xfs_point=/tmp/point320230831091656
++ echo 'test ext3 file'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Aug 31 09:17:01 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Aug 31 09:17:02 2023 - INFO  - Start to run test.
++ mv /tmp/point120230831091656/testFile1 /tmp/point220230831091656/testFile2
++ stat /tmp/point220230831091656/testFile2
++ grep Inode
+Device: 252,1	Inode: 12          Links: 1
++ CHECK_RESULT 0 0 0 'Check inode of file /tmp/point220230831091656/testFile2 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode of file /tmp/point220230831091656/testFile2 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep test /tmp/point220230831091656/testFile2
+test ext3 file
++ CHECK_RESULT 0 0 0 'Check file msg of /tmp/point220230831091656/testFile2 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file msg of /tmp/point220230831091656/testFile2 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point220230831091656/testFile2 /tmp/point320230831091656/testFile3
++ stat /tmp/point320230831091656/testFile3
++ grep Inode
+Device: 0,41	Inode: 1221        Links: 1
++ CHECK_RESULT 0 0 0 'Check inode of file /tmp/point320230831091656/testFile3 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode of file /tmp/point320230831091656/testFile3 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep test /tmp/point320230831091656/testFile3
+test ext3 file
++ CHECK_RESULT 0 0 0 'Check file msg of /tmp/point320230831091656/testFile3 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file msg of /tmp/point320230831091656/testFile3 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point320230831091656/testFile3 /tmp/point120230831091656/testFile4
++ stat /tmp/point120230831091656/testFile4
++ grep Inode
+Device: 252,0	Inode: 12          Links: 1
++ CHECK_RESULT 0 0 0 'Check inode of file /tmp/point120230831091656/testFile4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check inode of file /tmp/point120230831091656/testFile4 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep test /tmp/point120230831091656/testFile4
+test ext3 file
++ CHECK_RESULT 0 0 0 'Check file msg of /tmp/point120230831091656/testFile4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file msg of /tmp/point120230831091656/testFile4 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Aug 31 09:17:03 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Aug 31 09:17:04 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Aug 31 09:17:05 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230831091656 /tmp/point120230831091656 /tmp/point220230831091656 /tmp/point320230831091656
++ list='test_vggroup20230831091656 /tmp/point120230831091656 /tmp/point220230831091656 /tmp/point320230831091656'
++ REMOVE_FS 'test_vggroup20230831091656 /tmp/point120230831091656 /tmp/point220230831091656 /tmp/point320230831091656'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230831091656
+++ df -T
+++ grep test_vggroup20230831091656
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20230831091656-test_lv120230831091656
+/dev/mapper/test_vggroup20230831091656-test_lv220230831091656'
++ [[ /dev/mapper/test_vggroup20230831091656-test_lv120230831091656
+/dev/mapper/test_vggroup20230831091656-test_lv220230831091656 == '' ]]
++ umount -f test_vggroup20230831091656
+umount: test_vggroup20230831091656: no mount point specified.
++ rm -rf test_vggroup20230831091656
++ DELETE_LV /dev/mapper/test_vggroup20230831091656-test_lv120230831091656 /dev/mapper/test_vggroup20230831091656-test_lv220230831091656
++ lvname=/dev/mapper/test_vggroup20230831091656-test_lv120230831091656
++ lvremove /dev/mapper/test_vggroup20230831091656-test_lv120230831091656 -y
+  Logical volume test_vggroup20230831091656/test_lv120230831091656 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230831091656
+++ df -T
+++ grep /tmp/point120230831091656
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230831091656-test_lv120230831091656
++ [[ /dev/mapper/test_vggroup20230831091656-test_lv120230831091656 == '' ]]
++ umount -f /tmp/point120230831091656
++ rm -rf /tmp/point120230831091656
++ DELETE_LV /dev/mapper/test_vggroup20230831091656-test_lv120230831091656
++ lvname=/dev/mapper/test_vggroup20230831091656-test_lv120230831091656
++ lvremove /dev/mapper/test_vggroup20230831091656-test_lv120230831091656 -y
+  Logical volume "test_lv120230831091656" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230831091656
+++ df -T
+++ grep /tmp/point220230831091656
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230831091656-test_lv220230831091656
++ [[ /dev/mapper/test_vggroup20230831091656-test_lv220230831091656 == '' ]]
++ umount -f /tmp/point220230831091656
++ rm -rf /tmp/point220230831091656
++ DELETE_LV /dev/mapper/test_vggroup20230831091656-test_lv220230831091656
++ lvname=/dev/mapper/test_vggroup20230831091656-test_lv220230831091656
++ lvremove /dev/mapper/test_vggroup20230831091656-test_lv220230831091656 -y
+  Logical volume "test_lv220230831091656" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230831091656
+++ df -T
+++ grep /tmp/point320230831091656
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Aug 31 09:17:08 2023 - INFO  - End to restore the test environment.

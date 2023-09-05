@@ -1,0 +1,152 @@
++ source ./common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sat Aug 26 16:57:47 2023 - INFO  - Start to prepare the test environment.
++ iSulad_install
++ DNF_INSTALL iSulad
++ pkgs=iSulad
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iSulad --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpqkyk4wcf
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpqkyk4wcf
++ sed -i '/registry-mirrors/a\"docker.io"' /etc/isulad/daemon.json
++ systemctl restart isulad
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Sat Aug 26 16:57:58 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Sat Aug 26 16:57:58 2023 - INFO  - Start to run test.
+++ isula run -tid --cgroup-parent /cgroup123 --system-container busybox
+Unable to find image 'busybox' locally
+Image "busybox" pulling
+Image "a416a98b71e224a31ee99cff8e16063554498227d2b696152a9c3e0aa65e5824" pulled
+Error response from daemon: shim-log error: {"level": "error", "msg": "runtime error"}
+
+runtime-log error: 
+
++ container_names=29c99dcc050872bf9c8bbe993fc927e55b9088fb059e8608acfd5282fee07eb5
+++ isula inspect -f '{{json .State.Pid}}' 29c99dcc050872bf9c8bbe993fc927e55b9088fb059e8608acfd5282fee07eb5
++ container_pid=0
++ grep cgroup123 /proc/0/cgroup
+grep: /proc/0/cgroup: No such file or directory
++ CHECK_RESULT 2 0 0 'configure the Cgroup path failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='configure the Cgroup path failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'configure the Cgroup path failed'
++ LOG_ERROR 'configure the Cgroup path failed'
++ message='configure the Cgroup path failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'configure the Cgroup path failed'
+Sat Aug 26 16:58:07 2023 - ERROR - configure the Cgroup path failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_restriction_cgroup.sh line 33'
++ message='oe_test_iSulad_resource_restriction_cgroup.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_restriction_cgroup.sh line 33'
+Sat Aug 26 16:58:07 2023 - ERROR - oe_test_iSulad_resource_restriction_cgroup.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ sed -i '/use-decrypted-key/a\"cgroup-parent": "/cgroup456",' /etc/isulad/daemon.json
++ systemctl restart isulad
+++ isula run -tid busybox
+Error response from daemon: shim-log error: {"level": "error", "msg": "runtime error"}
+
+runtime-log error: 
+
++ container_names1=a49d782c4bd227810b911c7377d6b1995403f47fdd361d8792493340718a2bfc
+++ isula inspect -f '{{json .State.Pid}}' a49d782c4bd227810b911c7377d6b1995403f47fdd361d8792493340718a2bfc
++ container_pid1=0
++ grep cgroup456 /proc/0/cgroup
+grep: /proc/0/cgroup: No such file or directory
++ CHECK_RESULT 2 0 0 'configure the Cgroup path failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='configure the Cgroup path failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'configure the Cgroup path failed'
++ LOG_ERROR 'configure the Cgroup path failed'
++ message='configure the Cgroup path failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'configure the Cgroup path failed'
+Sat Aug 26 16:58:08 2023 - ERROR - configure the Cgroup path failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_restriction_cgroup.sh line 39'
++ message='oe_test_iSulad_resource_restriction_cgroup.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_restriction_cgroup.sh line 39'
+Sat Aug 26 16:58:08 2023 - ERROR - oe_test_iSulad_resource_restriction_cgroup.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Sat Aug 26 16:58:08 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Sat Aug 26 16:58:08 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Sat Aug 26 16:58:08 2023 - INFO  - Start to restore the test environment.
++ isula stop 29c99dcc050872bf9c8bbe993fc927e55b9088fb059e8608acfd5282fee07eb5 a49d782c4bd227810b911c7377d6b1995403f47fdd361d8792493340718a2bfc
+29c99dcc050872bf9c8bbe993fc927e55b9088fb059e8608acfd5282fee07eb5
+a49d782c4bd227810b911c7377d6b1995403f47fdd361d8792493340718a2bfc
++ isula rm 29c99dcc050872bf9c8bbe993fc927e55b9088fb059e8608acfd5282fee07eb5 a49d782c4bd227810b911c7377d6b1995403f47fdd361d8792493340718a2bfc
+29c99dcc050872bf9c8bbe993fc927e55b9088fb059e8608acfd5282fee07eb5
+a49d782c4bd227810b911c7377d6b1995403f47fdd361d8792493340718a2bfc
++ isula rmi busybox
+Image "busybox" removed
++ iSulad_remove
++ systemctl stop isulad
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpqkyk4wcf ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpqkyk4wcf
++ '[' 0 -ne 0 ']'
++ rm -rf /etc/isulad
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Sat Aug 26 16:58:09 2023 - INFO  - End to restore the test environment.
