@@ -1,0 +1,238 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Aug 31 03:53:48 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL nfs-utils
++ pkgs=nfs-utils
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs nfs-utils --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp9ft8lfjm
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp9ft8lfjm
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Aug 31 03:54:19 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Aug 31 03:54:19 2023 - INFO  - Start to run test.
++ test_execution nfs-client.target
++ service=nfs-client.target
+++ date '+%Y-%m-%d %T'
++ log_time='2023-08-31 03:54:19'
++ test_restart nfs-client.target
++ service=nfs-client.target
++ systemctl restart nfs-client.target
++ CHECK_RESULT 0 0 0 'nfs-client.target restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='nfs-client.target restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status nfs-client.target
++ grep 'Active: active'
+     Active: active since Thu 2023-08-31 03:54:19 CST; 5s ago
++ CHECK_RESULT 0 0 0 'nfs-client.target restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='nfs-client.target restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop nfs-client.target
++ CHECK_RESULT 0 0 0 'nfs-client.target stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='nfs-client.target stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status nfs-client.target
++ grep 'Active: inactive'
+     Active: inactive (dead) since Thu 2023-08-31 03:54:25 CST; 5s ago
++ CHECK_RESULT 0 0 0 'nfs-client.target stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='nfs-client.target stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start nfs-client.target
++ CHECK_RESULT 0 0 0 'nfs-client.target start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='nfs-client.target start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status nfs-client.target
++ grep 'Active: active'
+     Active: active since Thu 2023-08-31 03:54:31 CST; 5s ago
++ CHECK_RESULT 0 0 0 'nfs-client.target start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='nfs-client.target start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled nfs-client.target
++ service=nfs-client.target
+++ systemctl is-enabled nfs-client.target
++ state=enabled
++ '[' enabled == enabled ']'
+++ systemctl disable nfs-client.target
+++ grep Removed
+++ awk '{print $2}'
+++ awk '{print substr($0,1,length($0)-1)}'
++ symlink_file='"/etc/systemd/system/multi-user.target.wants/nfs-client.target"
+"/etc/systemd/system/remote-fs.target.wants/nfs-client.target"'
++ find '"/etc/systemd/system/multi-user.target.wants/nfs-client.target"' '"/etc/systemd/system/remote-fs.target.wants/nfs-client.target"'
+find: ‘"/etc/systemd/system/multi-user.target.wants/nfs-client.target"’: No such file or directory
+find: ‘"/etc/systemd/system/remote-fs.target.wants/nfs-client.target"’: No such file or directory
++ CHECK_RESULT 1 0 1 'nfs-client.target disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='nfs-client.target disable failed'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ systemctl enable nfs-client.target
+Created symlink /etc/systemd/system/multi-user.target.wants/nfs-client.target → /usr/lib/systemd/system/nfs-client.target.
+Created symlink /etc/systemd/system/remote-fs.target.wants/nfs-client.target → /usr/lib/systemd/system/nfs-client.target.
++ find '"/etc/systemd/system/multi-user.target.wants/nfs-client.target"' '"/etc/systemd/system/remote-fs.target.wants/nfs-client.target"'
+find: ‘"/etc/systemd/system/multi-user.target.wants/nfs-client.target"’: No such file or directory
+find: ‘"/etc/systemd/system/remote-fs.target.wants/nfs-client.target"’: No such file or directory
++ CHECK_RESULT 1 0 0 'nfs-client.target enable failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='nfs-client.target enable failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'nfs-client.target enable failed'
++ LOG_ERROR 'nfs-client.target enable failed'
++ message='nfs-client.target enable failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'nfs-client.target enable failed'
+Thu Aug 31 03:54:40 2023 - ERROR - nfs-client.target enable failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 70'
++ message='../common/common_lib.sh line 70'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 70'
+Thu Aug 31 03:54:41 2023 - ERROR - ../common/common_lib.sh line 70
++ return 0
++ journalctl --since '2023-08-31 03:54:19' -u nfs-client.target
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of nfs-client.target'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of nfs-client.target'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload nfs-client.target
++ service=nfs-client.target
++ systemctl start nfs-client.target
++ systemctl reload nfs-client.target
++ grep 'Job type reload is not applicable'
+Failed to reload nfs-client.target: Job type reload is not applicable for unit nfs-client.target.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit nfs-client.target'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit nfs-client.target'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status nfs-client.target
++ grep 'Active: active'
+     Active: active since Thu 2023-08-31 03:54:31 CST; 10s ago
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Thu Aug 31 03:54:41 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Aug 31 03:54:42 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu Aug 31 03:54:42 2023 - INFO  - start environment cleanup.
++ systemtl stop nfs-client.target
+oe_test_target_nfs-client.sh: line 37: systemtl: command not found
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp9ft8lfjm ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp9ft8lfjm
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Thu Aug 31 03:54:57 2023 - INFO  - Finish environment cleanup!

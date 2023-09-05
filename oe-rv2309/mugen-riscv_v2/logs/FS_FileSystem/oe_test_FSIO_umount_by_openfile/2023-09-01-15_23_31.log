@@ -1,0 +1,274 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Fri Sep  1 15:23:33 2023 - INFO  - Start to prepare the database config.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230901152333
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230901152333
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vda
++++ disk_name=/dev/vda
++++ pvcreate /dev/vda -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vda
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=
++++ printf
+printf: usage: printf [-v var] format [arguments]
+++ vggroup=
+++ count=1
+++ msg=' '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230901152333
+++ point=/tmp/point120230901152333
+++ lvcreate -n test_lv120230901152333 -L 512M -y
+  No command with matching syntax recognised.  Run 'lvcreate --help' for more information.
+  Nearest similar command has syntax:
+++ mkfs -t ext3 /dev//test_lv120230901152333
+mke2fs 1.47.0 (5-Feb-2023)
+The file /dev//test_lv120230901152333 does not exist and no size was specified.
+++ mkdir /tmp/point120230901152333
+++ mount /dev//test_lv120230901152333 /tmp/point120230901152333
+mount: /tmp/point120230901152333: special device /dev//test_lv120230901152333 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230901152333 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230901152333
+++ point=/tmp/point220230901152333
+++ lvcreate -n test_lv220230901152333 -L 512M -y
+  No command with matching syntax recognised.  Run 'lvcreate --help' for more information.
+  Nearest similar command has syntax:
+++ mkfs -t ext4 /dev//test_lv220230901152333
+mke2fs 1.47.0 (5-Feb-2023)
+The file /dev//test_lv220230901152333 does not exist and no size was specified.
+++ mkdir /tmp/point220230901152333
+++ mount /dev//test_lv220230901152333 /tmp/point220230901152333
+mount: /tmp/point220230901152333: special device /dev//test_lv220230901152333 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230901152333 /tmp/point220230901152333 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230901152333
+++ point=/tmp/point320230901152333
+++ lvcreate -n test_lv320230901152333 -L 512M -y
+  No command with matching syntax recognised.  Run 'lvcreate --help' for more information.
+  Nearest similar command has syntax:
+++ mkfs -t xfs /dev//test_lv320230901152333
+mkfs: failed to execute mkfs.xfs: No such file or directory
+++ mkdir /tmp/point320230901152333
+++ mount /dev//test_lv320230901152333 /tmp/point320230901152333
+mount: /tmp/point320230901152333: special device /dev//test_lv320230901152333 does not exist.
+       dmesg(1) may have more information after failed mount system call.
+++ msg=' /tmp/point120230901152333 /tmp/point220230901152333 /tmp/point320230901152333 '
+++ count=4
+++ echo /tmp/point120230901152333 /tmp/point220230901152333 /tmp/point320230901152333
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Fri Sep  1 15:23:34 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep  1 15:23:35 2023 - INFO  - Start to run test.
+++ seq 1 2
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220230901152333
++ echo test
++ umount /tmp/point220230901152333
++ nohup vi /tmp/point220230901152333/testFile
+umount: /tmp/point220230901152333: not mounted.
++ CHECK_RESULT 32 0 0 'Umount fs /tmp/point220230901152333 failed.'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Umount fs /tmp/point220230901152333 failed.'
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Umount fs /tmp/point220230901152333 failed.'
++ LOG_ERROR 'Umount fs /tmp/point220230901152333 failed.'
++ message='Umount fs /tmp/point220230901152333 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Umount fs /tmp/point220230901152333 failed.'
+Vim: Warning: Output is not to a terminal
+Vim: Warning: Input is not from a terminal
+Fri Sep  1 15:23:35 2023 - ERROR - Umount fs /tmp/point220230901152333 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_umount_by_openfile.sh line 34'
++ message='oe_test_FSIO_umount_by_openfile.sh line 34'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_umount_by_openfile.sh line 34'
+Fri Sep  1 15:23:35 2023 - ERROR - oe_test_FSIO_umount_by_openfile.sh line 34
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320230901152333
++ echo test
++ umount /tmp/point320230901152333
++ nohup vi /tmp/point320230901152333/testFile
+umount: /tmp/point320230901152333: not mounted.
++ CHECK_RESULT 32 0 0 'Umount fs /tmp/point320230901152333 failed.'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Umount fs /tmp/point320230901152333 failed.'
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Umount fs /tmp/point320230901152333 failed.'
++ LOG_ERROR 'Umount fs /tmp/point320230901152333 failed.'
++ message='Umount fs /tmp/point320230901152333 failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Umount fs /tmp/point320230901152333 failed.'
+Vim: Warning: Output is not to a terminal
+Vim: Warning: Input is not from a terminal
+Fri Sep  1 15:23:36 2023 - ERROR - Umount fs /tmp/point320230901152333 failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_umount_by_openfile.sh line 34'
++ message='oe_test_FSIO_umount_by_openfile.sh line 34'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_umount_by_openfile.sh line 34'
+Fri Sep  1 15:23:36 2023 - ERROR - oe_test_FSIO_umount_by_openfile.sh line 34
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+[1;24r[27m[24m[0m[H[J[?25l[24;1H"/tmp/point220230901152333/testFile" 1L, 5B[1;1Htest
+[1m~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~[1;1H[?25h[24;1H[0mVim: Error reading input, exiting...
+Vim: Finished.
+[24;1H
+Fri Sep  1 15:23:37 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep  1 15:23:37 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep  1 15:23:38 2023 - INFO  - Start to restore the test environment.
+[1;24r[27m[24m[0m[H[J[?25l[24;1H"/tmp/point320230901152333/testFile" 1L, 5B[1;1Htest
+[1m~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~[1;1H[?25h[24;1H[0mVim: Error reading input, exiting...
+Vim: Finished.
+[24;1H
+++ echo /tmp/point120230901152333 /tmp/point220230901152333 /tmp/point320230901152333
++ list='/tmp/point120230901152333 /tmp/point220230901152333 /tmp/point320230901152333'
++ REMOVE_FS '/tmp/point120230901152333 /tmp/point220230901152333 /tmp/point320230901152333'
++ point_list=($1)
+++ seq 0 2
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230901152333
+++ df -T
+++ grep /tmp/point120230901152333
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230901152333
+++ df -T
+++ grep /tmp/point220230901152333
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230901152333
+++ df -T
+++ grep /tmp/point320230901152333
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ rm -f ./nohup.out
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep  1 15:23:38 2023 - INFO  - End to restore the test environment.

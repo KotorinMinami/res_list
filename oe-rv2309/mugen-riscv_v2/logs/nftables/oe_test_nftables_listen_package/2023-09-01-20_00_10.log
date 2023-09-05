@@ -1,0 +1,134 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start to config params of the case.'
++ message='Start to config params of the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to config params of the case.'
+Fri Sep  1 20:00:12 2023 - INFO  - Start to config params of the case.
++ table_name=sec015
++ chain_name=sec015_chain
++ nft add table inet sec015
++ nft add chain inet sec015 sec015_chain '{' type filter hook input priority 0 ';' '}'
++ LOG_INFO 'End to config params of the case.'
++ message='End to config params of the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to config params of the case.'
+Fri Sep  1 20:00:12 2023 - INFO  - End to config params of the case.
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Fri Sep  1 20:00:13 2023 - INFO  - Start executing testcase.
++ nft add rule inet sec015 sec015_chain udp dport 22 accept
++ nft --handle list chain inet sec015 sec015_chain
++ grep sec015_chain
+	chain sec015_chain { # handle 1
++ CHECK_RESULT 0 0 0 'exec '\''nft add rule inet sec015 sec015_chain udp dport 22 accept'\'' failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='exec '\''nft add rule inet sec015 sec015_chain udp dport 22 accept'\'' failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ nft --handle list chain inet sec015 sec015_chain
+++ grep udp
+++ awk -F ' ' '{printf $NF}'
++ handle_num=2
++ nft replace rule inet sec015 sec015_chain handle 2 tcp dport 22 meta nftrace set 1 accept
++ nft --handle list chain inet sec015 sec015_chain
++ grep 'tcp dport 22 meta nftrace set 1 accept'
+		tcp dport 22 meta nftrace set 1 accept # handle 2
++ CHECK_RESULT 0 0 0 'exec '\''nft replace'\'' failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='exec '\''nft replace'\'' failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pid_num=58470
++ nft monitor
++ SSH_CMD pwd 127.0.0.1 'openEuler12#$' root
++ cmd=pwd
++ remoteip=127.0.0.1
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen-riscv/libs/locallibs/sshcmd.sh -c pwd -i 127.0.0.1 -u root -p 'openEuler12#$' -t 300 -o 22
++ grep 'inet sec015 sec015_chain'
+Fri Sep  1 20:00:13 2023 - WARN  - the remote user uses the default configuration.
+Fri Sep  1 20:00:14 2023 - WARN  - the remote password uses the default configuration.
+Fri Sep  1 20:00:14 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@127.0.0.1 pwd
+The authenticity of host '127.0.0.1 (127.0.0.1)' can't be established.
+ED25519 key fingerprint is SHA256:8Pxs8FwnhXe1PUsUwI+EopLmQvfwj42663SPm/NcFhM.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '127.0.0.1' (ED25519) to the list of known hosts.
+root@127.0.0.1's password: 
+/root
++ ret=0
++ test 0 -ne 0
++ return 0
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ kill -9 58470
+++ cat monitor_log
+++ wc -l
++ '[' 22 -gt 0 ']'
++ CHECK_RESULT 0 0 0 'exec '\''nft monitor'\'' failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='exec '\''nft monitor'\'' failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish testcase execution.'
++ message='Finish testcase execution.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish testcase execution.'
+Fri Sep  1 20:00:27 2023 - INFO  - Finish testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Sep  1 20:00:27 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Fri Sep  1 20:00:28 2023 - INFO  - start environment cleanup.
++ nft delete table inet sec015
++ rm -rf monitor_log
+oe_test_nftables_listen_package.sh: line 51: 58469 Broken pipe             nft monitor
+     58470 Killed                  | grep "inet $table_name $chain_name" > monitor_log
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Fri Sep  1 20:00:28 2023 - INFO  - Finish environment cleanup!

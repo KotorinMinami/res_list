@@ -1,0 +1,167 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Tue Aug 29 10:14:32 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230829101432
+++ CREATE_VG
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230829101432
++++ grep disk
++++ lsblk
++++ awk '{print $1}'
++++ tail -n 1
+++ free_disk=vda
+++ disk_name=/dev/vda
+++ pvcreate /dev/vda -f
+++ [[ 127 -eq 0 ]]
++++ pvcreate /dev/vda
++++ grep test_vggroup
++++ cut -d '"' -f 4
+++ vggroup=
+++ printf
+printf: usage: printf [-v var] format [arguments]
++ vggroup=
++ lv=test_lv20230829101432
++ lvcreate -n test_lv20230829101432 -L 2G -y
+oe_test_FSIO_mount_xfs_dax.sh: line 26: lvcreate: command not found
++ mkfs.xfs -m reflink=0 /dev//test_lv20230829101432
+oe_test_FSIO_mount_xfs_dax.sh: line 27: mkfs.xfs: command not found
++ xfs_point=/mnt/test20230829101432
++ mkdir /mnt/test20230829101432
+mkdir: cannot create directory ‘/mnt/test20230829101432’: File exists
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Tue Aug 29 10:14:32 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Aug 29 10:14:32 2023 - INFO  - Start to run test.
++ mount -t xfs -o dax /dev//test_lv20230829101432 /mnt/test20230829101432
+mount: /mnt/test20230829101432: special device /dev//test_lv20230829101432 does not exist.
+       dmesg(1) may have more information after failed mount system call.
++ CHECK_RESULT 32 0 0 'Mount xfs by dax failed.'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Mount xfs by dax failed.'
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Mount xfs by dax failed.'
++ LOG_ERROR 'Mount xfs by dax failed.'
++ message='Mount xfs by dax failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Mount xfs by dax failed.'
+Tue Aug 29 10:14:32 2023 - ERROR - Mount xfs by dax failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_xfs_dax.sh line 36'
++ message='oe_test_FSIO_mount_xfs_dax.sh line 36'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_xfs_dax.sh line 36'
+Tue Aug 29 10:14:32 2023 - ERROR - oe_test_FSIO_mount_xfs_dax.sh line 36
++ return 0
++ dd if=/dev/zero of=/mnt/test20230829101432/testFile1 bs=1M count=1024
+1024+0 records in
+1024+0 records out
+1073741824 bytes (1.1 GB, 1.0 GiB) copied, 0.347807 s, 3.1 GB/s
++ CHECK_RESULT 0 0 0 'Write file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Write file failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dd if=/mnt/test20230829101432/testFile1 of=/mnt/test20230829101432/testFile1 bs=1M count=1
+0+0 records in
+0+0 records out
+0 bytes copied, 7.2994e-05 s, 0.0 kB/s
++ CHECK_RESULT 0 0 0 'Read file failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Read file failed.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount -f /dev//test_lv20230829101432
+umount: /dev//test_lv20230829101432: no mount point specified.
++ CHECK_RESULT 32 0 0 'Umount xfs failed.'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Umount xfs failed.'
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Umount xfs failed.'
++ LOG_ERROR 'Umount xfs failed.'
++ message='Umount xfs failed.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Umount xfs failed.'
+Tue Aug 29 10:14:33 2023 - ERROR - Umount xfs failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_mount_xfs_dax.sh line 42'
++ message='oe_test_FSIO_mount_xfs_dax.sh line 42'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_mount_xfs_dax.sh line 42'
+Tue Aug 29 10:14:33 2023 - ERROR - oe_test_FSIO_mount_xfs_dax.sh line 42
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Aug 29 10:14:33 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Aug 29 10:14:33 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Aug 29 10:14:33 2023 - INFO  - Start to restore the test environment.
++ rm -rf /mnt/test20230829101432
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Aug 29 10:14:33 2023 - INFO  - End to restore the test environment.

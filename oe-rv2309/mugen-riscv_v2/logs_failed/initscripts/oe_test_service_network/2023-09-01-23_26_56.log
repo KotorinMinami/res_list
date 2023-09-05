@@ -1,0 +1,147 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Fri Sep  1 23:26:58 2023 - INFO  - Start environmental preparation.
++ P_SSH_CMD --cmd 'dnf install -y network-scripts' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'dnf install -y network-scripts' --node 2
+Fri Sep  1 23:26:59 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ service=network.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-01 23:26:59'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Sep  1 23:27:00 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Fri Sep  1 23:27:00 2023 - INFO  - Start testing...
++ P_SSH_CMD --cmd 'systemctl restart network.service' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'systemctl restart network.service' --node 2
+Fri Sep  1 23:27:02 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 0 'network.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='network.service restart failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'network.service restart failed'
++ LOG_ERROR 'network.service restart failed'
++ message='network.service restart failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'network.service restart failed'
+Fri Sep  1 23:27:02 2023 - ERROR - network.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_network.sh line 33'
++ message='oe_test_service_network.sh line 33'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_network.sh line 33'
+Fri Sep  1 23:27:03 2023 - ERROR - oe_test_service_network.sh line 33
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ P_SSH_CMD --cmd 'systemctl status network.service | grep '\''Active: active'\''' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'systemctl status network.service | grep '\''Active: active'\''' --node 2
+Fri Sep  1 23:27:10 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 0 'network.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='network.service restart failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'network.service restart failed'
++ LOG_ERROR 'network.service restart failed'
++ message='network.service restart failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'network.service restart failed'
+Fri Sep  1 23:27:11 2023 - ERROR - network.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_network.sh line 36'
++ message='oe_test_service_network.sh line 36'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_network.sh line 36'
+Fri Sep  1 23:27:11 2023 - ERROR - oe_test_service_network.sh line 36
++ return 0
++ P_SSH_CMD --cmd 'journalct --since '\''2023-09-01 23:26:59'\'' -u network.service | grep -i '\''fail\|error'\'' | grep -v -i '\''DEBUG\|INFO\|WARNING'\''' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'journalct --since '\''2023-09-01 23:26:59'\'' -u network.service | grep -i '\''fail\|error'\'' | grep -v -i '\''DEBUG\|INFO\|WARNING'\''' --node 2
+Fri Sep  1 23:27:13 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 1 'There is an error message for the log of network.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of network.service'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ P_SSH_CMD --cmd 'systemctl start network.service
+    systemctl reload network.service 2>&1 | grep '\''Job type reload is not applicable'\''' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'systemctl start network.service
+    systemctl reload network.service 2>&1 | grep '\''Job type reload is not applicable'\''' --node 2
+Fri Sep  1 23:27:15 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ CHECK_RESULT 1 0 0 'Job type reload is not applicable for unit network.service'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit network.service'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Job type reload is not applicable for unit network.service'
++ LOG_ERROR 'Job type reload is not applicable for unit network.service'
++ message='Job type reload is not applicable for unit network.service'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Job type reload is not applicable for unit network.service'
+Fri Sep  1 23:27:15 2023 - ERROR - Job type reload is not applicable for unit network.service
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_service_network.sh line 41'
++ message='oe_test_service_network.sh line 41'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_service_network.sh line 41'
+Fri Sep  1 23:27:16 2023 - ERROR - oe_test_service_network.sh line 41
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Fri Sep  1 23:27:16 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep  1 23:27:16 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Fri Sep  1 23:27:17 2023 - INFO  - start environment cleanup.
++ P_SSH_CMD --cmd 'dnf remove -y network-scripts' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'dnf remove -y network-scripts' --node 2
+Fri Sep  1 23:27:18 2023 - ERROR - You need to check the environment configuration file to see if this node information exists.
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Fri Sep  1 23:27:19 2023 - INFO  - Finish environment cleanup!
