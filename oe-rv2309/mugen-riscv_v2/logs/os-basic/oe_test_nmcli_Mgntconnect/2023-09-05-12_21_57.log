@@ -1,0 +1,173 @@
++ source ../common/net_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start to config params of the case.'
++ message='Start to config params of the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to config params of the case.'
+Tue Sep  5 12:22:00 2023 - INFO  - Start to config params of the case.
++ get_free_eth 1
++ local num_eth=1
++ echo 10.0.0.1
+10.0.0.1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --node 1 --device nic
+Tue Sep  5 12:22:09 2023 - INFO  - pkgs:(lshw) is already installed
++ NODE1_NIC='enp0s3 enp0s4 enp0s5 enp0s6'
++ LOCAL_ETH=(${NODE1_NIC[@]/$(ip route | grep ${NODE1_IPV4} | awk '{print$3}')/})
+++ ip route
+++ grep 10.0.0.1
+++ awk '{print$3}'
++ '[' 4 -ge 1 ']'
++ test_eth=enp0s3
++ con_name=ethernet-enp0s3
++ LOG_INFO 'End to config params of the case.'
++ message='End to config params of the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to config params of the case.'
+Tue Sep  5 12:22:19 2023 - INFO  - End to config params of the case.
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Sep  5 12:22:20 2023 - INFO  - Start to prepare the test environment.
++ nmcli con show ethernet-enp0s3
+Error: ethernet-enp0s3 - no such connection profile.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Sep  5 12:22:21 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Sep  5 12:22:22 2023 - INFO  - Start to run test.
++ nmcli con add type ethernet ifname enp0s3
++ grep successfully
+Connection 'ethernet-enp0s3' (941bd9b8-a8c7-4bd6-aded-7ff6bb6de0dc) successfully added.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ nmcli -a con add
++ grep successfully log
+Connection 'ethernet' (1813ae91-46a6-4312-a35f-0670419d0270) successfully added.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ nmcli con mod ethernet-enp0s3 ipv4.method auto
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ nmcli connection show ethernet-enp0s3
++ grep ipv4.method
++ grep auto
+ipv4.method:                            auto
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ nmcli connection edit ethernet-enp0s3
++ grep -c 'nmcli>' log
++ grep 3
+3
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ nmcli con show
+++ grep -c ethernet-enp0s3
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
+++ nmcli con show ethernet-enp0s3
+++ grep -c connection
++ num_nmcli=27
++ test 27 -gt 10
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Sep  5 12:22:25 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Sep  5 12:22:26 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Sep  5 12:22:27 2023 - INFO  - Start to restore the test environment.
++ rm -rf log
++ nmcli con delete ethernet-enp0s3
+Connection 'ethernet-enp0s3' (941bd9b8-a8c7-4bd6-aded-7ff6bb6de0dc) successfully deleted.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Sep  5 12:22:28 2023 - INFO  - End to restore the test environment.
