@@ -1,0 +1,271 @@
++ source ../common/common_ndisc6.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Sep  8 04:22:33 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'ndisc6 xinetd time'
++ pkgs='ndisc6 xinetd time'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'ndisc6 xinetd time' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpixxw97ux
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpixxw97ux
+++ hostname
+../common/common_ndisc6.sh: line 21: hostname: command not found
++ hostname_init=
++ hostname newlocalhost
+../common/common_ndisc6.sh: line 22: hostname: command not found
+++ ip addr show ens6
+++ grep -w inet6
+++ awk '{print $2}'
+++ awk 'NR==1{print $1}'
+++ awk -F / '{print $1}'
++ NODE1_IPV6=fe80::8e5e:ed0:3bf6:83e8
+++ P_SSH_CMD --node 2 --cmd 'ip addr show ens6'
+++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'ip addr show ens6'
+++ grep -w inet6
+++ awk '{print $2}'
+++ awk 'NR==1{print $1}'
+++ awk -F / '{print $1}'
++ NODE2_IPV6=fe80::b30b:4ddb:46f9:d38b
++ cp /etc/resolv.conf /etc/resolv.conf-bak
++ sed -i 's/name/#&/' /etc/resolv.conf
++ sed -i 6s/yes/no/g /etc/xinetd.d/echo-stream
++ systemctl restart xinetd
++ DNF_INSTALL xinetd 2
++ pkgs=xinetd
++ node=2
++ '[' -z /tmp/tmpixxw97ux ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs xinetd --node 2 --tempfile /tmp/tmpixxw97ux
+Fri Sep  8 04:23:24 2023 - INFO  - pkgs:(xinetd) is already installed
++ tmpfile2=
++ '[' -z /tmp/tmpixxw97ux ']'
++ P_SSH_CMD --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
+
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Sep  8 04:23:25 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep  8 04:23:25 2023 - INFO  - Start to run test.
++ name2addr -4 newlocalhost
++ grep 10.0.0.2
+newlocalhost: Name or service not known
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_name2addr.sh line 29'
++ message='oe_test_ndisc6_name2addr.sh line 29'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_name2addr.sh line 29'
+Fri Sep  8 04:23:25 2023 - ERROR - oe_test_ndisc6_name2addr.sh line 29
++ '[' 0 -eq 1 ']'
++ return 0
++ name2addr -6 newlocalhost
++ grep fe80::8e5e:ed0:3bf6:83e8
+newlocalhost: Name or service not known
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_name2addr.sh line 31'
++ message='oe_test_ndisc6_name2addr.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_name2addr.sh line 31'
+Fri Sep  8 04:23:25 2023 - ERROR - oe_test_ndisc6_name2addr.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
++ name2addr -c newlocalhost
++ grep ens6
+newlocalhost: Name or service not known
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_name2addr.sh line 33'
++ message='oe_test_ndisc6_name2addr.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_name2addr.sh line 33'
+Fri Sep  8 04:23:25 2023 - ERROR - oe_test_ndisc6_name2addr.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ name2addr -m localhost newlocalhost
++ grep -E '10.0.0.2|fe80::8e5e:ed0:3bf6:83e8'
+newlocalhost: Name or service not known
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_name2addr.sh line 35'
++ message='oe_test_ndisc6_name2addr.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_name2addr.sh line 35'
+Fri Sep  8 04:23:25 2023 - ERROR - oe_test_ndisc6_name2addr.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
++ name2addr -n -r 10.0.0.2
++ grep newlocalhost
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_name2addr.sh line 37'
++ message='oe_test_ndisc6_name2addr.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_name2addr.sh line 37'
+Fri Sep  8 04:23:25 2023 - ERROR - oe_test_ndisc6_name2addr.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ name2addr -n -r fe80::8e5e:ed0:3bf6:83e8
++ grep newlocalhost
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_name2addr.sh line 39'
++ message='oe_test_ndisc6_name2addr.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_name2addr.sh line 39'
+Fri Sep  8 04:23:25 2023 - ERROR - oe_test_ndisc6_name2addr.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
+++ rpm -qa ndisc6
+++ awk -F - '{print $2}'
++ ndisc6_version=1.0.4
++ name2addr -V
++ grep 1.0.4
+addrinfo 1.0.4 ($Rev$)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ name2addr -h
++ grep name2addr
+Usage: name2addr [-4|-6] [hostnames]
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo 'hello world'
++ dnssort -r file
++ grep 'hello world'
+hello world
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep  8 04:23:25 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 6
++ test 6 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep  8 04:23:25 2023 - ERROR - failed to execute the case.
++ exit 6
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep  8 04:23:25 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpixxw97ux ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpixxw97ux
++ '[' 0 -ne 0 ']'
++ hostname
+../common/common_ndisc6.sh: line 35: hostname: command not found
++ cp -rf /etc/resolv.conf-bak /etc/resolv.conf
++ rm -rf file runtime /etc/resolv.conf-bak
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep  8 04:23:28 2023 - INFO  - End to restore the test environment.
