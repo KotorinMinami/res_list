@@ -1,0 +1,834 @@
++ source common/common_dnf.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Mon Sep 11 23:33:29 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ OLD_LANG=en_US.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL tree
++ pkgs=tree
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs tree --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpkw4upj7a
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpkw4upj7a
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Mon Sep 11 23:34:07 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Sep 11 23:34:08 2023 - INFO  - Start to run test.
++ dnf -y reinstall tree
++ grep Reinstalled
+Reinstalled:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rpm -q tree
++ grep tree
+tree-2.1.1-1.oe2309.riscv64
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf remove -y tree
++ grep Removed
+Removed:
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf reinstall -y tree
++ grep 'Package tree available, but not installed'
+Package tree available, but not installed.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf --repo=everything repolist
++ grep everything
+everything                              everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ dnf --repo=everything repolist
+++ wc -l
++ ret=2
++ CHECK_RESULT 2 2 0
++ actual_result=2
++ expect_result=2
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 2x
++ return 0
++ dnf --repoid=everything repolist
++ grep everything
+everything                              everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoinfo
++ grep Repo-id
+Last metadata expiration check: 0:02:09 ago on Mon 11 Sep 2023 11:32:39 PM CST.
+Repo-id            : EPOL
+Repo-id            : OS
+Repo-id            : debuginfo
+Repo-id            : everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repolist
++ grep 'repo id'
+repo id                                 repo name
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoquery tree
++ grep tree
+Last metadata expiration check: 0:02:21 ago on Mon 11 Sep 2023 11:32:39 PM CST.
+tree-0:2.1.1-1.oe2309.riscv64
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoquery -all
++ grep /usr/bin/tree
+Last metadata expiration check: 0:02:27 ago on Mon 11 Sep 2023 11:32:39 PM CST.
+Package abrt-cli-2.16.1-1.oe2309.riscv64 contains no files
+Package abrt-desktop-2.16.1-1.oe2309.riscv64 contains no files
+Package basesystem-12-3.oe2309.noarch contains no files
+Package ceph-2:16.2.7-23.oe2309.riscv64 contains no files
+Package custom_build_tool-nodebug-1.0.0-21.oe2309.noarch contains no files
+Package erlang-23.3.4.9-4.oe2309.riscv64 contains no files
+Package erlang-otp_mibs-23.3.4.9-4.oe2309.riscv64 contains no files
+Package esc-help-1.1.2-6.oe2309.noarch contains no files
+Package fftw-libs-3.3.10-1.oe2309.riscv64 contains no files
+Package gcc_secure-1.0-0.12.oe2309.riscv64 contains no files
+Package gnome-packagekit-3.32.0-1.oe2309.riscv64 contains no files
+Package gperftools-2.10-3.oe2309.riscv64 contains no files
+Package hsqldb-demo-1:2.4.0-4.oe2309.noarch contains no files
+Package hunspell-es-1:2.6-1.oe2309.noarch contains no files
+Package ibus-table-chinese-1.8.2-13.oe2309.noarch contains no files
+Package kiwi-systemdeps-9.24.1-1.oe2309.riscv64 contains no files
+Package libknet1-compress-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libknet1-crypto-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libknet1-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libvirt-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-kvm-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-kvm-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-qemu-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-qemu-6.2.0-59.oe2309.riscv64 contains no files
+Package lorax-lmc-novirt-34.1-4.oe2309.riscv64 contains no files
+Package maven-local-5.3.0-5.oe2309.noarch contains no files
+Package native-turbo-1.0.0-5.oe2309.riscv64 contains no files
+Package nbdkit-1.29.11-1.oe2309.riscv64 contains no files
+Package nginx-all-modules-1:1.23.3-1.oe2309.noarch contains no files
+Package obs-env-1.0-7.oe2309.riscv64 contains no files
+Package python-pygments-help-2.15.1-1.oe2309.noarch contains no files
+Package python3-pillow-help-10.0.0-1.oe2309.noarch contains no files
+Package rpmlint-help-2.4.0-1.oe2309.noarch contains no files
+Package setools-4.4.2-2.oe2309.riscv64 contains no files
+Package setools-4.4.3-1.oe2309.riscv64 contains no files
+Package texlive-9:2021-2.oe2309.noarch contains no files
+Package texlive-babel-bahasa-doc-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-babel-bahasa-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-bibtexperllibs-9:svn57137-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-2.oe2309.noarch contains no files
+Package texlive-collection-bibtexextra-9:svn58437-1.oe2309.noarch contains no files
+Package texlive-collection-bibtexextra-9:svn58437-2.oe2309.noarch contains no files
+Package texlive-collection-binextra-9:svn56352-1.oe2309.noarch contains no files
+Package texlive-collection-binextra-9:svn56352-2.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-fontsextra-9:svn58253-1.oe2309.noarch contains no files
+Package texlive-collection-fontsextra-9:svn58253-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn35830.0-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-fontutils-9:svn57089-1.oe2309.noarch contains no files
+Package texlive-collection-fontutils-9:svn57089-2.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn47828-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn58896-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-2.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-1.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-2.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-1.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-2.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-2.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-1.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-2.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-1.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-2.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-1.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-2.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-1.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-2.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-1.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-2.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-1.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-2.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-1.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-2.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-1.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-2.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-1.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-2.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-1.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-2.oe2309.noarch contains no files
+Package texlive-collection-latexextra-9:svn59009-1.oe2309.noarch contains no files
+Package texlive-collection-latexextra-9:svn59009-2.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-1.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-2.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-1.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-2.oe2309.noarch contains no files
+Package texlive-collection-mathscience-9:svn57759-1.oe2309.noarch contains no files
+Package texlive-collection-mathscience-9:svn57759-2.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn50293-1.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-1.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-2.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-1.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-2.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-1.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-2.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-1.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-2.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-1.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-2.oe2309.noarch contains no files
+Package texlive-collection-texworks-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-gloss-occitan-9:svn52593-1.oe2309.noarch contains no files
+Package texlive-hyphen-arabic-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-hyphen-farsi-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-obsolete-9:2021-1.oe2309.noarch contains no files
+Package texlive-scheme-basic-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-full-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-gust-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-medium-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-minimal-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-small-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-tetex-9:svn54074-1.oe2309.noarch contains no files
+Package uthash-help-2.1.0-1.oe2309.noarch contains no files
+Package xorg-x11-drivers-7.7-29.oe2309.riscv64 contains no files
+Package abrt-cli-2.16.1-1.oe2309.riscv64 contains no files
+Package abrt-desktop-2.16.1-1.oe2309.riscv64 contains no files
+Package basesystem-12-3.oe2309.noarch contains no files
+Package ceph-2:16.2.7-23.oe2309.riscv64 contains no files
+Package custom_build_tool-nodebug-1.0.0-21.oe2309.noarch contains no files
+Package erlang-23.3.4.9-4.oe2309.riscv64 contains no files
+Package erlang-otp_mibs-23.3.4.9-4.oe2309.riscv64 contains no files
+Package esc-help-1.1.2-6.oe2309.noarch contains no files
+Package fftw-libs-3.3.10-1.oe2309.riscv64 contains no files
+Package gcc_secure-1.0-0.12.oe2309.riscv64 contains no files
+Package gnome-packagekit-3.32.0-1.oe2309.riscv64 contains no files
+Package gperftools-2.10-3.oe2309.riscv64 contains no files
+Package hsqldb-demo-1:2.4.0-4.oe2309.noarch contains no files
+Package hunspell-es-1:2.6-1.oe2309.noarch contains no files
+Package ibus-table-chinese-1.8.2-13.oe2309.noarch contains no files
+Package kiwi-systemdeps-9.24.1-1.oe2309.riscv64 contains no files
+Package libknet1-compress-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libknet1-crypto-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libknet1-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libvirt-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-kvm-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-kvm-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-qemu-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-qemu-6.2.0-59.oe2309.riscv64 contains no files
+Package lorax-lmc-novirt-34.1-4.oe2309.riscv64 contains no files
+Package maven-local-5.3.0-5.oe2309.noarch contains no files
+Package native-turbo-1.0.0-5.oe2309.riscv64 contains no files
+Package nbdkit-1.29.11-1.oe2309.riscv64 contains no files
+Package nginx-all-modules-1:1.23.3-1.oe2309.noarch contains no files
+Package obs-env-1.0-7.oe2309.riscv64 contains no files
+Package python-pygments-help-2.15.1-1.oe2309.noarch contains no files
+Package python3-pillow-help-10.0.0-1.oe2309.noarch contains no files
+Package rpmlint-help-2.4.0-1.oe2309.noarch contains no files
+Package setools-4.4.2-2.oe2309.riscv64 contains no files
+Package setools-4.4.3-1.oe2309.riscv64 contains no files
+Package texlive-9:2021-2.oe2309.noarch contains no files
+Package texlive-babel-bahasa-doc-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-babel-bahasa-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-bibtexperllibs-9:svn57137-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-2.oe2309.noarch contains no files
+Package texlive-collection-bibtexextra-9:svn58437-1.oe2309.noarch contains no files
+Package texlive-collection-bibtexextra-9:svn58437-2.oe2309.noarch contains no files
+Package texlive-collection-binextra-9:svn56352-1.oe2309.noarch contains no files
+Package texlive-collection-binextra-9:svn56352-2.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-fontsextra-9:svn58253-1.oe2309.noarch contains no files
+Package texlive-collection-fontsextra-9:svn58253-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn35830.0-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-fontutils-9:svn57089-1.oe2309.noarch contains no files
+Package texlive-collection-fontutils-9:svn57089-2.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn47828-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn58896-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-2.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-1.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-2.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-1.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-2.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-2.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-1.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-2.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-1.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-2.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-1.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-2.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-1.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-2.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-1.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-2.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-1.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-2.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-1.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-2.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-1.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-2.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-1.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-2.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-1.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-2.oe2309.noarch contains no files
+Package texlive-collection-latexextra-9:svn59009-1.oe2309.noarch contains no files
+Package texlive-collection-latexextra-9:svn59009-2.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-1.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-2.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-1.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-2.oe2309.noarch contains no files
+Package texlive-collection-mathscience-9:svn57759-1.oe2309.noarch contains no files
+Package texlive-collection-mathscience-9:svn57759-2.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn50293-1.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-1.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-2.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-1.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-2.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-1.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-2.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-1.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-2.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-1.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-2.oe2309.noarch contains no files
+Package texlive-collection-texworks-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-gloss-occitan-9:svn52593-1.oe2309.noarch contains no files
+Package texlive-hyphen-arabic-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-hyphen-farsi-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-obsolete-9:2021-1.oe2309.noarch contains no files
+Package texlive-scheme-basic-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-full-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-gust-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-medium-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-minimal-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-small-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-tetex-9:svn54074-1.oe2309.noarch contains no files
+Package uthash-help-2.1.0-1.oe2309.noarch contains no files
+Package xorg-x11-drivers-7.7-29.oe2309.riscv64 contains no files
+Package abrt-cli-2.16.1-1.oe2309.riscv64 contains no files
+Package abrt-desktop-2.16.1-1.oe2309.riscv64 contains no files
+Package basesystem-12-3.oe2309.noarch contains no files
+Package ceph-2:16.2.7-23.oe2309.riscv64 contains no files
+Package custom_build_tool-nodebug-1.0.0-21.oe2309.noarch contains no files
+Package erlang-23.3.4.9-4.oe2309.riscv64 contains no files
+Package erlang-otp_mibs-23.3.4.9-4.oe2309.riscv64 contains no files
+Package esc-help-1.1.2-6.oe2309.noarch contains no files
+Package fftw-libs-3.3.10-1.oe2309.riscv64 contains no files
+Package gcc_secure-1.0-0.12.oe2309.riscv64 contains no files
+Package gnome-packagekit-3.32.0-1.oe2309.riscv64 contains no files
+Package gperftools-2.10-3.oe2309.riscv64 contains no files
+Package hsqldb-demo-1:2.4.0-4.oe2309.noarch contains no files
+Package hunspell-es-1:2.6-1.oe2309.noarch contains no files
+Package ibus-table-chinese-1.8.2-13.oe2309.noarch contains no files
+Package kiwi-systemdeps-9.24.1-1.oe2309.riscv64 contains no files
+Package libknet1-compress-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libknet1-crypto-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libknet1-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libvirt-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-kvm-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-kvm-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-qemu-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-qemu-6.2.0-59.oe2309.riscv64 contains no files
+Package lorax-lmc-novirt-34.1-4.oe2309.riscv64 contains no files
+Package maven-local-5.3.0-5.oe2309.noarch contains no files
+Package native-turbo-1.0.0-5.oe2309.riscv64 contains no files
+Package nbdkit-1.29.11-1.oe2309.riscv64 contains no files
+Package nginx-all-modules-1:1.23.3-1.oe2309.noarch contains no files
+Package obs-env-1.0-7.oe2309.riscv64 contains no files
+Package python-pygments-help-2.15.1-1.oe2309.noarch contains no files
+Package python3-pillow-help-10.0.0-1.oe2309.noarch contains no files
+Package rpmlint-help-2.4.0-1.oe2309.noarch contains no files
+Package setools-4.4.2-2.oe2309.riscv64 contains no files
+Package setools-4.4.3-1.oe2309.riscv64 contains no files
+Package texlive-9:2021-2.oe2309.noarch contains no files
+Package texlive-babel-bahasa-doc-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-babel-bahasa-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-bibtexperllibs-9:svn57137-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-2.oe2309.noarch contains no files
+Package texlive-collection-bibtexextra-9:svn58437-1.oe2309.noarch contains no files
+Package texlive-collection-bibtexextra-9:svn58437-2.oe2309.noarch contains no files
+Package texlive-collection-binextra-9:svn56352-1.oe2309.noarch contains no files
+Package texlive-collection-binextra-9:svn56352-2.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-fontsextra-9:svn58253-1.oe2309.noarch contains no files
+Package texlive-collection-fontsextra-9:svn58253-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn35830.0-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-fontutils-9:svn57089-1.oe2309.noarch contains no files
+Package texlive-collection-fontutils-9:svn57089-2.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn47828-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn58896-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-2.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-1.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-2.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-1.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-2.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-2.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-1.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-2.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-1.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-2.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-1.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-2.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-1.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-2.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-1.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-2.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-1.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-2.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-1.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-2.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-1.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-2.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-1.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-2.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-1.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-2.oe2309.noarch contains no files
+Package texlive-collection-latexextra-9:svn59009-1.oe2309.noarch contains no files
+Package texlive-collection-latexextra-9:svn59009-2.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-1.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-2.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-1.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-2.oe2309.noarch contains no files
+Package texlive-collection-mathscience-9:svn57759-1.oe2309.noarch contains no files
+Package texlive-collection-mathscience-9:svn57759-2.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn50293-1.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-1.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-2.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-1.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-2.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-1.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-2.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-1.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-2.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-1.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-2.oe2309.noarch contains no files
+Package texlive-collection-texworks-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-gloss-occitan-9:svn52593-1.oe2309.noarch contains no files
+Package texlive-hyphen-arabic-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-hyphen-farsi-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-obsolete-9:2021-1.oe2309.noarch contains no files
+Package texlive-scheme-basic-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-full-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-gust-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-medium-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-minimal-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-small-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-tetex-9:svn54074-1.oe2309.noarch contains no files
+Package uthash-help-2.1.0-1.oe2309.noarch contains no files
+Package xorg-x11-drivers-7.7-29.oe2309.riscv64 contains no files
+Package abrt-cli-2.16.1-1.oe2309.riscv64 contains no files
+Package abrt-desktop-2.16.1-1.oe2309.riscv64 contains no files
+Package basesystem-12-3.oe2309.noarch contains no files
+Package ceph-2:16.2.7-23.oe2309.riscv64 contains no files
+Package custom_build_tool-nodebug-1.0.0-21.oe2309.noarch contains no files
+Package erlang-23.3.4.9-4.oe2309.riscv64 contains no files
+Package erlang-otp_mibs-23.3.4.9-4.oe2309.riscv64 contains no files
+Package esc-help-1.1.2-6.oe2309.noarch contains no files
+Package fftw-libs-3.3.10-1.oe2309.riscv64 contains no files
+Package gcc_secure-1.0-0.12.oe2309.riscv64 contains no files
+Package gnome-packagekit-3.32.0-1.oe2309.riscv64 contains no files
+Package gperftools-2.10-3.oe2309.riscv64 contains no files
+Package hsqldb-demo-1:2.4.0-4.oe2309.noarch contains no files
+Package hunspell-es-1:2.6-1.oe2309.noarch contains no files
+Package ibus-table-chinese-1.8.2-13.oe2309.noarch contains no files
+Package kiwi-systemdeps-9.24.1-1.oe2309.riscv64 contains no files
+Package libknet1-compress-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libknet1-crypto-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libknet1-plugins-all-1.24-1.oe2309.riscv64 contains no files
+Package libvirt-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-driver-storage-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-kvm-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-kvm-6.2.0-59.oe2309.riscv64 contains no files
+Package libvirt-daemon-qemu-6.2.0-58.oe2309.riscv64 contains no files
+Package libvirt-daemon-qemu-6.2.0-59.oe2309.riscv64 contains no files
+Package lorax-lmc-novirt-34.1-4.oe2309.riscv64 contains no files
+Package maven-local-5.3.0-5.oe2309.noarch contains no files
+Package native-turbo-1.0.0-5.oe2309.riscv64 contains no files
+Package nbdkit-1.29.11-1.oe2309.riscv64 contains no files
+Package nginx-all-modules-1:1.23.3-1.oe2309.noarch contains no files
+Package obs-env-1.0-7.oe2309.riscv64 contains no files
+Package python-pygments-help-2.15.1-1.oe2309.noarch contains no files
+Package python3-pillow-help-10.0.0-1.oe2309.noarch contains no files
+Package rpmlint-help-2.4.0-1.oe2309.noarch contains no files
+Package setools-4.4.2-2.oe2309.riscv64 contains no files
+Package setools-4.4.3-1.oe2309.riscv64 contains no files
+Package texlive-9:2021-2.oe2309.noarch contains no files
+Package texlive-babel-bahasa-doc-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-babel-bahasa-9:svn30255.1.0l.metapackage-1.oe2309.noarch contains no files
+Package texlive-bibtexperllibs-9:svn57137-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-1.oe2309.noarch contains no files
+Package texlive-collection-basic-9:svn59159-2.oe2309.noarch contains no files
+Package texlive-collection-bibtexextra-9:svn58437-1.oe2309.noarch contains no files
+Package texlive-collection-bibtexextra-9:svn58437-2.oe2309.noarch contains no files
+Package texlive-collection-binextra-9:svn56352-1.oe2309.noarch contains no files
+Package texlive-collection-binextra-9:svn56352-2.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-context-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-fontsextra-9:svn58253-1.oe2309.noarch contains no files
+Package texlive-collection-fontsextra-9:svn58253-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn35830.0-2.oe2309.noarch contains no files
+Package texlive-collection-fontsrecommended-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-fontutils-9:svn57089-1.oe2309.noarch contains no files
+Package texlive-collection-fontutils-9:svn57089-2.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-formatsextra-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn47828-2.oe2309.noarch contains no files
+Package texlive-collection-games-9:svn58896-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-1.oe2309.noarch contains no files
+Package texlive-collection-humanities-9:svn56575-2.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-1.oe2309.noarch contains no files
+Package texlive-collection-langarabic-9:svn59003-2.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-1.oe2309.noarch contains no files
+Package texlive-collection-langchinese-9:svn58965-2.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-collection-langcjk-9:svn54191-2.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langcyrillic-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langczechslovak-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-1.oe2309.noarch contains no files
+Package texlive-collection-langenglish-9:svn58290-2.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-1.oe2309.noarch contains no files
+Package texlive-collection-langeuropean-9:svn58626-2.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-1.oe2309.noarch contains no files
+Package texlive-collection-langfrench-9:svn57491-2.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-1.oe2309.noarch contains no files
+Package texlive-collection-langgerman-9:svn55706-2.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-1.oe2309.noarch contains no files
+Package texlive-collection-langgreek-9:svn54139-2.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-1.oe2309.noarch contains no files
+Package texlive-collection-langitalian-9:svn55129-2.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-1.oe2309.noarch contains no files
+Package texlive-collection-langjapanese-9:svn58754-2.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langkorean-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-1.oe2309.noarch contains no files
+Package texlive-collection-langother-9:svn57757-2.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langpolish-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-langportuguese-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-1.oe2309.noarch contains no files
+Package texlive-collection-langspanish-9:svn54141-2.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-1.oe2309.noarch contains no files
+Package texlive-collection-latex-9:svn57048-2.oe2309.noarch contains no files
+Package texlive-collection-latexextra-9:svn59009-1.oe2309.noarch contains no files
+Package texlive-collection-latexextra-9:svn59009-2.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-1.oe2309.noarch contains no files
+Package texlive-collection-latexrecommended-9:svn57862-2.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-1.oe2309.noarch contains no files
+Package texlive-collection-luatex-9:svn58124-2.oe2309.noarch contains no files
+Package texlive-collection-mathscience-9:svn57759-1.oe2309.noarch contains no files
+Package texlive-collection-mathscience-9:svn57759-2.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn50293-1.oe2309.noarch contains no files
+Package texlive-collection-metapost-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-1.oe2309.noarch contains no files
+Package texlive-collection-music-9:svn57878-2.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-1.oe2309.noarch contains no files
+Package texlive-collection-pictures-9:svn59115-2.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-1.oe2309.noarch contains no files
+Package texlive-collection-plaingeneric-9:svn58874-2.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-1.oe2309.noarch contains no files
+Package texlive-collection-pstricks-9:svn54455-2.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-1.oe2309.noarch contains no files
+Package texlive-collection-publishers-9:svn59002-2.oe2309.noarch contains no files
+Package texlive-collection-texworks-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-collection-xetex-9:svn54074-2.oe2309.noarch contains no files
+Package texlive-gloss-occitan-9:svn52593-1.oe2309.noarch contains no files
+Package texlive-hyphen-arabic-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-hyphen-farsi-9:svn54568-2.oe2309.noarch contains no files
+Package texlive-obsolete-9:2021-1.oe2309.noarch contains no files
+Package texlive-scheme-basic-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-context-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-full-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-gust-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-medium-9:svn54074-1.oe2309.noarch contains no files
+Package texlive-scheme-minimal-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-small-9:svn54191-1.oe2309.noarch contains no files
+Package texlive-scheme-tetex-9:svn54074-1.oe2309.noarch contains no files
+Package uthash-help-2.1.0-1.oe2309.noarch contains no files
+Package xorg-x11-drivers-7.7-29.oe2309.riscv64 contains no files
+/usr/bin/tree
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf -y install sysstat
++ rpm -q sysstat
++ grep sysstat
+sysstat-12.7.4-1.oe2309.riscv64
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf search vim
++ grep vim-enhanced
+Waiting for process with pid 4157 to finish.
+Last metadata expiration check: 0:04:29 ago on Mon 11 Sep 2023 11:32:39 PM CST.
+Package sysstat-12.7.4-1.oe2309.riscv64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
+Last metadata expiration check: 0:04:32 ago on Mon 11 Sep 2023 11:32:39 PM CST.
+vim-enhanced.riscv64 : This is a package containing enhanced vim editor.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf update-minimal --assumeno
++ grep Upgrading:
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 59'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 59'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 59'
+Mon Sep 11 23:37:20 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 59
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf --version
++ grep -B 1 dnf
+4.16.2
+  Installed: dnf-0:4.16.2-1.oe2309.noarch at Mon 11 Sep 2023 09:59:20 AM GMT
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Mon Sep 11 23:37:24 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Mon Sep 11 23:37:24 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Mon Sep 11 23:37:25 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_REMOVE 1 'tree sysstat'
++ node=1
++ pkg_list='tree sysstat'
++ mode=0
++ [[ -z /tmp/tmpkw4upj7a ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs 'tree sysstat' --tempfile /tmp/tmpkw4upj7a
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Mon Sep 11 23:37:40 2023 - INFO  - Finish restoring the test environment.
