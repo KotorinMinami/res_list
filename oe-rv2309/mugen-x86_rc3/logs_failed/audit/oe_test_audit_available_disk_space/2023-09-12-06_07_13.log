@@ -1,0 +1,88 @@
++ source ../common/comlib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++++ find /etc -name auditd.conf
+++ AUDIT_PATH=/etc/audit/auditd.conf
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Sep 12 06:07:16 2023 - INFO  - Start to prepare the test environment.
++ cp -raf /var/log/ /tmp/
++ sed -i 's/log_file = \/var\/log\/audit\/audit.log/log_file = \/tmp\/log\/audit\/audit.log/g' /etc/audit/auditd.conf
++ sed -i 's/max_log_file_action = ROTATE/max_log_file_action = KEEP_LOGS/g' /etc/audit/auditd.conf
++ service auditd restart
+Stopping logging: 
+Redirecting start to /bin/systemctl start auditd.service
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Sep 12 06:07:21 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Sep 12 06:07:21 2023 - INFO  - Start to run test.
+++ df -m /tmp/log/audit/
+++ awk NR==2
+++ awk '{print $4-74}'
++ count_size=1756
++ dd if=/dev/zero of=/tmp/log/audit/audit_log bs=1M count=1756
+1756+0 records in
+1756+0 records out
+1841299456 bytes (1.8 GB, 1.7 GiB) copied, 5.14126 s, 358 MB/s
++ (( j=0 ))
++ (( j<10 ))
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ search_log available_disk_space
++ audit_key=available_disk_space
++ auditctl -w /tmp/available_disk_space -p rwxa -k available_disk_space
++ CHECK_RESULT 0 0 0 ' add rules failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=' add rules failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ date +%T
++ starttime=06:07:28
++ touch /tmp/available_disk_space
++ rm -rf /tmp/available_disk_space
+++ date +%T
++ endtime=06:07:28
++ auditctl -W /tmp/available_disk_space -p rwxa -k available_disk_space
++ CHECK_RESULT 0 0 0 'second failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='second failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ (( i=0 ))
++ (( i<10 ))
++ ausearch -k available_disk_space -ts 06:07:28 -te 06:07:28
+Tue Sep 12 06:37:13 2023 - ERROR - Timeout : Command 'bash -x oe_test_audit_available_disk_space.sh' timed out after 1799.999848899999 seconds
