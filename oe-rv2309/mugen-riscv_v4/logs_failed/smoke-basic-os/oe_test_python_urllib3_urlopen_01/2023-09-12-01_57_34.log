@@ -1,0 +1,245 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Sep 12 01:57:37 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL httpd
++ pkgs=httpd
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs httpd --node 1 --tempfile ''
+Tue Sep 12 01:57:45 2023 - INFO  - pkgs:(httpd) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ getenforce
++ grep Enforcing
++ systemctl status firewalld
++ grep running
+Unit firewalld.service could not be found.
++ mkdir /var/www/html/test
++ chmod 777 /var/www/html -R
++ systemctl restart httpd
+Job for httpd.service failed because the control process exited with error code.
+See "systemctl status httpd.service" and "journalctl -xeu httpd.service" for details.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Sep 12 01:57:47 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Sep 12 01:57:48 2023 - INFO  - Start to run test.
++ expect
+spawn python3
+Python 3.11.4 (main, Jun 30 2023, 00:00:00) [GCC 12.3.1 (openEuler 12.3.1-10.oe2309)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import urllib
+>>> import urllib.request
+>>> response = urllib.request.urlopen('http://127.0.0.1/test/')
+Traceback (most recent call last):
+  File "/usr/lib64/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib64/python3.11/http/client.py", line 1286, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib64/python3.11/http/client.py", line 1332, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.11/http/client.py", line 1281, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.11/http/client.py", line 1041, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.11/http/client.py", line 979, in send
+    self.connect()
+  File "/usr/lib64/python3.11/http/client.py", line 945, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/socket.py", line 851, in create_connection
+    raise exceptions[0]
+  File "/usr/lib64/python3.11/socket.py", line 836, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/lib64/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+>>> response.status
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'response' is not defined
+>>> exit()
++ grep 200 ./testlog1
++ CHECK_RESULT 1 0 0 'Status 200 code return failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Status 200 code return failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Status 200 code return failed'
++ LOG_ERROR 'Status 200 code return failed'
++ message='Status 200 code return failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Status 200 code return failed'
+Tue Sep 12 01:57:49 2023 - ERROR - Status 200 code return failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_python_urllib3_urlopen_01.sh line 46'
++ message='oe_test_python_urllib3_urlopen_01.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_python_urllib3_urlopen_01.sh line 46'
+Tue Sep 12 01:57:50 2023 - ERROR - oe_test_python_urllib3_urlopen_01.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ expect
+spawn python3
+Python 3.11.4 (main, Jun 30 2023, 00:00:00) [GCC 12.3.1 (openEuler 12.3.1-10.oe2309)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import urllib
+>>> import urllib.request
+>>> headers = {'User-Agent': 'PostmanRuntime/7.29.0','Host': '1'}
+>>> data = bytes(urllib.parse.urlencode({'word':'hollow'}), encoding='utf8')
+>>> 
+>>> <1/test/',data=data, headers=headers, method='POST')
+>>> response = urllib.request.urlopen(request)
+Traceback (most recent call last):
+  File "/usr/lib64/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib64/python3.11/http/client.py", line 1286, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib64/python3.11/http/client.py", line 1332, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.11/http/client.py", line 1281, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib64/python3.11/http/client.py", line 1041, in _send_output
+    self.send(msg)
+  File "/usr/lib64/python3.11/http/client.py", line 979, in send
+    self.connect()
+  File "/usr/lib64/python3.11/http/client.py", line 945, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/socket.py", line 851, in create_connection
+    raise exceptions[0]
+  File "/usr/lib64/python3.11/socket.py", line 836, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/lib64/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+>>> exit()
++ grep 400 ./testlog2
++ CHECK_RESULT 1 0 0 'Status 400 code return failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Status 400 code return failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Status 400 code return failed'
++ LOG_ERROR 'Status 400 code return failed'
++ message='Status 400 code return failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Status 400 code return failed'
+Tue Sep 12 01:57:51 2023 - ERROR - Status 400 code return failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_python_urllib3_urlopen_01.sh line 61'
++ message='oe_test_python_urllib3_urlopen_01.sh line 61'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_python_urllib3_urlopen_01.sh line 61'
+Tue Sep 12 01:57:52 2023 - ERROR - oe_test_python_urllib3_urlopen_01.sh line 61
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Sep 12 01:57:52 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Sep 12 01:57:53 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Sep 12 01:57:53 2023 - INFO  - Start to restore the test environment.
++ rm -rf testlog1 testlog2 /var/www/html/test
++ getenforce
++ grep Permissive
++ grep dead
++ systemctl status firewalld
+Unit firewalld.service could not be found.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Tue Sep 12 01:57:54 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Sep 12 01:57:54 2023 - INFO  - End to restore the test environment.

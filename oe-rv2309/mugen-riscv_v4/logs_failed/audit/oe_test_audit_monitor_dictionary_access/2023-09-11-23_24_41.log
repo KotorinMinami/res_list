@@ -1,0 +1,82 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Mon Sep 11 23:24:44 2023 - INFO  - Start to run test.
++ service auditd restart
+Stopping logging: 
+Redirecting start to /bin/systemctl start auditd.service
++ auditctl -D
+No rules
++ CHECK_RESULT 0 0 0 'delete failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='delete failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ auditctl -w /opt -p wa -k opt_changes
++ CHECK_RESULT 0 0 0 'add failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='add failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ auditctl -l
++ grep -e '-w /opt -p wa -k opt_changes'
+-w /opt -p wa -k opt_changes
++ CHECK_RESULT 0 0 0 'change failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='change failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ date +%T
++ starttime=23:24:48
++ mkdir -p /opt/test/
++ CHECK_RESULT 0 0 0 'create failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='create failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ date +%T
++ endtime=23:24:48
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ ausearch -ts 23:24:48 -te 23:24:48 -f /opt -k opt_changes
+Mon Sep 11 23:54:42 2023 - ERROR - Timeout : Command 'bash -x oe_test_audit_monitor_dictionary_access.sh' timed out after 1799.9998423 seconds
