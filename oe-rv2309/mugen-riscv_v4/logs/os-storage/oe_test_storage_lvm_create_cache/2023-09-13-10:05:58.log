@@ -1,0 +1,182 @@
++ source ../common/storage_disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start loading data!'
++ message='Start loading data!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start loading data!'
+Wed Sep 13 10:06:01 2023 - INFO  - Start loading data!
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='vdb vdc vdd vde'
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=vdc
++ local_disk2=vdd
++ local_disk3=vde
++ LOG_INFO 'Loading data is complete!'
++ message='Loading data is complete!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Loading data is complete!'
+Wed Sep 13 10:06:09 2023 - INFO  - Loading data is complete!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Wed Sep 13 10:06:09 2023 - INFO  - Start executing testcase!
++ pvcreate -y /dev/vdb /dev/vdc
+  Wiping dos signature on /dev/vdb.
+  Physical volume "/dev/vdb" successfully created.
+  Physical volume "/dev/vdc" successfully created.
++ pvdisplay
++ grep 'PV Name'
++ grep /dev/vdb
+  PV Name               /dev/vdb
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ vgcreate openeulertest /dev/vdb /dev/vdc
+  Volume group "openeulertest" successfully created
++ vgdisplay
++ grep 'VG Name'
++ grep openeulertest
+  VG Name               openeulertest
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lvcreate -y -L 50MB -n test openeulertest /dev/vdb
+  Rounding up size to full physical extent 52.00 MiB
+  Wiping ext2 signature on /dev/openeulertest/test.
+  Logical volume "test" created.
++ lvcreate --type cache-pool -L 1G -n cpool openeulertest /dev/vdc -y
+  Logical volume "cpool" created.
++ lvs -a -o name,size,attr,devices openeulertest
+  LV              LSize  Attr       Devices       
+  cpool            1.00g Cwi---C--- cpool_cdata(0)
+  [cpool_cdata]    1.00g Cwi------- /dev/vdc(4)   
+  [cpool_cmeta]    8.00m ewi------- /dev/vdc(2)   
+  [lvol0_pmspare]  8.00m ewi------- /dev/vdc(0)   
+  test            52.00m -wi-a----- /dev/vdb(0)   
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lvconvert -y --type cache --cachepool cpool openeulertest/test
+  Logical volume openeulertest/test is now cached.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lvs -a -o name,size,attr,devices openeulertest
+  LV                  LSize  Attr       Devices             
+  [cpool_cpool]        1.00g Cwi---C--- cpool_cpool_cdata(0)
+  [cpool_cpool_cdata]  1.00g Cwi-ao---- /dev/vdc(4)         
+  [cpool_cpool_cmeta]  8.00m ewi-ao---- /dev/vdc(2)         
+  [lvol0_pmspare]      8.00m ewi------- /dev/vdc(0)         
+  test                52.00m Cwi-a-C--- test_corig(0)       
+  [test_corig]        52.00m owi-aoC--- /dev/vdb(0)         
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lvconvert --type thin-pool openeulertest/test /dev/vdb -y
+  Thin pool volume with chunk size 64.00 KiB can address at most <15.88 TiB of data.
+  WARNING: Converting openeulertest/test to thin pool's data volume with metadata wiping.
+  THIS WILL DESTROY CONTENT OF LOGICAL VOLUME (filesystem etc.)
+  Converted openeulertest/test to thin pool.
++ lvs -a -o name,size,attr,devices openeulertest
+  LV                  LSize  Attr       Devices             
+  [cpool_cpool]        1.00g Cwi---C--- cpool_cpool_cdata(0)
+  [cpool_cpool_cdata]  1.00g Cwi-ao---- /dev/vdc(4)         
+  [cpool_cpool_cmeta]  8.00m ewi-ao---- /dev/vdc(2)         
+  [lvol0_pmspare]      8.00m ewi------- /dev/vdc(0)         
+  test                52.00m twi-a-tz-- test_tdata(0)       
+  [test_tdata]        52.00m Cwi-aoC--- test_tdata_corig(0) 
+  [test_tdata_corig]  52.00m owi-aoC--- /dev/vdb(0)         
+  [test_tmeta]         4.00m ewi-ao---- /dev/vdb(13)        
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Wed Sep 13 10:06:21 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 13 10:06:21 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 13 10:06:22 2023 - INFO  - start environment cleanup.
++ vgremove -y openeulertest
+  Logical volume "test" successfully removed.
+  Volume group "openeulertest" successfully removed
++ pvremove -y /dev/vdc /dev/vdb
+  Labels on physical volume "/dev/vdc" successfully wiped.
+  Labels on physical volume "/dev/vdb" successfully wiped.
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Sep 13 10:06:23 2023 - INFO  - Finish environment cleanup.

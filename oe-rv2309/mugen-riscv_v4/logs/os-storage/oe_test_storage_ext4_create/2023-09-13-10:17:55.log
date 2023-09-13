@@ -1,0 +1,249 @@
++ source ../common/storage_disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Sep 13 10:17:58 2023 - INFO  - Start environment preparation.
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='vdb vdc vdd vde'
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=vdc
++ local_disk2=vdd
++ local_disk3=vde
++ echo -e 'n\np\n1\n\n+20M\np\nw\n'
++ fdisk /dev/vdb
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+The device contains 'ext4' signature and it may remain on the device. It is recommended to wipe the device with wipefs(8) or fdisk --wipe, in order to avoid possible collisions.
+
+Command (m for help): Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): Partition number (1-4, default 1): First sector (2048-4194303, default 2048): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-4194303, default 4194303): 
+Created a new partition 1 of type 'Linux' and of size 20 MiB.
+Partition #1 contains a ext2 signature.
+
+Command (m for help): 
+Disk /dev/vdb: 2 GiB, 2147483648 bytes, 4194304 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xc39192fb
+
+Device     Boot Start   End Sectors Size Id Type
+/dev/vdb1        2048 43007   40960  20M 83 Linux
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Wed Sep 13 10:18:06 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Wed Sep 13 10:18:06 2023 - INFO  - Start executing testcase!
++ mkfs.ext4 -F /dev/vdb1
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:     0/20480           done                            
+Creating filesystem with 20480 1k blocks and 5112 inodes
+Filesystem UUID: 42c13f13-538a-4aa9-82ca-e5a61f38436d
+Superblock backups stored on blocks: 
+	8193
+
+Allocating group tables: 0/3   done                            
+Writing inode tables: 0/3   done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: 0/3   done
+
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ blkid
++ grep /dev/vdb1
++ grep ext4
+/dev/vdb1: UUID="42c13f13-538a-4aa9-82ca-e5a61f38436d" BLOCK_SIZE="1024" TYPE="ext4" PARTUUID="c39192fb-01"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mkfs.ext4 -F -U a7784af8-d965-4ffe-8582-549cef1fa222 /dev/vdb1
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:     0/20480           done                            
+Creating filesystem with 20480 1k blocks and 5112 inodes
+Filesystem UUID: a7784af8-d965-4ffe-8582-549cef1fa222
+Superblock backups stored on blocks: 
+	8193
+
+Allocating group tables: 0/3   done                            
+Writing inode tables: 0/3   done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: 0/3   done
+
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ udevadm settle
++ blkid
++ grep /dev/vdb1
++ grep a7784af8-d965-4ffe-8582-549cef1fa222
++ awk '-F ' '{print $2}'
+UUID="a7784af8-d965-4ffe-8582-549cef1fa222"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mkfs.ext4 -F -L newlable /dev/vdb1
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:     0/20480           done                            
+Creating filesystem with 20480 1k blocks and 5112 inodes
+Filesystem UUID: 7e3f47e6-d975-4adf-afa6-f6f84d4e02a0
+Superblock backups stored on blocks: 
+	8193
+
+Allocating group tables: 0/3   done                            
+Writing inode tables: 0/3   done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: 0/3   done
+
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ udevadm settle
++ blkid
++ grep /dev/vdb1
++ grep newlable
++ awk '-F ' '{print $2}'
+LABEL="newlable"
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Wed Sep 13 10:18:18 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 13 10:18:19 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 13 10:18:19 2023 - INFO  - start environment cleanup.
++ echo -e 'd\np\nw\n'
++ fdisk /dev/vdb
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+The device contains 'ext4' signature and it may remain on the device. It is recommended to wipe the device with wipefs(8) or fdisk --wipe, in order to avoid possible collisions.
+
+Command (m for help): 
+Selected partition 1
+Partition 1 has been deleted.
+
+Command (m for help): Disk /dev/vdb: 2 GiB, 2147483648 bytes, 4194304 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xc39192fb
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Sep 13 10:18:20 2023 - INFO  - Finish environment cleanup.

@@ -1,0 +1,217 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue Sep 12 15:24:19 2023 - INFO  - Start testing...
++ test_execution ipset.service
++ service=ipset.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-12 15:24:19'
++ test_restart ipset.service
++ service=ipset.service
++ systemctl restart ipset.service
++ CHECK_RESULT 0 0 0 'ipset.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status ipset.service
++ grep 'Active: active'
+     Active: active (exited) since Tue 2023-09-12 15:24:19 CST; 5s ago
++ CHECK_RESULT 0 0 0 'ipset.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop ipset.service
++ CHECK_RESULT 0 0 0 'ipset.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status ipset.service
++ grep 'Active: inactive'
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'ipset.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start ipset.service
++ CHECK_RESULT 0 0 0 'ipset.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status ipset.service
++ grep 'Active: active'
+     Active: active (exited) since Tue 2023-09-12 15:24:32 CST; 5s ago
++ CHECK_RESULT 0 0 0 'ipset.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled ipset.service
++ service=ipset.service
+++ systemctl is-enabled ipset.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ systemctl enable ipset.service
+++ grep 'Created symlink'
+++ awk '{print $3}'
++ symlink_file=/etc/systemd/system/basic.target.wants/ipset.service
++ find /etc/systemd/system/basic.target.wants/ipset.service
+/etc/systemd/system/basic.target.wants/ipset.service
++ CHECK_RESULT 0 0 0 'ipset.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service enable failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable ipset.service
+Removed "/etc/systemd/system/basic.target.wants/ipset.service".
++ find /etc/systemd/system/basic.target.wants/ipset.service
+find: ‘/etc/systemd/system/basic.target.wants/ipset.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'ipset.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='ipset.service disable failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ journalctl --since '2023-09-12 15:24:19' -u ipset.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of ipset.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of ipset.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ systemctl start ipset.service
++ sed -i 's\IPSET_SAVE_ON_RESTART=no\IPSET_SAVE_ON_RESTART=yes\g' /usr/lib/systemd/system/ipset.service
++ systemctl daemon-reload
++ systemctl reload ipset.service
++ CHECK_RESULT 0 0 0 'ipset.service reload failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service reload failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status ipset.service
++ grep 'active (exited)'
+     Active: active (exited) since Tue 2023-09-12 15:24:32 CST; 17s ago
++ CHECK_RESULT 0 0 0 'ipset.service reload causes the service status to change'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='ipset.service reload causes the service status to change'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue Sep 12 15:24:50 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Sep 12 15:24:50 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Tue Sep 12 15:24:51 2023 - INFO  - start environment cleanup.
++ sed -i 's\IPSET_SAVE_ON_RESTART=yes\IPSET_SAVE_ON_RESTART=no\g' /usr/lib/systemd/system/ipset.service
++ systemctl daemon-reload
++ systemctl reload ipset.service
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Tue Sep 12 15:24:55 2023 - INFO  - Finish environment cleanup!

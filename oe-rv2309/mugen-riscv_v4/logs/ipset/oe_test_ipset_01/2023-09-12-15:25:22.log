@@ -1,0 +1,196 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Tue Sep 12 15:25:25 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL ipset
++ pkgs=ipset
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs ipset --node 1 --tempfile ''
+Tue Sep 12 15:25:35 2023 - INFO  - pkgs:(ipset) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Tue Sep 12 15:25:35 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue Sep 12 15:25:36 2023 - INFO  - Start testing...
+++ echo 10422
++ local random=10422
++ ipset create aa10422 hash:net maxelem 1000000
++ ipset add aa10422 10.7.10.10
++ ipset test aa10422 10.7.10.10
+Warning: 10.7.10.10 is in set aa10422.
++ CHECK_RESULT 0 0 0 'Add aa10422 entry to the named set fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Add aa10422 entry to the named set fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipset create bb10422 hash:net maxelem 1000000
++ ipset add bb10422 10.7.10.11
++ ipset list bb10422
++ grep 10.7.10.11
+10.7.10.11
++ CHECK_RESULT 0 0 0 'Add bb10422 entry to the named set fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Add bb10422 entry to the named set fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipset rename aa10422 cc10422
++ CHECK_RESULT 0 0 0 'Rename the named set fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Rename the named set fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipset list cc10422
++ grep 10.7.10.10
+10.7.10.10
++ CHECK_RESULT 0 0 0 'Check the named entry set fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check the named entry set fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipset swap cc10422 bb10422
++ CHECK_RESULT 0 0 0 'Swap the named set fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Swap the named set fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipset list cc10422
++ grep 10.7.10.11
+10.7.10.11
++ CHECK_RESULT 0 0 0 'Check the named entry set fail after swap'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check the named entry set fail after swap'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipset list bb10422
++ grep 10.7.10.10
+10.7.10.10
++ CHECK_RESULT 0 0 0 'Check the named entry set fail after swap'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check the named entry set fail after swap'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipset flush
++ ipset list cc10422
++ grep 10.7.10.11
++ CHECK_RESULT 1 1 0 'Flus the named set fail'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='Flus the named set fail'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ ipset list bb10422
++ grep 10.7.10.10
++ CHECK_RESULT 1 1 0 'Flus the named set fail'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='Flus the named set fail'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue Sep 12 15:25:37 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Sep 12 15:25:37 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Tue Sep 12 15:25:38 2023 - INFO  - start environment cleanup.
++ ipset destroy bb
+ipset v7.17: The set with the given name does not exist
++ ipset destroy cc
+ipset v7.17: The set with the given name does not exist
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Tue Sep 12 15:25:38 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Tue Sep 12 15:25:39 2023 - INFO  - Finish environment cleanup!

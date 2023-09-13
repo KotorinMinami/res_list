@@ -1,0 +1,230 @@
++ source ../common/storage_disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Sep 13 10:12:39 2023 - INFO  - Start environment preparation.
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='vdb vdc vdd vde'
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=vdc
++ local_disk2=vdd
++ local_disk3=vde
++ mkfs.ext4 -F /dev/vdb
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524288             done                            
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: a83e2b40-6b32-4371-86aa-60a3cb03c933
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ mkfs.ext4 -F /dev/vdc
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524288             done                            
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: 190f65df-02b4-4f7c-981e-bf194899a081
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ mkfs.ext4 -F /dev/vdd
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524288             done                            
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: e683486f-49b5-4274-9cd6-b300c3dc0b3e
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ mkfs.ext4 -F /dev/vde
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524288             done                            
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: 07f8475d-8cdb-4281-87d2-4b205b6ebe35
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ pvcreate /dev/vdc -y
+  Wiping ext4 signature on /dev/vdc.
+  Physical volume "/dev/vdc" successfully created.
++ vgcreate openeulertest /dev/vdc -y
+  Volume group "openeulertest" successfully created
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Wed Sep 13 10:12:47 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Wed Sep 13 10:12:47 2023 - INFO  - Start executing testcase!
++ vgextend openeulertest /dev/vdb -y
+  Wiping ext4 signature on /dev/vdb.
+  Physical volume "/dev/vdb" successfully created.
+  Volume group "openeulertest" successfully extended
++ vgextend openeulertest /dev/vde -y
+  Wiping ext4 signature on /dev/vde.
+  Physical volume "/dev/vde" successfully created.
+  Volume group "openeulertest" successfully extended
++ vgextend openeulertest /dev/vdd -y
+  Wiping ext4 signature on /dev/vdd.
+  Physical volume "/dev/vdd" successfully created.
+  Volume group "openeulertest" successfully extended
++ expect -c '
+    set timeout 30
+    log_file testlog
+    spawn lvcreate --type raid1 -m 1 -L 50MB -n test openeulertest -y
+    expect "*\[y/n\]*" {send "y\r"}
+    expect eof
+'
+spawn lvcreate --type raid1 -m 1 -L 50MB -n test openeulertest -y
+  Rounding up size to full physical extent 52.00 MiB
+y
+  Logical volume "test" created.
++ grep -iE 'while executing|error|fail' testlog
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ expect -c '
+    set timeout 30
+    log_file testlog1
+    spawn lvcreate --type raid5 -i 3 -L 50MB -n test1 openeulertest -y
+    expect "*\[y/n\]*" {send "y\r"}
+    expect eof
+'
+spawn lvcreate --type raid5 -i 3 -L 50MB -n test1 openeulertest -y
+  Using default stripesize 64.00 KiB.
+y
+  Rounding up size to full physical extent 52.00 MiB
+  Rounding size 52.00 MiB (13 extents) up to stripe boundary size 60.00 MiB (15 extents).
+  Logical volume "test1" created.
++ grep -iE 'while executing|error|fail' testlog1
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ expect -c '
+    set timeout 30
+    log_file testlog2
+    spawn lvcreate -y --type raid5 -i 3 -L 50MB -n test2 openeulertest
+    expect "*\[y/n\]*" {send "y\r"}
+    expect eof
+'
+spawn lvcreate -y --type raid5 -i 3 -L 50MB -n test2 openeulertest
+  Using default stripesize 64.00 KiB.
+y
+  Rounding up size to full physical extent 52.00 MiB
+  Rounding size 52.00 MiB (13 extents) up to stripe boundary size 60.00 MiB (15 extents).
+  Logical volume "test2" created.
++ grep -iE 'while executing|error|fail' testlog2
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ grep /dev/openeulertest/test
++ lvscan
+  ACTIVE            '/dev/openeulertest/test' [52.00 MiB] inherit
+  ACTIVE            '/dev/openeulertest/test1' [60.00 MiB] inherit
+  ACTIVE            '/dev/openeulertest/test2' [60.00 MiB] inherit
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Wed Sep 13 10:12:57 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 13 10:12:58 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 13 10:12:58 2023 - INFO  - start environment cleanup.
++ lvremove openeulertest/test openeulertest/test1 openeulertest/test2 -y
+  Logical volume "test" successfully removed.
+  Logical volume "test1" successfully removed.
+  Logical volume "test2" successfully removed.
++ vgremove openeulertest -y
+  Volume group "openeulertest" successfully removed
++ pvremove /dev/vdc /dev/vdd /dev/vdb /dev/vde
+  Labels on physical volume "/dev/vdc" successfully wiped.
+  Labels on physical volume "/dev/vdd" successfully wiped.
+  Labels on physical volume "/dev/vdb" successfully wiped.
+  Labels on physical volume "/dev/vde" successfully wiped.
++ rm -rf testlog testlog1 testlog2
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Sep 13 10:13:01 2023 - INFO  - Finish environment cleanup.

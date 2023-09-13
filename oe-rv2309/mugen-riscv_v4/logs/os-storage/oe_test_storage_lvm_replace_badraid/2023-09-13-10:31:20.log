@@ -1,0 +1,210 @@
++ source ../common/storage_disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Sep 13 10:31:23 2023 - INFO  - Start environment preparation.
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='vdb vdc vdd vde'
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=vdc
++ local_disk2=vdd
++ local_disk3=vde
++ mkfs.ext4 -F /dev/vdb
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524288             done                            
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: 7c3b01f4-c26b-4dcf-ad26-337fd4608e27
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ pvcreate /dev/vdb -y
+  Wiping ext4 signature on /dev/vdb.
+  Physical volume "/dev/vdb" successfully created.
++ vgcreate openeulertest /dev/vdb
+  Volume group "openeulertest" successfully created
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Wed Sep 13 10:31:31 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Wed Sep 13 10:31:32 2023 - INFO  - Start executing testcase!
++ vgextend openeulertest /dev/vdd /dev/vdc -y
+  Physical volume "/dev/vdd" successfully created.
+  Physical volume "/dev/vdc" successfully created.
+  Volume group "openeulertest" successfully extended
++ lvcreate --type mirror -m 1 -L 50MB -n test openeulertest -y
+  Rounding up size to full physical extent 52.00 MiB
+  Logical volume "test" created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect -c '
+    set timeout 30
+    log_file testlog
+    spawn lvconvert --type raid1 /dev/openeulertest/test
+    expect "*\[y/n\]*" {send "y\r"}
+    expect eof
+'
+spawn lvconvert --type raid1 /dev/openeulertest/test
+Are you sure you want to convert mirror LV openeulertest/test to raid1 type? [y/n]: y
+  Logical volume openeulertest/test successfully converted.
++ grep -iE 'error|fail' testlog
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ expect -c '
+    log_file testlog1
+    set timeout 30
+    spawn lvconvert --type mirror /dev/openeulertest/test
+    expect "*\[y/n\]*" {send "y\r"}
+    expect eof
+'
+spawn lvconvert --type mirror /dev/openeulertest/test
+Are you sure you want to convert openeulertest/test back to the older mirror type? [y/n]: y
+  Logical volume openeulertest/test successfully converted.
++ grep -iE 'error|fail' testlog1
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ dd if=/dev/zero of=/dev/vdc
+dd: writing to '/dev/vdc': No space left on device
+4194305+0 records in
+4194304+0 records out
+2147483648 bytes (2.1 GB, 2.0 GiB) copied, 172.428 s, 12.5 MB/s
++ lvconvert --repair openeulertest/test -y
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  WARNING: VG openeulertest is missing PV h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4 (last written to /dev/vdc).
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  Mirror log status: 1 of 1 images failed.
+  WARNING: Trying to up-convert to 2 images, 1 logs.
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lvs -a -o name,copy_percent,devices openeulertest
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  WARNING: VG openeulertest is missing PV h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4 (last written to [unknown]).
+  LV              Cpy%Sync Devices                          
+  test            100.00   test_mimage_0(0),test_mimage_1(0)
+  [test_mimage_0]          /dev/vdb(0)                      
+  [test_mimage_1]          /dev/vdd(0)                      
+  [test_mlog]              /dev/vdd(13)                     
++ vgreduce -y --removemissing openeulertest
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  WARNING: VG openeulertest is missing PV h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4 (last written to [unknown]).
+  WARNING: Couldn't find device with uuid h3Dp3d-2ffR-cqOL-3S61-sady-pzHX-wte5E4.
+  Wrote out consistent volume group openeulertest.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lvchange -y --refresh openeulertest/test
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Wed Sep 13 10:34:39 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 13 10:34:39 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 13 10:34:40 2023 - INFO  - start environment cleanup.
++ lvremove -y openeulertest/test
+  Logical volume "test" successfully removed.
++ vgremove -y openeulertest
+  Volume group "openeulertest" successfully removed
++ pvremove -y /dev/vdd vdc /dev/vdb
+  No device found for vdc.
+  Labels on physical volume "/dev/vdd" successfully wiped.
+  Labels on physical volume "/dev/vdb" successfully wiped.
++ rm -rf testlog testlog1
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Sep 13 10:34:41 2023 - INFO  - Finish environment cleanup.

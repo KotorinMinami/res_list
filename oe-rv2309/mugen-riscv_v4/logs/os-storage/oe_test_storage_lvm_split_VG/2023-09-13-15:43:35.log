@@ -1,0 +1,296 @@
++ source ../common/storage_disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Sep 13 15:43:38 2023 - INFO  - Start environment preparation.
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='vdb vdc vdd vde'
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=vdc
++ local_disk2=vdd
++ local_disk3=vde
++ pvcreate -y /dev/vdc /dev/vdb
+Wed Sep 13 16:13:35 2023 - ERROR - Timeout : Command 'bash -x oe_test_storage_lvm_split_VG.sh' timed out after 1799.9997632000013 seconds
+  Physical volume "/dev/vdc" successfully created.
+  Physical volume "/dev/vdb" successfully created.
+++ post_test
+++ LOG_INFO 'start environment cleanup.'
+++ message='start environment cleanup.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 13 16:15:14 2023 - INFO  - start environment cleanup.
+++ umount /dev/openeulertest1/openeuler1
+umount: /dev/openeulertest1/openeuler1: no mount point specified.
+++ lvremove -y openeulertest/test openeulertest1/openeuler1
+  Volume group "openeulertest" not found
+  Cannot process volume group openeulertest
+  Volume group "openeulertest1" not found
+  Cannot process volume group openeulertest1
+++ vgremove -y openeulertest openeulertest1
+  Volume group "openeulertest" not found
+  Cannot process volume group openeulertest
+  Volume group "openeulertest1" not found
+  Cannot process volume group openeulertest1
+++ pvremove /dev/vdc /dev/vdb
+  No PV found on device /dev/vdc.
+  PV /dev/vdb is used by VG openeulertest so please use vgreduce first.
+  (If you are certain you need pvremove, then confirm by using --force twice.)
+  /dev/vdb: physical volume label not removed.
+++ LOG_INFO 'Finish environment cleanup.'
+++ message='Finish environment cleanup.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Sep 13 16:15:19 2023 - INFO  - Finish environment cleanup.
++ vgcreate openeulertest /dev/vdc
+  /dev/openeulertest: already exists in filesystem
+  Run `vgcreate --help' for more information.
++ lvcreate -L 50MB -n test openeulertest -y
+  Rounding up size to full physical extent 52.00 MiB
+  Logical Volume "test" already exists in volume group "openeulertest"
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Wed Sep 13 16:15:22 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Wed Sep 13 16:15:25 2023 - INFO  - Start executing testcase!
++ pvscan
++ grep /dev/vdc
+  PV /dev/vdc   VG openeulertest1   lvm2 [<2.00 GiB / <2.00 GiB free]
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ vgextend openeulertest /dev/vdb -y
+  Physical volume '/dev/vdb' is already in volume group 'openeulertest1'
+  Unable to add physical volume '/dev/vdb' to volume group 'openeulertest1'
+  /dev/vdb: physical volume not initialized.
++ grep vdb
++ pvdisplay
+  PV Name               /dev/vdb
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pvmove /dev/vdc /dev/vdb
+  No data to move for openeulertest1.
++ CHECK_RESULT 5
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_lvm_split_VG.sh line 37'
++ message='oe_test_storage_lvm_split_VG.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_lvm_split_VG.sh line 37'
+Wed Sep 13 16:15:30 2023 - ERROR - oe_test_storage_lvm_split_VG.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ pvscan
++ grep /dev/vdb
++ grep openeulertest
+  PV /dev/vdb   VG openeulertest1   lvm2 [<2.00 GiB / 868.00 MiB free]
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lvchange -a n /dev/openeulertest/test
+  Volume group "openeulertest" not found
+  Cannot process volume group openeulertest
++ CHECK_RESULT 5
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_lvm_split_VG.sh line 41'
++ message='oe_test_storage_lvm_split_VG.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_lvm_split_VG.sh line 41'
+Wed Sep 13 16:15:33 2023 - ERROR - oe_test_storage_lvm_split_VG.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ vgsplit openeulertest openeulertest1 /dev/vdc
+  Volume group "openeulertest" not found
+  Failed to read VG openeulertest1.
++ CHECK_RESULT 5
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_lvm_split_VG.sh line 43'
++ message='oe_test_storage_lvm_split_VG.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_lvm_split_VG.sh line 43'
+Wed Sep 13 16:15:34 2023 - ERROR - oe_test_storage_lvm_split_VG.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ vgdisplay
++ grep openeulertest1
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_lvm_split_VG.sh line 45'
++ message='oe_test_storage_lvm_split_VG.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_lvm_split_VG.sh line 45'
+Wed Sep 13 16:15:35 2023 - ERROR - oe_test_storage_lvm_split_VG.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ lvcreate -y -L 1G -n openeuler1 openeulertest1
+  Volume group "openeulertest1" not found
+  Cannot process volume group openeulertest1
++ CHECK_RESULT 5
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_lvm_split_VG.sh line 47'
++ message='oe_test_storage_lvm_split_VG.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_lvm_split_VG.sh line 47'
+Wed Sep 13 16:15:36 2023 - ERROR - oe_test_storage_lvm_split_VG.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ mkfs.ext4 /dev/openeulertest1/openeuler1
+mke2fs 1.47.0 (5-Feb-2023)
+The file /dev/openeulertest1/openeuler1 does not exist and no size was specified.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_lvm_split_VG.sh line 49'
++ message='oe_test_storage_lvm_split_VG.sh line 49'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_lvm_split_VG.sh line 49'
+Wed Sep 13 16:15:36 2023 - ERROR - oe_test_storage_lvm_split_VG.sh line 49
++ '[' 0 -eq 1 ']'
++ return 0
++ mount /dev/openeulertest1/openeuler1 /mnt
+mount: /mnt: special device /dev/openeulertest1/openeuler1 does not exist.
+       dmesg(1) may have more information after failed mount system call.
++ CHECK_RESULT 32
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_storage_lvm_split_VG.sh line 51'
++ message='oe_test_storage_lvm_split_VG.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_storage_lvm_split_VG.sh line 51'
+Wed Sep 13 16:15:37 2023 - ERROR - oe_test_storage_lvm_split_VG.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Wed Sep 13 16:15:37 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Sep 13 16:15:38 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 13 16:15:38 2023 - INFO  - start environment cleanup.
++ umount /dev/openeulertest1/openeuler1
+umount: /dev/openeulertest1/openeuler1: no mount point specified.
++ lvremove -y openeulertest/test openeulertest1/openeuler1
+  Volume group "openeulertest" not found
+  Cannot process volume group openeulertest
+  Volume group "openeulertest1" not found
+  Cannot process volume group openeulertest1
++ vgremove -y openeulertest openeulertest1
+  Volume group "openeulertest" not found
+  Cannot process volume group openeulertest
+  Volume group "openeulertest1" not found
+  Cannot process volume group openeulertest1
++ pvremove /dev/vdc /dev/vdb
+  No PV found on device /dev/vdc.
+  No PV found on device /dev/vdb.
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Sep 13 16:15:39 2023 - INFO  - Finish environment cleanup.

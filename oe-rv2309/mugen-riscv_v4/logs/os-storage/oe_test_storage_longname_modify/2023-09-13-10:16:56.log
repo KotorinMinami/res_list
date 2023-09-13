@@ -1,0 +1,434 @@
++ source ../common/storage_disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Sep 13 10:16:59 2023 - INFO  - Start environment preparation.
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='vdb vdc vdd vde'
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=vdc
++ local_disk2=vdd
++ local_disk3=vde
++ echo -e 'n\np\n1\n\n\nw\n'
++ fdisk /dev/vdb
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+The device contains 'ext4' signature and it may remain on the device. It is recommended to wipe the device with wipefs(8) or fdisk --wipe, in order to avoid possible collisions.
+
+Command (m for help): Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): Partition number (1-4, default 1): First sector (2048-4194303, default 2048): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-4194303, default 4194303): 
+Created a new partition 1 of type 'Linux' and of size 2 GiB.
+Partition #1 contains a ext4 signature.
+
+Command (m for help): 
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ mkfs.ext2 -F /dev/vdb1
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524032             done                            
+Creating filesystem with 524032 4k blocks and 131072 inodes
+Filesystem UUID: e54b85af-41e6-4a3e-87ae-295056d1acd6
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ echo -e 'n\np\n1\n\n\nt\n82\nw\n'
++ fdisk /dev/vdd
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS (MBR) disklabel with disk identifier 0xc9568532.
+
+Command (m for help): Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): Partition number (1-4, default 1): First sector (2048-4194303, default 2048): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-4194303, default 4194303): 
+Created a new partition 1 of type 'Linux' and of size 2 GiB.
+
+Command (m for help): Selected partition 1
+Hex code or alias (type L to list all): Changed type of partition 'Linux' to 'Linux swap / Solaris'.
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ mkswap /dev/vdd1
+Setting up swapspace version 1, size = 2 GiB (2146430976 bytes)
+no label, UUID=a9b6eba2-d4d5-4fbf-bad1-6d7344577557
++ echo -e 'n\np\n1\n\n\nw\n'
++ fdisk /dev/vde
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS (MBR) disklabel with disk identifier 0x3355afaa.
+
+Command (m for help): Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): Partition number (1-4, default 1): First sector (2048-4194303, default 2048): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-4194303, default 4194303): 
+Created a new partition 1 of type 'Linux' and of size 2 GiB.
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ mkfs.xfs -f /dev/vde1
+meta-data=/dev/vde1              isize=512    agcount=4, agsize=131008 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=0
+data     =                       bsize=4096   blocks=524032, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=16384, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+Discarding blocks...Done.
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Wed Sep 13 10:17:07 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Wed Sep 13 10:17:08 2023 - INFO  - Start executing testcase!
++ lsblk --fs /dev/vdb1
++ grep vdb1
+vdb1 ext2   1.0         e54b85af-41e6-4a3e-87ae-295056d1acd6                
++ CHECK_RESULT 0 0 0 'Failed to view file system type'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view file system type'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tune2fs -U 2222d19b-8674-41ab-9856-ac3d15d1195e -L new-label /dev/vdb1
+tune2fs 1.47.0 (5-Feb-2023)
++ CHECK_RESULT 0 0 0 'Failed to modify the label and uuid of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to modify the label and uuid of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ lsblk --fs /dev/vdb1
++ awk '{if (NR>1){print $5}}'
++ grep 2222d19b-8674-41ab-9856-ac3d15d1195e
+2222d19b-8674-41ab-9856-ac3d15d1195e
++ CHECK_RESULT 0 0 0 'Failed to view the uuid of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view the uuid of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lsblk --fs /dev/vdb1
++ awk '{if (NR>1){print $4}}'
++ sed -n '$p'
++ grep new-label
+new-label
++ CHECK_RESULT 0 0 0 'Failed to view the label of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view the label of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lsblk --fs /dev/vdd1
++ grep vdd1
+vdd1 swap   1           a9b6eba2-d4d5-4fbf-bad1-6d7344577557                
++ CHECK_RESULT 0 0 0 'Failed to view file system type'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view file system type'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ swaplabel --uuid 11114983-9331-4a61-8123-96ac6a817c41 --label new-label /dev/vdd1
++ CHECK_RESULT 0 0 0 'Failed to modify the label and uuid of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to modify the label and uuid of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ lsblk --fs /dev/vdd1
++ awk '{if (NR>1){print $4}}'
++ grep new-label
+new-label
++ CHECK_RESULT 0 0 0 'Failed to view the label of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view the label of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lsblk --fs /dev/vdd1
++ awk '{if (NR>1){print $5}}'
++ grep 11114983-9331-4a61-8123-96ac6a817c41
+11114983-9331-4a61-8123-96ac6a817c41
++ CHECK_RESULT 0 0 0 'Failed to view the uuid of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view the uuid of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lsblk --fs /dev/vde1
+NAME FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+vde1 xfs                53b5fd86-6a73-4358-abff-fa2ac8d4919d                
++ CHECK_RESULT 0 0 0 'Failed to view file system type'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view file system type'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ xfs_admin -U 8888016f-f432-45d9-933b-66f243174bed -L new-label /dev/vde1
+Clearing log and setting UUID
+writing all SBs
+new UUID = 8888016f-f432-45d9-933b-66f243174bed
+writing all SBs
+new label = "new-label"
++ CHECK_RESULT 0 0 0 'Failed to modify the label and uuid of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to modify the label and uuid of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ lsblk --fs /dev/vde1
++ awk '{if (NR>1){print $3}}'
++ grep new-label
+new-label
++ CHECK_RESULT 0 0 0 'Failed to view the label of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view the label of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lsblk --fs /dev/vde1
++ awk '{if (NR>1){print $4}}'
++ grep 8888016f-f432-45d9-933b-66f243174bed
+8888016f-f432-45d9-933b-66f243174bed
++ CHECK_RESULT 0 0 0 'Failed to view the uuid of the file system'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to view the uuid of the file system'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Wed Sep 13 10:17:17 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 13 10:17:18 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 13 10:17:18 2023 - INFO  - start environment cleanup.
++ echo -e 'd\n\nd\n\nd\n\np\nw\n'
++ fdisk /dev/vdb
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+The device contains 'ext4' signature and it may remain on the device. It is recommended to wipe the device with wipefs(8) or fdisk --wipe, in order to avoid possible collisions.
+
+Command (m for help): 
+Selected partition 1
+Partition 1 has been deleted.
+
+Command (m for help): 
+
+Command (m for help): No partition is defined yet!
+
+Command (m for help): 
+
+Command (m for help): No partition is defined yet!
+
+Command (m for help): 
+
+Command (m for help): 
+Disk /dev/vdb: 2 GiB, 2147483648 bytes, 4194304 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xc39192fb
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ echo -e 'd\n\nd\n\nd\n\np\nw\n'
++ fdisk /dev/vdd
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): Selected partition 1
+Partition 1 has been deleted.
+
+Command (m for help): 
+
+Command (m for help): No partition is defined yet!
+
+Command (m for help): 
+
+Command (m for help): No partition is defined yet!
+
+Command (m for help): 
+
+Command (m for help): 
+Disk /dev/vdd: 2 GiB, 2147483648 bytes, 4194304 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xc9568532
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ echo -e 'd\n\nd\n\nd\n\np\nw\n'
++ fdisk /dev/vde
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): Selected partition 1
+Partition 1 has been deleted.
+
+Command (m for help): 
+
+Command (m for help): No partition is defined yet!
+
+Command (m for help): 
+
+Command (m for help): No partition is defined yet!
+
+Command (m for help): 
+
+Command (m for help): 
+Disk /dev/vde: 2 GiB, 2147483648 bytes, 4194304 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x3355afaa
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Sep 13 10:17:19 2023 - INFO  - Finish environment cleanup.
