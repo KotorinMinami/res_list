@@ -1,0 +1,201 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n '' ']'
++ trap POST_TEST_DEFAULT EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue Sep 12 16:55:18 2023 - INFO  - Start testing...
++ test_execution tuned.service
++ service=tuned.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-12 16:55:18'
++ test_restart tuned.service
++ service=tuned.service
++ systemctl restart tuned.service
++ CHECK_RESULT 0 0 0 'tuned.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='tuned.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status tuned.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-09-12 16:55:23 CST; 5s ago
++ CHECK_RESULT 0 0 0 'tuned.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='tuned.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop tuned.service
++ CHECK_RESULT 0 0 0 'tuned.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='tuned.service stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status tuned.service
++ grep 'Active: inactive'
+     Active: inactive (dead) since Tue 2023-09-12 16:55:31 CST; 5s ago
++ CHECK_RESULT 0 0 0 'tuned.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='tuned.service stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start tuned.service
++ CHECK_RESULT 0 0 0 'tuned.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='tuned.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status tuned.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-09-12 16:55:42 CST; 5s ago
++ CHECK_RESULT 0 0 0 'tuned.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='tuned.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled tuned.service
++ service=tuned.service
+++ systemctl is-enabled tuned.service
++ state=enabled
++ '[' enabled == enabled ']'
+++ systemctl disable tuned.service
+++ awk '{print $2}'
+++ grep Removed
+++ awk '{print substr($0,1,length($0)-1)}'
++ symlink_file='"/etc/systemd/system/multi-user.target.wants/tuned.service"'
++ find '"/etc/systemd/system/multi-user.target.wants/tuned.service"'
+find: ‘"/etc/systemd/system/multi-user.target.wants/tuned.service"’: No such file or directory
++ CHECK_RESULT 1 0 1 'tuned.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='tuned.service disable failed'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ systemctl enable tuned.service
+Created symlink /etc/systemd/system/multi-user.target.wants/tuned.service → /usr/lib/systemd/system/tuned.service.
++ find '"/etc/systemd/system/multi-user.target.wants/tuned.service"'
+find: ‘"/etc/systemd/system/multi-user.target.wants/tuned.service"’: No such file or directory
++ CHECK_RESULT 1 0 0 'tuned.service enable failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='tuned.service enable failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'tuned.service enable failed'
++ LOG_ERROR 'tuned.service enable failed'
++ message='tuned.service enable failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'tuned.service enable failed'
+Tue Sep 12 16:55:54 2023 - ERROR - tuned.service enable failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 70'
++ message='../common/common_lib.sh line 70'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 70'
+Tue Sep 12 16:55:55 2023 - ERROR - ../common/common_lib.sh line 70
++ return 0
++ journalctl --since '2023-09-12 16:55:18' -u tuned.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of tuned.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of tuned.service'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload tuned.service
++ service=tuned.service
++ systemctl start tuned.service
++ systemctl reload tuned.service
++ grep 'Job type reload is not applicable'
+Failed to reload tuned.service: Job type reload is not applicable for unit tuned.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit tuned.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit tuned.service'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status tuned.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-09-12 16:55:42 CST; 13s ago
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue Sep 12 16:55:56 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Sep 12 16:55:56 2023 - ERROR - failed to execute the case.
++ exit 1
++ POST_TEST_DEFAULT
++ LOG_INFO 'oe_test_service_tuned.sh post_test'
++ message='oe_test_service_tuned.sh post_test'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'oe_test_service_tuned.sh post_test'
+Tue Sep 12 16:55:57 2023 - INFO  - oe_test_service_tuned.sh post_test

@@ -1,0 +1,225 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Sep 12 13:33:57 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL lksctp-tools
++ pkgs=lksctp-tools
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs lksctp-tools --node 1 --tempfile ''
+Tue Sep 12 13:34:06 2023 - INFO  - pkgs:(lksctp-tools) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Sep 12 13:34:07 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Sep 12 13:34:07 2023 - INFO  - Start to run test.
++ server_pid=1609
++ sctp_status -H ::1 -P 6000 -l -i 0 -d 1 -f server_output
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+
+Starting tests...
+	socket(SOCK_STREAM, IPPROTO_SCTP)  ->  sk=3
+	bind(sk=3, [a:::1,p:x11])  --  attempt 1/10
+	listen(sk=3,backlog=1)
+	accept(sk=3)
++ client_pid=1614
++ SLEEP_WAIT 2
++ sctp_darn -H ::1 -P 7000 -h ::1 -p 6000 -s
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ echo hello
++ cat
+sctp_darn ready to send...
+::1:7000-::1:6000> Server: Receiving packets.(1/10)
+Received SCTP_COMM_UP
+New connection, peer addresses
+0000:0000:0000:0000:0000:0000:0000:0001:6000
+::1:7000-::1:6000> 	recvmsg(sk=4) count 1
+	recvmsg(sk=4) + cat server_output
++ grep ESTABLISHED
+1   14       ESTABLISHED       106496   0         0        10      10       65468      ACTIVE       131072      0           3000       65536
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test options: -i, -d, -f'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test options: -i, -d, -f'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 1609
++ kill -9 1614
+Error getting status: Invalid argument.
++ server_pid=1619
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ sctp_darn -H ::1 -P 6010 -l
+/root/mugen-riscv/libs/locallibs/common_lib_python.sh: line 164:  1609 Killed                  sctp_status -H ::1 -P 6000 -l -i 0 -d 1 -f server_output
++ client_pid=1621
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ sctp_status -H ::1 -P 7010 -h ::1 -p 6010 -s -c 0 -o 0 -f client_output
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
+
+Starting tests...
+     Client: Sending packets.(1/10)
+Client: Sending packets.(2/10)
+Client: Sending packets.(3/10)
+Client: Sending packets.(4/10)
+Client: Sending packets.(5/10)
+Client: Sending packets.(6/10)
+Client: Sending packets.(7/10)
+Client: Sending packets.(8/10)
+Client: Sending packets.(9/10)
+Client: Sending packets.(10/10)
++ cat client_output
++ grep ESTABLISHED
+1   15       ESTABLISHED       106496   0         0        10      10       65468      ACTIVE       131072      0           3000       65536
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test options: -c, -o, -f'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test options: -c, -o, -f'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 1621
+oe_test_lksctp-tools_sctp_status.sh: line 50: kill: (1621) - No such process
++ client_pid=1626
++ SLEEP_WAIT 2
++ wait_time=2
++ sctp_status -H ::1 -P 7020 -h ::1 -p 6010 -s -x 1
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ cat client_output
++ grep '(1/1)'
+     Client: Sending packets.(1/1)
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test option: -x'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test option: -x'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 1626
+oe_test_lksctp-tools_sctp_status.sh: line 56: kill: (1626) - No such process
++ client_pid=1631
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ sctp_status -H ::1 -P 7030 -h ::1 -p 6010 -s -M 0 -m 1500 -D
++ cat client_output
++ grep 'Starting tests...'
+Starting tests...
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test options: -M, -m, -o'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test options: -M, -m, -o'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 1631
++ client_pid=1636
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ sctp_status -H ::1 -P 7040 -h ::1 -p 6010 -s -I 1 -i 0 -d 1
+/root/mugen-riscv/libs/locallibs/common_lib_python.sh: line 164:  1631 Killed                  sctp_status -H ::1 -P 7030 -h ::1 -p 6010 -s -M 0 -m 1500 -D > client_output 2>&1
++ cat client_output
++ grep 'Starting tests...'
+Starting tests...
++ CHECK_RESULT 0 0 0 'sctp_status: failed to test options: -I, -i, -d'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='sctp_status: failed to test options: -I, -i, -d'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 1636
+oe_test_lksctp-tools_sctp_status.sh: line 68: kill: (1636) - No such process
++ kill -9 1619
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Error getting status: Invalid argument.
+Tue Sep 12 13:34:26 2023 - INFO  - End to run test.
+/root/mugen-riscv/libs/locallibs/common_lib_python.sh: line 19:  1619 Killed                  sctp_darn -H ::1 -P 6010 -l > /dev/null 2>&1
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Sep 12 13:34:26 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Sep 12 13:34:27 2023 - INFO  - Start to restore the test environment.
++ rm -rf server_output client_output
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Tue Sep 12 13:34:28 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Sep 12 13:34:28 2023 - INFO  - End to restore the test environment.

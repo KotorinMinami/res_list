@@ -1,0 +1,108 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Sep 13 15:25:00 2023 - INFO  - Start environment preparation.
+++ date +%Y%m%d%H%M%S
++ cur_date=20230913152500
++ lower=/tmp/low20230913152500
++ upper=/tmp/upper20230913152500
++ work=/tmp/work20230913152500
++ point=/mnt/point20230913152500
++ mkdir /tmp/low20230913152500 /tmp/upper20230913152500 /tmp/work20230913152500 /mnt/point20230913152500
++ echo test
++ mkdir /tmp/low20230913152500/testDir
++ mount -t overlay overlay -o lowerdir=/tmp/low20230913152500,upperdir=/tmp/upper20230913152500,workdir=/tmp/work20230913152500 /mnt/point20230913152500
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Sep 13 15:25:00 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 13 15:25:01 2023 - INFO  - Start to run test.
++ sed -i amodify /mnt/point20230913152500/testFile
++ touch /mnt/point20230913152500/testDir/testFile2
++ grep modify /tmp/low20230913152500/testFile
++ CHECK_RESULT 1 1 0 'The file in /tmp/low20230913152500 is modified unexpectly.'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='The file in /tmp/low20230913152500 is modified unexpectly.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ test -f /tmp/low20230913152500/testDir/testFile2
++ CHECK_RESULT 1 1 0 'The directory in /tmp/low20230913152500 is modified unexpectly.'
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log='The directory in /tmp/low20230913152500 is modified unexpectly.'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ grep modify /tmp/upper20230913152500/testFile
+modify
++ CHECK_RESULT 0 0 0 'The file in /tmp/upper20230913152500 doesn'\''t create.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The file in /tmp/upper20230913152500 doesn'\''t create.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f /tmp/upper20230913152500/testDir/testFile2
++ CHECK_RESULT 0 0 0 'Modify directory in /tmp/upper20230913152500 doesn'\''t create.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Modify directory in /tmp/upper20230913152500 doesn'\''t create.'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Sep 13 15:25:02 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 13 15:25:02 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Sep 13 15:25:03 2023 - INFO  - Start to restore the test environment.
++ umount /mnt/point20230913152500
++ rm -rf /tmp/low20230913152500 /tmp/upper20230913152500 /tmp/work20230913152500 /mnt/point20230913152500
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Sep 13 15:25:03 2023 - INFO  - End to restore the test environment.
