@@ -1,0 +1,709 @@
++ source ./common/disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment!'
++ message='Start to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment!'
+Tue Sep 12 10:05:50 2023 - INFO  - Start to prepare the test environment!
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='sr0 vdb'
++ disk_list=($disks)
++ local_disk=sr0
++ local_disk1=vdb
++ local_disk2=
++ local_disk3=
++ DNF_INSTALL fio
++ pkgs=fio
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs fio --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp3t490meq
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp3t490meq
++ test -f test.txt
++ touch test.txt
++ LOG_INFO 'End to prepare the test environment!'
++ message='End to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment!'
+Tue Sep 12 10:09:00 2023 - INFO  - End to prepare the test environment!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Tue Sep 12 10:09:00 2023 - INFO  - Start executing testcase!
++ fio-dedupe -o 1 /dev/sr0
++ grep 'items processed'
+open: No medium found
++ CHECK_RESULT 1 0 0 'fio-dedupe -o option failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -o option failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'fio-dedupe -o option failed'
++ LOG_ERROR 'fio-dedupe -o option failed'
++ message='fio-dedupe -o option failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'fio-dedupe -o option failed'
+Tue Sep 12 10:09:00 2023 - ERROR - fio-dedupe -o option failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fio_002.sh line 31'
++ message='oe_test_fio_002.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fio_002.sh line 31'
+Tue Sep 12 10:09:00 2023 - ERROR - oe_test_fio_002.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
++ fio-dedupe -c 1 /dev/vdb
++ grep 'items processed'
+0.00% done90.40% done (1851392KiB/sec)Threads(4): 128000 items processed
++ CHECK_RESULT 0 0 0 'fio-dedupe -c option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -c option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -B 1 /dev/vdb
+Will check </dev/vdb>, size <524288000>, using 4 threads
+0.00% doneThreads(4): 128000 items processed
+Extents=128000, Unique extents=0
+De-dupe ratio: 1:infinite
+Fio setting: dedupe_percentage=100
++ CHECK_RESULT 0 0 0 'fio-dedupe -B option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -B option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -p 1 /dev/vdb
+Will check </dev/vdb>, size <524288000>, using 4 threads
+0.00% doneThreads(4): 128000 items processed
+Extents=128000, Unique extents=0
+De-dupe ratio: 1:infinite
+Fio setting: dedupe_percentage=100
++ CHECK_RESULT 0 0 0 'fio-dedupe -p option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -p option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio --filename=test_file --direct=1 --rw=randwrite --numjobs=1 --iodepth=16 --ioengine=libaio --bs=4k --group_reporting --name=zhangyi --log_avg_msec=500 --write_bw_log=test-fio --size=1G
+zhangyi: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=16
+fio-3.34
+Starting 1 process
+zhangyi: Laying out IO file (1 file / 1024MiB)
+
+zhangyi: (groupid=0, jobs=1): err= 0: pid=2017: Tue Sep 12 10:09:04 2023
+  write: IOPS=78.1k, BW=305MiB/s (320MB/s)(1024MiB/3358msec); 0 zone resets
+    slat (nsec): min=1970, max=154470, avg=10950.43, stdev=6937.70
+    clat (usec): min=6, max=43185, avg=193.26, stdev=296.56
+     lat (usec): min=21, max=43189, avg=204.21, stdev=297.01
+    clat percentiles (usec):
+     |  1.00th=[  104],  5.00th=[  131], 10.00th=[  139], 20.00th=[  149],
+     | 30.00th=[  157], 40.00th=[  165], 50.00th=[  174], 60.00th=[  184],
+     | 70.00th=[  198], 80.00th=[  227], 90.00th=[  285], 95.00th=[  318],
+     | 99.00th=[  371], 99.50th=[  392], 99.90th=[  461], 99.95th=[  494],
+     | 99.99th=[  611]
+   bw (  KiB/s): min=280200, max=339896, per=99.16%, avg=309633.67, stdev=23055.36, samples=6
+   iops        : min=70052, max=84976, avg=77409.00, stdev=5763.83, samples=6
+  lat (usec)   : 10=0.01%, 20=0.01%, 50=0.39%, 100=0.49%, 250=84.07%
+  lat (usec)   : 500=15.01%, 750=0.03%
+  lat (msec)   : 20=0.01%, 50=0.01%
+  cpu          : usr=6.64%, sys=52.67%, ctx=153131, majf=0, minf=13
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=100.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.1%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,262144,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=305MiB/s (320MB/s), 305MiB/s-305MiB/s (320MB/s-320MB/s), io=1024MiB (1074MB), run=3358-3358msec
+
+Disk stats (read/write):
+  vda: ios=0/246326, merge=0/0, ticks=0/9867, in_queue=9867, util=96.98%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/sr0 -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep sr0
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
++ CHECK_RESULT 1 0 0 'fio -filename=/dev option failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'fio -filename=/dev option failed'
++ LOG_ERROR 'fio -filename=/dev option failed'
++ message='fio -filename=/dev option failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'fio -filename=/dev option failed'
+Tue Sep 12 10:09:06 2023 - ERROR - fio -filename=/dev option failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fio_002.sh line 41'
++ message='oe_test_fio_002.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fio_002.sh line 41'
+Tue Sep 12 10:09:06 2023 - ERROR - oe_test_fio_002.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ fio -filename=/dev/sr0 -direct=1 -iodepth 1 -thread -rw=write -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep sr0
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
++ CHECK_RESULT 1 0 0 'fio -filename=/dev option failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'fio -filename=/dev option failed'
++ LOG_ERROR 'fio -filename=/dev option failed'
++ message='fio -filename=/dev option failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'fio -filename=/dev option failed'
+Tue Sep 12 10:09:07 2023 - ERROR - fio -filename=/dev option failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fio_002.sh line 43'
++ message='oe_test_fio_002.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fio_002.sh line 43'
+Tue Sep 12 10:09:07 2023 - ERROR - oe_test_fio_002.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=randread -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
+mytest: (g=0): rw=randread, bs=(R) 16.0KiB-16.0KiB, (W) 16.0KiB-16.0KiB, (T) 16.0KiB-16.0KiB, ioengine=psync, iodepth=1
+...
+fio-3.34
+Starting 30 threads
+
+mytest: (groupid=0, jobs=30): err= 0: pid=2034: Tue Sep 12 10:09:09 2023
+  read: IOPS=490k, BW=7661MiB/s (8033MB/s)(14.6GiB/1958msec)
+    clat (usec): min=9, max=19068, avg=60.30, stdev=59.34
+     lat (usec): min=9, max=19068, avg=60.37, stdev=59.35
+    clat percentiles (usec):
+     |  1.00th=[   22],  5.00th=[   30], 10.00th=[   37], 20.00th=[   46],
+     | 30.00th=[   51], 40.00th=[   55], 50.00th=[   59], 60.00th=[   62],
+     | 70.00th=[   67], 80.00th=[   74], 90.00th=[   87], 95.00th=[   97],
+     | 99.00th=[  119], 99.50th=[  129], 99.90th=[  167], 99.95th=[  196],
+     | 99.99th=[  302]
+   bw (  MiB/s): min= 7167, max= 7904, per=98.80%, avg=7569.19, stdev=10.43, samples=90
+   iops        : min=458724, max=505916, avg=484428.00, stdev=667.81, samples=90
+  lat (usec)   : 10=0.01%, 20=0.61%, 50=27.39%, 100=68.11%, 250=3.88%
+  lat (usec)   : 500=0.02%, 750=0.01%
+  lat (msec)   : 4=0.01%, 10=0.01%, 20=0.01%
+  cpu          : usr=1.52%, sys=5.13%, ctx=960376, majf=0, minf=120
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=960000,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=7661MiB/s (8033MB/s), 7661MiB/s-7661MiB/s (8033MB/s-8033MB/s), io=14.6GiB (15.7GB), run=1958-1958msec
+
+Disk stats (read/write):
+  vdb: ios=931767/0, merge=0/0, ticks=41270/0, in_queue=41270, util=94.99%
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/sr0 -direct=1 -iodepth 1 -thread -rw=randwrite -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep sr0
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
++ CHECK_RESULT 1 0 0 'fio -filename=/dev option failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'fio -filename=/dev option failed'
++ LOG_ERROR 'fio -filename=/dev option failed'
++ message='fio -filename=/dev option failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'fio -filename=/dev option failed'
+Tue Sep 12 10:09:10 2023 - ERROR - fio -filename=/dev option failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fio_002.sh line 47'
++ message='oe_test_fio_002.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fio_002.sh line 47'
+Tue Sep 12 10:09:10 2023 - ERROR - oe_test_fio_002.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ fio -filename=/dev/sr0 -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest --output test.txt
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: failed opening blockdev /dev/sr0 for size check
+file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
+fio: pid=0, err=123/file:filesetup.c:795, func=open(/dev/sr0), error=No medium found
++ test -f test.txt
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ genfio -d /dev/sr0,/dev/vdb,/dev/ -a -b 4k,128k,1m -r 100 -a -x dellr720-day2/
+/usr/bin/genfio: line 280: hostname: command not found
+Generating dellr720-day2/-4k,128k,1m-all-write,randwrite,read,randread-sr0,vdb,dev.fio
+Estimated Time = 4800 seconds : 1 hour 20 minutes
++ test -d dellr720-day2
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ genfio -h
++ grep -i usage
+usage of genfio:
++ CHECK_RESULT 0 0 0 'genfio -h option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='genfio -h option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Tue Sep 12 10:09:12 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Sep 12 10:09:12 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start environment cleanup.'
++ message='Start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment cleanup.'
+Tue Sep 12 10:09:12 2023 - INFO  - Start environment cleanup.
++ rm -rf test-fio_bw.1.log test.txt test_file dellr720-day2
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp3t490meq ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp3t490meq
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Tue Sep 12 10:09:15 2023 - INFO  - Finish environment cleanup.

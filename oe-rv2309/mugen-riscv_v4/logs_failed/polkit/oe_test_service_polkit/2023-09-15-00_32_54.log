@@ -1,0 +1,192 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n '' ']'
++ trap POST_TEST_DEFAULT EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Fri Sep 15 00:32:57 2023 - INFO  - Start testing...
++ test_execution polkit.service
++ service=polkit.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-15 00:32:57'
++ test_restart polkit.service
++ service=polkit.service
++ systemctl restart polkit.service
++ CHECK_RESULT 0 0 0 'polkit.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='polkit.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'Active: active'
++ systemctl status polkit.service
+     Active: active (running) since Fri 2023-09-15 00:32:58 CST; 5s ago
++ CHECK_RESULT 0 0 0 'polkit.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='polkit.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop polkit.service
++ CHECK_RESULT 0 0 0 'polkit.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='polkit.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status polkit.service
++ grep 'Active: inactive'
+     Active: inactive (dead) since Fri 2023-09-15 00:33:04 CST; 5s ago
++ CHECK_RESULT 0 0 0 'polkit.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='polkit.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start polkit.service
++ CHECK_RESULT 0 0 0 'polkit.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='polkit.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status polkit.service
++ grep 'Active: active'
+     Active: active (running) since Fri 2023-09-15 00:33:10 CST; 5s ago
++ CHECK_RESULT 0 0 0 'polkit.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='polkit.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled polkit.service
++ service=polkit.service
+++ systemctl is-enabled polkit.service
++ state=static
++ '[' static == enabled ']'
++ '[' static == disabled ']'
++ '[' static == masked ']'
++ '[' static == static ']'
++ LOG_INFO 'The unit files have no installation config,This means they are not meant to be enabled using systemctl.'
++ message='The unit files have no installation config,This means they are not meant to be enabled using systemctl.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'The unit files have no installation config,This means they are not meant to be enabled using systemctl.'
+Fri Sep 15 00:33:16 2023 - INFO  - The unit files have no installation config,This means they are not meant to be enabled using systemctl.
++ journalctl --since '2023-09-15 00:32:57' -u polkit.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
+Sep 15 00:32:58 openeuler-riscv64 polkitd[1231]: Error opening rules directory: Error opening directory “/etc/polkit-1/rules.d”: Permission denied (g-file-error-quark, 2)
+Sep 15 00:32:58 openeuler-riscv64 polkitd[1231]: Error opening rules directory: Error opening directory “/usr/share/polkit-1/rules.d”: Permission denied (g-file-error-quark, 2)
+Sep 15 00:33:10 openeuler-riscv64 polkitd[1462]: Error opening rules directory: Error opening directory “/etc/polkit-1/rules.d”: Permission denied (g-file-error-quark, 2)
+Sep 15 00:33:10 openeuler-riscv64 polkitd[1462]: Error opening rules directory: Error opening directory “/usr/share/polkit-1/rules.d”: Permission denied (g-file-error-quark, 2)
++ CHECK_RESULT 0 0 1 'There is an error message for the log of polkit.service'
++ actual_result=0
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of polkit.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 1 -eq 0 ']'
++ test 0x == 0x
++ test -n 'There is an error message for the log of polkit.service'
++ LOG_ERROR 'There is an error message for the log of polkit.service'
++ message='There is an error message for the log of polkit.service'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'There is an error message for the log of polkit.service'
+Fri Sep 15 00:33:17 2023 - ERROR - There is an error message for the log of polkit.service
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 28'
++ message='../common/common_lib.sh line 28'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 28'
+Fri Sep 15 00:33:17 2023 - ERROR - ../common/common_lib.sh line 28
++ '[' 0 -eq 1 ']'
++ return 0
++ test_reload polkit.service
++ service=polkit.service
++ systemctl start polkit.service
++ grep 'Job type reload is not applicable'
++ systemctl reload polkit.service
+Failed to reload polkit.service: Job type reload is not applicable for unit polkit.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit polkit.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit polkit.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status polkit.service
++ grep 'Active: active'
+     Active: active (running) since Fri 2023-09-15 00:33:10 CST; 7s ago
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Fri Sep 15 00:33:18 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep 15 00:33:18 2023 - ERROR - failed to execute the case.
++ exit 1
++ POST_TEST_DEFAULT
++ LOG_INFO 'oe_test_service_polkit.sh post_test'
++ message='oe_test_service_polkit.sh post_test'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'oe_test_service_polkit.sh post_test'
+Fri Sep 15 00:33:19 2023 - INFO  - oe_test_service_polkit.sh post_test
