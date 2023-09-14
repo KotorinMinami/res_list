@@ -1,0 +1,241 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start to config the test environment.'
++ message='Start to config the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to config the test environment.'
+Wed Sep 13 13:48:29 2023 - INFO  - Start to config the test environment.
+++ tuned-adm active
+++ awk '{print $4}'
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 44, in load_config
+    with open(file_name) as f:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/etc/tuned/tuned-main.conf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/sbin/tuned-adm", line 50, in <module>
+    config = GlobalConfig()
+             ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 15, in __init__
+    self.load_config(file_name=config_file)
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 59, in load_config
+    raise TunedException("Global TuneD configuration file '%s' not found." % file_name)
+tuned.exceptions.TunedException: Global TuneD configuration file '/etc/tuned/tuned-main.conf' not found.
++ old_profile=
++ LOG_INFO 'End to config the test environment.'
++ message='End to config the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to config the test environment.'
+Wed Sep 13 13:48:30 2023 - INFO  - End to config the test environment.
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Sep 13 13:48:31 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL tuned
++ pkgs=tuned
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs tuned --node 1 --tempfile ''
+Wed Sep 13 13:48:38 2023 - INFO  - pkgs:(tuned) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl enable --now tuned
+Created symlink /etc/systemd/system/multi-user.target.wants/tuned.service → /usr/lib/systemd/system/tuned.service.
+Job for tuned.service failed because the control process exited with error code.
+See "systemctl status tuned.service" and "journalctl -xeu tuned.service" for details.
++ test -d /etc/tuned/my-profile_new
++ mkdir /etc/tuned/my-profile_new
++ echo '[main]
+summary=General non-specialized tuned profile
+[cpu]
+governor=conservative
+energy_perf_bias=normal
+[audio]
+timeout=10
+[video]
+radeon_powersave=dpm-balanced, auto'
++ test -d /etc/tuned/modified-profile
++ mkdir /etc/tuned/modified-profile
++ echo '[main]
+include=my-profile_new'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Sep 13 13:48:42 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 13 13:48:43 2023 - INFO  - Start to run test.
++ tuned-adm profile modified-profile
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 44, in load_config
+    with open(file_name) as f:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/etc/tuned/tuned-main.conf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/sbin/tuned-adm", line 50, in <module>
+    config = GlobalConfig()
+             ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 15, in __init__
+    self.load_config(file_name=config_file)
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 59, in load_config
+    raise TunedException("Global TuneD configuration file '%s' not found." % file_name)
+tuned.exceptions.TunedException: Global TuneD configuration file '/etc/tuned/tuned-main.conf' not found.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_disk_tuned_modify.sh line 50'
++ message='oe_test_disk_tuned_modify.sh line 50'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_disk_tuned_modify.sh line 50'
+Wed Sep 13 13:48:44 2023 - ERROR - oe_test_disk_tuned_modify.sh line 50
++ return 0
++ tuned-adm active
++ grep modified-profile
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 44, in load_config
+    with open(file_name) as f:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/etc/tuned/tuned-main.conf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/sbin/tuned-adm", line 50, in <module>
+    config = GlobalConfig()
+             ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 15, in __init__
+    self.load_config(file_name=config_file)
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 59, in load_config
+    raise TunedException("Global TuneD configuration file '%s' not found." % file_name)
+tuned.exceptions.TunedException: Global TuneD configuration file '/etc/tuned/tuned-main.conf' not found.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_disk_tuned_modify.sh line 52'
++ message='oe_test_disk_tuned_modify.sh line 52'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_disk_tuned_modify.sh line 52'
+Wed Sep 13 13:48:46 2023 - ERROR - oe_test_disk_tuned_modify.sh line 52
++ return 0
++ tuned-adm verify
++ grep succeeded
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 44, in load_config
+    with open(file_name) as f:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/etc/tuned/tuned-main.conf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/sbin/tuned-adm", line 50, in <module>
+    config = GlobalConfig()
+             ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 15, in __init__
+    self.load_config(file_name=config_file)
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 59, in load_config
+    raise TunedException("Global TuneD configuration file '%s' not found." % file_name)
+tuned.exceptions.TunedException: Global TuneD configuration file '/etc/tuned/tuned-main.conf' not found.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_disk_tuned_modify.sh line 54'
++ message='oe_test_disk_tuned_modify.sh line 54'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_disk_tuned_modify.sh line 54'
+Wed Sep 13 13:48:48 2023 - ERROR - oe_test_disk_tuned_modify.sh line 54
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Sep 13 13:48:48 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Sep 13 13:48:49 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Sep 13 13:48:49 2023 - INFO  - Start to restore the test environment.
++ rm -rf /etc/tuned/modified-profile /etc/tuned/my-profile_new
++ tuned-adm profile ''
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 44, in load_config
+    with open(file_name) as f:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/etc/tuned/tuned-main.conf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/sbin/tuned-adm", line 50, in <module>
+    config = GlobalConfig()
+             ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 15, in __init__
+    self.load_config(file_name=config_file)
+  File "/usr/lib/python3.11/site-packages/tuned/utils/global_config.py", line 59, in load_config
+    raise TunedException("Global TuneD configuration file '%s' not found." % file_name)
+tuned.exceptions.TunedException: Global TuneD configuration file '/etc/tuned/tuned-main.conf' not found.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Sep 13 13:48:51 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Sep 13 13:48:51 2023 - INFO  - End to restore the test environment.

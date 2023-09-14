@@ -1,0 +1,134 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Sep 14 09:44:58 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'openssh-server openssh-clients openssh'
++ pkgs='openssh-server openssh-clients openssh'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs 'openssh-server openssh-clients openssh' --node 1 --tempfile ''
+Thu Sep 14 09:44:59 2023 - INFO  - pkgs:(openssh-server openssh-clients openssh) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl start sshd
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Sep 14 09:44:59 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 14 09:44:59 2023 - INFO  - Start to run test.
++ sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ setsebool -P use_nfs_home_dirs 1
+oe_test_server_openssh_verifykey.sh: line 32: setsebool: command not found
++ CHECK_RESULT 127
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_server_openssh_verifykey.sh line 33'
++ message='oe_test_server_openssh_verifykey.sh line 33'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_server_openssh_verifykey.sh line 33'
+Thu Sep 14 09:44:59 2023 - ERROR - oe_test_server_openssh_verifykey.sh line 33
++ return 0
++ systemctl reload sshd
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD ls 127.0.0.1 'openEuler12#$' root
++ cmd=ls
++ remoteip=127.0.0.1
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen-riscv/libs/locallibs/sshcmd.sh -c ls -i 127.0.0.1 -u root -p 'openEuler12#$' -t 300 -o 22
+Thu Sep 14 09:44:59 2023 - WARN  - the remote user uses the default configuration.
+Thu Sep 14 09:44:59 2023 - WARN  - the remote password uses the default configuration.
+Thu Sep 14 09:44:59 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@127.0.0.1 ls
+
+Authorized users only. All activities may be monitored and reported.
+root@127.0.0.1: Permission denied (publickey,gssapi-with-mic).
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:255'
++ message='Failed in remote CMD operation:255'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:255'
+Thu Sep 14 09:44:59 2023 - ERROR - Failed in remote CMD operation:255
++ return 255
++ CHECK_RESULT 255 0 1
++ actual_result=255
++ expect_result=0
++ mode=1
++ error_log=
++ '[' -z 255 ']'
++ '[' 1 -eq 0 ']'
++ test 255x == 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Sep 14 09:44:59 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Sep 14 09:44:59 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Sep 14 09:44:59 2023 - INFO  - Start to restore the test environment.
++ sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
++ systemctl reload sshd
++ systemctl restart sshd
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Sep 14 09:44:59 2023 - INFO  - End to restore the test environment.

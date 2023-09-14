@@ -1,0 +1,192 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n '' ']'
++ trap POST_TEST_DEFAULT EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Tue Sep 12 14:09:31 2023 - INFO  - Start testing...
++ test_execution iprdump.service
++ service=iprdump.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-12 14:09:31'
++ test_restart iprdump.service
++ service=iprdump.service
++ systemctl restart iprdump.service
++ CHECK_RESULT 0 0 0 'iprdump.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iprdump.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status iprdump.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-09-12 14:09:31 CST; 5s ago
++ CHECK_RESULT 0 0 0 'iprdump.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iprdump.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop iprdump.service
++ CHECK_RESULT 0 0 0 'iprdump.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iprdump.service stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status iprdump.service
++ grep 'Active: inactive'
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'iprdump.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iprdump.service stop failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start iprdump.service
++ CHECK_RESULT 0 0 0 'iprdump.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iprdump.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status iprdump.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-09-12 14:09:43 CST; 5s ago
++ CHECK_RESULT 0 0 0 'iprdump.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iprdump.service start failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled iprdump.service
++ service=iprdump.service
+++ systemctl is-enabled iprdump.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ grep 'Created symlink'
+++ systemctl enable iprdump.service
+++ awk '{print $3}'
++ symlink_file=/etc/systemd/system/iprutils.target.wants/iprdump.service
++ find /etc/systemd/system/iprutils.target.wants/iprdump.service
+/etc/systemd/system/iprutils.target.wants/iprdump.service
++ CHECK_RESULT 0 0 0 'iprdump.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iprdump.service enable failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable iprdump.service
+Removed "/etc/systemd/system/iprutils.target.wants/iprdump.service".
++ find /etc/systemd/system/iprutils.target.wants/iprdump.service
+find: ‘/etc/systemd/system/iprutils.target.wants/iprdump.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'iprdump.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='iprdump.service disable failed'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ journalctl --since '2023-09-12 14:09:31' -u iprdump.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of iprdump.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of iprdump.service'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload iprdump.service
++ service=iprdump.service
++ systemctl start iprdump.service
++ systemctl reload iprdump.service
++ grep 'Job type reload is not applicable'
+Failed to reload iprdump.service: Job type reload is not applicable for unit iprdump.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit iprdump.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit iprdump.service'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status iprdump.service
++ grep 'Active: active'
+     Active: active (running) since Tue 2023-09-12 14:09:43 CST; 12s ago
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Tue Sep 12 14:09:57 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Tue Sep 12 14:09:57 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ POST_TEST_DEFAULT
++ LOG_INFO 'oe_test_service_iprdump.sh post_test'
++ message='oe_test_service_iprdump.sh post_test'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'oe_test_service_iprdump.sh post_test'
+Tue Sep 12 14:09:58 2023 - INFO  - oe_test_service_iprdump.sh post_test
