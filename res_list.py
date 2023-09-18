@@ -117,6 +117,7 @@ class testRes():
 def findRealFail(riscv:testRes , x86:testRes):
     riscvFailedSuite = os.listdir(riscv.failedLogsDir)
     x86FailedSuite = os.listdir(x86.failedLogsDir)
+    x86Suite = os.listdir(x86.logsDir)
     module = testRes('mugen-riscv')
     command = testRes('mugen-riscv')
     suite = ''
@@ -130,10 +131,16 @@ def findRealFail(riscv:testRes , x86:testRes):
                     riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'success'})
         if suite not in x86FailedSuite:
             for case in os.listdir(riscv.failedLogsDir+'/'+suite):
-                if riscv.csvtestResult.get(case , None) is not None:
-                    riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'fail' , 'reason':riscv.csvtestResult[case]['reason']})
-                else:
-                    riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'fail'})
+                if case not in x86Suite:
+                    if riscv.csvtestResult.get(case , None) is not None:
+                        riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'fail_x86NotTest' , 'reason':riscv.csvtestResult[case]['reason']})
+                    else:
+                        riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'fail_x86NotTest'})
+                else: 
+                    if riscv.csvtestResult.get(case , None) is not None:
+                         riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'fail' , 'reason':riscv.csvtestResult[case]['reason']})
+                    else:
+                        riscv.testResult.append({'suite name':suite , 'case name':case , 'status':'fail'})
         else:
             for case in os.listdir(riscv.failedLogsDir+'/'+suite):
                 if case in os.listdir(x86.failedLogsDir+'/'+suite):
