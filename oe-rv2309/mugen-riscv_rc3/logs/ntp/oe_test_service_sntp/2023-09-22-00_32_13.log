@@ -1,0 +1,328 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Fri Sep 22 00:32:22 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL ntp
++ pkgs=ntp
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs ntp --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:00:21 ago on Fri 22 Sep 2023 12:33:08 AM CST.
+No match for argument: ntp
+Error: Unable to find a match: ntp'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:00:21 ago on Fri 22 Sep 2023 12:33:08 AM CST.
+No match for argument: ntp
+Error: Unable to find a match: ntp'
++ echo 'server 127.127.1.0 iburst prefer maxpoll 4 minpoll 4'
++ sed -i 's/restrict default nomodify notrap nopeer noepeer noquery/#restrict default nomodify notrap nopeer noepeer noquery/' /etc/ntp.conf
++ sed -i s/OPTIONS=/#OPTIONS=/ /etc/sysconfig/sntp
+sed: can't read /etc/sysconfig/sntp: No such file or directory
++ echo 'OPTIONS="-s -d localhost"'
++ systemctl start ntpd.service
+Failed to start ntpd.service: Unit ntpd.service not found.
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Sep 22 00:33:38 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Fri Sep 22 00:33:40 2023 - INFO  - Start testing...
++ test_execution sntp.service
++ service=sntp.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-22 00:33:40'
++ test_restart sntp.service
++ service=sntp.service
++ systemctl restart sntp.service
+Failed to restart sntp.service: Unit sntp.service not found.
++ CHECK_RESULT 5 0 0 'sntp.service restart failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='sntp.service restart failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'sntp.service restart failed'
++ LOG_ERROR 'sntp.service restart failed'
++ message='sntp.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'sntp.service restart failed'
+Fri Sep 22 00:33:41 2023 - ERROR - sntp.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 34'
++ message='../common/common_lib.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 34'
+Fri Sep 22 00:33:42 2023 - ERROR - ../common/common_lib.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status sntp.service
++ grep 'Active: active'
+Unit sntp.service could not be found.
++ CHECK_RESULT 1 0 0 'sntp.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='sntp.service restart failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'sntp.service restart failed'
++ LOG_ERROR 'sntp.service restart failed'
++ message='sntp.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'sntp.service restart failed'
+Fri Sep 22 00:33:50 2023 - ERROR - sntp.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 37'
++ message='../common/common_lib.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 37'
+Fri Sep 22 00:33:52 2023 - ERROR - ../common/common_lib.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl stop sntp.service
+Failed to stop sntp.service: Unit sntp.service not loaded.
++ CHECK_RESULT 5 0 0 'sntp.service stop failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='sntp.service stop failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'sntp.service stop failed'
++ LOG_ERROR 'sntp.service stop failed'
++ message='sntp.service stop failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'sntp.service stop failed'
+Fri Sep 22 00:33:53 2023 - ERROR - sntp.service stop failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 39'
++ message='../common/common_lib.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 39'
+Fri Sep 22 00:33:54 2023 - ERROR - ../common/common_lib.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status sntp.service
++ grep 'Active: inactive'
+Unit sntp.service could not be found.
++ CHECK_RESULT 1 0 0 'sntp.service stop failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='sntp.service stop failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'sntp.service stop failed'
++ LOG_ERROR 'sntp.service stop failed'
++ message='sntp.service stop failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'sntp.service stop failed'
+Fri Sep 22 00:34:03 2023 - ERROR - sntp.service stop failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 42'
++ message='../common/common_lib.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 42'
+Fri Sep 22 00:34:04 2023 - ERROR - ../common/common_lib.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl start sntp.service
+Failed to start sntp.service: Unit sntp.service not found.
++ CHECK_RESULT 5 0 0 'sntp.service start failed'
++ actual_result=5
++ expect_result=0
++ mode=0
++ error_log='sntp.service start failed'
++ exit_mode=0
++ '[' -z 5 ']'
++ '[' 0 -eq 0 ']'
++ test 5x '!=' 0x
++ test -n 'sntp.service start failed'
++ LOG_ERROR 'sntp.service start failed'
++ message='sntp.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'sntp.service start failed'
+Fri Sep 22 00:34:05 2023 - ERROR - sntp.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 44'
++ message='../common/common_lib.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 44'
+Fri Sep 22 00:34:07 2023 - ERROR - ../common/common_lib.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status sntp.service
++ grep 'Active: active'
+Unit sntp.service could not be found.
++ CHECK_RESULT 1 0 0 'sntp.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='sntp.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'sntp.service start failed'
++ LOG_ERROR 'sntp.service start failed'
++ message='sntp.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'sntp.service start failed'
+Fri Sep 22 00:34:15 2023 - ERROR - sntp.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 47'
++ message='../common/common_lib.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 47'
+Fri Sep 22 00:34:16 2023 - ERROR - ../common/common_lib.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ test_enabled sntp.service
++ service=sntp.service
+++ systemctl is-enabled sntp.service
++ state=not-found
++ '[' not-found == enabled ']'
++ '[' not-found == disabled ']'
++ '[' not-found == masked ']'
++ '[' not-found == static ']'
++ LOG_INFO 'Unit is indirect, ignoring.'
++ message='Unit is indirect, ignoring.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Unit is indirect, ignoring.'
+Fri Sep 22 00:34:18 2023 - INFO  - Unit is indirect, ignoring.
++ journalctl --since '2023-09-22 00:33:40' -u sntp.service
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ grep -i 'fail\|error'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of sntp.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of sntp.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload sntp.service
++ service=sntp.service
++ systemctl start sntp.service
+Failed to start sntp.service: Unit sntp.service not found.
++ grep 'Job type reload is not applicable'
++ systemctl reload sntp.service
++ CHECK_RESULT 1 0 0 'Job type reload is not applicable for unit sntp.service'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit sntp.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Job type reload is not applicable for unit sntp.service'
++ LOG_ERROR 'Job type reload is not applicable for unit sntp.service'
++ message='Job type reload is not applicable for unit sntp.service'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Job type reload is not applicable for unit sntp.service'
+Fri Sep 22 00:34:20 2023 - ERROR - Job type reload is not applicable for unit sntp.service
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 91'
++ message='../common/common_lib.sh line 91'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 91'
+Fri Sep 22 00:34:21 2023 - ERROR - ../common/common_lib.sh line 91
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl status sntp.service
++ grep 'Active: active'
+Unit sntp.service could not be found.
++ systemctl status sntp.service
++ grep 'inactive (dead)'
+Unit sntp.service could not be found.
++ return 1
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Fri Sep 22 00:34:23 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep 22 00:34:24 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Fri Sep 22 00:34:25 2023 - INFO  - start environment cleanup.
++ systemctl stop sntp.service
+Failed to stop sntp.service: Unit sntp.service not loaded.
++ systemctl stop ntpd.service
+Failed to stop ntpd.service: Unit ntpd.service not loaded.
++ sed -i '/OPTIONS="-s -d localhost"/d' /etc/sysconfig/sntp
++ sed -i s/#OPTIONS=/OPTIONS=/ /etc/sysconfig/sntp
++ sed -i '/server 127.127.1.0 iburst prefer maxpoll 4 minpoll 4/d' /etc/ntp.conf
++ sed -i 's/#restrict default nomodify notrap nopeer noepeer noquery/restrict default nomodify notrap nopeer noepeer noquery/' /etc/ntp.conf
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:00:21 ago on Fri 22 Sep 2023 12:33:08 AM CST.
+No match for argument: ntp
+Error: Unable to find a match: ntp ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:00:21 ago on Fri 22 Sep 2023 12:33:08 AM CST.
+No match for argument: ntp
+Error: Unable to find a match: ntp'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'Last metadata expiration check: 0:00:21 ago on Fri 22 Sep 2023 12:33:08 AM CST.\nNo match for argument: ntp\nError: Unable to find a match: ntp'
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Fri Sep 22 00:34:33 2023 - INFO  - Finish environment cleanup!

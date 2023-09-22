@@ -1,0 +1,103 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Sep 21 19:58:29 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'freeradius freeradius-utils perl-DBD-MySQL mysql5 mysql5-server freeradius-mysql'
++ pkgs='freeradius freeradius-utils perl-DBD-MySQL mysql5 mysql5-server freeradius-mysql'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'freeradius freeradius-utils perl-DBD-MySQL mysql5 mysql5-server freeradius-mysql' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:13:16 ago on Thu 21 Sep 2023 07:45:40 PM CST.
+Package freeradius-3.0.26-1.oe2309.riscv64 is already installed.
+Package freeradius-utils-3.0.26-1.oe2309.riscv64 is already installed.
+Package perl-DBD-MySQL-4.050-4.oe2309.riscv64 is already installed.
+Error: 
+ Problem: problem with installed package mariadb-4:10.5.22-1.oe2309.riscv64
+  - package mysql5-5.7.43-1.oe2309.riscv64 from mainline conflicts with mariadb provided by mariadb-4:10.5.22-1.oe2309.riscv64 from @System
+  - package mysql5-5.7.43-1.oe2309.riscv64 from mainline conflicts with mariadb provided by mariadb-4:10.5.22-1.oe2309.riscv64 from mainline
+  - conflicting requests
+(try to add '\''--allowerasing'\'' to command line to replace conflicting packages or '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:13:16 ago on Thu 21 Sep 2023 07:45:40 PM CST.
+Package freeradius-3.0.26-1.oe2309.riscv64 is already installed.
+Package freeradius-utils-3.0.26-1.oe2309.riscv64 is already installed.
+Package perl-DBD-MySQL-4.050-4.oe2309.riscv64 is already installed.
+Error: 
+ Problem: problem with installed package mariadb-4:10.5.22-1.oe2309.riscv64
+  - package mysql5-5.7.43-1.oe2309.riscv64 from mainline conflicts with mariadb provided by mariadb-4:10.5.22-1.oe2309.riscv64 from @System
+  - package mysql5-5.7.43-1.oe2309.riscv64 from mainline conflicts with mariadb provided by mariadb-4:10.5.22-1.oe2309.riscv64 from mainline
+  - conflicting requests
+(try to add '\''--allowerasing'\'' to command line to replace conflicting packages or '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ systemctl start mysqld
+Failed to start mysqld.service: Unit mysqld.service not found.
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ mysqladmin -uroot password Test123
+mysqladmin: connect to server at 'localhost' failed
+error: 'Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)'
+Check that mysqld is running and that the socket: '/var/lib/mysql/mysql.sock' exists!
++ mysql -uroot -pTest123 -e 'create database radius;
+                               use radius;
+                               source /etc/raddb/mods-config/sql/main/mysql/schema.sql;                       
+    '
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
++ sed -i 's/driver = "rlm_sql_null"/driver = "rlm_sql_mysql"/g' /etc/raddb/mods-available/sql
+sed: can't read /etc/raddb/mods-available/sql: No such file or directory
++ sed -i 's/dialect = "sqlite"/dialect = "mysql"/g' /etc/raddb/mods-available/sql
+sed: can't read /etc/raddb/mods-available/sql: No such file or directory
++ sed -i '/server = "localhost"/a server = "localhost"' /etc/raddb/mods-available/sql
+sed: can't read /etc/raddb/mods-available/sql: No such file or directory
++ sed -i '/port = 3306/a port = 3306' /etc/raddb/mods-available/sql
+sed: can't read /etc/raddb/mods-available/sql: No such file or directory
++ sed -i '/login = "radius"/a login = "root"' /etc/raddb/mods-available/sql
+sed: can't read /etc/raddb/mods-available/sql: No such file or directory
++ sed -i '/password = "radpass"/a password = "Test123"' /etc/raddb/mods-available/sql
+sed: can't read /etc/raddb/mods-available/sql: No such file or directory
++ ln -s /etc/raddb/mods-available/sql /etc/raddb/mods-enabled/
+ln: failed to create symbolic link '/etc/raddb/mods-enabled/': No such file or directory
++ echo 'insert into radcheck (username,attribute,op,value) values ('\''wjf'\'','\''Cleartext-Password'\'','\'':='\'','\''wjf123'\'');'
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Sep 21 19:59:00 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 19:59:01 2023 - INFO  - Start to run test.
++ radsqlrelay '-?'
++ grep usage
+usage: radsqlrelay [options] file_path
++ CHECK_RESULT 0 0 0 'radsqlrelay -? execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='radsqlrelay -? execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ radsqlrelay -1 -d mysql -b radius -h localhost -p Test123 -u root /tmp/radius.sql
+Thu Sep 21 20:28:26 2023 - ERROR - Timeout : Command 'bash -x oe_test_freeradius_freeradius-utils_radsqlrelay.sh' timed out after 1799.9998209999999 seconds

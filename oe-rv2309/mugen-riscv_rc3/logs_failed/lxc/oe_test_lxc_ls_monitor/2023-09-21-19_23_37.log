@@ -1,0 +1,345 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Sep 21 19:23:41 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'lxc lxc-devel lxc-libs lxcfs lxcfs-tools tar busybox'
++ pkgs='lxc lxc-devel lxc-libs lxcfs lxcfs-tools tar busybox'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'lxc lxc-devel lxc-libs lxcfs lxcfs-tools tar busybox' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 3:38:34 ago on Thu 21 Sep 2023 03:45:34 PM CST.
+Package lxc-4.0.3-2022102422.oe2309.riscv64 is already installed.
+Package lxc-libs-4.0.3-2022102422.oe2309.riscv64 is already installed.
+Package lxcfs-5.0.4-1.oe2309.riscv64 is already installed.
+Package tar-2:1.35-2.oe2309.riscv64 is already installed.
+Package busybox-1:1.36.1-3.oe2309.riscv64 is already installed.
+Error: 
+ Problem: package lxcfs-tools-0.3-32.oe2309.riscv64 from mainline requires iSulad, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides lcr > 2.1.2-0 needed by iSulad-2.1.3-6.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 3:38:34 ago on Thu 21 Sep 2023 03:45:34 PM CST.
+Package lxc-4.0.3-2022102422.oe2309.riscv64 is already installed.
+Package lxc-libs-4.0.3-2022102422.oe2309.riscv64 is already installed.
+Package lxcfs-5.0.4-1.oe2309.riscv64 is already installed.
+Package tar-2:1.35-2.oe2309.riscv64 is already installed.
+Package busybox-1:1.36.1-3.oe2309.riscv64 is already installed.
+Error: 
+ Problem: package lxcfs-tools-0.3-32.oe2309.riscv64 from mainline requires iSulad, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides lcr > 2.1.2-0 needed by iSulad-2.1.3-6.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+++ rpm -qa lxc
+++ awk -F - '{print $2}'
++ version=4.0.3
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Sep 21 19:24:12 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 19:24:12 2023 - INFO  - Start to run test.
++ lxc-create -t /usr/share/lxc/templates/lxc-busybox -n myEuler1
+lxc-create: myEuler1: utils.c: get_template_path: 888 No such file or directory - Bad template pathname: /usr/share/lxc/templates/lxc-busybox
+lxc-create: myEuler1: lxccontainer.c: do_lxcapi_create: 2019 Unknown template "/usr/share/lxc/templates/lxc-busybox"
+lxc-create: myEuler1: tools/lxc_create.c: main: 319 Failed to create container myEuler1
++ CHECK_RESULT 1 0 0 'Failed to set up container.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to set up container.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to set up container.'
++ LOG_ERROR 'Failed to set up container.'
++ message='Failed to set up container.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to set up container.'
+Thu Sep 21 19:24:13 2023 - ERROR - Failed to set up container.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_lxc_ls_monitor.sh line 31'
++ message='oe_test_lxc_ls_monitor.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_lxc_ls_monitor.sh line 31'
+Thu Sep 21 19:24:13 2023 - ERROR - oe_test_lxc_ls_monitor.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
++ lxc-ls --help
++ grep -i Usage
+Usage: lxc-ls 
+      --usage                      Give a short usage message
++ CHECK_RESULT 0 0 0 'Check lxc-ls --help failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check lxc-ls --help failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lxc-ls --usage
++ grep -i 'Usage: lxc-ls'
+Usage: lxc-ls [-1|--line] [-f|--fancy] [-F|--fancy-format=FANCY-FORMAT] [--active] 
++ CHECK_RESULT 0 0 0 'Check lxc-ls --usage failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check lxc-ls --usage failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lxc-ls --version
++ grep 4.0.3
+4.0.3
++ CHECK_RESULT 0 0 0 'Check lxc-ls --version failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check lxc-ls --version failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lxc-ls
++ grep myEuler1
++ CHECK_RESULT 1 0 0 'Failed to list myEuler1.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Failed to list myEuler1.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Failed to list myEuler1.'
++ LOG_ERROR 'Failed to list myEuler1.'
++ message='Failed to list myEuler1.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to list myEuler1.'
+Thu Sep 21 19:24:14 2023 - ERROR - Failed to list myEuler1.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_lxc_ls_monitor.sh line 39'
++ message='oe_test_lxc_ls_monitor.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_lxc_ls_monitor.sh line 39'
+Thu Sep 21 19:24:14 2023 - ERROR - oe_test_lxc_ls_monitor.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ lxc-ls --stopped
++ grep myEuler1
++ CHECK_RESULT 1 0 0 'Check lxc-ls --stopped failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check lxc-ls --stopped failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check lxc-ls --stopped failed.'
++ LOG_ERROR 'Check lxc-ls --stopped failed.'
++ message='Check lxc-ls --stopped failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check lxc-ls --stopped failed.'
+Thu Sep 21 19:24:15 2023 - ERROR - Check lxc-ls --stopped failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_lxc_ls_monitor.sh line 41'
++ message='oe_test_lxc_ls_monitor.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_lxc_ls_monitor.sh line 41'
+Thu Sep 21 19:24:15 2023 - ERROR - oe_test_lxc_ls_monitor.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ lxc-start -n myEuler1
+lxc-start: myEuler1: tools/lxc_start.c: main: 331 No container config specified
++ CHECK_RESULT 1 0 0 'Check lxc-start -n failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check lxc-start -n failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check lxc-start -n failed.'
++ LOG_ERROR 'Check lxc-start -n failed.'
++ message='Check lxc-start -n failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check lxc-start -n failed.'
+Thu Sep 21 19:24:16 2023 - ERROR - Check lxc-start -n failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_lxc_ls_monitor.sh line 43'
++ message='oe_test_lxc_ls_monitor.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_lxc_ls_monitor.sh line 43'
+Thu Sep 21 19:24:16 2023 - ERROR - oe_test_lxc_ls_monitor.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ lxc-ls --running
++ grep myEuler1
++ CHECK_RESULT 1 0 0 'Check lxc-ls --running failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check lxc-ls --running failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check lxc-ls --running failed.'
++ LOG_ERROR 'Check lxc-ls --running failed.'
++ message='Check lxc-ls --running failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check lxc-ls --running failed.'
+Thu Sep 21 19:24:17 2023 - ERROR - Check lxc-ls --running failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_lxc_ls_monitor.sh line 45'
++ message='oe_test_lxc_ls_monitor.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_lxc_ls_monitor.sh line 45'
+Thu Sep 21 19:24:17 2023 - ERROR - oe_test_lxc_ls_monitor.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ lxc-ls --defined
++ grep myEuler1
++ CHECK_RESULT 1 0 0 'Check lxc-ls --defined failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check lxc-ls --defined failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check lxc-ls --defined failed.'
++ LOG_ERROR 'Check lxc-ls --defined failed.'
++ message='Check lxc-ls --defined failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check lxc-ls --defined failed.'
+Thu Sep 21 19:24:18 2023 - ERROR - Check lxc-ls --defined failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_lxc_ls_monitor.sh line 47'
++ message='oe_test_lxc_ls_monitor.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_lxc_ls_monitor.sh line 47'
+Thu Sep 21 19:24:18 2023 - ERROR - oe_test_lxc_ls_monitor.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ lxc-monitor --help
++ grep -i Usage
+Usage: lxc-monitor [--name=NAME]
+      --usage                      Give a short usage message
++ CHECK_RESULT 0 0 0 'Check lxc-monitor --help failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check lxc-monitor --help failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lxc-monitor --usage
++ grep -i 'Usage: lxc-monitor'
+Usage: lxc-monitor [-Q|--quit] [-n|--name=NAME] [-h|--help] [-?|--help] 
++ CHECK_RESULT 0 0 0 'Check lxc-monitor --usage failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check lxc-monitor --usage failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lxc-monitor --version
++ grep 4.0.3
+4.0.3
++ CHECK_RESULT 0 0 0 'Check lxc-monitor --version failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check lxc-monitor --version failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Sep 21 19:24:19 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 6
++ test 6 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Sep 21 19:24:19 2023 - ERROR - failed to execute the case.
++ exit 6
++ post_test
++ LOG_INFO 'Start to restore the tet environment.'
++ message='Start to restore the tet environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the tet environment.'
+Thu Sep 21 19:24:20 2023 - INFO  - Start to restore the tet environment.
++ lxc-stop myEuler1
+lxc-stop: myEuler1: tools/lxc_stop.c: main: 170 myEuler1 is not running
++ lxc-destroy myEuler1
+lxc-destroy: myEuler1: tools/lxc_destroy.c: main: 242 Container is not defined
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 3:38:34 ago on Thu 21 Sep 2023 03:45:34 PM CST.
+Package lxc-4.0.3-2022102422.oe2309.riscv64 is already installed.
+Package lxc-libs-4.0.3-2022102422.oe2309.riscv64 is already installed.
+Package lxcfs-5.0.4-1.oe2309.riscv64 is already installed.
+Package tar-2:1.35-2.oe2309.riscv64 is already installed.
+Package busybox-1:1.36.1-3.oe2309.riscv64 is already installed.
+Error: 
+ Problem: package lxcfs-tools-0.3-32.oe2309.riscv64 from mainline requires iSulad, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides lcr > 2.1.2-0 needed by iSulad-2.1.3-6.oe2309.riscv64 from mainline
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 3:38:34 ago on Thu 21 Sep 2023 03:45:34 PM CST.
+Package lxc-4.0.3-2022102422.oe2309.riscv64 is already installed.
+Package lxc-libs-4.0.3-2022102422.oe2309.riscv64 is already installed.
+Package lxcfs-5.0.4-1.oe2309.riscv64 is already installed.
+Package tar-2:1.35-2.oe2309.riscv64 is already installed.
+Package busybox-1:1.36.1-3.oe2309.riscv64 is already installed.
+Error: 
+ Problem: package lxcfs-tools-0.3-32.oe2309.riscv64 from mainline requires iSulad, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides lcr > 2.1.2-0 needed by iSulad-2.1.3-6.oe2309.riscv64 from mainline
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 3:38:34 ago on Thu 21 Sep 2023 03:45:34 PM CST.\nPackage lxc-4.0.3-2022102422.oe2309.riscv64 is already installed.\nPackage lxc-libs-4.0.3-2022102422.oe2309.riscv64 is already installed.\nPackage lxcfs-5.0.4-1.oe2309.riscv64 is already installed.\nPackage tar-2:1.35-2.oe2309.riscv64 is already installed.\nPackage busybox-1:1.36.1-3.oe2309.riscv64 is already installed.\nError: \n Problem: package lxcfs-tools-0.3-32.oe2309.riscv64 from mainline requires iSulad, but none of the providers can be installed\n  - conflicting requests\n  - nothing provides lcr > 2.1.2-0 needed by iSulad-2.1.3-6.oe2309.riscv64 from mainline\n(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the tet environment.'
++ message='End to restore the tet environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the tet environment.'
+Thu Sep 21 19:24:23 2023 - INFO  - End to restore the tet environment.

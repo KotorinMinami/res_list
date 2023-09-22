@@ -1,0 +1,307 @@
++ source common/common_pcp.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Sep 22 06:31:55 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL pcp
++ pkgs=pcp
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs pcp --node 1 --tempfile ''
+Fri Sep 22 06:32:16 2023 - INFO  - pkgs:(pcp) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl enable pmcd
++ systemctl start pmcd
++ systemctl enable pmlogger
++ systemctl start pmlogger
+Job for pmlogger.service failed because the control process exited with error code.
+See "systemctl status pmlogger.service" and "journalctl -xeu pmlogger.service" for details.
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
+++ hostname
++ host_name=openeuler-riscv64
+++ awk -F - '{print $2}'
+++ rpm -qa pcp
++ pcp_version=5.3.7
+++ pcp -h openeuler-riscv64
+++ grep 'primary logger:'
+++ awk -F: '{print $NF}'
++ archive_data=
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Sep 22 06:33:05 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep 22 06:33:07 2023 - INFO  - Start to run test.
+++ hostname
+++ date +%Y%m%d-%H%M
++ /usr/libexec/pcp/bin/pmlogreduce -A 10min -v 10 /var/log/pcp/pmlogger/openeuler-riscv64/20230922-0633
+pmlogreduce: Error: insufficient arguments
+Usage: pmlogreduce [options] input-archive output-archive
+
+Options:
+  -A TIME, --align=TIME align sample times on natural boundaries
+  -S TIME, --start=TIME start of the time window
+  -s N, --samples=N     terminate after this many samples
+  -T TIME, --finish=TIME
+                        end of the time window
+  -t DELTA, --interval=DELTA
+                        sample output interval [default 10min]
+  -v NUM                switch log volumes after this many samples
+  -Z TZ, --timezone=TZ  set reporting timezone
+  -z, --hostzone        set reporting timezone to local time of metrics source
+  -?, --help            show this usage message and exit
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 31'
++ message='oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 31'
+Fri Sep 22 06:33:08 2023 - ERROR - oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
+++ hostname
+++ date +%Y%m%d-%H%M%S
++ /usr/libexec/pcp/bin/pmlogreduce -S @08 -T @18 -s 10 -t 2 /var/log/pcp/pmlogger/openeuler-riscv64/20230922-063308
+pmlogreduce: Error: insufficient arguments
+Usage: pmlogreduce [options] input-archive output-archive
+
+Options:
+  -A TIME, --align=TIME align sample times on natural boundaries
+  -S TIME, --start=TIME start of the time window
+  -s N, --samples=N     terminate after this many samples
+  -T TIME, --finish=TIME
+                        end of the time window
+  -t DELTA, --interval=DELTA
+                        sample output interval [default 10min]
+  -v NUM                switch log volumes after this many samples
+  -Z TZ, --timezone=TZ  set reporting timezone
+  -z, --hostzone        set reporting timezone to local time of metrics source
+  -?, --help            show this usage message and exit
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 33'
++ message='oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 33'
+Fri Sep 22 06:33:10 2023 - ERROR - oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ grep TZ=Africa/Sao_Tome
+++ hostname
+++ date +%Y%m%d-%H%M
++ /usr/libexec/pcp/bin/pmlogreduce -Z Africa/Sao_Tome /var/log/pcp/pmlogger/openeuler-riscv64/20230922-0633
+pmlogreduce: Error: insufficient arguments
+Usage: pmlogreduce [options] input-archive output-archive
+
+Options:
+  -A TIME, --align=TIME align sample times on natural boundaries
+  -S TIME, --start=TIME start of the time window
+  -s N, --samples=N     terminate after this many samples
+  -T TIME, --finish=TIME
+                        end of the time window
+  -t DELTA, --interval=DELTA
+                        sample output interval [default 10min]
+  -v NUM                switch log volumes after this many samples
+  -Z TZ, --timezone=TZ  set reporting timezone
+  -z, --hostzone        set reporting timezone to local time of metrics source
+  -?, --help            show this usage message and exit
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 35'
++ message='oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 35'
+Fri Sep 22 06:33:11 2023 - ERROR - oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
+++ hostname
++ grep 'local timezone'
+++ date +%Y%m%d-%H%M
++ /usr/libexec/pcp/bin/pmlogreduce -z /var/log/pcp/pmlogger/openeuler-riscv64/20230922-0633
+pmlogreduce: Error: insufficient arguments
+Usage: pmlogreduce [options] input-archive output-archive
+
+Options:
+  -A TIME, --align=TIME align sample times on natural boundaries
+  -S TIME, --start=TIME start of the time window
+  -s N, --samples=N     terminate after this many samples
+  -T TIME, --finish=TIME
+                        end of the time window
+  -t DELTA, --interval=DELTA
+                        sample output interval [default 10min]
+  -v NUM                switch log volumes after this many samples
+  -Z TZ, --timezone=TZ  set reporting timezone
+  -z, --hostzone        set reporting timezone to local time of metrics source
+  -?, --help            show this usage message and exit
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 37'
++ message='oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 37'
+Fri Sep 22 06:33:13 2023 - ERROR - oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ nohup /usr/libexec/pcp/bin/pmpause
++ grep pmpause
++ ps aux
++ grep -v grep
++ awk '{print $8}'
++ grep S
+S
+S
+S
+S
+S
+S
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f /usr/libexec/pcp/bin/pmpause
++ kill -9 172769
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ /usr/libexec/pcp/bin/pmpost pmpost_info
+oe_test_pmlogreduce_pmpause_pmpost_pmsleep.sh: line 28: 172769 Killed                  nohup /usr/libexec/pcp/bin/pmpause
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep pmpost_info /var/log/pcp/NOTICES
+06:33:14.906 pmpost_info
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ /usr/libexec/pcp/bin/pmsleep 3
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep 22 06:33:19 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 4
++ test 4 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep 22 06:33:20 2023 - ERROR - failed to execute the case.
++ exit 4
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep 22 06:33:22 2023 - INFO  - Start to restore the test environment.
++ rm -f /var/log/pcp/NOTICES
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Fri Sep 22 06:33:23 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep 22 06:33:24 2023 - INFO  - End to restore the test environment.

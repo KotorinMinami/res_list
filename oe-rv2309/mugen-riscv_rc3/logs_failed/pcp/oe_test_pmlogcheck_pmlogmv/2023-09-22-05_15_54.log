@@ -1,0 +1,308 @@
++ source common/common_pcp.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Sep 22 05:16:04 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL pcp
++ pkgs=pcp
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs pcp --node 1 --tempfile ''
+Fri Sep 22 05:16:24 2023 - INFO  - pkgs:(pcp) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl enable pmcd
++ systemctl start pmcd
++ systemctl enable pmlogger
++ systemctl start pmlogger
+Job for pmlogger.service failed because the control process exited with error code.
+See "systemctl status pmlogger.service" and "journalctl -xeu pmlogger.service" for details.
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
+++ hostname
++ host_name=openeuler-riscv64
+++ rpm -qa pcp
+++ awk -F - '{print $2}'
++ pcp_version=5.3.7
+++ pcp -h openeuler-riscv64
+++ grep 'primary logger:'
+++ awk -F: '{print $NF}'
++ archive_data=
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Sep 22 05:17:20 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep 22 05:17:21 2023 - INFO  - Start to run test.
++ grep 'Log Label'
++ pmlogcheck -l
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogcheck_pmlogmv.sh line 31'
++ message='oe_test_pmlogcheck_pmlogmv.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogcheck_pmlogmv.sh line 31'
+Fri Sep 22 05:17:23 2023 - ERROR - oe_test_pmlogcheck_pmlogmv.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
++ pmlogcheck -n /var/lib/pcp/pmns/root
++ grep PMID
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogcheck_pmlogmv.sh line 33'
++ message='oe_test_pmlogcheck_pmlogmv.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogcheck_pmlogmv.sh line 33'
+Fri Sep 22 05:17:25 2023 - ERROR - oe_test_pmlogcheck_pmlogmv.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ pmlogcheck -S @00 -T @23
+Error: no archive specified
+
+Usage: pmlogcheck [options] archive
+
+Options:
+  -l, --label           print the archive label
+  -m, --metadataonly    skip checking log data volumes
+  -n FILE, --namespace=FILE
+                        use an alternative PMNS
+  -S TIME, --start=TIME start of the time window
+  -T TIME, --finish=TIME
+                        end of the time window
+  -v, --verbose         verbose output
+  -w, --nowrap          suppress counter wrap warnings
+  -Z TZ, --timezone=TZ  set reporting timezone
+  -z, --hostzone        set reporting timezone to local time of metrics source
+  -?, --help            show this usage message and exit
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogcheck_pmlogmv.sh line 35'
++ message='oe_test_pmlogcheck_pmlogmv.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogcheck_pmlogmv.sh line 35'
+Fri Sep 22 05:17:26 2023 - ERROR - oe_test_pmlogcheck_pmlogmv.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
++ pmlogcheck -v
++ grep meta
+  -m, --metadataonly    skip checking log data volumes
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pmlogcheck -w
+Error: no archive specified
+
+Usage: pmlogcheck [options] archive
+
+Options:
+  -l, --label           print the archive label
+  -m, --metadataonly    skip checking log data volumes
+  -n FILE, --namespace=FILE
+                        use an alternative PMNS
+  -S TIME, --start=TIME start of the time window
+  -T TIME, --finish=TIME
+                        end of the time window
+  -v, --verbose         verbose output
+  -w, --nowrap          suppress counter wrap warnings
+  -Z TZ, --timezone=TZ  set reporting timezone
+  -z, --hostzone        set reporting timezone to local time of metrics source
+  -?, --help            show this usage message and exit
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogcheck_pmlogmv.sh line 39'
++ message='oe_test_pmlogcheck_pmlogmv.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogcheck_pmlogmv.sh line 39'
+Fri Sep 22 05:17:28 2023 - ERROR - oe_test_pmlogcheck_pmlogmv.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ pmlogcheck -Z Africa/Sao_Tome
++ grep TZ=Africa/Sao_Tome
+Error: no archive specified
+
+Usage: pmlogcheck [options] archive
+
+Options:
+  -l, --label           print the archive label
+  -m, --metadataonly    skip checking log data volumes
+  -n FILE, --namespace=FILE
+                        use an alternative PMNS
+  -S TIME, --start=TIME start of the time window
+  -T TIME, --finish=TIME
+                        end of the time window
+  -v, --verbose         verbose output
+  -w, --nowrap          suppress counter wrap warnings
+  -Z TZ, --timezone=TZ  set reporting timezone
+  -z, --hostzone        set reporting timezone to local time of metrics source
+  -?, --help            show this usage message and exit
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogcheck_pmlogmv.sh line 41'
++ message='oe_test_pmlogcheck_pmlogmv.sh line 41'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogcheck_pmlogmv.sh line 41'
+Fri Sep 22 05:17:29 2023 - ERROR - oe_test_pmlogcheck_pmlogmv.sh line 41
++ '[' 0 -eq 1 ']'
++ return 0
++ pmlogcheck -z
++ grep 'local timezone'
+Error: no archive specified
+
+Usage: pmlogcheck [options] archive
+
+Options:
+  -l, --label           print the archive label
+  -m, --metadataonly    skip checking log data volumes
+  -n FILE, --namespace=FILE
+                        use an alternative PMNS
+  -S TIME, --start=TIME start of the time window
+  -T TIME, --finish=TIME
+                        end of the time window
+  -v, --verbose         verbose output
+  -w, --nowrap          suppress counter wrap warnings
+  -Z TZ, --timezone=TZ  set reporting timezone
+  -z, --hostzone        set reporting timezone to local time of metrics source
+  -?, --help            show this usage message and exit
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogcheck_pmlogmv.sh line 43'
++ message='oe_test_pmlogcheck_pmlogmv.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogcheck_pmlogmv.sh line 43'
+Fri Sep 22 05:17:31 2023 - ERROR - oe_test_pmlogcheck_pmlogmv.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ pmlogmv -NV /var/log/pcp/pmlogger_new/openeuler-riscv64/
++ grep link
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pmlogcheck_pmlogmv.sh line 45'
++ message='oe_test_pmlogcheck_pmlogmv.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pmlogcheck_pmlogmv.sh line 45'
+Fri Sep 22 05:17:32 2023 - ERROR - oe_test_pmlogcheck_pmlogmv.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep 22 05:17:34 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 7
++ test 7 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep 22 05:17:35 2023 - ERROR - failed to execute the case.
++ exit 7
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep 22 05:17:37 2023 - INFO  - Start to restore the test environment.
++ rm -f 'pmlogcheck_*.log'
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Fri Sep 22 05:17:38 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep 22 05:17:39 2023 - INFO  - End to restore the test environment.
