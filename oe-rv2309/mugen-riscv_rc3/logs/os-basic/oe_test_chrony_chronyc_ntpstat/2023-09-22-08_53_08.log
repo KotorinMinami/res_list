@@ -1,0 +1,180 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Sep 22 08:53:12 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'chrony ntpstat ntp'
++ pkgs='chrony ntpstat ntp'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'chrony ntpstat ntp' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: -1 day, 8:53:43 ago on Fri 22 Sep 2023 11:59:53 PM CST.
+Package chrony-4.3-2.oe2309.riscv64 is already installed.
+Package ntpstat-0.6-4.oe2309.noarch is already installed.
+No match for argument: ntp
+Error: Unable to find a match: ntp'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: -1 day, 8:53:43 ago on Fri 22 Sep 2023 11:59:53 PM CST.
+Package chrony-4.3-2.oe2309.riscv64 is already installed.
+Package ntpstat-0.6-4.oe2309.noarch is already installed.
+No match for argument: ntp
+Error: Unable to find a match: ntp'
++ systemctl start ntpd
+Failed to start ntpd.service: Unit ntpd.service not found.
++ systemctl start chronyd
+Job for chronyd.service failed because the control process exited with error code.
+See "systemctl status chronyd.service" and "journalctl -xeu chronyd.service" for details.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Sep 22 08:53:38 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep 22 08:53:39 2023 - INFO  - Start to run test.
++ systemctl status chronyd
++ grep running
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_chrony_chronyc_ntpstat.sh line 32'
++ message='oe_test_chrony_chronyc_ntpstat.sh line 32'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_chrony_chronyc_ntpstat.sh line 32'
+Fri Sep 22 08:53:39 2023 - ERROR - oe_test_chrony_chronyc_ntpstat.sh line 32
++ '[' 0 -eq 1 ']'
++ return 0
+++ chronyc -n tracking
+++ grep -icE 'utc|RMS offset|Last offset'
++ CHECK_RESULT 0 3
++ actual_result=0
++ expect_result=3
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 3x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_chrony_chronyc_ntpstat.sh line 33'
++ message='oe_test_chrony_chronyc_ntpstat.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_chrony_chronyc_ntpstat.sh line 33'
+Fri Sep 22 08:53:40 2023 - ERROR - oe_test_chrony_chronyc_ntpstat.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ cp /etc/ntp.conf /etc/ntp.conf_bak
+cp: cannot stat '/etc/ntp.conf': No such file or directory
++ echo 'server 127.127.1.0 iburst prefer minpoll 3 maxpoll 3'
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl restart ntpd
+Failed to restart ntpd.service: Unit ntpd.service not found.
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ ntpstat
++ grep 'polling server'
+Unable to talk to NTP daemon. Is it running?
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_chrony_chronyc_ntpstat.sh line 40'
++ message='oe_test_chrony_chronyc_ntpstat.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_chrony_chronyc_ntpstat.sh line 40'
+Fri Sep 22 08:53:44 2023 - ERROR - oe_test_chrony_chronyc_ntpstat.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep 22 08:53:45 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep 22 08:53:45 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep 22 08:53:45 2023 - INFO  - Start to restore the test environment.
++ mv -f /etc/ntp.conf_bak /etc/ntp.conf
+mv: cannot stat '/etc/ntp.conf_bak': No such file or directory
++ systemctl stop chronyd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: -1 day, 8:53:43 ago on Fri 22 Sep 2023 11:59:53 PM CST.
+Package chrony-4.3-2.oe2309.riscv64 is already installed.
+Package ntpstat-0.6-4.oe2309.noarch is already installed.
+No match for argument: ntp
+Error: Unable to find a match: ntp ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: -1 day, 8:53:43 ago on Fri 22 Sep 2023 11:59:53 PM CST.
+Package chrony-4.3-2.oe2309.riscv64 is already installed.
+Package ntpstat-0.6-4.oe2309.noarch is already installed.
+No match for argument: ntp
+Error: Unable to find a match: ntp'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: 'Last metadata expiration check: -1 day, 8:53:43 ago on Fri 22 Sep 2023 11:59:53 PM CST.\nPackage chrony-4.3-2.oe2309.riscv64 is already installed.\nPackage ntpstat-0.6-4.oe2309.noarch is already installed.\nNo match for argument: ntp\nError: Unable to find a match: ntp'
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep 22 08:53:48 2023 - INFO  - End to restore the test environment.

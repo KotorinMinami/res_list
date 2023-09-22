@@ -1,0 +1,318 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Fri Sep 22 04:16:56 2023 - INFO  - Start environmental preparation.
++ P_SSH_CMD --cmd 'cp /etc/chrony.conf /etc/chrony.conf_bak;sed -i '\''s/^pool/#pool/'\'' /etc/chrony.conf;sed -i '\''s/^#allow.*/allow all/'\'' /etc/chrony.conf;sed -i '\''s/^#local.*/local/'\'' /etc/chrony.conf;systemctl restart chronyd.service;systemctl stop firewalld.service' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'cp /etc/chrony.conf /etc/chrony.conf_bak;sed -i '\''s/^pool/#pool/'\'' /etc/chrony.conf;sed -i '\''s/^#allow.*/allow all/'\'' /etc/chrony.conf;sed -i '\''s/^#local.*/local/'\'' /etc/chrony.conf;systemctl restart chronyd.service;systemctl stop firewalld.service' --node 2
+
++ cp /etc/chrony.conf /etc/chrony.conf_bak
++ sed -i 's/^pool.*/server 10.0.0.11 iburst minpoll 3 maxpoll 3/' /etc/chrony.conf
++ sed -i 's/^#allow.*/allow all/' /etc/chrony.conf
++ sed -i 's/^#local/local/' /etc/chrony.conf
++ systemctl restart chronyd.service
+Job for chronyd.service failed because the control process exited with error code.
+See "systemctl status chronyd.service" and "journalctl -xeu chronyd.service" for details.
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Sep 22 04:17:05 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Fri Sep 22 04:17:05 2023 - INFO  - Start testing...
++ test_execution chrony-wait.service
++ service=chrony-wait.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-22 04:17:05'
++ test_restart chrony-wait.service
++ service=chrony-wait.service
++ systemctl restart chrony-wait.service
+A dependency job for chrony-wait.service failed. See 'journalctl -xe' for details.
++ CHECK_RESULT 1 0 0 'chrony-wait.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='chrony-wait.service restart failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'chrony-wait.service restart failed'
++ LOG_ERROR 'chrony-wait.service restart failed'
++ message='chrony-wait.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'chrony-wait.service restart failed'
+Fri Sep 22 04:17:06 2023 - ERROR - chrony-wait.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 34'
++ message='../common/common_lib.sh line 34'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 34'
+Fri Sep 22 04:17:07 2023 - ERROR - ../common/common_lib.sh line 34
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status chrony-wait.service
++ grep 'Active: active'
++ CHECK_RESULT 1 0 0 'chrony-wait.service restart failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='chrony-wait.service restart failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'chrony-wait.service restart failed'
++ LOG_ERROR 'chrony-wait.service restart failed'
++ message='chrony-wait.service restart failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'chrony-wait.service restart failed'
+Fri Sep 22 04:17:13 2023 - ERROR - chrony-wait.service restart failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 37'
++ message='../common/common_lib.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 37'
+Fri Sep 22 04:17:14 2023 - ERROR - ../common/common_lib.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl stop chrony-wait.service
++ CHECK_RESULT 0 0 0 'chrony-wait.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='chrony-wait.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status chrony-wait.service
++ grep 'Active: inactive'
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'chrony-wait.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='chrony-wait.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start chrony-wait.service
+A dependency job for chrony-wait.service failed. See 'journalctl -xe' for details.
++ CHECK_RESULT 1 0 0 'chrony-wait.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='chrony-wait.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'chrony-wait.service start failed'
++ LOG_ERROR 'chrony-wait.service start failed'
++ message='chrony-wait.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'chrony-wait.service start failed'
+Fri Sep 22 04:17:21 2023 - ERROR - chrony-wait.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 44'
++ message='../common/common_lib.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 44'
+Fri Sep 22 04:17:21 2023 - ERROR - ../common/common_lib.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status chrony-wait.service
++ grep 'Active: active'
++ CHECK_RESULT 1 0 0 'chrony-wait.service start failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='chrony-wait.service start failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'chrony-wait.service start failed'
++ LOG_ERROR 'chrony-wait.service start failed'
++ message='chrony-wait.service start failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'chrony-wait.service start failed'
+Fri Sep 22 04:17:28 2023 - ERROR - chrony-wait.service start failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 47'
++ message='../common/common_lib.sh line 47'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 47'
+Fri Sep 22 04:17:28 2023 - ERROR - ../common/common_lib.sh line 47
++ '[' 0 -eq 1 ']'
++ return 0
++ test_enabled chrony-wait.service
++ service=chrony-wait.service
+++ systemctl is-enabled chrony-wait.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ systemctl enable chrony-wait.service
+++ grep 'Created symlink'
+++ awk '{print $3}'
++ symlink_file=/etc/systemd/system/multi-user.target.wants/chrony-wait.service
++ find /etc/systemd/system/multi-user.target.wants/chrony-wait.service
+/etc/systemd/system/multi-user.target.wants/chrony-wait.service
++ CHECK_RESULT 0 0 0 'chrony-wait.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='chrony-wait.service enable failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable chrony-wait.service
+Removed "/etc/systemd/system/multi-user.target.wants/chrony-wait.service".
++ find /etc/systemd/system/multi-user.target.wants/chrony-wait.service
+find: ‘/etc/systemd/system/multi-user.target.wants/chrony-wait.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'chrony-wait.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='chrony-wait.service disable failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ journalctl --since '2023-09-22 04:17:05' -u chrony-wait.service
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ grep -i 'fail\|error'
+Sep 22 04:17:06 openeuler-riscv64 systemd[1]: Dependency failed for Wait for chrony to synchronize system clock.
+Sep 22 04:17:06 openeuler-riscv64 systemd[1]: chrony-wait.service: Job chrony-wait.service/start failed with result 'dependency'.
+Sep 22 04:17:20 openeuler-riscv64 systemd[1]: Dependency failed for Wait for chrony to synchronize system clock.
+Sep 22 04:17:20 openeuler-riscv64 systemd[1]: chrony-wait.service: Job chrony-wait.service/start failed with result 'dependency'.
++ CHECK_RESULT 0 0 1 'There is an error message for the log of chrony-wait.service'
++ actual_result=0
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of chrony-wait.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 1 -eq 0 ']'
++ test 0x == 0x
++ test -n 'There is an error message for the log of chrony-wait.service'
++ LOG_ERROR 'There is an error message for the log of chrony-wait.service'
++ message='There is an error message for the log of chrony-wait.service'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'There is an error message for the log of chrony-wait.service'
+Fri Sep 22 04:17:35 2023 - ERROR - There is an error message for the log of chrony-wait.service
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 28'
++ message='../common/common_lib.sh line 28'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 28'
+Fri Sep 22 04:17:36 2023 - ERROR - ../common/common_lib.sh line 28
++ '[' 0 -eq 1 ']'
++ return 0
++ test_reload chrony-wait.service
++ service=chrony-wait.service
++ systemctl start chrony-wait.service
+A dependency job for chrony-wait.service failed. See 'journalctl -xe' for details.
++ systemctl reload chrony-wait.service
++ grep 'Job type reload is not applicable'
+Failed to reload chrony-wait.service: Job type reload is not applicable for unit chrony-wait.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit chrony-wait.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit chrony-wait.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status chrony-wait.service
++ grep 'Active: active'
++ systemctl status chrony-wait.service
++ grep 'inactive (dead)'
+     Active: inactive (dead)
++ systemctl status chrony-wait.service
++ grep 'Condition check'
++ grep skip
++ CHECK_RESULT 1 0 0 'chrony-wait.service reload causes the service status to change'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='chrony-wait.service reload causes the service status to change'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'chrony-wait.service reload causes the service status to change'
++ LOG_ERROR 'chrony-wait.service reload causes the service status to change'
++ message='chrony-wait.service reload causes the service status to change'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'chrony-wait.service reload causes the service status to change'
+Fri Sep 22 04:17:38 2023 - ERROR - chrony-wait.service reload causes the service status to change
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 95'
++ message='../common/common_lib.sh line 95'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 95'
+Fri Sep 22 04:17:38 2023 - ERROR - ../common/common_lib.sh line 95
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Fri Sep 22 04:17:39 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 6
++ test 6 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep 22 04:17:39 2023 - ERROR - failed to execute the case.
++ exit 6
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Fri Sep 22 04:17:40 2023 - INFO  - start environment cleanup.
++ systemctl stop chrony-wait.service
++ cp -f /etc/chrony.conf_bak /etc/chrony.conf
++ systemctl restart chronyd.service
+Job for chronyd.service failed because the control process exited with error code.
+See "systemctl status chronyd.service" and "journalctl -xeu chronyd.service" for details.
++ P_SSH_CMD --cmd '\cp -f /etc/chrony.conf_bak /etc/chrony.conf;systemctl restart chronyd.service;systemctl start firewalld.service' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd '\cp -f /etc/chrony.conf_bak /etc/chrony.conf;systemctl restart chronyd.service;systemctl start firewalld.service' --node 2
+
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Fri Sep 22 04:17:51 2023 - INFO  - Finish environment cleanup!

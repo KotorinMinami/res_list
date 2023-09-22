@@ -1,0 +1,216 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Sep 22 04:52:22 2023 - INFO  - Start to prepare the test environment.
++ pre_env
++ DNF_INSTALL iperf3
++ pkgs=iperf3
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iperf3 --node 1 --tempfile ''
+Fri Sep 22 04:52:46 2023 - INFO  - pkgs:(iperf3) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ DNF_INSTALL iperf3 2
++ pkgs=iperf3
++ node=2
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iperf3 --node 2 --tempfile ''
+Fri Sep 22 04:53:08 2023 - INFO  - pkgs:(iperf3) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ P_SSH_CMD --cmd 'systemctl stop firewalld
+             iperf3 -s >/dev/null 2>&1 &
+    '
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'systemctl stop firewalld
+             iperf3 -s >/dev/null 2>&1 &
+    '
+
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Fri Sep 22 04:53:27 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Sep 22 04:53:29 2023 - INFO  - Start to run test.
++ iperf3 -c 10.0.0.25 -n 1400 -V
++ grep '1400 bytes to send'
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 1400 bytes to send, tos 0
++ CHECK_RESULT 0 0 0 'iperf3 -n execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -n execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 -c 10.0.0.25 -k 1400 -V
++ grep '1400 blocks to send'
+Starting Test: protocol: TCP, 1 streams, 131072 byte blocks, omitting 0 seconds, 1400 blocks to send, tos 0
++ CHECK_RESULT 0 0 0 'iperf3 -k execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -k execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 -c 10.0.0.25 -P 2
++ grep -c connected
++ grep 2
+2
++ CHECK_RESULT 0 0 0 'iperf3 -P execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -P execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 -c 10.0.0.25 --get-server-output
++ grep 'Server output'
+Server output:
++ CHECK_RESULT 0 0 0 'iperf3 --get-server-output execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 --get-server-output execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++++ iperf3 -c 10.0.0.25 -w 20240
++++ grep sender
++++ awk '{print $5}'
++++ iperf3 -c 10.0.0.25 -w 102400
++++ grep sender
++++ awk '{print $5}'
+++ expr 137 '>' 510
++ '[' 0 -eq 0 ']'
++ CHECK_RESULT 0 0 0 'iperf3 -w execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -w execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 -c 10.0.0.25 -R
++ grep 'Reverse mode'
+Reverse mode, remote host 10.0.0.25 is sending
++ CHECK_RESULT 0 0 0 'iperf3 -R execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -R execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 -c 10.0.0.25 -T test
++ grep test:
+test:  Connecting to host 10.0.0.25, port 5201
+test:  [  5] local 10.0.0.9 port 52270 connected to 10.0.0.25 port 5201
+test:  [ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+test:  [  5]   0.00-1.00   sec   140 MBytes  1.17 Gbits/sec    0    591 KBytes       
+test:  [  5]   1.00-2.00   sec   135 MBytes  1.13 Gbits/sec    0    621 KBytes       
+test:  [  5]   2.00-3.00   sec   146 MBytes  1.22 Gbits/sec    0    652 KBytes       
+test:  [  5]   3.00-4.00   sec   150 MBytes  1.26 Gbits/sec    0    803 KBytes       
+test:  [  5]   4.00-5.00   sec   151 MBytes  1.27 Gbits/sec    0    803 KBytes       
+test:  [  5]   5.00-6.01   sec   142 MBytes  1.19 Gbits/sec    0    898 KBytes       
+test:  [  5]   6.01-7.01   sec   130 MBytes  1.09 Gbits/sec    0    898 KBytes       
+test:  [  5]   7.01-8.01   sec   149 MBytes  1.25 Gbits/sec    0   1.02 MBytes       
+test:  [  5]   8.01-9.01   sec   132 MBytes  1.11 Gbits/sec    0   1.02 MBytes       
+test:  [  5]   9.01-10.00  sec   142 MBytes  1.20 Gbits/sec    0   1.02 MBytes       
+test:  - - - - - - - - - - - - - - - - - - - - - - - - -
+test:  [ ID] Interval           Transfer     Bitrate         Retr
+test:  [  5]   0.00-10.00  sec  1.39 GBytes  1.19 Gbits/sec    0             sender
+test:  [  5]   0.00-10.01  sec  1.39 GBytes  1.19 Gbits/sec                  receiver
+test:  
+test:  iperf Done.
++ CHECK_RESULT 0 0 0 'iperf3 -T execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -T execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep 22 04:54:33 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Sep 22 04:54:34 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep 22 04:54:36 2023 - INFO  - Start to restore the test environment.
++ clean_env
++ P_SSH_CMD --cmd 'kill -9 $(ps -ef | grep \"iperf3 -s\" | grep -v grep | awk '\''{print $2}'\'')
+             systemctl start firewalld
+             '
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'kill -9 $(ps -ef | grep \"iperf3 -s\" | grep -v grep | awk '\''{print $2}'\'')
+             systemctl start firewalld
+             '
+
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Fri Sep 22 04:54:58 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep 22 04:55:00 2023 - INFO  - End to restore the test environment.
