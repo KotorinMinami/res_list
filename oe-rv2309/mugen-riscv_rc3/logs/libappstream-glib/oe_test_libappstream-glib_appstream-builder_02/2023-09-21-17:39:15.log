@@ -1,0 +1,309 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Sep 21 17:39:18 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL libappstream-glib
++ pkgs=libappstream-glib
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs libappstream-glib --node 1 --tempfile ''
+Thu Sep 21 17:39:26 2023 - INFO  - pkgs:(libappstream-glib) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ mkdir -p glibtest/pkg
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Sep 21 17:39:27 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 17:39:27 2023 - INFO  - Start to run test.
++ appstream-builder -v --temp-dir glibtest/tepmtest --packages-dir glibtest/pkg --origin metadata
+WARNING: Metadata basename not set, using 'appstream'
+(appstream-builder:1653): Asb-DEBUG: 17:39:27.549: searching for plugins in /usr/lib64/asb-plugins-5
+(appstream-builder:1653): Asb-DEBUG: 17:39:27.552: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_appdata.so: appdata
+(appstream-builder:1653): Asb-DEBUG: 17:39:27.553: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_desktop.so: desktop
+(appstream-builder:1653): Asb-DEBUG: 17:39:27.557: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_icon.so: icon
+(appstream-builder:1653): Asb-DEBUG: 17:39:27.646: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_font.so: font
+(appstream-builder:1653): Asb-DEBUG: 17:39:27.651: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_shell_extension.so: shell-extension
+(appstream-builder:1653): Asb-DEBUG: 17:39:27.652: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_gettext.so: gettext
+(appstream-builder:1653): Asb-DEBUG: 17:39:27.654: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_hardcoded.so: hardcoded
+Scanning packages...
+Processing packages...
+Merging applications...
+(appstream-builder:1653): GLib-GIO-DEBUG: 17:39:27.662: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
+Writing ./example.xml.gz...
+Writing ./example-ignore.xml.gz...
+Writing ./example-icons.tar.gz...
+Writing ./example-screenshots.tar...
+Done!
++ test -f example.xml.gz
++ CHECK_RESULT 0 0 0 'Check appstream-builder -v --log-dir --packages-dir --origin failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-builder -v --log-dir --packages-dir --origin failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf cache example-ignore.xml.gz example.xml.gz tepmtest
++ appstream-builder -v --output-dir glibtest/out --packages-dir glibtest/pkg --origin metadata
+WARNING: Metadata basename not set, using 'appstream'
+(appstream-builder:1655): Asb-DEBUG: 17:39:27.809: searching for plugins in /usr/lib64/asb-plugins-5
+(appstream-builder:1655): Asb-DEBUG: 17:39:27.812: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_appdata.so: appdata
+(appstream-builder:1655): Asb-DEBUG: 17:39:27.813: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_desktop.so: desktop
+(appstream-builder:1655): Asb-DEBUG: 17:39:27.814: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_icon.so: icon
+(appstream-builder:1655): Asb-DEBUG: 17:39:27.902: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_font.so: font
+(appstream-builder:1655): Asb-DEBUG: 17:39:27.905: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_shell_extension.so: shell-extension
+(appstream-builder:1655): Asb-DEBUG: 17:39:27.907: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_gettext.so: gettext
+(appstream-builder:1655): Asb-DEBUG: 17:39:27.908: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_hardcoded.so: hardcoded
+Scanning packages...
+Processing packages...
+Merging applications...
+(appstream-builder:1655): GLib-GIO-DEBUG: 17:39:27.914: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
+Writing glibtest/out/example.xml.gz...
+Writing glibtest/out/example-ignore.xml.gz...
+Writing glibtest/out/example-icons.tar.gz...
+Writing glibtest/out/example-screenshots.tar...
+Done!
++ test -f glibtest/out/example.xml.gz
++ CHECK_RESULT 0 0 0 'Check appstream-builder -v --log-dir --packages-dir --origin failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-builder -v --log-dir --packages-dir --origin failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf cache example-ignore.xml.gz example.xml.gz tepmtest
++ appstream-builder -v --icons-dir glibtest/icons --packages-dir glibtest/pkg --origin metadata
+WARNING: Metadata basename not set, using 'appstream'
+(appstream-builder:1657): Asb-DEBUG: 17:39:28.048: searching for plugins in /usr/lib64/asb-plugins-5
+(appstream-builder:1657): Asb-DEBUG: 17:39:28.050: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_appdata.so: appdata
+(appstream-builder:1657): Asb-DEBUG: 17:39:28.052: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_desktop.so: desktop
+(appstream-builder:1657): Asb-DEBUG: 17:39:28.053: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_icon.so: icon
+(appstream-builder:1657): Asb-DEBUG: 17:39:28.123: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_font.so: font
+(appstream-builder:1657): Asb-DEBUG: 17:39:28.126: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_shell_extension.so: shell-extension
+(appstream-builder:1657): Asb-DEBUG: 17:39:28.128: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_gettext.so: gettext
+(appstream-builder:1657): Asb-DEBUG: 17:39:28.129: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_hardcoded.so: hardcoded
+Scanning packages...
+Processing packages...
+Merging applications...
+(appstream-builder:1657): GLib-GIO-DEBUG: 17:39:28.135: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
+Writing ./example.xml.gz...
+Writing ./example-ignore.xml.gz...
+Writing ./example-icons.tar.gz...
+Writing ./example-screenshots.tar...
+Done!
++ test -f example.xml.gz
++ CHECK_RESULT 0 0 0 'Check appstream-builder -v --icons-dir --packages-dir --origin metadata  failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-builder -v --icons-dir --packages-dir --origin metadata  failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf cache example-ignore.xml.gz example.xml.gz tepmtest
++ appstream-builder -v --cache-dir glibtest/caches --packages-dir glibtest/pkg --origin metadata
+WARNING: Metadata basename not set, using 'appstream'
+(appstream-builder:1659): Asb-DEBUG: 17:39:28.275: searching for plugins in /usr/lib64/asb-plugins-5
+(appstream-builder:1659): Asb-DEBUG: 17:39:28.278: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_appdata.so: appdata
+(appstream-builder:1659): Asb-DEBUG: 17:39:28.280: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_desktop.so: desktop
+(appstream-builder:1659): Asb-DEBUG: 17:39:28.281: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_icon.so: icon
+(appstream-builder:1659): Asb-DEBUG: 17:39:28.377: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_font.so: font
+(appstream-builder:1659): Asb-DEBUG: 17:39:28.381: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_shell_extension.so: shell-extension
+(appstream-builder:1659): Asb-DEBUG: 17:39:28.383: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_gettext.so: gettext
+(appstream-builder:1659): Asb-DEBUG: 17:39:28.384: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_hardcoded.so: hardcoded
+Scanning packages...
+Processing packages...
+Merging applications...
+(appstream-builder:1659): GLib-GIO-DEBUG: 17:39:28.390: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
+Writing ./example.xml.gz...
+Writing ./example-ignore.xml.gz...
+Writing ./example-icons.tar.gz...
+Writing ./example-screenshots.tar...
+Done!
++ test -f example.xml.gz
++ CHECK_RESULT 0 0 0 'Check appstream-builder -v --cache-dir --packages-dir --origin failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-builder -v --cache-dir --packages-dir --origin failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf cache example-ignore.xml.gz example.xml.gz tepmtest
++ appstream-builder -v --basename metadata --packages-dir glibtest/pkg --origin metadata --max-threads 3
+--max-threads now does nothing and will be removed in future versions(appstream-builder:1661): Asb-DEBUG: 17:39:28.537: searching for plugins in /usr/lib64/asb-plugins-5
+(appstream-builder:1661): Asb-DEBUG: 17:39:28.540: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_appdata.so: appdata
+(appstream-builder:1661): Asb-DEBUG: 17:39:28.541: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_desktop.so: desktop
+(appstream-builder:1661): Asb-DEBUG: 17:39:28.543: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_icon.so: icon
+(appstream-builder:1661): Asb-DEBUG: 17:39:28.649: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_font.so: font
+(appstream-builder:1661): Asb-DEBUG: 17:39:28.653: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_shell_extension.so: shell-extension
+(appstream-builder:1661): Asb-DEBUG: 17:39:28.654: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_gettext.so: gettext
+(appstream-builder:1661): Asb-DEBUG: 17:39:28.656: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_hardcoded.so: hardcoded
+Scanning packages...
+Processing packages...
+Merging applications...
+(appstream-builder:1661): GLib-GIO-DEBUG: 17:39:28.661: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
+Writing ./metadata.xml.gz...
+Writing ./metadata-ignore.xml.gz...
+Writing ./metadata-icons.tar.gz...
+Writing ./metadata-screenshots.tar...
+Done!
++ test -f metadata.xml.gz
++ CHECK_RESULT 0 0 0 'Check appstream-builder -v --basename --packages-dir --origin --max-threads failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-builder -v --basename --packages-dir --origin --max-threads failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf cache metadata-ignore.xml.gz metadata.xml.gz tmp
++ appstream-builder -v --basename metadata --packages-dir glibtest/pkg --origin metadata --min-icon-size=1024
+(appstream-builder:1663): Asb-DEBUG: 17:39:28.822: searching for plugins in /usr/lib64/asb-plugins-5
+(appstream-builder:1663): Asb-DEBUG: 17:39:28.825: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_appdata.so: appdata
+(appstream-builder:1663): Asb-DEBUG: 17:39:28.826: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_desktop.so: desktop
+(appstream-builder:1663): Asb-DEBUG: 17:39:28.828: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_icon.so: icon
+(appstream-builder:1663): Asb-DEBUG: 17:39:28.898: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_font.so: font
+(appstream-builder:1663): Asb-DEBUG: 17:39:28.903: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_shell_extension.so: shell-extension
+(appstream-builder:1663): Asb-DEBUG: 17:39:28.905: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_gettext.so: gettext
+(appstream-builder:1663): Asb-DEBUG: 17:39:28.907: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_hardcoded.so: hardcoded
+Scanning packages...
+Processing packages...
+Merging applications...
+(appstream-builder:1663): GLib-GIO-DEBUG: 17:39:28.913: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
+Writing ./metadata.xml.gz...
+Writing ./metadata-ignore.xml.gz...
+Writing ./metadata-icons.tar.gz...
+Writing ./metadata-screenshots.tar...
+Done!
++ test -f metadata.xml.gz
++ CHECK_RESULT 0 0 0 'Check appstream-builder -v --basename --packages-dir --origin --min-icon-size failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-builder -v --basename --packages-dir --origin --min-icon-size failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf cache metadata-ignore.xml.gz metadata.xml.gz tmp
++ appstream-builder -v --basename metadata --packages-dir glibtest/pkg --origin metadata --old-metadata glibtest/old
+--old-metadata now does nothing and will be removed in future versions(appstream-builder:1665): Asb-DEBUG: 17:39:29.068: searching for plugins in /usr/lib64/asb-plugins-5
+(appstream-builder:1665): Asb-DEBUG: 17:39:29.070: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_appdata.so: appdata
+(appstream-builder:1665): Asb-DEBUG: 17:39:29.072: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_desktop.so: desktop
+(appstream-builder:1665): Asb-DEBUG: 17:39:29.073: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_icon.so: icon
+(appstream-builder:1665): Asb-DEBUG: 17:39:29.161: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_font.so: font
+(appstream-builder:1665): Asb-DEBUG: 17:39:29.165: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_shell_extension.so: shell-extension
+(appstream-builder:1665): Asb-DEBUG: 17:39:29.166: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_gettext.so: gettext
+(appstream-builder:1665): Asb-DEBUG: 17:39:29.168: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_hardcoded.so: hardcoded
+Scanning packages...
+Processing packages...
+Merging applications...
+(appstream-builder:1665): GLib-GIO-DEBUG: 17:39:29.174: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
+Writing ./metadata.xml.gz...
+Writing ./metadata-ignore.xml.gz...
+Writing ./metadata-icons.tar.gz...
+Writing ./metadata-screenshots.tar...
+Done!
++ test -f metadata.xml.gz
++ CHECK_RESULT 0 0 0 'Check appstream-builder -v --basename --packages-dir --origin --old-metadata failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-builder -v --basename --packages-dir --origin --old-metadata failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rm -rf cache metadata-ignore.xml.gz metadata.xml.gz tmp
++ appstream-builder -v --basename metadata --packages-dir glibtest/pkg --origin metadata --veto-ignore component
+
+(appstream-builder:1667): As-WARNING **: 17:39:29.305: Unknown flag name: component, expected 'missing-info' or 'missing-parents'
+(appstream-builder:1667): Asb-DEBUG: 17:39:29.309: searching for plugins in /usr/lib64/asb-plugins-5
+(appstream-builder:1667): Asb-DEBUG: 17:39:29.312: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_appdata.so: appdata
+(appstream-builder:1667): Asb-DEBUG: 17:39:29.313: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_desktop.so: desktop
+(appstream-builder:1667): Asb-DEBUG: 17:39:29.314: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_icon.so: icon
+(appstream-builder:1667): Asb-DEBUG: 17:39:29.386: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_font.so: font
+(appstream-builder:1667): Asb-DEBUG: 17:39:29.391: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_shell_extension.so: shell-extension
+(appstream-builder:1667): Asb-DEBUG: 17:39:29.392: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_gettext.so: gettext
+(appstream-builder:1667): Asb-DEBUG: 17:39:29.394: opened plugin /usr/lib64/asb-plugins-5/libasb_plugin_hardcoded.so: hardcoded
+Scanning packages...
+Processing packages...
+Merging applications...
+(appstream-builder:1667): GLib-GIO-DEBUG: 17:39:29.399: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
+Writing ./metadata.xml.gz...
+Writing ./metadata-ignore.xml.gz...
+Writing ./metadata-icons.tar.gz...
+Writing ./metadata-screenshots.tar...
+Done!
++ test -f metadata.xml.gz
++ CHECK_RESULT 0 0 0 'Check appstream-builder -v --basename --packages-dir --origin --veto-ignore failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check appstream-builder -v --basename --packages-dir --origin --veto-ignore failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Sep 21 17:39:29 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Sep 21 17:39:30 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Sep 21 17:39:30 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf glibtest cache tmp metadata-ignore.xml.gz metadata.xml.gz
++ LOG_INFO 'Finish restore the test environment.'
++ message='Finish restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish restore the test environment.'
+Thu Sep 21 17:39:30 2023 - INFO  - Finish restore the test environment.
