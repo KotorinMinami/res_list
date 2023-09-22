@@ -1,0 +1,276 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n '' ']'
++ trap POST_TEST_DEFAULT EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Thu Sep 21 17:21:46 2023 - INFO  - Start testing...
++ pstree -V
+pstree (PSmisc) 23.6
+Copyright (C) 1993-2021 Werner Almesberger and Craig Small
+
+PSmisc comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under
+the terms of the GNU General Public License.
+For more information about these matters, see the files named COPYING.
++ CHECK_RESULT 0 0 0 'pstree -V fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -V fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -a
++ grep systemd
+systemd
+  |-dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+  |               |               |-grep systemd
+  |-systemd --user
+  |-systemd-journal
+  |-systemd-logind
+  |-systemd-udevd
++ CHECK_RESULT 0 0 0 'pstree -a fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -a fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -A
++ grep systemd-+-
+systemd-+-NetworkManager---3*[{NetworkManager}]
++ CHECK_RESULT 0 0 0 'pstree -A fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -A fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -p
++ grep 'systemd(1)'
+systemd(1)-+-NetworkManager(21857)-+-{NetworkManager}(21863)
++ CHECK_RESULT 0 0 0 'pstree -p fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -p fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -g
+systemd(1)-+-NetworkManager(21857)---3*[{NetworkManager}(21857)]
+           |-acpid(352)
+           |-2*[agetty(1263)]
+           |-auditd(329)---{auditd}(329)
+           |-bash(1299)---grep(1299)
+           |-bash(1299)---skopeo(1299)---6*[{skopeo}(1299)]
+           |-crond(30630)
+           |-cupsd(981)
+           |-dbus-daemon(12633)
+           |-dhclient(878)
+           |-dockerd(1226)-+-containerd(1266)---9*[{containerd}(1266)]
+           |               `-9*[{dockerd}(1226)]
+           |-firewalld(28118)---{firewalld}(28118)
+           |-gssproxy(989)---5*[{gssproxy}(989)]
+           |-irqbalance(374)---{irqbalance}(374)
+           |-nfsdcld(6661)
+           |-ping(1299)
+           |-polkitd(12628)---3*[{polkitd}(12628)]
+           |-rasdaemon(370)
+           |-rsyslogd(30771)---2*[{rsyslogd}(30771)]
+           |-smartd(379)
+           |-sshd(1274)---sshd(1274)---python3(1299)---sh(1299)-+-sudo(1299)---bash(1299)---python3(1299)---bash(1299)---pstree(129+
+           |                                                    `-tee(1299)
+           |-sshd(31220)
+           |-systemd(1278)---(sd-pam)(1278)
+           |-systemd-journal(29290)
+           |-systemd-logind(12967)
+           |-systemd-udevd(261)
+           |-tuned(12643)---4*[{tuned}(12643)]
+           |-vsftpd(11688)
+           `-xinetd(32747)
++ CHECK_RESULT 0 0 0 'pstree -g fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -g fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -s
+systemd-+-NetworkManager---3*[{NetworkManager}]
+        |-acpid
+        |-2*[agetty]
+        |-auditd---{auditd}
+        |-bash---grep
+        |-bash---skopeo---6*[{skopeo}]
+        |-crond
+        |-cupsd
+        |-dbus-daemon
+        |-dhclient
+        |-dockerd-+-containerd---9*[{containerd}]
+        |         `-9*[{dockerd}]
+        |-firewalld---{firewalld}
+        |-gssproxy---5*[{gssproxy}]
+        |-irqbalance---{irqbalance}
+        |-nfsdcld
+        |-ping
+        |-polkitd---3*[{polkitd}]
+        |-rasdaemon
+        |-rsyslogd---2*[{rsyslogd}]
+        |-smartd
+        |-sshd---sshd---python3---sh-+-sudo---bash---python3---bash---pstree
+        |                            `-tee
+        |-sshd
+        |-systemd---(sd-pam)
+        |-systemd-journal
+        |-systemd-logind
+        |-systemd-udevd
+        |-tuned---4*[{tuned}]
+        |-vsftpd
+        `-xinetd
++ CHECK_RESULT 0 0 0 'pstree -s fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -s fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -t
+systemd-+-NetworkManager-+-{gdbus}
+        |                |-{gmain}
+        |                `-{pool-spawner}
+        |-acpid
+        |-2*[agetty]
+        |-auditd---{auditd}
+        |-bash---grep
+        |-bash---skopeo---6*[{skopeo}]
+        |-crond
+        |-cupsd
+        |-dbus-daemon
+        |-dhclient
+        |-dockerd-+-containerd---9*[{containerd}]
+        |         `-9*[{dockerd}]
+        |-firewalld---{gmain}
+        |-gssproxy---5*[{gssproxy}]
+        |-irqbalance---{gmain}
+        |-nfsdcld
+        |-ping
+        |-polkitd-+-{gdbus}
+        |         |-{gmain}
+        |         `-{pool-spawner}
+        |-rasdaemon
+        |-rsyslogd-+-{in:imjournal}
+        |          `-{rs:main Q:Reg}
+        |-smartd
+        |-sshd---sshd---python3---sh-+-sudo---bash---python3---bash---pstree
+        |                            `-tee
+        |-sshd
+        |-systemd---(sd-pam)
+        |-systemd-journal
+        |-systemd-logind
+        |-systemd-udevd
+        |-tuned---4*[{tuned}]
+        |-vsftpd
+        `-xinetd
++ CHECK_RESULT 0 0 0 'pstree -t fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -t fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pstree -u
+systemd-+-NetworkManager---3*[{NetworkManager}]
+        |-acpid
+        |-2*[agetty]
+        |-auditd---{auditd}
+        |-bash---grep
+        |-bash---skopeo---6*[{skopeo}]
+        |-crond
+        |-cupsd
+        |-dbus-daemon(dbus)
+        |-dhclient
+        |-dockerd-+-containerd---9*[{containerd}]
+        |         `-9*[{dockerd}]
+        |-firewalld---{firewalld}
+        |-gssproxy---5*[{gssproxy}]
+        |-irqbalance---{irqbalance}
+        |-nfsdcld
+        |-ping
+        |-polkitd(polkitd)---3*[{polkitd}]
+        |-rasdaemon
+        |-rsyslogd---2*[{rsyslogd}]
+        |-smartd
+        |-sshd---sshd---python3---sh-+-sudo---bash---python3---bash---pstree
+        |                            `-tee
+        |-sshd
+        |-systemd---(sd-pam)
+        |-systemd-journal
+        |-systemd-logind
+        |-systemd-udevd
+        |-tuned---4*[{tuned}]
+        |-vsftpd
+        `-xinetd
++ CHECK_RESULT 0 0 0 'pstree -u fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='pstree -u fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Thu Sep 21 17:21:49 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Sep 21 17:21:50 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ POST_TEST_DEFAULT
++ LOG_INFO 'oe_test_pstree.sh post_test'
++ message='oe_test_pstree.sh post_test'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'oe_test_pstree.sh post_test'
+Thu Sep 21 17:21:51 2023 - INFO  - oe_test_pstree.sh post_test

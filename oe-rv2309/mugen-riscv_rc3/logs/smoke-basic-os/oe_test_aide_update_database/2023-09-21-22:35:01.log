@@ -1,0 +1,202 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Sep 21 22:35:07 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'aide gcc'
++ pkgs='aide gcc'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'aide gcc' --node 1 --tempfile ''
+Thu Sep 21 22:35:21 2023 - INFO  - pkgs:(aide gcc) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ sed -i '$a/home DATAONLY' /etc/aide.conf
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Sep 21 22:35:21 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 22:35:22 2023 - INFO  - Start to run test.
++ aide --init
+Start timestamp: 2023-09-21 22:35:22 +0800 (AIDE 0.18.5)
+AIDE successfully initialized database.
+New AIDE database written to /var/lib/aide/aide.db.new.gz
+
+Number of entries:	178477
+
+---------------------------------------------------
+The attributes of the (uncompressed) database(s):
+---------------------------------------------------
+
+/var/lib/aide/aide.db.new.gz
+ MD5       : nY9jTB75wSrUvpsfPdP+jQ==
+ SHA1      : b+STlnKGr0MsJr6Dsy56TVK/7Z8=
+ SHA256    : 5ctQH7toLOKSBJ5Ja8NquBVlH1+eWtvS
+             lZY0B4YnVkc=
+ SHA512    : gE8FTNJ1DGrUOiunBZhRf93Li7oY0pfH
+             7RLTRY836NDoFP0LNCMyG7gVIdmhNOyG
+             WzBmd8Gfsbu5nStTO5d/Zw==
+ RMD160    : yQetdIHfvqTPhFldtLiwR9CFRjU=
+ TIGER     : LIWY8tPzcL4LA2mf/jAqrIyThTblnZmK
+ CRC32     : Meh+cg==
+ WHIRLPOOL : ZjHSHuEerra4rF+N85oTkvCdtk4v8sF7
+             J/9l4F2WgXkpRiKBpJ9MqzO603NRwnG+
+             p8bwtZlH9k1u0E9VBkuZ/g==
+ GOST      : L+G8sk/06O4whqnjM2TVRuaUsO5/gHND
+             5i6jygO9lBo=
+ STRIBOG256: 9JuinenyMmUTw0Nzq2UE0uoD4dKzMwhi
+             90c8gH2v/wo=
+ STRIBOG512: ZM1cv/Pd9gGzjuf8t+6f5Bh4KQBZgsJN
+             bkO+q8Cln4DViCimDODiQX08eg4xoamO
+             242YC7f7j9sGg1XJkVItVQ==
+ SM3       : GTlkCIbZDOEmzvP7vHrnIX7Ffra8TMr1
+             ebcUQDUyYC8=
+
+
+End timestamp: 2023-09-21 22:49:38 +0800 (run time: 14m 16s)
++ CHECK_RESULT 0 0 0 'initialization failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='initialization failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
++ useradd testuser
++ aide -c /etc/aide.conf --update
++ grep -A 10 'Changed entries:'
++ grep /etc/group
+Thu Sep 21 23:05:02 2023 - ERROR - Timeout : Command 'bash -x oe_test_aide_update_database.sh' timed out after 1799.999506000001 seconds
+f > ... mci.H..  : /etc/group
+f < ... mc..H..  : /etc/group-
+++ post_test
+++ LOG_INFO 'Start to restore the test environment.'
+++ message='Start to restore the test environment.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Sep 21 23:14:43 2023 - INFO  - Start to restore the test environment.
+++ DNF_REMOVE
+++ node=1
+++ pkg_list=
+++ mode=0
+++ [[ -z '' ]]
+++ [[ -z '' ]]
+++ LOG_WARN 'no thing to do.'
+++ message='no thing to do.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Sep 21 23:14:44 2023 - WARN  - no thing to do.
+++ return 0
+++ userdel -rf testuser
+++ rm -rf testlog /var/log/aide/aide.log /var/lib/aide/aide.db.gz /var/lib/aide/aide.db.new.gz
+++ LOG_INFO 'End to restore the test environment.'
+++ message='End to restore the test environment.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Sep 21 23:14:46 2023 - INFO  - End to restore the test environment.
++ CHECK_RESULT 0 0 0 'Update execution failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Update execution failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f /var/lib/aide/aide.db.new.gz
++ CHECK_RESULT 1 0 0 'Update execution failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Update execution failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Update execution failed'
++ LOG_ERROR 'Update execution failed'
++ message='Update execution failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Update execution failed'
+Thu Sep 21 23:14:46 2023 - ERROR - Update execution failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_aide_update_database.sh line 38'
++ message='oe_test_aide_update_database.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_aide_update_database.sh line 38'
+Thu Sep 21 23:14:47 2023 - ERROR - oe_test_aide_update_database.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+mv: cannot stat '/var/lib/aide/aide.db.new.gz': No such file or directory
++ aide --check
++ grep Changed entries:
+grep: entries:: No such file or directory
+  ERROR: /etc/aide.conf:7: open (read-only) failed for file '/var/lib/aide/aide.db.gz': No such file or directory (line: 'database_in=file:@@{DBDIR}/aide.db.gz')
++ CHECK_RESULT 2 0 1 'Check execution failed'
++ actual_result=2
++ expect_result=0
++ mode=1
++ error_log='Check execution failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 1 -eq 0 ']'
++ test 2x == 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Sep 21 23:14:47 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Sep 21 23:14:48 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Sep 21 23:14:49 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Sep 21 23:14:49 2023 - WARN  - no thing to do.
++ return 0
++ userdel -rf testuser
+userdel: user 'testuser' does not exist
++ rm -rf testlog /var/log/aide/aide.log '/var/lib/aide/aide*'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Sep 21 23:14:50 2023 - INFO  - End to restore the test environment.

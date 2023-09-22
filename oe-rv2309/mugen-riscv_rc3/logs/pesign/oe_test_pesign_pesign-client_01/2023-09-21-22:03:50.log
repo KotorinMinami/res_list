@@ -1,0 +1,281 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Sep 21 22:03:55 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL pesign
++ pkgs=pesign
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs pesign --node 1 --tempfile ''
+Thu Sep 21 22:04:07 2023 - INFO  - pkgs:(pesign) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ mkdir pesigntest
++ cd pesigntest
++ cp ../common/baidu.zip ./
++ cp ../common/grubx64.efi ./
++ unzip baidu.zip
+Archive:  baidu.zip
+   creating: baidu/
+  inflating: baidu/cert9.db          
+  inflating: baidu/key4.db           
+  inflating: baidu/pkcs11.txt        
++ pesign -i grubx64.efi -n ./baidu -D
+pesignd starting (pid 0)
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Sep 21 22:04:10 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 22:04:11 2023 - INFO  - Start to run test.
++ pesign-client '-?'
++ grep 'Usage: pesign-client'
+Usage: pesign-client [OPTION...]
++ CHECK_RESULT 0 0 0 'Check pesign-client -? failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign-client -? failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign-client --help
++ grep 'Usage: pesign-client'
+Usage: pesign-client [OPTION...]
++ CHECK_RESULT 0 0 0 'Check pesign-client --help failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign-client --help failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign-client --usage
++ grep 'Usage: pesign-client'
+Usage: pesign-client [-?] [-t|--token=<token>] [-c|--certificate=<nickname>]
++ CHECK_RESULT 0 0 0 'Check pesign-client --usage failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check pesign-client --usage failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign-client -c 'ALT Linux UEFI SB CA' -q -t 'NSS Certificate DB'
+pesign-client: could not access socket "/run//pesign/socket": No such file or directory
+pesign-client: could not access socket "/run/pesign/socket": No such file or directory
+pesign-client: could not access socket "/var/run/pesign/socket": No such file or directory
++ CHECK_RESULT 1 0 0 'Check pesign-client -c -q -t failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign-client -c -q -t failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign-client -c -q -t failed'
++ LOG_ERROR 'Check pesign-client -c -q -t failed'
++ message='Check pesign-client -c -q -t failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign-client -c -q -t failed'
+Thu Sep 21 22:04:12 2023 - ERROR - Check pesign-client -c -q -t failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_pesign-client_01.sh line 43'
++ message='oe_test_pesign_pesign-client_01.sh line 43'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_pesign-client_01.sh line 43'
+Thu Sep 21 22:04:12 2023 - ERROR - oe_test_pesign_pesign-client_01.sh line 43
++ '[' 0 -eq 1 ']'
++ return 0
++ pesign-client '--certificate=ALT Linux UEFI SB CA' --is-unlocked '--token=NSS Certificate DB'
+pesign-client: could not access socket "/run//pesign/socket": No such file or directory
+pesign-client: could not access socket "/run/pesign/socket": No such file or directory
+pesign-client: could not access socket "/var/run/pesign/socket": No such file or directory
++ CHECK_RESULT 1 0 0 'Check pesign-client --certificate --is-unlocked --token failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign-client --certificate --is-unlocked --token failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign-client --certificate --is-unlocked --token failed'
++ LOG_ERROR 'Check pesign-client --certificate --is-unlocked --token failed'
++ message='Check pesign-client --certificate --is-unlocked --token failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign-client --certificate --is-unlocked --token failed'
+Thu Sep 21 22:04:13 2023 - ERROR - Check pesign-client --certificate --is-unlocked --token failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_pesign-client_01.sh line 45'
++ message='oe_test_pesign_pesign-client_01.sh line 45'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_pesign-client_01.sh line 45'
+Thu Sep 21 22:04:14 2023 - ERROR - oe_test_pesign_pesign-client_01.sh line 45
++ '[' 0 -eq 1 ']'
++ return 0
++ echo pesign-client -c 'ALT Linux UEFI SB CA' -u
+pesign-client -c ALT Linux UEFI SB CA -u
++ CHECK_RESULT 0 0 0 'Check echo pesign-client -c -u failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check echo pesign-client -c -u failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo pesign-client -c 'ALT Linux UEFI SB CA' --unlock
+pesign-client -c ALT Linux UEFI SB CA --unlock
++ CHECK_RESULT 0 0 0 'Check echo pesign-client -c --unlock failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check echo pesign-client -c --unlock failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ pesign-client -c 'ALT Linux UEFI SB CA' -q
+pesign-client: could not access socket "/run//pesign/socket": No such file or directory
+pesign-client: could not access socket "/run/pesign/socket": No such file or directory
+pesign-client: could not access socket "/var/run/pesign/socket": No such file or directory
++ CHECK_RESULT 1 0 0 'Check pesign-client -c -q failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign-client -c -q failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign-client -c -q failed'
++ LOG_ERROR 'Check pesign-client -c -q failed'
++ message='Check pesign-client -c -q failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign-client -c -q failed'
+Thu Sep 21 22:04:15 2023 - ERROR - Check pesign-client -c -q failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_pesign-client_01.sh line 51'
++ message='oe_test_pesign_pesign-client_01.sh line 51'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_pesign-client_01.sh line 51'
+Thu Sep 21 22:04:15 2023 - ERROR - oe_test_pesign_pesign-client_01.sh line 51
++ '[' 0 -eq 1 ']'
++ return 0
++ pesign-client '--certificate=ALT Linux UEFI SB CA' --is-unlocked
+pesign-client: could not access socket "/run//pesign/socket": No such file or directory
+pesign-client: could not access socket "/run/pesign/socket": No such file or directory
+pesign-client: could not access socket "/var/run/pesign/socket": No such file or directory
++ CHECK_RESULT 1 0 0 'Check pesign-client --certificate --is-unlocked failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign-client --certificate --is-unlocked failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign-client --certificate --is-unlocked failed'
++ LOG_ERROR 'Check pesign-client --certificate --is-unlocked failed'
++ message='Check pesign-client --certificate --is-unlocked failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign-client --certificate --is-unlocked failed'
+Thu Sep 21 22:04:16 2023 - ERROR - Check pesign-client --certificate --is-unlocked failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_pesign-client_01.sh line 53'
++ message='oe_test_pesign_pesign-client_01.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_pesign-client_01.sh line 53'
+Thu Sep 21 22:04:17 2023 - ERROR - oe_test_pesign_pesign-client_01.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
++ pesign-client -k
+pesign-client: could not access socket "/run//pesign/socket": No such file or directory
+pesign-client: could not access socket "/run/pesign/socket": No such file or directory
+pesign-client: could not access socket "/var/run/pesign/socket": No such file or directory
++ CHECK_RESULT 1 0 0 'Check pesign-client -k failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check pesign-client -k failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check pesign-client -k failed'
++ LOG_ERROR 'Check pesign-client -k failed'
++ message='Check pesign-client -k failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Check pesign-client -k failed'
+Thu Sep 21 22:04:18 2023 - ERROR - Check pesign-client -k failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_pesign_pesign-client_01.sh line 55'
++ message='oe_test_pesign_pesign-client_01.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_pesign_pesign-client_01.sh line 55'
+Thu Sep 21 22:04:18 2023 - ERROR - oe_test_pesign_pesign-client_01.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Sep 21 22:04:19 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 5
++ test 5 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Sep 21 22:04:20 2023 - ERROR - failed to execute the case.
++ exit 5
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Sep 21 22:04:20 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Sep 21 22:04:21 2023 - WARN  - no thing to do.
++ return 0
++ ps -ef
++ grep grubx64.efi
++ grep -v grep
++ awk '{print $2}'
++ xargs kill -9
+kill: not enough arguments
++ cd ..
++ rm -rf pesigntest
++ LOG_INFO 'Finish restore the test environment.'
++ message='Finish restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restore the test environment.'
+Thu Sep 21 22:04:22 2023 - INFO  - Finish restore the test environment.

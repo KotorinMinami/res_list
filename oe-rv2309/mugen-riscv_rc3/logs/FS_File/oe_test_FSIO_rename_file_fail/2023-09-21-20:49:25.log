@@ -1,0 +1,411 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Thu Sep 21 20:49:30 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230921204930
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230921204930
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20230921202529
++++ printf test_vggroup20230921202529
+++ vggroup=test_vggroup20230921202529
+++ count=1
+++ msg='test_vggroup20230921202529 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230921204930
+++ point=/tmp/point120230921204930
+++ lvcreate -n test_lv120230921204930 -L 512M test_vggroup20230921202529 -y
+++ mkfs -t ext3 /dev/test_vggroup20230921202529/test_lv120230921204930
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point120230921204930
+++ mount /dev/test_vggroup20230921202529/test_lv120230921204930 /tmp/point120230921204930
+++ msg='test_vggroup20230921202529 /tmp/point120230921204930 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230921204930
+++ point=/tmp/point220230921204930
+++ lvcreate -n test_lv220230921204930 -L 512M test_vggroup20230921202529 -y
+++ mkfs -t ext4 /dev/test_vggroup20230921202529/test_lv220230921204930
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point220230921204930
+++ mount /dev/test_vggroup20230921202529/test_lv220230921204930 /tmp/point220230921204930
+++ msg='test_vggroup20230921202529 /tmp/point120230921204930 /tmp/point220230921204930 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230921204930
+++ point=/tmp/point320230921204930
+++ lvcreate -n test_lv320230921204930 -L 512M test_vggroup20230921202529 -y
+++ mkfs -t xfs /dev/test_vggroup20230921202529/test_lv320230921204930
+++ mkdir /tmp/point320230921204930
+++ mount /dev/test_vggroup20230921202529/test_lv320230921204930 /tmp/point320230921204930
+++ msg='test_vggroup20230921202529 /tmp/point120230921204930 /tmp/point220230921204930 /tmp/point320230921204930 '
+++ count=4
+++ echo test_vggroup20230921202529 /tmp/point120230921204930 /tmp/point220230921204930 /tmp/point320230921204930
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Sep 21 20:49:35 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 20:49:36 2023 - INFO  - Start to run test.
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point120230921204930
++ echo test
++ mv /tmp/point120230921204930/testfile1
++ grep 'missing destination file operand'
+mv: missing destination file operand after '/tmp/point120230921204930/testfile1'
++ CHECK_RESULT 0 0 0 'The cmd lacks parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The cmd lacks parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point120230921204930/testfile1 /tmp/point120230921204930/testaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++ grep 'File name too long'
+mv: cannot stat '/tmp/point120230921204930/testaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa': File name too long
++ CHECK_RESULT 0 0 0 'File can be moved when length of file name is more than 255 on /tmp/point120230921204930.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='File can be moved when length of file name is more than 255 on /tmp/point120230921204930.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point120230921204930/testfile1 /tmp/point120230921204930/testfile2 /tmp/point120230921204930/testfile3
++ grep 'is not a directory'
++ CHECK_RESULT 1 0 0 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The cmd with blank space parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ LOG_ERROR 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ message='The cmd with blank space parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point120230921204930.'
+Thu Sep 21 20:49:36 2023 - ERROR - The cmd with blank space parameter was executed succeed on unexpect on /tmp/point120230921204930.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_rename_file_fail.sh line 37'
++ message='oe_test_FSIO_rename_file_fail.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_rename_file_fail.sh line 37'
+Thu Sep 21 20:49:37 2023 - ERROR - oe_test_FSIO_rename_file_fail.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ mv /tmp/point120230921204930/testfile1 /tmp/point120230921204930/a:1 /tmp/point120230921204930/b:2
++ grep 'is not a directory'
++ CHECK_RESULT 1 0 0 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The cmd with dict parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ LOG_ERROR 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ message='The cmd with dict parameter was executed succeed on unexpect on /tmp/point120230921204930.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point120230921204930.'
+Thu Sep 21 20:49:38 2023 - ERROR - The cmd with dict parameter was executed succeed on unexpect on /tmp/point120230921204930.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_rename_file_fail.sh line 39'
++ message='oe_test_FSIO_rename_file_fail.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_rename_file_fail.sh line 39'
+Thu Sep 21 20:49:38 2023 - ERROR - oe_test_FSIO_rename_file_fail.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220230921204930
++ echo test
++ mv /tmp/point220230921204930/testfile1
++ grep 'missing destination file operand'
+mv: missing destination file operand after '/tmp/point220230921204930/testfile1'
++ CHECK_RESULT 0 0 0 'The cmd lacks parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The cmd lacks parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point220230921204930/testfile1 /tmp/point220230921204930/testaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++ grep 'File name too long'
+mv: cannot stat '/tmp/point220230921204930/testaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa': File name too long
++ CHECK_RESULT 0 0 0 'File can be moved when length of file name is more than 255 on /tmp/point220230921204930.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='File can be moved when length of file name is more than 255 on /tmp/point220230921204930.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point220230921204930/testfile1 /tmp/point220230921204930/testfile2 /tmp/point220230921204930/testfile3
++ grep 'is not a directory'
++ CHECK_RESULT 1 0 0 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The cmd with blank space parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ LOG_ERROR 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ message='The cmd with blank space parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point220230921204930.'
+Thu Sep 21 20:49:39 2023 - ERROR - The cmd with blank space parameter was executed succeed on unexpect on /tmp/point220230921204930.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_rename_file_fail.sh line 37'
++ message='oe_test_FSIO_rename_file_fail.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_rename_file_fail.sh line 37'
+Thu Sep 21 20:49:39 2023 - ERROR - oe_test_FSIO_rename_file_fail.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ mv /tmp/point220230921204930/testfile1 /tmp/point220230921204930/a:1 /tmp/point220230921204930/b:2
++ grep 'is not a directory'
++ CHECK_RESULT 1 0 0 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The cmd with dict parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ LOG_ERROR 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ message='The cmd with dict parameter was executed succeed on unexpect on /tmp/point220230921204930.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point220230921204930.'
+Thu Sep 21 20:49:40 2023 - ERROR - The cmd with dict parameter was executed succeed on unexpect on /tmp/point220230921204930.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_rename_file_fail.sh line 39'
++ message='oe_test_FSIO_rename_file_fail.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_rename_file_fail.sh line 39'
+Thu Sep 21 20:49:41 2023 - ERROR - oe_test_FSIO_rename_file_fail.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320230921204930
++ echo test
++ mv /tmp/point320230921204930/testfile1
++ grep 'missing destination file operand'
+mv: missing destination file operand after '/tmp/point320230921204930/testfile1'
++ CHECK_RESULT 0 0 0 'The cmd lacks parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The cmd lacks parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point320230921204930/testfile1 /tmp/point320230921204930/testaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
++ grep 'File name too long'
+mv: cannot stat '/tmp/point320230921204930/testaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa': File name too long
++ CHECK_RESULT 0 0 0 'File can be moved when length of file name is more than 255 on /tmp/point320230921204930.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='File can be moved when length of file name is more than 255 on /tmp/point320230921204930.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv /tmp/point320230921204930/testfile1 /tmp/point320230921204930/testfile2 /tmp/point320230921204930/testfile3
++ grep 'is not a directory'
++ CHECK_RESULT 1 0 0 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The cmd with blank space parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ LOG_ERROR 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ message='The cmd with blank space parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The cmd with blank space parameter was executed succeed on unexpect on /tmp/point320230921204930.'
+Thu Sep 21 20:49:41 2023 - ERROR - The cmd with blank space parameter was executed succeed on unexpect on /tmp/point320230921204930.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_rename_file_fail.sh line 37'
++ message='oe_test_FSIO_rename_file_fail.sh line 37'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_rename_file_fail.sh line 37'
+Thu Sep 21 20:49:42 2023 - ERROR - oe_test_FSIO_rename_file_fail.sh line 37
++ '[' 0 -eq 1 ']'
++ return 0
++ mv /tmp/point320230921204930/testfile1 /tmp/point320230921204930/a:1 /tmp/point320230921204930/b:2
++ grep 'is not a directory'
++ CHECK_RESULT 1 0 0 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='The cmd with dict parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ LOG_ERROR 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ message='The cmd with dict parameter was executed succeed on unexpect on /tmp/point320230921204930.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'The cmd with dict parameter was executed succeed on unexpect on /tmp/point320230921204930.'
+Thu Sep 21 20:49:42 2023 - ERROR - The cmd with dict parameter was executed succeed on unexpect on /tmp/point320230921204930.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_FSIO_rename_file_fail.sh line 39'
++ message='oe_test_FSIO_rename_file_fail.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_FSIO_rename_file_fail.sh line 39'
+Thu Sep 21 20:49:43 2023 - ERROR - oe_test_FSIO_rename_file_fail.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Sep 21 20:49:44 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 6
++ test 6 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Sep 21 20:49:44 2023 - ERROR - failed to execute the case.
++ exit 6
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Sep 21 20:49:45 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230921202529 /tmp/point120230921204930 /tmp/point220230921204930 /tmp/point320230921204930
++ list='test_vggroup20230921202529 /tmp/point120230921204930 /tmp/point220230921204930 /tmp/point320230921204930'
++ REMOVE_FS 'test_vggroup20230921202529 /tmp/point120230921204930 /tmp/point220230921204930 /tmp/point320230921204930'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230921202529
+++ df -T
+++ grep test_vggroup20230921202529
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20230921202529-test_lv120230921204930
+/dev/mapper/test_vggroup20230921202529-test_lv220230921204930
+/dev/mapper/test_vggroup20230921202529-test_lv320230921204930'
++ [[ /dev/mapper/test_vggroup20230921202529-test_lv120230921204930
+/dev/mapper/test_vggroup20230921202529-test_lv220230921204930
+/dev/mapper/test_vggroup20230921202529-test_lv320230921204930 == '' ]]
++ umount -f test_vggroup20230921202529
+umount: test_vggroup20230921202529: no mount point specified.
++ rm -rf test_vggroup20230921202529
++ DELETE_LV /dev/mapper/test_vggroup20230921202529-test_lv120230921204930 /dev/mapper/test_vggroup20230921202529-test_lv220230921204930 /dev/mapper/test_vggroup20230921202529-test_lv320230921204930
++ lvname=/dev/mapper/test_vggroup20230921202529-test_lv120230921204930
++ lvremove /dev/mapper/test_vggroup20230921202529-test_lv120230921204930 -y
+  Logical volume test_vggroup20230921202529/test_lv120230921204930 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230921204930
+++ df -T
+++ grep /tmp/point120230921204930
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230921202529-test_lv120230921204930
++ [[ /dev/mapper/test_vggroup20230921202529-test_lv120230921204930 == '' ]]
++ umount -f /tmp/point120230921204930
++ rm -rf /tmp/point120230921204930
++ DELETE_LV /dev/mapper/test_vggroup20230921202529-test_lv120230921204930
++ lvname=/dev/mapper/test_vggroup20230921202529-test_lv120230921204930
++ lvremove /dev/mapper/test_vggroup20230921202529-test_lv120230921204930 -y
+  Logical volume "test_lv120230921204930" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230921204930
+++ df -T
+++ grep /tmp/point220230921204930
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230921202529-test_lv220230921204930
++ [[ /dev/mapper/test_vggroup20230921202529-test_lv220230921204930 == '' ]]
++ umount -f /tmp/point220230921204930
++ rm -rf /tmp/point220230921204930
++ DELETE_LV /dev/mapper/test_vggroup20230921202529-test_lv220230921204930
++ lvname=/dev/mapper/test_vggroup20230921202529-test_lv220230921204930
++ lvremove /dev/mapper/test_vggroup20230921202529-test_lv220230921204930 -y
+  Logical volume "test_lv220230921204930" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230921204930
+++ df -T
+++ grep /tmp/point320230921204930
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230921202529-test_lv320230921204930
++ [[ /dev/mapper/test_vggroup20230921202529-test_lv320230921204930 == '' ]]
++ umount -f /tmp/point320230921204930
++ rm -rf /tmp/point320230921204930
++ DELETE_LV /dev/mapper/test_vggroup20230921202529-test_lv320230921204930
++ lvname=/dev/mapper/test_vggroup20230921202529-test_lv320230921204930
++ lvremove /dev/mapper/test_vggroup20230921202529-test_lv320230921204930 -y
+  Logical volume "test_lv320230921204930" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Sep 21 20:49:48 2023 - INFO  - End to restore the test environment.

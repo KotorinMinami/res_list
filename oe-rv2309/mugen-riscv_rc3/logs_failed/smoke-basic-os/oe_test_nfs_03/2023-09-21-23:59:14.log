@@ -1,0 +1,202 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Sep 21 23:59:19 2023 - INFO  - Start to prepare the test environment.
++ df -h /
++ grep overlay
++ DNF_INSTALL nfs-utils
++ pkgs=nfs-utils
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs nfs-utils --node 1 --tempfile ''
+Thu Sep 21 23:59:31 2023 - INFO  - pkgs:(nfs-utils) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ cp /etc/exports /etc/exports.bak
++ echo '/home/nfs *(rw,sync,all_squash)'
++ mkdir /home/nfs /home/test
++ exportfs -avr
+exportfs: /etc/exports [1]: Neither 'subtree_check' or 'no_subtree_check' specified for export "*:/home/nfs".
+  Assuming default behaviour ('no_subtree_check').
+  NOTE: this default has changed since nfs-utils version 1.0.x
+
+exporting *:/home/nfs
++ systemctl restart nfs
+Job for nfs-server.service canceled.
++ chmod 777 /home/nfs
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Sep 21 23:59:35 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 23:59:36 2023 - INFO  - Start to run test.
++ mount -t nfs -o ro 127.0.0.1:/home/nfs /home/test
+Job for rpc-statd.service failed because the control process exited with error code.
+See "systemctl status rpc-statd.service" and "journalctl -xeu rpc-statd.service" for details.
+mount.nfs: rpc.statd is not running but is required for remote locking.
+mount.nfs: Either use '-o nolock' to keep locks local, or start statd.
+Job for rpc-statd.service failed because the control process exited with error code.
+See "systemctl status rpc-statd.service" and "journalctl -xeu rpc-statd.service" for details.
+mount.nfs: rpc.statd is not running but is required for remote locking.
+mount.nfs: Either use '-o nolock' to keep locks local, or start statd.
+Job for rpc-statd.service failed because the control process exited with error code.
+See "systemctl status rpc-statd.service" and "journalctl -xeu rpc-statd.service" for details.
+mount.nfs: rpc.statd is not running but is required for remote locking.
+mount.nfs: Either use '-o nolock' to keep locks local, or start statd.
+Job for rpc-statd.service failed because the control process exited with error code.
+See "systemctl status rpc-statd.service" and "journalctl -xeu rpc-statd.service" for details.
+mount.nfs: rpc.statd is not running but is required for remote locking.
+mount.nfs: Either use '-o nolock' to keep locks local, or start statd.
+Job for rpc-statd.service failed because the control process exited with error code.
+See "systemctl status rpc-statd.service" and "journalctl -xeu rpc-statd.service" for details.
+mount.nfs: rpc.statd is not running but is required for remote locking.
+mount.nfs: Either use '-o nolock' to keep locks local, or start statd.
+Job for rpc-statd.service failed because the control process exited with error code.
+See "systemctl status rpc-statd.service" and "journalctl -xeu rpc-statd.service" for details.
+mount.nfs: rpc.statd is not running but is required for remote locking.
+mount.nfs: Either use '-o nolock' to keep locks local, or start statd.
+Job for rpc-statd.service failed because the control process exited with error code.
+See "systemctl status rpc-statd.service" and "journalctl -xeu rpc-statd.service" for details.
+mount.nfs: rpc.statd is not running but is required for remote locking.
+mount.nfs: Either use '-o nolock' to keep locks local, or start statd.
+mount.nfs: Connection refused
++ CHECK_RESULT 32 0 0 'Mount failed'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Mount failed'
++ exit_mode=0
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Mount failed'
++ LOG_ERROR 'Mount failed'
++ message='Mount failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Mount failed'
+Fri Sep 22 00:01:42 2023 - ERROR - Mount failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_nfs_03.sh line 42'
++ message='oe_test_nfs_03.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_nfs_03.sh line 42'
+Fri Sep 22 00:01:43 2023 - ERROR - oe_test_nfs_03.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ touch /home/test/test
++ CHECK_RESULT 0 0 1 'Folder is not read-only'
++ actual_result=0
++ expect_result=0
++ mode=1
++ error_log='Folder is not read-only'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 1 -eq 0 ']'
++ test 0x == 0x
++ test -n 'Folder is not read-only'
++ LOG_ERROR 'Folder is not read-only'
++ message='Folder is not read-only'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Folder is not read-only'
+Fri Sep 22 00:01:44 2023 - ERROR - Folder is not read-only
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_nfs_03.sh line 44'
++ message='oe_test_nfs_03.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_nfs_03.sh line 44'
+Fri Sep 22 00:01:44 2023 - ERROR - oe_test_nfs_03.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ mount -o remount,rw /home/test
+mount: /home/test: mount point not mounted or bad option.
+       dmesg(1) may have more information after failed mount system call.
++ CHECK_RESULT 32 0 0 'Failed to modify permission'
++ actual_result=32
++ expect_result=0
++ mode=0
++ error_log='Failed to modify permission'
++ exit_mode=0
++ '[' -z 32 ']'
++ '[' 0 -eq 0 ']'
++ test 32x '!=' 0x
++ test -n 'Failed to modify permission'
++ LOG_ERROR 'Failed to modify permission'
++ message='Failed to modify permission'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed to modify permission'
+Fri Sep 22 00:01:45 2023 - ERROR - Failed to modify permission
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_nfs_03.sh line 46'
++ message='oe_test_nfs_03.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_nfs_03.sh line 46'
+Fri Sep 22 00:01:46 2023 - ERROR - oe_test_nfs_03.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ touch /home/test/test
++ CHECK_RESULT 0 0 0 'Folder is not write'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Folder is not write'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Fri Sep 22 00:01:46 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep 22 00:01:47 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Sep 22 00:01:48 2023 - INFO  - Start to restore the test environment.
++ umount /home/test
+umount: /home/test: not mounted.
++ rm -rf /home/nfs /home/test
++ mv -f /etc/exports.bak /etc/exports
++ exportfs -avr
+exportfs: No file systems exported!
++ systemctl stop nfs
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Fri Sep 22 00:01:48 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Fri Sep 22 00:01:49 2023 - INFO  - End to restore the test environment.

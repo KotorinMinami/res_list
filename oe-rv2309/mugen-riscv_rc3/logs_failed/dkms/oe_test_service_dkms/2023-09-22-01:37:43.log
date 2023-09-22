@@ -1,0 +1,260 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Fri Sep 22 01:37:48 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL dkms
++ pkgs=dkms
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs dkms --node 1 --tempfile ''
+Fri Sep 22 01:38:05 2023 - INFO  - pkgs:(dkms) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Sep 22 01:38:05 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Fri Sep 22 01:38:06 2023 - INFO  - Start testing...
++ test_execution dkms.service
++ service=dkms.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-22 01:38:06'
++ test_restart dkms.service
++ service=dkms.service
++ systemctl restart dkms.service
++ CHECK_RESULT 0 0 0 'dkms.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dkms.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status dkms.service
++ grep 'Active: active'
+     Active: active (exited) since Fri 2023-09-22 01:38:09 CST; 5s ago
++ CHECK_RESULT 0 0 0 'dkms.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dkms.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop dkms.service
++ CHECK_RESULT 0 0 0 'dkms.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dkms.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status dkms.service
++ grep 'Active: inactive'
+     Active: inactive (dead) since Fri 2023-09-22 01:38:15 CST; 6s ago
++ CHECK_RESULT 0 0 0 'dkms.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dkms.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start dkms.service
++ CHECK_RESULT 0 0 0 'dkms.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dkms.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status dkms.service
++ grep 'Active: active'
+     Active: active (exited) since Fri 2023-09-22 01:38:25 CST; 5s ago
++ CHECK_RESULT 0 0 0 'dkms.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='dkms.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled dkms.service
++ service=dkms.service
+++ systemctl is-enabled dkms.service
++ state=enabled
++ '[' enabled == enabled ']'
+++ systemctl disable dkms.service
+++ grep Removed
+++ awk '{print $2}'
+++ awk '{print substr($0,1,length($0)-1)}'
++ symlink_file='"/etc/systemd/system/multi-user.target.wants/dkms.service"'
++ find '"/etc/systemd/system/multi-user.target.wants/dkms.service"'
+find: ‘"/etc/systemd/system/multi-user.target.wants/dkms.service"’: No such file or directory
++ CHECK_RESULT 1 0 1 'dkms.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='dkms.service disable failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ systemctl enable dkms.service
+Created symlink /etc/systemd/system/multi-user.target.wants/dkms.service → /usr/lib/systemd/system/dkms.service.
++ find '"/etc/systemd/system/multi-user.target.wants/dkms.service"'
+find: ‘"/etc/systemd/system/multi-user.target.wants/dkms.service"’: No such file or directory
++ CHECK_RESULT 1 0 0 'dkms.service enable failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='dkms.service enable failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'dkms.service enable failed'
++ LOG_ERROR 'dkms.service enable failed'
++ message='dkms.service enable failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'dkms.service enable failed'
+Fri Sep 22 01:38:40 2023 - ERROR - dkms.service enable failed
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 70'
++ message='../common/common_lib.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 70'
+Fri Sep 22 01:38:41 2023 - ERROR - ../common/common_lib.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
++ journalctl --since '2023-09-22 01:38:06' -u dkms.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
+Sep 22 01:38:09 openeuler-riscv64 sh[1576]: kmod-kvdo/8.2.1.2-3 autoinstall failed due to missing dependencies: LZ_DECOMPRESS
+Sep 22 01:38:25 openeuler-riscv64 sh[1695]: kmod-kvdo/8.2.1.2-3 autoinstall failed due to missing dependencies: LZ_DECOMPRESS
++ CHECK_RESULT 0 0 1 'There is an error message for the log of dkms.service'
++ actual_result=0
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of dkms.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 1 -eq 0 ']'
++ test 0x == 0x
++ test -n 'There is an error message for the log of dkms.service'
++ LOG_ERROR 'There is an error message for the log of dkms.service'
++ message='There is an error message for the log of dkms.service'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'There is an error message for the log of dkms.service'
+Fri Sep 22 01:38:42 2023 - ERROR - There is an error message for the log of dkms.service
++ (( exec_result++ ))
++ LOG_ERROR '../common/common_lib.sh line 28'
++ message='../common/common_lib.sh line 28'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message '../common/common_lib.sh line 28'
+Fri Sep 22 01:38:43 2023 - ERROR - ../common/common_lib.sh line 28
++ '[' 0 -eq 1 ']'
++ return 0
++ test_reload dkms.service
++ service=dkms.service
++ systemctl start dkms.service
++ systemctl reload dkms.service
++ grep 'Job type reload is not applicable'
+Failed to reload dkms.service: Job type reload is not applicable for unit dkms.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit dkms.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit dkms.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status dkms.service
++ grep 'Active: active'
+     Active: active (exited) since Fri 2023-09-22 01:38:25 CST; 18s ago
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Fri Sep 22 01:38:44 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Sep 22 01:38:45 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Fri Sep 22 01:38:45 2023 - INFO  - start environment cleanup.
++ systemctl stop dkms.service
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Fri Sep 22 01:38:46 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Fri Sep 22 01:38:47 2023 - INFO  - Finish environment cleanup!

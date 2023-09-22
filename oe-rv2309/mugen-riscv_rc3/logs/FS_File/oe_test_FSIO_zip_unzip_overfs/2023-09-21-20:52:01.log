@@ -1,0 +1,311 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Thu Sep 21 20:52:06 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS "ext3 ext4 xfs"))
+++ CREATE_FS 'ext3 ext4 xfs'
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20230921205206
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20230921205206
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20230921205108
++++ printf test_vggroup20230921205108
+++ vggroup=test_vggroup20230921205108
+++ count=1
+++ msg='test_vggroup20230921205108 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120230921205206
+++ point=/tmp/point120230921205206
+++ lvcreate -n test_lv120230921205206 -L 512M test_vggroup20230921205108 -y
+++ mkfs -t ext3 /dev/test_vggroup20230921205108/test_lv120230921205206
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point120230921205206
+++ mount /dev/test_vggroup20230921205108/test_lv120230921205206 /tmp/point120230921205206
+++ msg='test_vggroup20230921205108 /tmp/point120230921205206 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220230921205206
+++ point=/tmp/point220230921205206
+++ lvcreate -n test_lv220230921205206 -L 512M test_vggroup20230921205108 -y
+++ mkfs -t ext4 /dev/test_vggroup20230921205108/test_lv220230921205206
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point220230921205206
+++ mount /dev/test_vggroup20230921205108/test_lv220230921205206 /tmp/point220230921205206
+++ msg='test_vggroup20230921205108 /tmp/point120230921205206 /tmp/point220230921205206 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320230921205206
+++ point=/tmp/point320230921205206
+++ lvcreate -n test_lv320230921205206 -L 512M test_vggroup20230921205108 -y
+++ mkfs -t xfs /dev/test_vggroup20230921205108/test_lv320230921205206
+++ mkdir /tmp/point320230921205206
+++ mount /dev/test_vggroup20230921205108/test_lv320230921205206 /tmp/point320230921205206
+++ msg='test_vggroup20230921205108 /tmp/point120230921205206 /tmp/point220230921205206 /tmp/point320230921205206 '
+++ count=4
+++ echo test_vggroup20230921205108 /tmp/point120230921205206 /tmp/point220230921205206 /tmp/point320230921205206
++ ext3_point=/tmp/point120230921205206
++ ext4_point=/tmp/point220230921205206
++ xfs_point=/tmp/point320230921205206
++ mkdir /tmp/point120230921205206/testDir1 /tmp/point120230921205206/testDir2
++ echo 'test file'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Sep 21 20:52:11 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 20:52:11 2023 - INFO  - Start to run test.
++ zip -r /tmp/point220230921205206/test1.zip /tmp/point120230921205206/testDir1
+  adding: tmp/point120230921205206/testDir1/ (stored 0%)
+  adding: tmp/point120230921205206/testDir1/testFile (stored 0%)
++ CHECK_RESULT 0 0 0 'Compress file by zip from ext3 to ext4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by zip from ext3 to ext4 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ unzip -l /tmp/point220230921205206/test1.zip
++ grep testFile
+       10  09-21-2023 20:52   tmp/point120230921205206/testDir1/testFile
++ CHECK_RESULT 0 0 0 'Check file on zip in ext4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file on zip in ext4 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ unzip /tmp/point220230921205206/test1.zip -d /tmp/point220230921205206
+Archive:  /tmp/point220230921205206/test1.zip
+   creating: /tmp/point220230921205206/tmp/point120230921205206/testDir1/
+ extracting: /tmp/point220230921205206/tmp/point120230921205206/testDir1/testFile  
++ CHECK_RESULT 0 0 0 'Decompress file by zip in ext4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress file by zip in ext4 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ zip -r /tmp/point320230921205206/test2.zip /tmp/point120230921205206/testDir1
+  adding: tmp/point120230921205206/testDir1/ (stored 0%)
+  adding: tmp/point120230921205206/testDir1/testFile (stored 0%)
++ CHECK_RESULT 0 0 0 'Compress file by zip from ext3 to xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by zip from ext3 to xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ unzip -l /tmp/point320230921205206/test2.zip
++ grep testFile
+       10  09-21-2023 20:52   tmp/point120230921205206/testDir1/testFile
++ CHECK_RESULT 0 0 0 'Check file on zip in xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file on zip in xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ unzip /tmp/point320230921205206/test2.zip -d /tmp/point320230921205206
+Archive:  /tmp/point320230921205206/test2.zip
+   creating: /tmp/point320230921205206/tmp/point120230921205206/testDir1/
+ extracting: /tmp/point320230921205206/tmp/point120230921205206/testDir1/testFile  
++ CHECK_RESULT 0 0 0 'Decompress file by zip in xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress file by zip in xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ zip -r /tmp/point320230921205206/test3.zip /tmp/point220230921205206//tmp/point120230921205206/testDir1
+  adding: tmp/point220230921205206//tmp/point120230921205206/testDir1/ (stored 0%)
+  adding: tmp/point220230921205206//tmp/point120230921205206/testDir1/testFile (stored 0%)
++ CHECK_RESULT 0 0 0 'Compress file by zip from ext4 to xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by zip from ext4 to xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ unzip -l /tmp/point320230921205206/test3.zip
++ grep testFile
+       10  09-21-2023 20:52   tmp/point220230921205206//tmp/point120230921205206/testDir1/testFile
++ CHECK_RESULT 0 0 0 'Check file on zip in xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check file on zip in xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ unzip /tmp/point320230921205206/test3.zip -d /tmp/point320230921205206
+Archive:  /tmp/point320230921205206/test3.zip
+   creating: /tmp/point320230921205206/tmp/point220230921205206/tmp/point120230921205206/testDir1/
+ extracting: /tmp/point320230921205206/tmp/point220230921205206/tmp/point120230921205206/testDir1/testFile  
++ CHECK_RESULT 0 0 0 'Decompress file by zip in xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress file by zip in xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Sep 21 20:52:12 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Sep 21 20:52:13 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Sep 21 20:52:13 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20230921205108 /tmp/point120230921205206 /tmp/point220230921205206 /tmp/point320230921205206
++ list='test_vggroup20230921205108 /tmp/point120230921205206 /tmp/point220230921205206 /tmp/point320230921205206'
++ REMOVE_FS 'test_vggroup20230921205108 /tmp/point120230921205206 /tmp/point220230921205206 /tmp/point320230921205206'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20230921205108
+++ df -T
+++ grep test_vggroup20230921205108
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20230921205108-test_lv120230921205206
+/dev/mapper/test_vggroup20230921205108-test_lv220230921205206
+/dev/mapper/test_vggroup20230921205108-test_lv320230921205206'
++ [[ /dev/mapper/test_vggroup20230921205108-test_lv120230921205206
+/dev/mapper/test_vggroup20230921205108-test_lv220230921205206
+/dev/mapper/test_vggroup20230921205108-test_lv320230921205206 == '' ]]
++ umount -f test_vggroup20230921205108
+umount: test_vggroup20230921205108: no mount point specified.
++ rm -rf test_vggroup20230921205108
++ DELETE_LV /dev/mapper/test_vggroup20230921205108-test_lv120230921205206 /dev/mapper/test_vggroup20230921205108-test_lv220230921205206 /dev/mapper/test_vggroup20230921205108-test_lv320230921205206
++ lvname=/dev/mapper/test_vggroup20230921205108-test_lv120230921205206
++ lvremove /dev/mapper/test_vggroup20230921205108-test_lv120230921205206 -y
+  Logical volume test_vggroup20230921205108/test_lv120230921205206 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120230921205206
+++ df -T
+++ grep /tmp/point120230921205206
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230921205108-test_lv120230921205206
++ [[ /dev/mapper/test_vggroup20230921205108-test_lv120230921205206 == '' ]]
++ umount -f /tmp/point120230921205206
++ rm -rf /tmp/point120230921205206
++ DELETE_LV /dev/mapper/test_vggroup20230921205108-test_lv120230921205206
++ lvname=/dev/mapper/test_vggroup20230921205108-test_lv120230921205206
++ lvremove /dev/mapper/test_vggroup20230921205108-test_lv120230921205206 -y
+  Logical volume "test_lv120230921205206" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220230921205206
+++ df -T
+++ grep /tmp/point220230921205206
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230921205108-test_lv220230921205206
++ [[ /dev/mapper/test_vggroup20230921205108-test_lv220230921205206 == '' ]]
++ umount -f /tmp/point220230921205206
++ rm -rf /tmp/point220230921205206
++ DELETE_LV /dev/mapper/test_vggroup20230921205108-test_lv220230921205206
++ lvname=/dev/mapper/test_vggroup20230921205108-test_lv220230921205206
++ lvremove /dev/mapper/test_vggroup20230921205108-test_lv220230921205206 -y
+  Logical volume "test_lv220230921205206" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320230921205206
+++ df -T
+++ grep /tmp/point320230921205206
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20230921205108-test_lv320230921205206
++ [[ /dev/mapper/test_vggroup20230921205108-test_lv320230921205206 == '' ]]
++ umount -f /tmp/point320230921205206
++ rm -rf /tmp/point320230921205206
++ DELETE_LV /dev/mapper/test_vggroup20230921205108-test_lv320230921205206
++ lvname=/dev/mapper/test_vggroup20230921205108-test_lv320230921205206
++ lvremove /dev/mapper/test_vggroup20230921205108-test_lv320230921205206 -y
+  Logical volume "test_lv320230921205206" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Sep 21 20:52:17 2023 - INFO  - End to restore the test environment.

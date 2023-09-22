@@ -1,0 +1,187 @@
++ source ./common/disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment!'
++ message='Start to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment!'
+Thu Sep 21 23:18:49 2023 - INFO  - Start to prepare the test environment!
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='vdb vdc'
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=vdc
++ local_disk2=
++ local_disk3=
++ DNF_INSTALL fio
++ pkgs=fio
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs fio --node 1 --tempfile ''
+Thu Sep 21 23:19:10 2023 - INFO  - pkgs:(fio) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ test -f test.txt
++ touch test.txt
++ LOG_INFO 'End to prepare the test environment!'
++ message='End to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment!'
+Thu Sep 21 23:19:11 2023 - INFO  - End to prepare the test environment!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Thu Sep 21 23:19:11 2023 - INFO  - Start executing testcase!
++ fio-dedupe -o 1 /dev/vdb
++ grep 'items processed'
+0.00% done5.22% done (436525KiB/sec)11.91% done (545867KiB/sec)18.31% done (528125KiB/sec)25.10% done (560377KiB/sec)31.35% done (516031KiB/sec)38.28% done (561420KiB/sec)44.78% done (534086KiB/sec)51.51% done (543507KiB/sec)58.01% done (536188KiB/sec)64.60% done (540000KiB/sec)71.24% done (541883KiB/sec)77.83% done (546403KiB/sec)84.38% done (538101KiB/sec)90.92% done (542355KiB/sec)97.17% done (524288KiB/sec)Threads(4): 524288 items processed
++ CHECK_RESULT 0 0 0 'fio-dedupe -o option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -o option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -c 1 /dev/vdc
++ grep 'items processed'
+0.00% done2.05% done (169322KiB/sec)4.00% done (161259KiB/sec)6.35% done (195047KiB/sec)8.69% done (195824KiB/sec)11.04% done (195047KiB/sec)13.57% done (208815KiB/sec)16.06% done (201637KiB/sec)18.26% done (183585KiB/sec)20.41% done (179505KiB/sec)22.75% done (193511KiB/sec)24.95% done (181417KiB/sec)27.44% done (198570KiB/sec)29.79% done (194276KiB/sec)31.88% done (174039KiB/sec)34.33% done (203984KiB/sec)36.82% done (201637KiB/sec)39.16% done (195047KiB/sec)41.70% done (205590KiB/sec)43.90% done (182857KiB/sec)46.19% done (190984KiB/sec)48.34% done (173961KiB/sec)50.49% done (178793KiB/sec)52.83% done (194276KiB/sec)54.98% done (178086KiB/sec)57.52% done (211301KiB/sec)60.06% done (202463KiB/sec)62.79% done (227555KiB/sec)65.53% done (221405KiB/sec)67.92% done (199111KiB/sec)70.61% done (217451KiB/sec)73.14% done (211301KiB/sec)75.88% done (228462KiB/sec)78.52% done (219428KiB/sec)80.81% done (186542KiB/sec)83.30% done (207238KiB/sec)86.04% done (227555KiB/sec)88.38% done (194276KiB/sec)90.92% done (207190KiB/sec)93.26% done (194276KiB/sec)95.75% done (208063KiB/sec)98.14% done (199111KiB/sec)Threads(4): 524288 items processed
++ CHECK_RESULT 0 0 0 'fio-dedupe -c option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -c option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -B 1 /dev/vdc
+Will check </dev/vdc>, size <2147483648>, using 4 threads
+0.00% done4.20% done (352256KiB/sec)9.77% done (465083KiB/sec)15.23% done (456924KiB/sec)20.12% done (407968KiB/sec)25.78% done (473243KiB/sec)31.45% done (473243KiB/sec)37.16% done (477322KiB/sec)42.72% done (465083KiB/sec)48.34% done (469163KiB/sec)53.17% done (402285KiB/sec)58.25% done (424286KiB/sec)63.43% done (430730KiB/sec)68.70% done (433694KiB/sec)73.68% done (409600KiB/sec)78.91% done (434793KiB/sec)84.03% done (426666KiB/sec)89.11% done (424286KiB/sec)94.34% done (436525KiB/sec)99.71% done (441725KiB/sec)Threads(4): 524288 items processed
+Extents=524288, Unique extents=0
+De-dupe ratio: 1:infinite
+Fio setting: dedupe_percentage=100
++ CHECK_RESULT 0 0 0 'fio-dedupe -B option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -B option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -p 1 /dev/vdc
+Will check </dev/vdc>, size <2147483648>, using 4 threads
+0.00% done3.66% done (307200KiB/sec)9.47% done (470486KiB/sec)15.23% done (479492KiB/sec)20.70% done (456924KiB/sec)26.27% done (465083KiB/sec)31.74% done (456924KiB/sec)37.35% done (469163KiB/sec)42.72% done (448764KiB/sec)48.19% done (455111KiB/sec)53.61% done (452844KiB/sec)59.18% done (450718KiB/sec)63.67% done (375330KiB/sec)68.75% done (424286KiB/sec)74.02% done (440605KiB/sec)79.25% done (434793KiB/sec)84.47% done (436525KiB/sec)89.70% done (436525KiB/sec)95.02% done (436000KiB/sec)Threads(4): 524288 items processed
+Extents=524288, Unique extents=0
+De-dupe ratio: 1:infinite
+Fio setting: dedupe_percentage=100
++ CHECK_RESULT 0 0 0 'fio-dedupe -p option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -p option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio --filename=test_file --direct=1 --rw=randwrite --numjobs=1 --iodepth=16 --ioengine=libaio --bs=4k --group_reporting --name=zhangyi --log_avg_msec=500 --write_bw_log=test-fio --size=1G
+zhangyi: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=16
+fio-3.34
+Starting 1 process
+zhangyi: Laying out IO file (1 file / 1024MiB)
+
+zhangyi: (groupid=0, jobs=1): err= 0: pid=2061: Thu Sep 21 23:21:13 2023
+  write: IOPS=2847, BW=11.1MiB/s (11.7MB/s)(1024MiB/92070msec); 0 zone resets
+    slat (usec): min=129, max=21658, avg=273.25, stdev=185.11
+    clat (usec): min=225, max=409032, avg=5331.16, stdev=9474.19
+     lat (usec): min=650, max=410134, avg=5604.41, stdev=9493.05
+    clat percentiles (msec):
+     |  1.00th=[    4],  5.00th=[    4], 10.00th=[    4], 20.00th=[    5],
+     | 30.00th=[    5], 40.00th=[    5], 50.00th=[    5], 60.00th=[    5],
+     | 70.00th=[    6], 80.00th=[    6], 90.00th=[    7], 95.00th=[    8],
+     | 99.00th=[   10], 99.50th=[   11], 99.90th=[  199], 99.95th=[  284],
+     | 99.99th=[  388]
+   bw (  KiB/s): min= 3379, max=14581, per=100.00%, avg=11397.54, stdev=2495.34, samples=183
+   iops        : min=  844, max= 3645, avg=2849.13, stdev=623.85, samples=183
+  lat (usec)   : 250=0.01%, 500=0.01%, 750=0.01%, 1000=0.01%
+  lat (msec)   : 2=0.01%, 4=10.28%, 10=89.21%, 20=0.30%, 50=0.09%
+  lat (msec)   : 100=0.01%, 250=0.05%, 500=0.07%
+  cpu          : usr=3.03%, sys=87.15%, ctx=1642, majf=0, minf=8
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=100.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.1%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,262144,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=11.1MiB/s (11.7MB/s), 11.1MiB/s-11.1MiB/s (11.7MB/s-11.7MB/s), io=1024MiB (1074MB), run=92070-92070msec
+
+Disk stats (read/write):
+  vda: ios=0/261608, merge=0/9680, ticks=0/169084, in_queue=174314, util=99.87%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=3931542/0, merge=0/0, ticks=6950554/0, in_queue=6950554, util=94.65%
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=write -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=726/3929354, merge=0/2330, ticks=510/5629568, in_queue=5630078, util=90.84%
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=randread -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
+mytest: (g=0): rw=randread, bs=(R) 16.0KiB-16.0KiB, (W) 16.0KiB-16.0KiB, (T) 16.0KiB-16.0KiB, ioengine=psync, iodepth=1
+...
+fio-3.34
+Starting 30 threads
+Thu Sep 21 23:48:45 2023 - ERROR - Timeout : Command 'bash -x oe_test_fio_002.sh' timed out after 1799.9997604 seconds
