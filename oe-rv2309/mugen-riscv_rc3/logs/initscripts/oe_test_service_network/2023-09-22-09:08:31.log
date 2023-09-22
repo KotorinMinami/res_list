@@ -1,0 +1,162 @@
++ source ../common/common_lib.sh
+++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Fri Sep 22 09:08:34 2023 - INFO  - Start environmental preparation.
++ P_SSH_CMD --cmd 'dnf install -y network-scripts' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'dnf install -y network-scripts' --node 2
+Last metadata expiration check: 16:23:29 ago on Thu 21 Sep 2023 04:45:15 PM CST.
+Package network-scripts-10.17-5.oe2309.riscv64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
++ service=network.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-22 09:08:46'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Fri Sep 22 09:08:46 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Fri Sep 22 09:08:47 2023 - INFO  - Start testing...
++ P_SSH_CMD --cmd 'systemctl restart network.service' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'systemctl restart network.service' --node 2
+
++ CHECK_RESULT 0 0 0 'network.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='network.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen-riscv/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ P_SSH_CMD --cmd 'systemctl status network.service | grep '\''Active: active'\''' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'systemctl status network.service | grep '\''Active: active'\''' --node 2
+     Active: active (running) since Fri 2023-09-22 09:09:04 CST; 9s ago
++ CHECK_RESULT 0 0 0 'network.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='network.service restart failed'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ P_SSH_CMD --cmd 'journalct --since '\''2023-09-22 09:08:46'\'' -u network.service | grep -i '\''fail\|error'\'' | grep -v -i '\''DEBUG\|INFO\|WARNING'\''' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'journalct --since '\''2023-09-22 09:08:46'\'' -u network.service | grep -i '\''fail\|error'\'' | grep -v -i '\''DEBUG\|INFO\|WARNING'\''' --node 2
+bash: line 1: journalct: command not found
++ CHECK_RESULT 1 0 1 'There is an error message for the log of network.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of network.service'
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ P_SSH_CMD --cmd 'systemctl start network.service
+    systemctl reload network.service 2>&1 | grep '\''Job type reload is not applicable'\''' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'systemctl start network.service
+    systemctl reload network.service 2>&1 | grep '\''Job type reload is not applicable'\''' --node 2
+Failed to reload network.service: Job type reload is not applicable for unit network.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit network.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit network.service'
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Fri Sep 22 09:09:22 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Fri Sep 22 09:09:23 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Fri Sep 22 09:09:23 2023 - INFO  - start environment cleanup.
++ P_SSH_CMD --cmd 'dnf remove -y network-scripts' --node 2
++ python3 /root/mugen-riscv/libs/locallibs/ssh_cmd.py --cmd 'dnf remove -y network-scripts' --node 2
+Dependencies resolved.
+================================================================================
+ Package                         Arch        Version              Repo     Size
+================================================================================
+Removing:
+ network-scripts                 riscv64     10.17-5.oe2309       @OS     179 k
+Removing dependent packages:
+ ppp                             riscv64     2.5.0-1.oe2309       @OS     849 k
+Removing unused dependencies:
+ network-scripts-openvswitch     riscv64     2.17.5-6.oe2309      @OS      12 k
+ network-scripts-teamd           riscv64     1.31-2.oe2309        @OS     7.7 k
+
+Transaction Summary
+================================================================================
+Remove  4 Packages
+
+Freed space: 1.0 M
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Erasing          : network-scripts-openvswitch-2.17.5-6.oe2309.riscv64    1/4 
+  Erasing          : network-scripts-teamd-1.31-2.oe2309.riscv64            2/4 
+  Erasing          : ppp-2.5.0-1.oe2309.riscv64                             3/4 
+  Running scriptlet: network-scripts-10.17-5.oe2309.riscv64                 4/4 
+  Erasing          : network-scripts-10.17-5.oe2309.riscv64                 4/4 
+  Running scriptlet: network-scripts-10.17-5.oe2309.riscv64                 4/4 
+  Verifying        : network-scripts-10.17-5.oe2309.riscv64                 1/4 
+  Verifying        : network-scripts-openvswitch-2.17.5-6.oe2309.riscv64    2/4 
+  Verifying        : network-scripts-teamd-1.31-2.oe2309.riscv64            3/4 
+  Verifying        : ppp-2.5.0-1.oe2309.riscv64                             4/4 
+
+Removed:
+  network-scripts-10.17-5.oe2309.riscv64                                        
+  network-scripts-openvswitch-2.17.5-6.oe2309.riscv64                           
+  network-scripts-teamd-1.31-2.oe2309.riscv64                                   
+  ppp-2.5.0-1.oe2309.riscv64                                                    
+
+Complete!
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Fri Sep 22 09:09:40 2023 - INFO  - Finish environment cleanup!

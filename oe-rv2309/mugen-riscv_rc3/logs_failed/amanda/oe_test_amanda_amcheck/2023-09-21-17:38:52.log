@@ -1,0 +1,323 @@
++ source /root/mugen-riscv/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen-riscv/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Sep 21 17:38:55 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL amanda
++ pkgs=amanda
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen-riscv/libs/locallibs/rpm_manage.py install --pkgs amanda --node 1 --tempfile ''
+Thu Sep 21 17:39:06 2023 - INFO  - pkgs:(amanda) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ [[ ! -d /etc/amanda ]]
++ mkdir -p /amanda /amanda/vtapes/slot1 /amanda/vtapes/slot2 /amanda/vtapes/slot3 /amanda/vtapes/slot4 /amanda/holding /amanda/state/curinfo /amanda/state/log /amanda/state/index /etc/amanda/MyConfig
++ cp ./common/amanda.conf /etc/amanda/MyConfig
++ echo 'localhost /etc simple-gnutar-local'
++ mkdir /amanda/tmp
++ cp ./common/archive /amanda/tmp
++ touch /amanda/tmp/tmparchive
++ chown -R amandabackup.disk /amanda /etc/amanda /amanda/tmp
+chown: invalid user: ‘amandabackup.disk’
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Sep 21 17:39:06 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 21 17:39:07 2023 - INFO  - Start to run test.
++ su - amandabackup -c 'amcheck MyConfig'
++ grep 'Amanda Tape Server Host Check'
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amcheck failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amcheck failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amcheck failed'
++ LOG_ERROR 'Check amcheck failed'
++ message='Check amcheck failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amcheck failed'
+Thu Sep 21 17:39:07 2023 - ERROR - Check amcheck failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 40'
++ message='oe_test_amanda_amcheck.sh line 40'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 40'
+Thu Sep 21 17:39:07 2023 - ERROR - oe_test_amanda_amcheck.sh line 40
++ return 0
++ su - amandabackup -c 'amlabel MyConfig'
++ grep 'Reading label'
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amlabel failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amlabel failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amlabel failed'
++ LOG_ERROR 'Check amlabel failed'
++ message='Check amlabel failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amlabel failed'
+Thu Sep 21 17:39:08 2023 - ERROR - Check amlabel failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 42'
++ message='oe_test_amanda_amcheck.sh line 42'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 42'
+Thu Sep 21 17:39:08 2023 - ERROR - oe_test_amanda_amcheck.sh line 42
++ return 0
++ su - amandabackup -c 'amdump --no-dump MyConfig'
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amdump failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amdump failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amdump failed'
++ LOG_ERROR 'Check amdump failed'
++ message='Check amdump failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amdump failed'
+Thu Sep 21 17:39:09 2023 - ERROR - Check amdump failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 44'
++ message='oe_test_amanda_amcheck.sh line 44'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 44'
+Thu Sep 21 17:39:09 2023 - ERROR - oe_test_amanda_amcheck.sh line 44
++ return 0
++ grep 'DUMP SUMMARY'
++ su - amandabackup -c 'amreport MyConfig'
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amreport failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amreport failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amreport failed'
++ LOG_ERROR 'Check amreport failed'
++ message='Check amreport failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amreport failed'
+Thu Sep 21 17:39:10 2023 - ERROR - Check amreport failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 46'
++ message='oe_test_amanda_amcheck.sh line 46'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 46'
+Thu Sep 21 17:39:10 2023 - ERROR - oe_test_amanda_amcheck.sh line 46
++ return 0
++ su - amandabackup -c 'amadmin MyConfig find'
++ grep 'No dump to list'
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amadmin failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amadmin failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amadmin failed'
++ LOG_ERROR 'Check amadmin failed'
++ message='Check amadmin failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amadmin failed'
+Thu Sep 21 17:39:11 2023 - ERROR - Check amadmin failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 48'
++ message='oe_test_amanda_amcheck.sh line 48'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 48'
+Thu Sep 21 17:39:11 2023 - ERROR - oe_test_amanda_amcheck.sh line 48
++ return 0
++ su - amandabackup -c 'amcheckdump MyConfig'
++ grep 'No matching dumps found'
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amcheckdump failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amcheckdump failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amcheckdump failed'
++ LOG_ERROR 'Check amcheckdump failed'
++ message='Check amcheckdump failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amcheckdump failed'
+Thu Sep 21 17:39:11 2023 - ERROR - Check amcheckdump failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 50'
++ message='oe_test_amanda_amcheck.sh line 50'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 50'
+Thu Sep 21 17:39:12 2023 - ERROR - oe_test_amanda_amcheck.sh line 50
++ return 0
++ su - amandabackup -c 'amarchiver --create --file /amanda/tmp/archive /amanda/tmp/tmparchive'
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amarchiver failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amarchiver failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amarchiver failed'
++ LOG_ERROR 'Check amarchiver failed'
++ message='Check amarchiver failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amarchiver failed'
+Thu Sep 21 17:39:12 2023 - ERROR - Check amarchiver failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 52'
++ message='oe_test_amanda_amcheck.sh line 52'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 52'
+Thu Sep 21 17:39:13 2023 - ERROR - oe_test_amanda_amcheck.sh line 52
++ return 0
++ su - amandabackup -c 'amcheckdb MyConfig'
++ grep Ready.
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amcheckdb failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amcheckdb failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amcheckdb failed'
++ LOG_ERROR 'Check amcheckdb failed'
++ message='Check amcheckdb failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amcheckdb failed'
+Thu Sep 21 17:39:13 2023 - ERROR - Check amcheckdb failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 54'
++ message='oe_test_amanda_amcheck.sh line 54'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 54'
+Thu Sep 21 17:39:13 2023 - ERROR - oe_test_amanda_amcheck.sh line 54
++ return 0
++ su - amandabackup -c 'amstatus MyConfig'
++ grep 'network free kps'
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amstatus failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amstatus failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amstatus failed'
++ LOG_ERROR 'Check amstatus failed'
++ message='Check amstatus failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amstatus failed'
+Thu Sep 21 17:39:14 2023 - ERROR - Check amstatus failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 56'
++ message='oe_test_amanda_amcheck.sh line 56'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 56'
+Thu Sep 21 17:39:14 2023 - ERROR - oe_test_amanda_amcheck.sh line 56
++ return 0
++ su - amandabackup -c 'amoverview MyConfig 2>&1'
++ grep disk
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amoverview failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amoverview failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amoverview failed'
++ LOG_ERROR 'Check amoverview failed'
++ message='Check amoverview failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amoverview failed'
+Thu Sep 21 17:39:15 2023 - ERROR - Check amoverview failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 58'
++ message='oe_test_amanda_amcheck.sh line 58'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 58'
+Thu Sep 21 17:39:15 2023 - ERROR - oe_test_amanda_amcheck.sh line 58
++ return 0
++ su - amandabackup -c 'amdevcheck MyConfig'
++ grep SUCCESS
+su: user amandabackup does not exist or the user entry does not contain all the required fields
++ CHECK_RESULT 1 0 0 'Check amdevcheck failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Check amdevcheck failed'
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Check amdevcheck failed'
++ LOG_ERROR 'Check amdevcheck failed'
++ message='Check amdevcheck failed'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'Check amdevcheck failed'
+Thu Sep 21 17:39:16 2023 - ERROR - Check amdevcheck failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_amanda_amcheck.sh line 60'
++ message='oe_test_amanda_amcheck.sh line 60'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'oe_test_amanda_amcheck.sh line 60'
+Thu Sep 21 17:39:16 2023 - ERROR - oe_test_amanda_amcheck.sh line 60
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Sep 21 17:39:16 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 11
++ test 11 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Sep 21 17:39:17 2023 - ERROR - failed to execute the case.
++ exit 11
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Sep 21 17:39:17 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Sep 21 17:39:18 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf /amanda /etc/amanda
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen-riscv/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Sep 21 17:39:18 2023 - INFO  - End to restore the test environment.
