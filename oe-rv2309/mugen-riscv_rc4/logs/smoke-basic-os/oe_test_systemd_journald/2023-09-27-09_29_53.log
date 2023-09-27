@@ -1,0 +1,996 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 27 09:29:57 2023 - INFO  - Start to run test.
++ CHECK_RESULT 0 0 0 'Failed to execute journalctl -f'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to execute journalctl -f'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ journalctl -f
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ grep -E 'begins at|begin at|[0-9]|entries' testlog
+Sep 27 09:29:45 openeuler-riscv64 userdel[33007]: delete user 'testuser1'
+Sep 27 09:29:45 openeuler-riscv64 userdel[33007]: removed group 'testuser1' owned by 'testuser1'
+Sep 27 09:29:45 openeuler-riscv64 userdel[33007]: removed shadow group 'testuser1' owned by 'testuser1'
+Sep 27 09:29:46 openeuler-riscv64 userdel[33014]: delete user 'testuser2'
+Sep 27 09:29:46 openeuler-riscv64 userdel[33014]: removed group 'testuser2' owned by 'testuser2'
+Sep 27 09:29:46 openeuler-riscv64 userdel[33014]: removed shadow group 'testuser2' owned by 'testuser2'
+Sep 27 09:29:47 openeuler-riscv64 systemctl[33021]: [systemctl stop sssd] called by PID 32971 (bash -x oe_test_sudo_U.sh)
+Sep 27 09:29:50 openeuler-riscv64 sudo[32924]: pam_unix(sudo:session): session closed for user root
+Sep 27 09:29:50 openeuler-riscv64 sudo[33034]:     root : PWD=/root/mugen ; USER=root ; COMMAND=/usr/bin/bash mugen.sh -f smoke-basic-os -r oe_test_systemd_journald -x
+Sep 27 09:29:50 openeuler-riscv64 sudo[33034]: pam_unix(sudo:session): session opened for user root(uid=0) by root(uid=0)
++ CHECK_RESULT 0 0 0 'Failed to find begin'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to find begin'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep journalctl
++ kill -9 33090
++ journalctl --reverse --lines 10 --no-pager
++ grep 10
++ grep -vcE 'begins at|begin at'
+10
+oe_test_systemd_journald.sh: line 22: 33090 Killed                  journalctl -f > testlog
++ CHECK_RESULT 0 0 0 'Failed to execute journalctl --lines'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to execute journalctl --lines'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ journalctl --show-cursor
++ grep cursor
+-- cursor: s=8a5eb6410754465f9b90fb7454d15471;i=2888;b=b381e5458c8542259370b54b75b77c40;m=34724eb80;t=60653d546eb93;x=5c853874099a82d2
++ CHECK_RESULT 0 0 0 'Failed to execute journalctl -show-cursor'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to execute journalctl -show-cursor'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mkdir /tmp/log
++ cp '/run/log/journal/*/system.journal' /tmp/log
+cp: cannot stat '/run/log/journal/*/system.journal': No such file or directory
++ journalctl --directory /tmp/log/ --rotate --vacuum-size=8M
+No journal files were found.
+Vacuuming done, freed 0B of archived journals from /tmp/log/.
++ CHECK_RESULT 0 0 0 'Failed to execute journalctl --directory'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to execute journalctl --directory'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ journalctl /usr/lib/systemd/systemd
+Sep 27 06:35:55 openeuler-riscv64 systemd[1]: rsyslog.service: Sent signal SIGHUP to main process 1275 (rsyslogd) on client request.
+Sep 27 06:40:02 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 06:40:02 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 06:40:02 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 06:40:58 openeuler-riscv64 systemd[1]: Time has been changed
+Sep 27 06:43:09 openeuler-riscv64 systemd[1]: Starting Locale Service...
+Sep 27 06:43:10 openeuler-riscv64 systemd[1]: Started Locale Service.
+Sep 27 06:43:10 openeuler-riscv64 systemd[1]: Reloading requested from client PID 10429 ('systemd-localed') (unit systemd-localed.service)...
+Sep 27 06:43:10 openeuler-riscv64 systemd[1]: Reloading.
+Sep 27 06:43:12 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/xinetd.service:10: PIDFile= references a path below legacy directory /var/run/, updating /var/run/xinetd.pid → /run/xinetd.pid; please update the unit file accordingly.
+Sep 27 06:43:13 openeuler-riscv64 systemd[1]: Configuration file /usr/lib/systemd/system/isulad.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Sep 27 06:43:13 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/nslcd.service:8: PIDFile= references a path below legacy directory /var/run/, updating /var/run/nslcd/nslcd.pid → /run/nslcd/nslcd.pid; please update the unit file accordingly.
+Sep 27 06:43:13 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/acpid.socket:6: ListenStream= references a path below legacy directory /var/run/, updating /var/run/acpid.socket → /run/acpid.socket; please update the unit file accordingly.
+Sep 27 06:43:13 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/rtkit-daemon.service:32: Unknown key name 'ControlGroup' in section 'Service', ignoring.
+Sep 27 06:43:13 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/dbus.socket:5: ListenStream= references a path below legacy directory /var/run/, updating /var/run/dbus/system_bus_socket → /run/dbus/system_bus_socket; please update the unit file accordingly.
+Sep 27 06:43:18 openeuler-riscv64 systemd[1]: Reloading requested from client PID 10429 ('systemd-localed') (unit systemd-localed.service)...
+Sep 27 06:43:18 openeuler-riscv64 systemd[1]: Reloading.
+Sep 27 06:43:20 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/xinetd.service:10: PIDFile= references a path below legacy directory /var/run/, updating /var/run/xinetd.pid → /run/xinetd.pid; please update the unit file accordingly.
+Sep 27 06:43:21 openeuler-riscv64 systemd[1]: Configuration file /usr/lib/systemd/system/isulad.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Sep 27 06:43:21 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/nslcd.service:8: PIDFile= references a path below legacy directory /var/run/, updating /var/run/nslcd/nslcd.pid → /run/nslcd/nslcd.pid; please update the unit file accordingly.
+Sep 27 06:43:21 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/acpid.socket:6: ListenStream= references a path below legacy directory /var/run/, updating /var/run/acpid.socket → /run/acpid.socket; please update the unit file accordingly.
+Sep 27 06:43:21 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/rtkit-daemon.service:32: Unknown key name 'ControlGroup' in section 'Service', ignoring.
+Sep 27 06:43:21 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/dbus.socket:5: ListenStream= references a path below legacy directory /var/run/, updating /var/run/dbus/system_bus_socket → /run/dbus/system_bus_socket; please update the unit file accordingly.
+Sep 27 06:43:46 openeuler-riscv64 systemd[1]: Starting Hostname Service...
+Sep 27 06:43:47 openeuler-riscv64 systemd[1]: Started Hostname Service.
+Sep 27 06:43:52 openeuler-riscv64 systemd[1]: systemd-localed.service: Deactivated successfully.
+Sep 27 06:44:22 openeuler-riscv64 systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Sep 27 06:50:35 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 06:50:35 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 06:50:35 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 07:00:35 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 07:00:35 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 07:00:35 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 07:10:35 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 07:10:35 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 07:10:35 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 07:20:35 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 07:20:35 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 07:20:35 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 07:30:35 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 07:30:35 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 07:30:35 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 07:40:35 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 07:40:35 openeuler-riscv64 systemd[1]: Starting dnf makecache...
+Sep 27 07:40:35 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 07:40:35 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 07:40:39 openeuler-riscv64 systemd[1]: dnf-makecache.service: Deactivated successfully.
+Sep 27 07:40:39 openeuler-riscv64 systemd[1]: Finished dnf makecache.
+Sep 27 07:45:00 openeuler-riscv64 systemd[1]: Started Session 7 of User root.
+Sep 27 07:45:00 openeuler-riscv64 systemd[1]: session-7.scope: Deactivated successfully.
+Sep 27 07:45:30 openeuler-riscv64 systemd[1]: Stopping Deferred execution scheduler...
+Sep 27 07:45:30 openeuler-riscv64 systemd[1]: atd.service: Deactivated successfully.
+Sep 27 07:45:30 openeuler-riscv64 systemd[1]: Stopped Deferred execution scheduler.
+Sep 27 07:47:12 openeuler-riscv64 systemd[1]: NetworkManager-wait-online.service: Deactivated successfully.
+Sep 27 07:47:12 openeuler-riscv64 systemd[1]: Stopped Network Manager Wait Online.
+Sep 27 07:47:12 openeuler-riscv64 systemd[1]: Stopping Network Manager Wait Online...
+Sep 27 07:47:12 openeuler-riscv64 systemd[1]: Stopping Network Manager...
+Sep 27 07:47:13 openeuler-riscv64 systemd[1]: Starting Network Manager Script Dispatcher Service...
+Sep 27 07:47:13 openeuler-riscv64 systemd[1]: NetworkManager.service: Deactivated successfully.
+Sep 27 07:47:13 openeuler-riscv64 systemd[1]: Stopped Network Manager.
+Sep 27 07:47:13 openeuler-riscv64 systemd[1]: Starting Network Manager...
+Sep 27 07:47:13 openeuler-riscv64 systemd[1]: Started Network Manager Script Dispatcher Service.
+Sep 27 07:47:13 openeuler-riscv64 systemd[1]: Started Network Manager.
+Sep 27 07:47:13 openeuler-riscv64 systemd[1]: Starting Network Manager Wait Online...
+Sep 27 07:47:13 openeuler-riscv64 systemd[1]: Starting Hostname Service...
+Sep 27 07:47:14 openeuler-riscv64 systemd[1]: Started Hostname Service.
+Sep 27 07:47:15 openeuler-riscv64 systemd[1]: Finished Network Manager Wait Online.
+Sep 27 07:47:16 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:47:16 openeuler-riscv64 systemd[1]: squid.service: Unit cannot be reloaded because it is inactive.
+Sep 27 07:47:16 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:47:17 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:47:17 openeuler-riscv64 systemd[1]: squid.service: Unit cannot be reloaded because it is inactive.
+Sep 27 07:47:18 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:47:18 openeuler-riscv64 systemd[1]: squid.service: Unit cannot be reloaded because it is inactive.
+Sep 27 07:47:18 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:47:19 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:47:19 openeuler-riscv64 systemd[1]: squid.service: Unit cannot be reloaded because it is inactive.
+Sep 27 07:47:19 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:47:29 openeuler-riscv64 systemd[1]: NetworkManager-dispatcher.service: Deactivated successfully.
+Sep 27 07:47:44 openeuler-riscv64 systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Sep 27 07:48:07 openeuler-riscv64 systemd[1]: Starting Samba SMB Daemon...
+Sep 27 07:48:08 openeuler-riscv64 systemd[1]: Started Samba SMB Daemon.
+Sep 27 07:48:12 openeuler-riscv64 systemd[1]: Stopping Samba SMB Daemon...
+Sep 27 07:48:12 openeuler-riscv64 systemd[1]: smb.service: Deactivated successfully.
+Sep 27 07:48:12 openeuler-riscv64 systemd[1]: Stopped Samba SMB Daemon.
+Sep 27 07:49:01 openeuler-riscv64 systemd[1]: Stopping firewalld - dynamic firewall daemon...
+Sep 27 07:49:01 openeuler-riscv64 systemd[1]: firewalld.service: Deactivated successfully.
+Sep 27 07:49:01 openeuler-riscv64 systemd[1]: Stopped firewalld - dynamic firewall daemon.
+Sep 27 07:49:01 openeuler-riscv64 systemd[1]: Starting Vsftpd ftp daemon...
+Sep 27 07:49:01 openeuler-riscv64 systemd[1]: Started Vsftpd ftp daemon.
+Sep 27 07:49:11 openeuler-riscv64 systemd[1]: Starting firewalld - dynamic firewall daemon...
+Sep 27 07:49:15 openeuler-riscv64 systemd[1]: Started firewalld - dynamic firewall daemon.
+Sep 27 07:50:11 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 07:50:12 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 07:50:12 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 07:50:12 openeuler-riscv64 systemd[1]: Started /usr/bin/systemctl start man-db-cache-update.
+Sep 27 07:50:12 openeuler-riscv64 systemd[1]: cgroup compatibility translation between legacy and unified hierarchy settings activated. See cgroup-compat debug messages for details.
+Sep 27 07:50:12 openeuler-riscv64 systemd[1]: Starting man-db-cache-update.service...
+Sep 27 07:50:12 openeuler-riscv64 systemd[1]: Reloading requested from client PID 12480 (unit session-4.scope)...
+Sep 27 07:50:12 openeuler-riscv64 systemd[1]: Reloading.
+Sep 27 07:50:15 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/xinetd.service:10: PIDFile= references a path below legacy directory /var/run/, updating /var/run/xinetd.pid → /run/xinetd.pid; please update the unit file accordingly.
+Sep 27 07:50:15 openeuler-riscv64 systemd[1]: Configuration file /usr/lib/systemd/system/isulad.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Sep 27 07:50:15 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/nslcd.service:8: PIDFile= references a path below legacy directory /var/run/, updating /var/run/nslcd/nslcd.pid → /run/nslcd/nslcd.pid; please update the unit file accordingly.
+Sep 27 07:50:15 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/acpid.socket:6: ListenStream= references a path below legacy directory /var/run/, updating /var/run/acpid.socket → /run/acpid.socket; please update the unit file accordingly.
+Sep 27 07:50:15 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/rtkit-daemon.service:32: Unknown key name 'ControlGroup' in section 'Service', ignoring.
+Sep 27 07:50:15 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/dbus.socket:5: ListenStream= references a path below legacy directory /var/run/, updating /var/run/dbus/system_bus_socket → /run/dbus/system_bus_socket; please update the unit file accordingly.
+Sep 27 07:50:17 openeuler-riscv64 systemd[1]: man-db-cache-update.service: Deactivated successfully.
+Sep 27 07:50:17 openeuler-riscv64 systemd[1]: Finished man-db-cache-update.service.
+Sep 27 07:50:17 openeuler-riscv64 systemd[1]: run-rdf012a08daf14ff78a10b6a3aa3202c5.service: Deactivated successfully.
+Sep 27 07:50:26 openeuler-riscv64 systemd[1]: Stopping firewalld - dynamic firewall daemon...
+Sep 27 07:50:27 openeuler-riscv64 systemd[1]: firewalld.service: Deactivated successfully.
+Sep 27 07:50:27 openeuler-riscv64 systemd[1]: Stopped firewalld - dynamic firewall daemon.
+Sep 27 07:50:27 openeuler-riscv64 systemd[1]: Starting One-time temporary TLS key generation for httpd.service...
+Sep 27 07:50:27 openeuler-riscv64 systemd[1]: httpd-init.service: Deactivated successfully.
+Sep 27 07:50:27 openeuler-riscv64 systemd[1]: Finished One-time temporary TLS key generation for httpd.service.
+Sep 27 07:50:27 openeuler-riscv64 systemd[1]: Starting The Apache HTTP Server...
+Sep 27 07:50:28 openeuler-riscv64 systemd[1]: Started The Apache HTTP Server.
+Sep 27 07:50:39 openeuler-riscv64 systemd[1]: Starting firewalld - dynamic firewall daemon...
+Sep 27 07:50:41 openeuler-riscv64 systemd[1]: Started firewalld - dynamic firewall daemon.
+Sep 27 07:50:51 openeuler-riscv64 systemd[1]: Reloading requested from client PID 12860 (unit session-4.scope)...
+Sep 27 07:50:51 openeuler-riscv64 systemd[1]: Reloading.
+Sep 27 07:50:54 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/xinetd.service:10: PIDFile= references a path below legacy directory /var/run/, updating /var/run/xinetd.pid → /run/xinetd.pid; please update the unit file accordingly.
+Sep 27 07:50:54 openeuler-riscv64 systemd[1]: Configuration file /usr/lib/systemd/system/isulad.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Sep 27 07:50:54 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/nslcd.service:8: PIDFile= references a path below legacy directory /var/run/, updating /var/run/nslcd/nslcd.pid → /run/nslcd/nslcd.pid; please update the unit file accordingly.
+Sep 27 07:50:54 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/acpid.socket:6: ListenStream= references a path below legacy directory /var/run/, updating /var/run/acpid.socket → /run/acpid.socket; please update the unit file accordingly.
+Sep 27 07:50:54 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/rtkit-daemon.service:32: Unknown key name 'ControlGroup' in section 'Service', ignoring.
+Sep 27 07:50:54 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/dbus.socket:5: ListenStream= references a path below legacy directory /var/run/, updating /var/run/dbus/system_bus_socket → /run/dbus/system_bus_socket; please update the unit file accordingly.
+Sep 27 07:50:56 openeuler-riscv64 systemd[1]: Started /usr/bin/systemctl start man-db-cache-update.
+Sep 27 07:50:57 openeuler-riscv64 systemd[1]: Starting man-db-cache-update.service...
+Sep 27 07:50:58 openeuler-riscv64 systemd[1]: man-db-cache-update.service: Deactivated successfully.
+Sep 27 07:50:58 openeuler-riscv64 systemd[1]: Finished man-db-cache-update.service.
+Sep 27 07:50:58 openeuler-riscv64 systemd[1]: run-rb0d31481696e46c1bb4562dec61ba70a.service: Deactivated successfully.
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: NetworkManager-wait-online.service: Deactivated successfully.
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Stopped Network Manager Wait Online.
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Stopping Network Manager Wait Online...
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Stopping Network Manager...
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Starting Network Manager Script Dispatcher Service...
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: NetworkManager.service: Deactivated successfully.
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Stopped Network Manager.
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Starting Network Manager...
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Started Network Manager Script Dispatcher Service.
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Started Network Manager.
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Starting Network Manager Wait Online...
+Sep 27 07:54:29 openeuler-riscv64 systemd[1]: Starting Hostname Service...
+Sep 27 07:54:30 openeuler-riscv64 systemd[1]: Started Hostname Service.
+Sep 27 07:54:32 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:54:32 openeuler-riscv64 systemd[1]: squid.service: Unit cannot be reloaded because it is inactive.
+Sep 27 07:54:32 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:54:33 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:54:33 openeuler-riscv64 systemd[1]: squid.service: Unit cannot be reloaded because it is inactive.
+Sep 27 07:54:33 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 07:54:36 openeuler-riscv64 systemd[1]: Finished Network Manager Wait Online.
+Sep 27 07:54:43 openeuler-riscv64 systemd[1]: NetworkManager-dispatcher.service: Deactivated successfully.
+Sep 27 07:55:00 openeuler-riscv64 systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Sep 27 08:00:00 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 08:00:00 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 08:00:00 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 08:10:03 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 08:10:03 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 08:10:03 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 08:10:44 openeuler-riscv64 systemd[1]: var-lib-os\x2dprober-mount.mount: Deactivated successfully.
+Sep 27 08:10:55 openeuler-riscv64 systemd[1]: var-lib-os\x2dprober-mount-boot.mount: Deactivated successfully.
+Sep 27 08:10:55 openeuler-riscv64 systemd[1]: var-lib-os\x2dprober-mount.mount: Deactivated successfully.
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: NetworkManager-wait-online.service: Deactivated successfully.
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Stopped Network Manager Wait Online.
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Stopping Network Manager Wait Online...
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Stopping Network Manager...
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Starting Network Manager Script Dispatcher Service...
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: NetworkManager.service: Deactivated successfully.
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Stopped Network Manager.
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Starting Network Manager...
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Started Network Manager Script Dispatcher Service.
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Started Network Manager.
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Starting Network Manager Wait Online...
+Sep 27 08:12:49 openeuler-riscv64 systemd[1]: Starting Hostname Service...
+Sep 27 08:12:50 openeuler-riscv64 systemd[1]: Started Hostname Service.
+Sep 27 08:12:52 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 08:12:52 openeuler-riscv64 systemd[1]: squid.service: Unit cannot be reloaded because it is inactive.
+Sep 27 08:12:52 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 08:12:53 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 08:12:53 openeuler-riscv64 systemd[1]: squid.service: Unit cannot be reloaded because it is inactive.
+Sep 27 08:12:53 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/squid.service:14: Unknown key name 'killMode' in section 'Service', ignoring.
+Sep 27 08:12:56 openeuler-riscv64 systemd[1]: Finished Network Manager Wait Online.
+Sep 27 08:13:03 openeuler-riscv64 systemd[1]: NetworkManager-dispatcher.service: Deactivated successfully.
+Sep 27 08:13:20 openeuler-riscv64 systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Sep 27 08:13:46 openeuler-riscv64 systemd[1]: Stopping firewalld - dynamic firewall daemon...
+Sep 27 08:13:46 openeuler-riscv64 systemd[1]: firewalld.service: Deactivated successfully.
+Sep 27 08:13:46 openeuler-riscv64 systemd[1]: Stopped firewalld - dynamic firewall daemon.
+Sep 27 08:13:47 openeuler-riscv64 systemd[1]: Starting firewalld - dynamic firewall daemon...
+Sep 27 08:13:49 openeuler-riscv64 systemd[1]: Started firewalld - dynamic firewall daemon.
+Sep 27 08:15:05 openeuler-riscv64 systemd[1]: Stopping firewalld - dynamic firewall daemon...
+Sep 27 08:15:06 openeuler-riscv64 systemd[1]: firewalld.service: Deactivated successfully.
+Sep 27 08:15:06 openeuler-riscv64 systemd[1]: Stopped firewalld - dynamic firewall daemon.
+Sep 27 08:15:06 openeuler-riscv64 systemd[1]: Starting firewalld - dynamic firewall daemon...
+Sep 27 08:15:09 openeuler-riscv64 systemd[1]: Started firewalld - dynamic firewall daemon.
+Sep 27 08:19:50 openeuler-riscv64 systemd[1]: Starting DNS caching server....
+Sep 27 08:19:50 openeuler-riscv64 systemd[1]: Started DNS caching server..
+Sep 27 08:19:55 openeuler-riscv64 systemd[1]: Stopping DNS caching server....
+Sep 27 08:19:55 openeuler-riscv64 systemd[1]: dnsmasq.service: Deactivated successfully.
+Sep 27 08:19:55 openeuler-riscv64 systemd[1]: Stopped DNS caching server..
+Sep 27 08:20:06 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 08:20:06 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 08:20:06 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 08:22:42 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:22:42 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:22:46 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:22:46 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:22:46 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:22:50 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:22:50 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:22:54 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:22:54 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:22:54 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:22:59 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:22:59 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:23:03 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:23:03 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:23:03 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:23:07 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:23:07 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:23:11 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:23:11 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:23:11 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:23:15 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:23:15 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:23:19 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:23:19 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:23:19 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:23:23 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:23:24 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:23:28 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:23:28 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:23:28 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:23:32 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:23:32 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:23:36 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:23:36 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:23:36 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:23:40 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:23:40 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:23:44 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:23:44 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:23:44 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:23:48 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:23:48 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:23:52 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:23:52 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:23:52 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:23:56 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:23:56 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:24:00 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:24:00 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:24:00 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:24:04 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:24:04 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:24:08 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:24:08 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:24:08 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:24:12 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:24:12 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:24:16 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:24:16 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:24:16 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:24:20 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:24:20 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:24:24 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:24:24 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:24:24 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:24:28 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:24:29 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:24:33 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:24:33 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:24:33 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:24:37 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:24:37 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:24:41 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:24:41 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:24:41 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:24:45 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:24:45 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:24:49 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:24:49 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:24:49 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:24:54 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:24:54 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:24:58 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:24:58 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:24:58 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:25:02 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:25:02 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:25:06 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:25:06 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:25:06 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:25:10 openeuler-riscv64 systemd[1]: Starting Open-iSCSI...
+Sep 27 08:25:10 openeuler-riscv64 systemd[1]: Started Open-iSCSI.
+Sep 27 08:25:14 openeuler-riscv64 systemd[1]: Stopping Open-iSCSI...
+Sep 27 08:25:14 openeuler-riscv64 systemd[1]: iscsid.service: Deactivated successfully.
+Sep 27 08:25:14 openeuler-riscv64 systemd[1]: Stopped Open-iSCSI.
+Sep 27 08:28:04 openeuler-riscv64 systemd[1]: Created slice User Slice of UID 1001.
+Sep 27 08:28:04 openeuler-riscv64 systemd[1]: Starting User Runtime Directory /run/user/1001...
+Sep 27 08:28:05 openeuler-riscv64 systemd[1]: Finished User Runtime Directory /run/user/1001.
+Sep 27 08:28:05 openeuler-riscv64 systemd[1]: Starting User Manager for UID 1001...
+Sep 27 08:28:05 openeuler-riscv64 (systemd)[25628]: pam_unix(systemd-user:session): session opened for user ltestuser(uid=1001) by ltestuser(uid=0)
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Queued start job for default target Main User Target.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Created slice User Application Slice.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Created slice User Core Session Slice.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Created slice User Background Tasks Slice.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Reached target Paths.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Reached target Timers.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Starting D-Bus User Message Bus Socket...
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Listening on PipeWire Multimedia System Socket.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Listening on OpenSSH key agent.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Listening on D-Bus User Message Bus Socket.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Reached target Sockets.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Reached target Basic System.
+Sep 27 08:28:06 openeuler-riscv64 systemd[1]: Started User Manager for UID 1001.
+Sep 27 08:28:06 openeuler-riscv64 systemd[25628]: Started PipeWire Multimedia Service.
+Sep 27 08:28:06 openeuler-riscv64 systemd[1]: Started Session 8 of User ltestuser.
+Sep 27 08:28:07 openeuler-riscv64 systemd[25628]: Starting Tracker metadata extractor...
+Sep 27 08:28:07 openeuler-riscv64 systemd[25628]: Starting D-Bus User Message Bus...
+Sep 27 08:28:07 openeuler-riscv64 systemd[25628]: Started D-Bus User Message Bus.
+Sep 27 08:28:07 openeuler-riscv64 systemd[1]: Starting Hostname Service...
+Sep 27 08:28:08 openeuler-riscv64 systemd[1]: Started Hostname Service.
+Sep 27 08:28:11 openeuler-riscv64 systemd[1]: session-8.scope: Deactivated successfully.
+Sep 27 08:28:14 openeuler-riscv64 systemd[25628]: Starting Tracker file system data miner...
+Sep 27 08:28:16 openeuler-riscv64 systemd[25628]: Started Tracker file system data miner.
+Sep 27 08:28:17 openeuler-riscv64 systemd[25628]: Started Tracker metadata extractor.
+Sep 27 08:28:17 openeuler-riscv64 systemd[25628]: Reached target Main User Target.
+Sep 27 08:28:17 openeuler-riscv64 systemd[25628]: Startup finished in 11.671s.
+Sep 27 08:28:21 openeuler-riscv64 systemd[1]: Stopping User Manager for UID 1001...
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Activating special unit Exit the Session...
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Stopped target Main User Target.
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Stopping D-Bus User Message Bus...
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Stopping PipeWire Multimedia Service...
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Stopping Tracker metadata extractor...
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Stopping Tracker file system data miner...
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Stopped D-Bus User Message Bus.
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Stopped PipeWire Multimedia Service.
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Removed slice User Core Session Slice.
+Sep 27 08:28:21 openeuler-riscv64 systemd[25628]: Stopped Tracker metadata extractor.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Stopped Tracker file system data miner.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Removed slice User Background Tasks Slice.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Stopped target Basic System.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Stopped target Paths.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Stopped target Sockets.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Stopped target Timers.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Closed D-Bus User Message Bus Socket.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Closed PipeWire Multimedia System Socket.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Closed OpenSSH key agent.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Removed slice User Application Slice.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Reached target Shutdown.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Finished Exit the Session.
+Sep 27 08:28:22 openeuler-riscv64 systemd[25628]: Reached target Exit the Session.
+Sep 27 08:28:22 openeuler-riscv64 systemd[1]: user@1001.service: Deactivated successfully.
+Sep 27 08:28:22 openeuler-riscv64 systemd[1]: Stopped User Manager for UID 1001.
+Sep 27 08:28:22 openeuler-riscv64 systemd[1]: Stopping User Runtime Directory /run/user/1001...
+Sep 27 08:28:22 openeuler-riscv64 systemd[1]: run-user-1001.mount: Deactivated successfully.
+Sep 27 08:28:22 openeuler-riscv64 systemd[1]: user-runtime-dir@1001.service: Deactivated successfully.
+Sep 27 08:28:22 openeuler-riscv64 systemd[1]: Stopped User Runtime Directory /run/user/1001.
+Sep 27 08:28:22 openeuler-riscv64 systemd[1]: Removed slice User Slice of UID 1001.
+Sep 27 08:28:38 openeuler-riscv64 systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Sep 27 08:30:08 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 08:30:08 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 08:30:08 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 08:30:26 openeuler-riscv64 systemd[1]: Started /usr/bin/systemctl start man-db-cache-update.
+Sep 27 08:30:26 openeuler-riscv64 systemd[1]: Starting man-db-cache-update.service...
+Sep 27 08:30:29 openeuler-riscv64 systemd[1]: man-db-cache-update.service: Deactivated successfully.
+Sep 27 08:30:29 openeuler-riscv64 systemd[1]: Finished man-db-cache-update.service.
+Sep 27 08:30:29 openeuler-riscv64 systemd[1]: run-r06f8d8c1db174e5b9d14451f01d42aac.service: Deactivated successfully.
+Sep 27 08:30:43 openeuler-riscv64 systemd[1]: Started /usr/bin/systemctl start man-db-cache-update.
+Sep 27 08:30:43 openeuler-riscv64 systemd[1]: Starting man-db-cache-update.service...
+Sep 27 08:30:46 openeuler-riscv64 systemd[1]: man-db-cache-update.service: Deactivated successfully.
+Sep 27 08:30:46 openeuler-riscv64 systemd[1]: Finished man-db-cache-update.service.
+Sep 27 08:30:46 openeuler-riscv64 systemd[1]: run-rf795706302fb49479a0e355a2ce827a0.service: Deactivated successfully.
+Sep 27 08:31:16 openeuler-riscv64 systemd[1]: Started Session 10 of User root.
+Sep 27 08:31:17 openeuler-riscv64 systemd[1]: Starting Hostname Service...
+Sep 27 08:31:18 openeuler-riscv64 systemd[1]: Started Hostname Service.
+Sep 27 08:31:21 openeuler-riscv64 systemd[1]: session-10.scope: Deactivated successfully.
+Sep 27 08:31:48 openeuler-riscv64 systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Sep 27 08:32:15 openeuler-riscv64 systemd[1]: Kernel Module supporting RPCSEC_GSS was skipped because of an unmet condition check (ConditionPathExists=/etc/krb5.keytab).
+Sep 27 08:32:15 openeuler-riscv64 systemd[1]: Stopping NFS server and services...
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: nfs-server.service: Deactivated successfully.
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: Stopped NFS server and services.
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: Stopping NFSv4 ID-name mapping service...
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: Stopping NFS Mount Daemon...
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: RPC security service for NFS client and server was skipped because of an unmet condition check (ConditionPathExists=/etc/krb5.keytab).
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: nfs-idmapd.service: Deactivated successfully.
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: Stopped NFSv4 ID-name mapping service.
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: nfs-mountd.service: Deactivated successfully.
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: Stopped NFS Mount Daemon.
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: Starting NFSv4 ID-name mapping service...
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: Starting NFS Mount Daemon...
+Sep 27 08:32:16 openeuler-riscv64 systemd[1]: Started NFSv4 ID-name mapping service.
+Sep 27 08:32:17 openeuler-riscv64 systemd[1]: Started NFS Mount Daemon.
+Sep 27 08:32:17 openeuler-riscv64 systemd[1]: Starting NFS server and services...
+Sep 27 08:32:18 openeuler-riscv64 systemd[1]: Finished NFS server and services.
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: Stopping NFS server and services...
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: nfs-server.service: Deactivated successfully.
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: Stopped NFS server and services.
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: Stopping NFSv4 ID-name mapping service...
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: Stopping NFS Mount Daemon...
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: nfs-idmapd.service: Deactivated successfully.
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: Stopped NFSv4 ID-name mapping service.
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: nfs-mountd.service: Deactivated successfully.
+Sep 27 08:32:20 openeuler-riscv64 systemd[1]: Stopped NFS Mount Daemon.
+Sep 27 08:32:42 openeuler-riscv64 systemd[1]: Kernel Module supporting RPCSEC_GSS was skipped because of an unmet condition check (ConditionPathExists=/etc/krb5.keytab).
+Sep 27 08:32:43 openeuler-riscv64 systemd[1]: Starting NFSv4 ID-name mapping service...
+Sep 27 08:32:43 openeuler-riscv64 systemd[1]: Starting NFS Mount Daemon...
+Sep 27 08:32:43 openeuler-riscv64 systemd[1]: RPC security service for NFS client and server was skipped because of an unmet condition check (ConditionPathExists=/etc/krb5.keytab).
+Sep 27 08:32:43 openeuler-riscv64 systemd[1]: Started NFSv4 ID-name mapping service.
+Sep 27 08:32:43 openeuler-riscv64 systemd[1]: Started NFS Mount Daemon.
+Sep 27 08:32:43 openeuler-riscv64 systemd[1]: Starting NFS server and services...
+Sep 27 08:32:44 openeuler-riscv64 systemd[1]: Finished NFS server and services.
+Sep 27 08:32:48 openeuler-riscv64 systemd[1]: home-test.mount: Deactivated successfully.
+Sep 27 08:32:48 openeuler-riscv64 systemd[1]: Stopping NFS server and services...
+Sep 27 08:32:49 openeuler-riscv64 systemd[1]: nfs-server.service: Deactivated successfully.
+Sep 27 08:32:49 openeuler-riscv64 systemd[1]: Stopped NFS server and services.
+Sep 27 08:32:49 openeuler-riscv64 systemd[1]: Stopping NFSv4 ID-name mapping service...
+Sep 27 08:32:49 openeuler-riscv64 systemd[1]: Stopping NFS Mount Daemon...
+Sep 27 08:32:49 openeuler-riscv64 systemd[1]: nfs-idmapd.service: Deactivated successfully.
+Sep 27 08:32:49 openeuler-riscv64 systemd[1]: Stopped NFSv4 ID-name mapping service.
+Sep 27 08:32:49 openeuler-riscv64 systemd[1]: nfs-mountd.service: Deactivated successfully.
+Sep 27 08:32:49 openeuler-riscv64 systemd[1]: Stopped NFS Mount Daemon.
+Sep 27 08:34:35 openeuler-riscv64 systemd[1]: Started /usr/bin/systemctl start man-db-cache-update.
+Sep 27 08:34:36 openeuler-riscv64 systemd[1]: Starting man-db-cache-update.service...
+Sep 27 08:34:40 openeuler-riscv64 systemd[1]: man-db-cache-update.service: Deactivated successfully.
+Sep 27 08:34:40 openeuler-riscv64 systemd[1]: Finished man-db-cache-update.service.
+Sep 27 08:34:40 openeuler-riscv64 systemd[1]: run-rda54ae9d3f32466ca75dfa53e6d1885a.service: Deactivated successfully.
+Sep 27 08:34:54 openeuler-riscv64 systemd[1]: Started /usr/bin/systemctl start man-db-cache-update.
+Sep 27 08:34:54 openeuler-riscv64 systemd[1]: Starting man-db-cache-update.service...
+Sep 27 08:34:57 openeuler-riscv64 systemd[1]: man-db-cache-update.service: Deactivated successfully.
+Sep 27 08:34:57 openeuler-riscv64 systemd[1]: Finished man-db-cache-update.service.
+Sep 27 08:34:58 openeuler-riscv64 systemd[1]: run-r336499ad4df64099bb8d1f6b31eae719.service: Deactivated successfully.
+Sep 27 08:37:08 openeuler-riscv64 systemd[1]: Stopping NTP client/server...
+Sep 27 08:37:08 openeuler-riscv64 systemd[1]: chronyd.service: Deactivated successfully.
+Sep 27 08:37:08 openeuler-riscv64 systemd[1]: Stopped NTP client/server.
+Sep 27 08:37:08 openeuler-riscv64 systemd[1]: Starting Network Time Service...
+Sep 27 08:37:08 openeuler-riscv64 systemd[1]: Started Network Time Service.
+Sep 27 08:37:09 openeuler-riscv64 systemd[1]: Stopping Network Time Service...
+Sep 27 08:37:09 openeuler-riscv64 systemd[1]: ntpd.service: Deactivated successfully.
+Sep 27 08:37:09 openeuler-riscv64 systemd[1]: Stopped Network Time Service.
+Sep 27 08:37:09 openeuler-riscv64 systemd[1]: Starting Network Time Service...
+Sep 27 08:37:10 openeuler-riscv64 systemd[1]: Started Network Time Service.
+Sep 27 08:40:01 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 08:40:01 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 08:40:01 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 08:45:33 openeuler-riscv64 systemd[1]: var-lib-os\x2dprober-mount.mount: Deactivated successfully.
+Sep 27 08:50:03 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 08:50:03 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 08:50:03 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 08:53:48 openeuler-riscv64 systemd[1]: Starting Locale Service...
+Sep 27 08:53:49 openeuler-riscv64 systemd[1]: Started Locale Service.
+Sep 27 08:54:16 openeuler-riscv64 systemd[1]: Stopping firewalld - dynamic firewall daemon...
+Sep 27 08:54:17 openeuler-riscv64 systemd[1]: firewalld.service: Deactivated successfully.
+Sep 27 08:54:17 openeuler-riscv64 systemd[1]: Stopped firewalld - dynamic firewall daemon.
+Sep 27 08:54:17 openeuler-riscv64 systemd[1]: Stopping The Apache HTTP Server...
+Sep 27 08:54:18 openeuler-riscv64 systemd[1]: httpd.service: Deactivated successfully.
+Sep 27 08:54:18 openeuler-riscv64 systemd[1]: Stopped The Apache HTTP Server.
+Sep 27 08:54:18 openeuler-riscv64 systemd[1]: Starting The Apache HTTP Server...
+Sep 27 08:54:19 openeuler-riscv64 systemd[1]: Started The Apache HTTP Server.
+Sep 27 08:54:24 openeuler-riscv64 systemd[1]: systemd-localed.service: Deactivated successfully.
+Sep 27 08:54:26 openeuler-riscv64 systemd[1]: Starting firewalld - dynamic firewall daemon...
+Sep 27 08:54:28 openeuler-riscv64 systemd[1]: Started firewalld - dynamic firewall daemon.
+Sep 27 09:00:01 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 09:00:01 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 09:00:01 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 09:00:05 openeuler-riscv64 systemd[1]: rsyslog.service: Main process exited, code=killed, status=9/KILL
+Sep 27 09:00:05 openeuler-riscv64 systemd[1]: rsyslog.service: Failed with result 'signal'.
+Sep 27 09:00:06 openeuler-riscv64 systemd[1]: rsyslog.service: Scheduled restart job, restart counter is at 1.
+Sep 27 09:00:06 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:00:06 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:00:06 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:01:01 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:01:02 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:01:02 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:01:02 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:01:02 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:01:28 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:01:28 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:01:28 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:01:32 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:01:33 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:01:39 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:01:39 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:01:39 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:01:39 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:01:39 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:01:47 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:01:48 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:01:48 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:01:48 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:01:48 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:11 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:12 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:12 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:15 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:15 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:18 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:18 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:18 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:18 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:19 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:22 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:22 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:22 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:25 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:25 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:28 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:28 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:28 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:28 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:29 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:32 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:32 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:32 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:35 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:35 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:38 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:38 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:38 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:38 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:39 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:42 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:42 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:42 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:45 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:45 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:48 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:48 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:48 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:48 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:49 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:52 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:52 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:52 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:55 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:55 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:02:58 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:02:59 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:02:59 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:02:59 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:02:59 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:02 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:02 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:02 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:05 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:06 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:08 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:09 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:09 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:09 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:09 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:12 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:13 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:13 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:15 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:16 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:18 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:19 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:19 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:19 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:19 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:22 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:23 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:23 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:26 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:26 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:29 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:29 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:29 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:29 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:30 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:33 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:33 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:33 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:36 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:36 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:39 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:40 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:40 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:40 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:40 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:43 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:44 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:44 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:46 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:47 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:50 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:50 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:50 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:50 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:50 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:03:53 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:03:54 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:03:54 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:03:57 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:03:57 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:00 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:00 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:00 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:00 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:00 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:03 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:04 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:04 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:07 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:07 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:10 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:10 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:10 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:10 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:11 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:14 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:14 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:14 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:17 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:17 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:20 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:20 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:20 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:20 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:21 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:24 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:24 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:24 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:27 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:27 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:30 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:31 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:31 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:31 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:31 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:34 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:34 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:34 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:37 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:37 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:40 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:41 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:41 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:41 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:41 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:44 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:44 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:44 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:47 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:47 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:50 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:50 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:51 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:51 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:51 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:04:54 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:04:54 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:04:54 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:04:57 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:04:57 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:05:00 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:05:00 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:05:01 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:05:01 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:05:01 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:05:04 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:05:04 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:05:04 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:05:07 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:05:07 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:05:10 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:05:11 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:05:11 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:05:11 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:05:11 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:05:14 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:05:14 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:05:14 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:05:17 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:05:18 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:05:20 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:05:21 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:05:21 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:05:21 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:05:21 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:05:47 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:05:47 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:05:47 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:05:47 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:05:48 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:05:58 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:05:59 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:05:59 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:05:59 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:05:59 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:06:22 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:06:23 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:06:23 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:06:23 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:06:23 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:06:25 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:06:25 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:06:25 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:06:25 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:06:26 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:06:49 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:06:49 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:06:49 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:06:49 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:06:50 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:06:52 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:06:52 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:06:52 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:06:52 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:06:52 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:16 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:16 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:16 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:16 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:17 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:21 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:21 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:21 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:21 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:22 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:25 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:26 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:26 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:26 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:26 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:30 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:31 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:31 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:31 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:31 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:35 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:35 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:35 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:35 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:35 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:39 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:39 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:40 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:40 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:40 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:44 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:44 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:44 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:44 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:44 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:48 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:48 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:49 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:49 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:49 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:07:53 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:07:53 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:07:53 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:07:53 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:07:54 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:08:22 openeuler-riscv64 systemd[1]: Starting Time & Date Service...
+Sep 27 09:08:22 openeuler-riscv64 systemd[1]: Started Time & Date Service.
+Sep 27 09:08:23 openeuler-riscv64 systemd[1]: Starting dnf makecache...
+Sep 27 09:08:26 openeuler-riscv64 systemd[1]: dnf-makecache.service: Deactivated successfully.
+Sep 27 09:08:26 openeuler-riscv64 systemd[1]: Finished dnf makecache.
+Sep 27 09:08:53 openeuler-riscv64 systemd[1]: systemd-timedated.service: Deactivated successfully.
+Sep 27 09:10:03 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 09:10:03 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 09:10:03 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: Stopping Command Scheduler...
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Deactivated successfully.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Unit process 31434 (crond) remains running after unit stopped.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Unit process 31435 (sh) remains running after unit stopped.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Unit process 31436 (bash) remains running after unit stopped.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Unit process 31453 (systemctl) remains running after unit stopped.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: Stopped Command Scheduler.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Found left-over process 31434 (crond) in control group while starting unit. Ignoring.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: This usually indicates unclean termination of a previous run, or service implementation deficiencies.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Found left-over process 31435 (sh) in control group while starting unit. Ignoring.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: This usually indicates unclean termination of a previous run, or service implementation deficiencies.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Found left-over process 31436 (bash) in control group while starting unit. Ignoring.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: This usually indicates unclean termination of a previous run, or service implementation deficiencies.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: crond.service: Found left-over process 31453 (systemctl) in control group while starting unit. Ignoring.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: This usually indicates unclean termination of a previous run, or service implementation deficiencies.
+Sep 27 09:15:02 openeuler-riscv64 systemd[1]: Started Command Scheduler.
+Sep 27 09:20:05 openeuler-riscv64 systemd[1]: Starting system activity accounting tool...
+Sep 27 09:20:06 openeuler-riscv64 systemd[1]: sysstat-collect.service: Deactivated successfully.
+Sep 27 09:20:06 openeuler-riscv64 systemd[1]: Finished system activity accounting tool.
+Sep 27 09:23:27 openeuler-riscv64 systemd[1]: Starting Time & Date Service...
+Sep 27 09:23:28 openeuler-riscv64 systemd[1]: Started Time & Date Service.
+Sep 27 09:23:28 openeuler-riscv64 systemd[1]: Stopping System Logging Service...
+Sep 27 09:23:28 openeuler-riscv64 systemd[1]: rsyslog.service: Deactivated successfully.
+Sep 27 09:23:28 openeuler-riscv64 systemd[1]: Stopped System Logging Service.
+Sep 27 09:23:28 openeuler-riscv64 systemd[1]: Starting System Logging Service...
+Sep 27 09:23:28 openeuler-riscv64 systemd[1]: Started System Logging Service.
+Sep 27 09:23:58 openeuler-riscv64 systemd[1]: systemd-timedated.service: Deactivated successfully.
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: Stopping OpenSSH server daemon...
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: sshd.service: Deactivated successfully.
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: Stopped OpenSSH server daemon.
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: Stopped target sshd-keygen.target.
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: Stopping sshd-keygen.target...
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: OpenSSH ecdsa Server Key Generation was skipped because of an unmet condition check (ConditionPathExists=!/run/systemd/generator.early/multi-user.target.wants/cloud-init.target).
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: OpenSSH ed25519 Server Key Generation was skipped because of an unmet condition check (ConditionPathExists=!/run/systemd/generator.early/multi-user.target.wants/cloud-init.target).
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: OpenSSH rsa Server Key Generation was skipped because of an unmet condition check (ConditionPathExists=!/run/systemd/generator.early/multi-user.target.wants/cloud-init.target).
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: Reached target sshd-keygen.target.
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: Starting OpenSSH server daemon...
+Sep 27 09:25:56 openeuler-riscv64 systemd[1]: Started OpenSSH server daemon.
+Sep 27 09:29:14 openeuler-riscv64 systemd[1]: /usr/lib/systemd/system/sssd.service:17: PIDFile= references a path below legacy directory /var/run/, updating /var/run/sssd.pid → /run/sssd.pid; please update the unit file accordingly.
+Sep 27 09:29:14 openeuler-riscv64 systemd[1]: Starting System Security Services Daemon...
+Sep 27 09:29:15 openeuler-riscv64 systemd[1]: sssd.service: Main process exited, code=exited, status=4/NOPERMISSION
+Sep 27 09:29:15 openeuler-riscv64 systemd[1]: sssd.service: Failed with result 'exit-code'.
+Sep 27 09:29:15 openeuler-riscv64 systemd[1]: Failed to start System Security Services Daemon.
++ CHECK_RESULT 0 0 0 'Failed to execute journalctl'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to execute journalctl'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ journalctl /usr/lib/systemd/systemd1
+Couldn't canonicalize path: No such file or directory
++ CHECK_RESULT 1 0 1 'Succeed to execute journalctl'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='Succeed to execute journalctl'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
+++ lsblk
+++ grep disk
+++ grep da
+++ head -n 1
+++ awk '{print $1}'
++ local_disk=vda
++ journalctl /dev/vda
++ grep -E 'begins at|begin at|[0-9]|entries'
+Sep 27 07:55:46 openeuler-riscv64 kernel: block vda: the capability attribute has been deprecated.
++ CHECK_RESULT 0 0 0 'Failed to execute journalctl disk'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to execute journalctl disk'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ journalctl /dev/testdev
+Couldn't canonicalize path: No such file or directory
++ CHECK_RESULT 1 0 1 'Succeed to execute journalctl disk'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='Succeed to execute journalctl disk'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Sep 27 09:30:05 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 27 09:30:06 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Sep 27 09:30:06 2023 - INFO  - Start to restore the test environment.
++ rm -rf /tmp/log testlog
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Sep 27 09:30:07 2023 - INFO  - End to restore the test environment.

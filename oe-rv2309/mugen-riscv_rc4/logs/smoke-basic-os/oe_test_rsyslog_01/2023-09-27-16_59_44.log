@@ -1,0 +1,178 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Sep 27 16:59:48 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL rsyslog
++ pkgs=rsyslog
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs rsyslog --node 1 --tempfile ''
+Wed Sep 27 16:59:59 2023 - INFO  - pkgs:(rsyslog) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl start rsyslog
++ cp -f /var/log/messages /var/log/messages.bak
++ echo ''
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Sep 27 17:00:00 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 27 17:00:00 2023 - INFO  - Start to run test.
++ systemctl status rsyslog
++ grep running
+     Active: active (running) since Wed 2023-09-27 13:36:45 CST; 3h 23min ago
++ CHECK_RESULT 0 0 0 'Service not started'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Service not started'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ systemctl status rsyslog
+++ grep 'Main PID'
+++ awk '{print $3}'
++ old_pid=1275
++ echo 'num=0
+    while ((num<200));do
+        dnf install -y vi
+        let num+=1
+    done
+    '
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ sh test.sh
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ kill -9 1275
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+Last metadata expiration check: 2:38:36 ago on Wed 27 Sep 2023 02:21:32 PM CST.
+Package vim-minimal-2:9.0-36.oe2309.riscv64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
++ systemctl status rsyslog
++ grep running
+     Active: active (running) since Wed 2023-09-27 17:00:06 CST; 4s ago
++ CHECK_RESULT 0 0 0 'The service was not pulled up again'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The service was not pulled up again'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ jobs -l
+++ grep test.sh
+++ awk '{print $2}'
++ kill -9 29898
++ CHECK_RESULT 0 0 0 'Service not started'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Service not started'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ grep -c ldapdb /var/log/messages
++ test 0 -lt 100
++ CHECK_RESULT 0 0 0 'Quantity is greater than 100'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Quantity is greater than 100'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+oe_test_rsyslog_01.sh: line 53: 29898 Killed                  sh test.sh
+++ systemctl status rsyslog
+++ grep 'Main PID'
+++ awk '{print $3}'
++ test 1275 -ne 29910
++ CHECK_RESULT 0 0 0 'Pid unchanged'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Pid unchanged'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Sep 27 17:00:11 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 27 17:00:12 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Sep 27 17:00:12 2023 - INFO  - Start to restore the test environment.
++ mv -f /var/log/messages.bak /var/log/messages
++ rm -rf test.sh
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Sep 27 17:00:13 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Sep 27 17:00:13 2023 - INFO  - End to restore the test environment.
+Last metadata expiration check: 2:38:45 ago on Wed 27 Sep 2023 02:21:32 PM CST.
+Package vim-minimal-2:9.0-36.oe2309.riscv64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!

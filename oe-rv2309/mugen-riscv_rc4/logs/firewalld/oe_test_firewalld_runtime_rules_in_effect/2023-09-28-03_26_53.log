@@ -1,0 +1,77 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n '' ']'
++ trap POST_TEST_DEFAULT EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Sep 28 03:26:58 2023 - INFO  - Start to run test.
+++ P_SSH_CMD --node 2 --cmd 'firewall-cmd --state'
+++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'firewall-cmd --state'
++ CHECK_RESULT running running 0 'firewalld.service not running'
++ actual_result=running
++ expect_result=running
++ mode=0
++ error_log='firewalld.service not running'
++ exit_mode=0
++ '[' -z running ']'
++ '[' 0 -eq 0 ']'
++ test runningx '!=' runningx
++ return 0
++ RichRule='rule family="ipv6" port port="11" protocol="tcp" mark set=11/11'
++ P_SSH_CMD --node 2 --cmd 'firewall-cmd --remove-rich-rule='\''rule family="ipv6" port port="11" protocol="tcp" mark set=11/11'\'''
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'firewall-cmd --remove-rich-rule='\''rule family="ipv6" port port="11" protocol="tcp" mark set=11/11'\'''
+success
+++ P_SSH_CMD --node 2 --cmd 'firewall-cmd --list-rich-rules'
+++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'firewall-cmd --list-rich-rules'
+++ grep -v '^$'
++ CHECK_RESULT '' '' 0 'default runtime firewall rich rule check fail'
++ actual_result=
++ expect_result=
++ mode=0
++ error_log='default runtime firewall rich rule check fail'
++ exit_mode=0
++ '[' -z '' ']'
++ LOG_ERROR 'Missing actual error code.'
++ message='Missing actual error code.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Missing actual error code.'
+Thu Sep 28 03:27:33 2023 - ERROR - Missing actual error code.
++ return 1
++ P_SSH_CMD --node 2 --cmd 'firewall-cmd --add-rich-rule='\''rule family="ipv6" port port="11" protocol="tcp" mark set=11/11'\'''
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'firewall-cmd --add-rich-rule='\''rule family="ipv6" port port="11" protocol="tcp" mark set=11/11'\'''
+success
+++ P_SSH_CMD --node 2 --cmd 'firewall-cmd --list-rich-rules'
+++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'firewall-cmd --list-rich-rules'
+++ grep -v '^$'
++ CHECK_RESULT 'rule family="ipv6" port port="11" protocol="tcp" mark set=11/11' 'rule family="ipv6" port port="11" protocol="tcp" mark set=11/11' 0 'add runtime firewall rich rule check fail'
++ actual_result='rule family="ipv6" port port="11" protocol="tcp" mark set=11/11'
++ expect_result='rule family="ipv6" port port="11" protocol="tcp" mark set=11/11'
++ mode=0
++ error_log='add runtime firewall rich rule check fail'
++ exit_mode=0
++ '[' -z 'rule family="ipv6" port port="11" protocol="tcp" mark set=11/11' ']'
++ '[' 0 -eq 0 ']'
++ test 'rule family="ipv6" port port="11" protocol="tcp" mark set=11/11x' '!=' 'rule family="ipv6" port port="11" protocol="tcp" mark set=11/11x'
++ return 0
++ REMOTE_REBOOT 2 15
++ node=2
++ waittime=15
++ '[' 15x '!=' x ']'
++ python3 /root/mugen/libs/locallibs/remote_reboot.py reboot --node 2 --waittime 15
+Thu Sep 28 03:28:01 2023 - WARN  - Failed to connect the remote machine:192.168.114.3.
+Thu Sep 28 03:28:01 2023 - WARN  - [Errno None] Unable to connect to port 22 on 192.168.114.3
+Thu Sep 28 03:28:04 2023 - WARN  - Failed to connect the remote machine:192.168.114.3.
+Thu Sep 28 03:28:04 2023 - WARN  - [Errno None] Unable to connect to port 22 on 192.168.114.3

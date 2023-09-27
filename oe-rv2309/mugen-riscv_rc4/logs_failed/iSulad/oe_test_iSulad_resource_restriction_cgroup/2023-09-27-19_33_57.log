@@ -1,0 +1,150 @@
++ source ./common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Sep 27 19:34:02 2023 - INFO  - Start to prepare the test environment.
++ iSulad_install
++ DNF_INSTALL iSulad
++ pkgs=iSulad
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iSulad --node 1 --tempfile ''
+Wed Sep 27 19:34:13 2023 - INFO  - pkgs:(iSulad) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ sed -i '/registry-mirrors/a\"docker.io"' /etc/isulad/daemon.json
+sed: can't read /etc/isulad/daemon.json: No such file or directory
++ systemctl restart isulad
+Job for isulad.service failed because the control process exited with error code.
+See "systemctl status isulad.service" and "journalctl -xeu isulad.service" for details.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Sep 27 19:34:15 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 27 19:34:15 2023 - INFO  - Start to run test.
+++ isula run -tid --cgroup-parent /cgroup123 --system-container busybox
+Can not connect with server.Is the iSulad daemon running on the host?
++ container_names=
+++ isula inspect -f '{{json .State.Pid}}' ''
+Inspect error: No such object:
++ container_pid=
++ grep cgroup123 /proc//cgroup
+grep: /proc//cgroup: No such file or directory
++ CHECK_RESULT 2 0 0 'configure the Cgroup path failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='configure the Cgroup path failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'configure the Cgroup path failed'
++ LOG_ERROR 'configure the Cgroup path failed'
++ message='configure the Cgroup path failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'configure the Cgroup path failed'
+Wed Sep 27 19:34:17 2023 - ERROR - configure the Cgroup path failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_restriction_cgroup.sh line 33'
++ message='oe_test_iSulad_resource_restriction_cgroup.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_restriction_cgroup.sh line 33'
+Wed Sep 27 19:34:17 2023 - ERROR - oe_test_iSulad_resource_restriction_cgroup.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ sed -i '/use-decrypted-key/a\"cgroup-parent": "/cgroup456",' /etc/isulad/daemon.json
+sed: can't read /etc/isulad/daemon.json: No such file or directory
++ systemctl restart isulad
+Job for isulad.service failed because the control process exited with error code.
+See "systemctl status isulad.service" and "journalctl -xeu isulad.service" for details.
+++ isula run -tid busybox
+Can not connect with server.Is the iSulad daemon running on the host?
++ container_names1=
+++ isula inspect -f '{{json .State.Pid}}' ''
+Inspect error: No such object:
++ container_pid1=
++ grep cgroup456 /proc//cgroup
+grep: /proc//cgroup: No such file or directory
++ CHECK_RESULT 2 0 0 'configure the Cgroup path failed'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='configure the Cgroup path failed'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'configure the Cgroup path failed'
++ LOG_ERROR 'configure the Cgroup path failed'
++ message='configure the Cgroup path failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'configure the Cgroup path failed'
+Wed Sep 27 19:34:19 2023 - ERROR - configure the Cgroup path failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iSulad_resource_restriction_cgroup.sh line 39'
++ message='oe_test_iSulad_resource_restriction_cgroup.sh line 39'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iSulad_resource_restriction_cgroup.sh line 39'
+Wed Sep 27 19:34:19 2023 - ERROR - oe_test_iSulad_resource_restriction_cgroup.sh line 39
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Sep 27 19:34:20 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Sep 27 19:34:20 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Sep 27 19:34:21 2023 - INFO  - Start to restore the test environment.
++ isula stop '' ''
++ isula rm '' ''
++ isula rmi busybox
+Can not connect with server.Is the iSulad daemon running on the host?
++ iSulad_remove
++ systemctl stop isulad
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Sep 27 19:34:23 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf /etc/isulad
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Sep 27 19:34:23 2023 - INFO  - End to restore the test environment.

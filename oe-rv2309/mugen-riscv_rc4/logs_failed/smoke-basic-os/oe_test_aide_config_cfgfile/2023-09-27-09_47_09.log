@@ -1,0 +1,82 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Sep 27 09:47:13 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL aide
++ pkgs=aide
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs aide --node 1 --tempfile ''
+Wed Sep 27 09:47:23 2023 - INFO  - pkgs:(aide) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ sed -i '$a/home DATAONLY' /etc/aide.conf
++ aide --init
+Start timestamp: 2023-09-27 09:47:24 +0000 (AIDE 0.18.5)
+AIDE successfully initialized database.
+New AIDE database written to /var/lib/aide/aide.db.new.gz
+
+Number of entries:	183899
+
+---------------------------------------------------
+The attributes of the (uncompressed) database(s):
+---------------------------------------------------
+
+/var/lib/aide/aide.db.new.gz
+ MD5       : bNC4COM5kJC/kH4KTiY4Mg==
+ SHA1      : IblcWk6DDEw7RwlFffFjr4oTe4Q=
+ SHA256    : iye9cgre91IxijYWiIWF3X+T2wzvwhgl
+             JL97xNxupio=
+ SHA512    : noZb1irz14NFdEyccth4zdYogGBlLqVR
+             xVSRh+jOHsSnHnxK7ceaSzJE7SaYxHir
+             ce2yQdLmoTWJKSl36aUUNw==
+ RMD160    : 8VPCgacFE0Xxoi2sL3LXvUlOixI=
+ TIGER     : z8s/GCoegD7cc1fmkONB6/QXURFyTUwK
+ CRC32     : Ukcv0A==
+ WHIRLPOOL : p9BCcGcoyEnj6YApGo/sawnl6K62P1Ou
+             4ZUmVIGxb/J+NP67pnYKgORwerH1pdSs
+             f/4bk8j+5Iea+eHNOxSAlw==
+ GOST      : WYSI2KTpvmo+U17B0XZ4Tue28tuC4Um1
+             kApMGy7hw5M=
+ STRIBOG256: r6ZzusF6XzvsQPGaXs/SY93qEAtmfgCo
+             w8hxJStlKlc=
+ STRIBOG512: qkNAaMJi9n3odpQ91k+z6j0x8y46CjLi
+             fTMiDLZDc5oBU2WbMNzVlJpGKNwdWRJq
+             FfwJKbf0jmjtvIA27dvlbQ==
+ SM3       : 0u6Xior4bJe1HhPiM4BA63cpMHBlWVKG
+             dbnXRHiabps=
+
+
+End timestamp: 2023-09-27 10:01:15 +0000 (run time: 13m 51s)
++ mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Sep 27 10:01:16 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 27 10:01:17 2023 - INFO  - Start to run test.
++ aide --config=/etc/aide.conf
++ grep -E 'Total number of entries|Added entries|Changed entries|Removed entries'
+Wed Sep 27 10:17:09 2023 - ERROR - Timeout : Command 'bash -x oe_test_aide_config_cfgfile.sh' timed out after 1799.999788199997 seconds

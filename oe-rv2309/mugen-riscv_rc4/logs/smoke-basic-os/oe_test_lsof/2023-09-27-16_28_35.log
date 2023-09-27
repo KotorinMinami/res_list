@@ -1,0 +1,136 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Sep 27 16:28:40 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL lsof
++ pkgs=lsof
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs lsof --node 1 --tempfile ''
+Wed Sep 27 16:28:50 2023 - INFO  - pkgs:(lsof) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Sep 27 16:28:51 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 27 16:28:52 2023 - INFO  - Start to run test.
++ lsof /bin/bash
++ grep bash
+bash     2546 root txt    REG  253,2  1313184 835050 /usr/bin/bash
+sh      25876 root txt    REG  253,2  1313184 835050 /usr/bin/bash
+bash    25879 root txt    REG  253,2  1313184 835050 /usr/bin/bash
+bash    25924 root txt    REG  253,2  1313184 835050 /usr/bin/bash
++ CHECK_RESULT 0 0 0 'Failed to display bash'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to display bash'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ CHECK_RESULT 0 0 0 'Failed to execute lsof'
++ lsof -u root
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to execute lsof'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 3
++ wait_time=3
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 3 --cmd '' --mode 1
++ grep -i pid testlog
+COMMAND     PID USER   FD      TYPE             DEVICE SIZE/OFF       NODE NAME
+systemd       1 root  115u     unix 0x0000000005c1a8e6      0t0      13585 /run/acpid.socket type=STREAM (LISTEN)
+acpid       342 root  cwd       DIR              253,2     4096          2 /
+acpid       342 root  rtd       DIR              253,2     4096          2 /
+acpid       342 root  txt       REG              253,2    58704      53618 /usr/sbin/acpid
+acpid       342 root  mem       REG              253,2  2038312     959725 /usr/lib64/libc.so.6
+acpid       342 root  mem       REG              253,2   158408      23883 /usr/lib/ld-linux-riscv64-lp64d.so.1
+acpid       342 root    0u     unix 0x0000000005c1a8e6      0t0      13585 /run/acpid.socket type=STREAM (LISTEN)
+acpid       342 root    1u      CHR                1,3      0t0          4 /dev/null
+acpid       342 root    2u      CHR                1,3      0t0          4 /dev/null
+acpid       342 root    3u     unix 0x00000000f2d1fe4a      0t0      13110 type=DGRAM (CONNECTED)
+acpid       342 root    4r  a_inode               0,14        0       2057 inotify
+acpid       342 root    5u  netlink                         0t0      13112 GENERIC
+isulad     1008 root    3uW     REG               0,24        5        655 /run/isulad.pid
+crond      1293 root    3uW     REG               0,24        5        737 /run/crond.pid
++ CHECK_RESULT 0 0 0 'Failed to list pid'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to list pid'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Sep 27 16:28:57 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 27 16:28:58 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Sep 27 16:28:58 2023 - INFO  - Start to restore the test environment.
+++ pgrep lsof
++ kill -9
+kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
++ rm -rf testlog
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Sep 27 16:28:59 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Sep 27 16:28:59 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,148 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Sep 28 02:43:34 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL net-tools
++ pkgs=net-tools
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs net-tools --node 1 --tempfile ''
+Thu Sep 28 02:43:46 2023 - INFO  - pkgs:(net-tools) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ SSH_CMD 'sudo dnf install -y net-tools' 192.168.114.3 'openEuler12#$' root
++ cmd='sudo dnf install -y net-tools'
++ remoteip=192.168.114.3
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sudo dnf install -y net-tools' -i 192.168.114.3 -u root -p 'openEuler12#$' -t 300 -o 22
+Thu Sep 28 02:43:47 2023 - WARN  - the remote user uses the default configuration.
+Thu Sep 28 02:43:48 2023 - WARN  - the remote password uses the default configuration.
+Thu Sep 28 02:43:49 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.3 sudo dnf install -y net-tools
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.3's password: 
+Last metadata expiration check: 0:54:26 ago on Thu 28 Sep 2023 01:49:36 AM CST.
+Dependencies resolved.
+================================================================================
+ Package            Architecture     Version                  Repository   Size
+================================================================================
+Installing:
+ net-tools          riscv64          2.10-3.oe2309            OS          201 k
+
+Transaction Summary
+================================================================================
+Install  1 Package
+
+Total download size: 201 k
+Installed size: 877 k
+Downloading Packages:
+[MIRROR] net-tools-2.10-3.oe2309.riscv64.rpm: Curl error (6): Couldn't resolve host name for https://mirror.iscas.ac.cn/openeuler-sig-riscv/openEuler-RISC-V/testing/20230926/v0.2/repo/23.09/mainline/riscv64/net-tools-2.10-3.oe2309.riscv64.rpm [Could not resolve host: mirror.iscas.ac.cn]
+[MIRROR] net-tools-2.10-3.oe2309.riscv64.rpm: Curl error (6): Couldn't resolve host name for https://mirror.iscas.ac.cn/openeuler-sig-riscv/openEuler-RISC-V/testing/20230926/v0.2/repo/23.09/mainline/riscv64/net-tools-2.10-3.oe2309.riscv64.rpm [Could not resolve host: mirror.iscas.ac.cn]
+[MIRROR] net-tools-2.10-3.oe2309.riscv64.rpm: Curl error (6): Couldn't resolve host name for https://mirror.iscas.ac.cn/openeuler-sig-riscv/openEuler-RISC-V/testing/20230926/v0.2/repo/23.09/mainline/riscv64/net-tools-2.10-3.oe2309.riscv64.rpm [Could not resolve host: mirror.iscas.ac.cn]
+[MIRROR] net-tools-2.10-3.oe2309.riscv64.rpm: Curl error (6): Couldn't resolve host name for https://mirror.iscas.ac.cn/openeuler-sig-riscv/openEuler-RISC-V/testing/20230926/v0.2/repo/23.09/mainline/riscv64/net-tools-2.10-3.oe2309.riscv64.rpm [Could not resolve host: mirror.iscas.ac.cn]
+[FAILED] net-tools-2.10-3.oe2309.riscv64.rpm: No more mirrors to try - All mirrors were already tried without success
+
+The downloaded packages were saved in cache until the next successful transaction.
+You can remove cached packages by executing 'dnf clean packages'.
+Error: Error downloading packages:
+  net-tools-2.10-3.oe2309.riscv64: Cannot download, all mirrors were already tried without success
++ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Thu Sep 28 02:44:04 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ test 1 -ne 0
++ exit 1
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu Sep 28 02:44:05 2023 - INFO  - start environment cleanup.
++ sudo firewall-cmd --direct --passthrough ipv4 -t nat -D POSTROUTING -oenp0s3 -j MASQUERADE -s 192.168.100.0/24
+Error: COMMAND_FAILED: '/sbin/iptables -w10 -t nat -D POSTROUTING -oenp0s3 -j MASQUERADE -s 192.168.100.0/24' failed: iptables: No chain/target/match by that name.
+
++ sudo firewall-cmd --zone=external --remove-masquerade
+success
++ '[' '!' -z '' ']'
++ '[' '!' -z '' ']'
++ sudo firewall-cmd --zone=internal --remove-interface=
+Error: INVALID_INTERFACE
++ sudo ip addr del 192.168.100.1 dev ''
+Warning: Executing wildcard deletion to stay compatible with old scripts.
+         Explicitly specify the prefix length (192.168.100.1/32) to avoid this warning.
+         This special behaviour is likely to disappear in further releases,
+         fix your scripts!
+Cannot find device ""
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Sep 28 02:44:20 2023 - WARN  - no thing to do.
++ return 0
++ SSH_CMD 'sudo ip addr del 192.168.100.2 dev ;sudo route del default  gw 192.168.100.1;sleep 2;sudo dnf remove -y net-tools' 192.168.114.3 'openEuler12#$' root
++ cmd='sudo ip addr del 192.168.100.2 dev ;sudo route del default  gw 192.168.100.1;sleep 2;sudo dnf remove -y net-tools'
++ remoteip=192.168.114.3
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'sudo ip addr del 192.168.100.2 dev ;sudo route del default  gw 192.168.100.1;sleep 2;sudo dnf remove -y net-tools' -i 192.168.114.3 -u root -p 'openEuler12#$' -t 300 -o 22
+Thu Sep 28 02:44:21 2023 - WARN  - the remote user uses the default configuration.
+Thu Sep 28 02:44:21 2023 - WARN  - the remote password uses the default configuration.
+Thu Sep 28 02:44:22 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.3 sudo ip addr del 192.168.100.2 dev ;sudo route del default  gw 192.168.100.1;sleep 2;sudo dnf remove -y net-tools
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.3's password: 
+Command line is not complete. Try option "help"
+sudo: route: command not found
+No match for argument: net-tools
+No packages marked for removal.
+Dependencies resolved.
+Nothing to do.
+Complete!
++ ret=0
++ test 0 -ne 0
++ return 0
++ mv /etc/sysctl.conf.bak /etc/sysctl.conf
+mv: cannot stat '/etc/sysctl.conf.bak': No such file or directory
++ sudo firewall-cmd --reload
+success
++ systemctl restart firewalld
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Thu Sep 28 02:44:50 2023 - INFO  - Finish environment cleanup!

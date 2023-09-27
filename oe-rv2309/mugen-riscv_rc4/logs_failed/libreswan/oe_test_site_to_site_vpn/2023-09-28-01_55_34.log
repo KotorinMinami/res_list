@@ -1,0 +1,438 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Sep 28 01:55:40 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL 'libreswan net-tools'
++ pkgs='libreswan net-tools'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'libreswan net-tools' --node 1 --tempfile ''
+Thu Sep 28 01:55:53 2023 - INFO  - pkgs:(libreswan net-tools) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ DNF_INSTALL 'libreswan net-tools' 2
++ pkgs='libreswan net-tools'
++ node=2
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'libreswan net-tools' --node 2 --tempfile ''
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 187, in <module>
+    exitcode, output = rpm_install(args.pkgs, args.node, args.tempfile)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 66, in rpm_install
+    conn = ssh_cmd.pssh_conn(
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl start firewalld
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Sep 28 01:58:08 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Thu Sep 28 01:58:08 2023 - INFO  - Start executing testcase.
++ systemctl enable ipsec --now
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ firewall-cmd --add-service=ipsec
++ grep success
+success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ firewall-cmd --runtime-to-permanent
++ grep success
+success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ ipsec newhostkey --nssdir /etc/ipsec.d/
+++ awk '/Generated/{print $7}'
++ left_ckaid=5f88caef1a8eff39bedddafa07d28d233ed20f0c
+++ ifconfig enp0s3
+++ grep netmask
+++ tr -s ' '
+++ awk '{print $4}'
++ left_mask=255.255.255.0
+++ ip -6 route show dev enp0s3
+++ head -n 1
+++ awk '{print $1}'
++ left6_mask=fe80::/64
+++ ipsec showhostkey --left --ckaid 5f88caef1a8eff39bedddafa07d28d233ed20f0c --nssdir /etc/ipsec.d/
+++ grep leftrsasigkey
+++ awk -F leftrsasigkey= '{print $2}'
+++ sed 's/^[ \t]*//g'
++ left_rsa=0sAwEAAdsARYUuX1aN6eTrmhEq+IrB3WMlkOYh89DIdET5KuUrYW25yuh1qkNAJ17G+DmxpdKVrFfGPYEvmDT91w3Br4BqhRpKV0byTARnDpzovJ1DAZVM/D8Rajg3NOk7EZg8Cwm2dEXEFGAUmJmeMezJyLiW7cRV6Q84ShFBO7UDWJsHq0v3dRS865OuQEsoa00OHvC6RLGDmw/CXpjEp2W7hjkoLghRNtFag4dRo3eacEPgduyHOVsWZlT3G4LvuB2JHzbWv8NQx+sgDfWuAG6qjpLwAyDBJiH0H7lrHPj0Vy9scCrtIl+WdZOkmJrLw8IVOy3gjkq3a2ZKtvGn37BqKjBpf+pVdLhja1Y5mgqhg2Tx0oVmPx9cKjH9YBmQhaNCI333tqJhc+SWjlU9+X+6a6zyeF+MTElFsq+dXCUdhk7ijkBgWpIsQfYWCAjNZCYT/cAR/LwessCAZSPR/f43NKL+4jNrKxo8WQJK0DlZPzzoFGE6WvJJlP/l0Kwnxo5xMoqeHUKVcVcj
++ P_SSH_CMD --cmd 'systemctl start firewalld;systemctl enable ipsec --now' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'systemctl start firewalld;systemctl enable ipsec --now' --node 2
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 132, in <module>
+    conn = pssh_conn(args.ip, args.password, args.port, args.user, args.timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 44'
++ message='oe_test_site_to_site_vpn.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 44'
+Thu Sep 28 02:00:49 2023 - ERROR - oe_test_site_to_site_vpn.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'firewall-cmd --add-service=\"ipsec\";firewall-cmd --runtime-to-permanent' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'firewall-cmd --add-service=\"ipsec\";firewall-cmd --runtime-to-permanent' --node 2
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 132, in <module>
+    conn = pssh_conn(args.ip, args.password, args.port, args.user, args.timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 46'
++ message='oe_test_site_to_site_vpn.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 46'
+Thu Sep 28 02:03:03 2023 - ERROR - oe_test_site_to_site_vpn.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'ipsec newhostkey --nssdir /etc/ipsec.d/ 2>&1 | grep Generated | cut -d '\'' '\'' -f 7 >/tmp/key.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec newhostkey --nssdir /etc/ipsec.d/ 2>&1 | grep Generated | cut -d '\'' '\'' -f 7 >/tmp/key.txt' --node 2
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 132, in <module>
+    conn = pssh_conn(args.ip, args.password, args.port, args.user, args.timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ SSH_SCP root@192.168.114.4:/tmp/key.txt /tmp 'openEuler12#$'
++ src=root@192.168.114.4:/tmp/key.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s root@192.168.114.4:/tmp/key.txt -d /tmp
+Thu Sep 28 02:05:16 2023 - WARN  - the remote password uses the default configuration.
+Thu Sep 28 02:05:16 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r root@192.168.114.4:/tmp/key.txt /tmp
+ssh: connect to host 192.168.114.4 port 22: Connection timed out
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu Sep 28 02:07:29 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
+++ cat /tmp/key.txt
+cat: /tmp/key.txt: No such file or directory
++ right_ckaid=
++ P_SSH_CMD --cmd 'ipsec showhostkey --right --ckaid  --nssdir /etc/ipsec.d/  | grep rightrsasigkey > /tmp/rsa.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec showhostkey --right --ckaid  --nssdir /etc/ipsec.d/  | grep rightrsasigkey > /tmp/rsa.txt' --node 2
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 132, in <module>
+    conn = pssh_conn(args.ip, args.password, args.port, args.user, args.timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 52'
++ message='oe_test_site_to_site_vpn.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 52'
+Thu Sep 28 02:09:42 2023 - ERROR - oe_test_site_to_site_vpn.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ SSH_SCP root@192.168.114.4:/tmp/rsa.txt /tmp 'openEuler12#$'
++ src=root@192.168.114.4:/tmp/rsa.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s root@192.168.114.4:/tmp/rsa.txt -d /tmp
+Thu Sep 28 02:09:43 2023 - WARN  - the remote password uses the default configuration.
+Thu Sep 28 02:09:43 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r root@192.168.114.4:/tmp/rsa.txt /tmp
+ssh: connect to host 192.168.114.4 port 22: Connection timed out
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu Sep 28 02:11:55 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
+++ cat /tmp/rsa.txt
+++ awk -F rightrsasigkey= '{print $2}'
+++ sed 's/^[ \t]*//g'
+cat: /tmp/rsa.txt: No such file or directory
++ right_rsa=
++ P_SSH_CMD --cmd 'ifconfig enp0s2 | grep netmask >/tmp/right_mask.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ifconfig enp0s2 | grep netmask >/tmp/right_mask.txt' --node 2
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 132, in <module>
+    conn = pssh_conn(args.ip, args.password, args.port, args.user, args.timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 57'
++ message='oe_test_site_to_site_vpn.sh line 57'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 57'
+Thu Sep 28 02:14:08 2023 - ERROR - oe_test_site_to_site_vpn.sh line 57
++ '[' 0 -eq 1 ']'
++ return 0
++ SSH_SCP root@192.168.114.4:/tmp/right_mask.txt /tmp 'openEuler12#$'
++ src=root@192.168.114.4:/tmp/right_mask.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s root@192.168.114.4:/tmp/right_mask.txt -d /tmp
+Thu Sep 28 02:14:09 2023 - WARN  - the remote password uses the default configuration.
+Thu Sep 28 02:14:09 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r root@192.168.114.4:/tmp/right_mask.txt /tmp
+ssh: connect to host 192.168.114.4 port 22: Connection timed out
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu Sep 28 02:16:21 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ P_SSH_CMD --cmd 'ip -6 route show dev enp0s3>/tmp/right6_mask.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ip -6 route show dev enp0s3>/tmp/right6_mask.txt' --node 2
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 132, in <module>
+    conn = pssh_conn(args.ip, args.password, args.port, args.user, args.timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 60'
++ message='oe_test_site_to_site_vpn.sh line 60'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 60'
+Thu Sep 28 02:18:34 2023 - ERROR - oe_test_site_to_site_vpn.sh line 60
++ '[' 0 -eq 1 ']'
++ return 0
++ SSH_SCP root@192.168.114.4:/tmp/right6_mask.txt /tmp 'openEuler12#$'
++ src=root@192.168.114.4:/tmp/right6_mask.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s root@192.168.114.4:/tmp/right6_mask.txt -d /tmp
+Thu Sep 28 02:18:35 2023 - WARN  - the remote password uses the default configuration.
+Thu Sep 28 02:18:36 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r root@192.168.114.4:/tmp/right6_mask.txt /tmp
+ssh: connect to host 192.168.114.4 port 22: Connection timed out
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu Sep 28 02:20:47 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
+++ cat /tmp/right_mask.txt
+++ awk '{print $4}'
+cat: /tmp/right_mask.txt: No such file or directory
++ right_mask=
+++ cat /tmp/right6_mask.txt
+++ awk '{print $1}'
+cat: /tmp/right6_mask.txt: No such file or directory
++ right6_mask=
++ echo -e 'conn mysubnet\n     also=mytunnel\n     leftsubnet=255.255.255.0/24\n     rightsubnet=/24\n     
+    auto=start\n\nconn mysubnet6\n     also=mytunnel\n     leftsubnet=fe80::/64\n     rightsubnet=\n     
+    auto=start\n\n\nconn mytunnel\n    leftid=@west\n    left=192.168.114.2\n    leftrsasigkey=0sAwEAAdsARYUuX1aN6eTrmhEq+IrB3WMlkOYh89DIdET5KuUrYW25yuh1qkNAJ17G+DmxpdKVrFfGPYEvmDT91w3Br4BqhRpKV0byTARnDpzovJ1DAZVM/D8Rajg3NOk7EZg8Cwm2dEXEFGAUmJmeMezJyLiW7cRV6Q84ShFBO7UDWJsHq0v3dRS865OuQEsoa00OHvC6RLGDmw/CXpjEp2W7hjkoLghRNtFag4dRo3eacEPgduyHOVsWZlT3G4LvuB2JHzbWv8NQx+sgDfWuAG6qjpLwAyDBJiH0H7lrHPj0Vy9scCrtIl+WdZOkmJrLw8IVOy3gjkq3a2ZKtvGn37BqKjBpf+pVdLhja1Y5mgqhg2Tx0oVmPx9cKjH9YBmQhaNCI333tqJhc+SWjlU9+X+6a6zyeF+MTElFsq+dXCUdhk7ijkBgWpIsQfYWCAjNZCYT/cAR/LwessCAZSPR/f43NKL+4jNrKxo8WQJK0DlZPzzoFGE6WvJJlP/l0Kwnxo5xMoqeHUKVcVcj\n    
+    rightid=@east\n    right=192.168.114.4\n    rightrsasigkey=\n    authby=rsasig'
++ SSH_SCP /etc/ipsec.d/my_site-to-site.conf root@192.168.114.4:/etc/ipsec.d/ 'openEuler12#$'
++ src=/etc/ipsec.d/my_site-to-site.conf
++ dest=root@192.168.114.4:/etc/ipsec.d/
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s /etc/ipsec.d/my_site-to-site.conf -d root@192.168.114.4:/etc/ipsec.d/
+Thu Sep 28 02:20:48 2023 - WARN  - the remote password uses the default configuration.
+Thu Sep 28 02:20:49 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/ipsec.d/my_site-to-site.conf root@192.168.114.4:/etc/ipsec.d/
+ssh: connect to host 192.168.114.4 port 22: Connection timed out
+scp: Connection closed
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote SCP operation: 255'
++ message='Failed in remote SCP operation: 255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote SCP operation: 255'
+Thu Sep 28 02:23:00 2023 - ERROR - Failed in remote SCP operation: 255
++ return 255
++ ipsec auto --add mysubnet
+while loading 'mysubnet': bad subnet rightsubnet=/24 [empty string]
+addconn, in config '/etc/ipsec.conf', bad subnet rightsubnet=/24 [empty string]
+
+conn mysubnet did not load properly
++ CHECK_RESULT 0 0 0 'add mysubnet failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='add mysubnet failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl restart ipsec
++ ipsec setup start
+Redirecting to: systemctl start ipsec.service
++ P_SSH_CMD --cmd 'ipsec auto --add mysubnet;systemctl restart ipsec;ipsec setup start' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec auto --add mysubnet;systemctl restart ipsec;ipsec setup start' --node 2
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 132, in <module>
+    conn = pssh_conn(args.ip, args.password, args.port, args.user, args.timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ ipsec auto --up mysubnet
+181 "mysubnet" #22: initiating IKEv2 connection
+181 "mysubnet" #22: sent IKE_SA_INIT request to 192.168.114.4:500
+182 "mysubnet" #22: sent IKE_AUTH request {cipher=AES_GCM_16_256 integ=n/a prf=HMAC_SHA2_512 group=DH19}
+003 "mysubnet" #22: IKE SA authentication request rejected by peer: AUTHENTICATION_FAILED
+036 "mysubnet" #22: encountered fatal error in state STATE_V2_PARENT_I2
+002 "mysubnet" #22: deleting state (STATE_V2_PARENT_I2) aged 0.113337s and NOT sending notification
+002 "mysubnet" #22: deleting IKE SA but connection is supposed to remain up; EVENT_REVIVE_CONNS already scheduled
++ CHECK_RESULT 36 0 0 'up mysubnet failed'
++ actual_result=36
++ expect_result=0
++ mode=0
++ error_log='up mysubnet failed'
++ exit_mode=0
++ '[' -z 36 ']'
++ '[' 0 -eq 0 ']'
++ test 36x '!=' 0x
++ test -n 'up mysubnet failed'
++ LOG_ERROR 'up mysubnet failed'
++ message='up mysubnet failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'up mysubnet failed'
+Thu Sep 28 02:25:22 2023 - ERROR - up mysubnet failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_site_to_site_vpn.sh line 77'
++ message='oe_test_site_to_site_vpn.sh line 77'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_site_to_site_vpn.sh line 77'
+Thu Sep 28 02:25:23 2023 - ERROR - oe_test_site_to_site_vpn.sh line 77
++ '[' 0 -eq 1 ']'
++ return 0
++ P_SSH_CMD --cmd 'ipsec auto --up mysubnet' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec auto --up mysubnet' --node 2
+Thu Sep 28 02:25:35 2023 - ERROR - Timeout : Command 'bash -x oe_test_site_to_site_vpn.sh' timed out after 1799.9997949039998 seconds
