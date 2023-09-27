@@ -1,0 +1,178 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Sep 27 14:07:45 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL createrepo_c
++ pkgs=createrepo_c
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs createrepo_c --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpgu75ntm0
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpgu75ntm0
++ test_path=/tmp/test
++ repo_path=/etc/yum.repos.d
++ mkdir /tmp/test /etc/yum.repos.d/bak
++ cd /tmp/test
++ yum download git git-core perl-Error perl-Git perl-TermReadKey
+Last metadata expiration check: 0:13:22 ago on Wed 27 Sep 2023 01:54:26 PM UTC.
+(1/5): perl-Error-0.17029-3.oe2309.noarch.rpm   285 kB/s |  31 kB     00:00    
+(2/5): git-2.41.0-1.oe2309.x86_64.rpm           646 kB/s | 104 kB     00:00    
+(3/5): perl-Git-2.41.0-1.oe2309.noarch.rpm      553 kB/s |  37 kB     00:00    
+(4/5): perl-TermReadKey-2.38-2.oe2309.x86_64.rp 593 kB/s |  24 kB     00:00    
+(5/5): git-core-2.41.0-1.oe2309.x86_64.rpm      4.9 MB/s |  10 MB     00:02    
++ mv /etc/yum.repos.d/openEuler.repo /etc/yum.repos.d/bak
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Sep 27 14:07:50 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Wed Sep 27 14:07:50 2023 - INFO  - Start testing...
++ createrepo_c .
+Directory walk started
+Directory walk done - 5 packages
+Temporary output repo path: ./.repodata/
+Preparing sqlite DBs
+Pool started (with 5 workers)
+Pool finished
++ test -e repodata
++ CHECK_RESULT 0 0 0 'Generation failure'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Generation failure'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ cat
++ yum '--disablerepo=*' --enablerepo=local list available
+local repo                                      304 kB/s | 5.2 kB     00:00    
+Available Packages
+git.x86_64                              2.41.0-1.oe2309                    local
+git-core.x86_64                         2.41.0-1.oe2309                    local
+perl-Error.noarch                       1:0.17029-3.oe2309                 local
+perl-Git.noarch                         2.41.0-1.oe2309                    local
+perl-TermReadKey.x86_64                 2.38-2.oe2309                      local
++ CHECK_RESULT 0 0 0 'Repo error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Repo error'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ yum clean all
+49 files removed
++ yum install git -y
+local repo                                      288 kB/s | 5.2 kB     00:00    
+Error: 
+ Problem: conflicting requests
+  - nothing provides /usr/bin/perl needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(Data::Dumper) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(File::Basename) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(File::Path) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(File::Temp) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(Getopt::Long) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(Getopt::Std) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(IPC::Open2) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(lib) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(strict) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(warnings) needed by git-2.41.0-1.oe2309.x86_64 from local
+  - nothing provides perl(:VERSION) >= 5.8.0 needed by git-2.41.0-1.oe2309.x86_64 from local
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)
++ CHECK_RESULT 1 0 0 'Package install fail'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='Package install fail'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'Package install fail'
++ LOG_ERROR 'Package install fail'
++ message='Package install fail'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Package install fail'
+Wed Sep 27 14:07:51 2023 - ERROR - Package install fail
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_createrepo_c_local_repo.sh line 50'
++ message='oe_test_createrepo_c_local_repo.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_createrepo_c_local_repo.sh line 50'
+Wed Sep 27 14:07:51 2023 - ERROR - oe_test_createrepo_c_local_repo.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ yum remove git -y
+No match for argument: git
+No packages marked for removal.
+Dependencies resolved.
+Nothing to do.
+Complete!
++ CHECK_RESULT 0 0 0 'Package remove fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Package remove fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Wed Sep 27 14:07:51 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Sep 27 14:07:51 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 27 14:07:51 2023 - INFO  - start environment cleanup.
++ mv /etc/yum.repos.d/bak/openEuler.repo /etc/yum.repos.d
++ rm -rf /tmp/test /etc/yum.repos.d/local.repo /etc/yum.repos.d/bak
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpgu75ntm0 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpgu75ntm0
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Sep 27 14:07:52 2023 - INFO  - Finish environment cleanup!
