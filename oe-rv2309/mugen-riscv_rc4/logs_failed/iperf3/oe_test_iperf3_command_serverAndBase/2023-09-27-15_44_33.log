@@ -1,0 +1,306 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Sep 27 15:44:37 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'iperf3 net-tools'
++ pkgs='iperf3 net-tools'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'iperf3 net-tools' --node 1 --tempfile ''
+Wed Sep 27 15:44:49 2023 - INFO  - pkgs:(iperf3 net-tools) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ DNF_INSTALL iperf3 2
++ pkgs=iperf3
++ node=2
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs iperf3 --node 2 --tempfile ''
+Wed Sep 27 15:45:21 2023 - INFO  - pkgs:(iperf3) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Sep 27 15:45:21 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 27 15:45:22 2023 - INFO  - Start to run test.
++ iperf3 -v
+++ rpm -q iperf3
+++ awk -F - '{print $2}'
++ grep 3.13
+iperf 3.13 (cJSON 1.7.15)
++ CHECK_RESULT 0 0 0 'iperf3 -v execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -v execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 --version
+++ rpm -q iperf3
+++ awk -F - '{print $2}'
++ grep 3.13
+iperf 3.13 (cJSON 1.7.15)
++ CHECK_RESULT 0 0 0 'iperf3 --version execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 --version execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 -h
++ grep Usage
+Usage: iperf3 [-s|-c host] [options]
++ CHECK_RESULT 0 0 0 'iperf3 -h execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -h execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iperf3 --help
++ grep Usage
+Usage: iperf3 [-s|-c host] [options]
++ CHECK_RESULT 0 0 0 'iperf3 --help execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 --help execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop firewalld
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ iperf3 -s
++ netstat -lnp
++ grep 5201
++ grep iperf3
+tcp6       0      0 :::5201                 :::*                    LISTEN      2955/iperf3         
++ CHECK_RESULT 0 0 0 'iperf3 -s execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -s execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'iperf3 -c 10.0.0.7' 10.0.0.15 'openEuler12#$' root
++ grep 'iperf Done'
++ cmd='iperf3 -c 10.0.0.7'
++ remoteip=10.0.0.15
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'iperf3 -c 10.0.0.7' -i 10.0.0.15 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 15:45:27 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 15:45:28 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 15:45:28 2023 - WARN  - the connect port using the default configuration
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 10.0.0.15, port 50734
+[  5] local 10.0.0.7 port 5201 connected to 10.0.0.15 port 50738
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec   247 MBytes  2.07 Gbits/sec                  
+[  5]   1.00-2.00   sec   276 MBytes  2.31 Gbits/sec                  
+[  5]   2.00-3.00   sec   258 MBytes  2.16 Gbits/sec                  
+[  5]   3.00-4.00   sec   301 MBytes  2.52 Gbits/sec                  
+[  5]   4.00-5.00   sec   285 MBytes  2.39 Gbits/sec                  
+[  5]   5.00-6.00   sec   302 MBytes  2.53 Gbits/sec                  
+[  5]   6.00-7.00   sec   269 MBytes  2.26 Gbits/sec                  
+[  5]   7.00-8.00   sec   282 MBytes  2.36 Gbits/sec                  
+[  5]   8.00-9.00   sec   318 MBytes  2.67 Gbits/sec                  
+[  5]   9.00-10.00  sec   317 MBytes  2.66 Gbits/sec                  
+[  5]  10.00-10.00  sec   896 KBytes  1.99 Gbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.00  sec  2.79 GBytes  2.39 Gbits/sec                  receiver
++ ret=0
++ test 0 -ne 0
++ return 0
+iperf Done.
++ CHECK_RESULT 0 0 0 'iperf3 -c serverIP execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -c serverIP execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'iperf3 -s'
++ kill -9 2955
+++ GET_FREE_PORT 10.0.0.7
+++ ip=10.0.0.7
+++ start_port=1000
+++ end_port=10000
+++ python3 /root/mugen/libs/locallibs/free_port.py get --ip 10.0.0.7 --start 1000 --end 10000
+/root/mugen/libs/locallibs/free_port.py:26: DeprecationWarning: 'telnetlib' is deprecated and slated for removal in Python 3.13
+  import telnetlib
++ rdport=8625
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ iperf3 -s -p 8625
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  2955 Killed                  iperf3 -s
++ netstat -lnp
++ grep 8625
++ grep iperf3
+tcp6       0      0 :::8625                 :::*                    LISTEN      2985/iperf3         
++ CHECK_RESULT 0 0 0 'iperf3 -s -p execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -s -p execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ pgrep -f 'iperf3 -s -p 8625'
++ kill -9 2985
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ iperf3 -s -I /tmp/iperf3_pid
+/root/mugen/libs/locallibs/common_lib_python.sh: line 164:  2985 Killed                  iperf3 -s -p "${rdport}"
+++ pgrep -f 'iperf3 -s -I'
++ result=2991
+++ cat /tmp/iperf3_pid
++ result1=2991
++ '[' 2991 -eq 2991 ']'
++ CHECK_RESULT 0 0 0 'iperf3 -s -I execution failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='iperf3 -s -I execution failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ kill -9 2991
++ SSH_CMD 'iperf3 -c 10.0.0.7' 10.0.0.15 'openEuler12#$' root
++ iperf3 -s -1
++ cmd='iperf3 -c 10.0.0.7'
++ remoteip=10.0.0.15
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'iperf3 -c 10.0.0.7' -i 10.0.0.15 -u root -p 'openEuler12#$' -t 300 -o 22
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+Wed Sep 27 15:46:15 2023 - ERROR - connection to 10.0.0.15 failed.
+/root/mugen/libs/locallibs/common_lib_python.sh: line 39:  2991 Killed                  iperf3 -s -I /tmp/iperf3_pid
++ ret=101
++ test 101 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:101'
++ message='Failed in remote CMD operation:101'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:101'
+Wed Sep 27 15:46:16 2023 - ERROR - Failed in remote CMD operation:101
++ return 101
+++ pgrep -f 'iperf3 -s'
++ '[' -z 2995 ']'
++ CHECK_RESULT 1 0 0 'iperf3 -s -1 execution failed.'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='iperf3 -s -1 execution failed.'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'iperf3 -s -1 execution failed.'
++ LOG_ERROR 'iperf3 -s -1 execution failed.'
++ message='iperf3 -s -1 execution failed.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'iperf3 -s -1 execution failed.'
+Wed Sep 27 15:46:17 2023 - ERROR - iperf3 -s -1 execution failed.
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_iperf3_command_serverAndBase.sh line 64'
++ message='oe_test_iperf3_command_serverAndBase.sh line 64'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_iperf3_command_serverAndBase.sh line 64'
+Wed Sep 27 15:46:17 2023 - ERROR - oe_test_iperf3_command_serverAndBase.sh line 64
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Sep 27 15:46:18 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Sep 27 15:46:19 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Sep 27 15:46:19 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Sep 27 15:46:20 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf /tmp/iperf3_pid
++ systemctl start firewalld
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Sep 27 15:46:23 2023 - INFO  - End to restore the test environment.

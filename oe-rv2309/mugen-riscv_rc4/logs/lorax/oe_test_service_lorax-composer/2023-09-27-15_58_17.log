@@ -1,0 +1,283 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Sep 27 15:58:22 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL 'lorax-composer python3-devel'
++ pkgs='lorax-composer python3-devel'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'lorax-composer python3-devel' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpw0rrplzc
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpw0rrplzc
++ pip3 install rpmfluff pycdlib ansible_runner
+Collecting rpmfluff
+  Downloading rpmfluff-0.6.3.tar.gz (112 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.4/112.4 kB 210.2 kB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: still running...
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: pycdlib in /usr/lib/python3.11/site-packages (1.14.0)
+Collecting ansible_runner
+  Downloading ansible_runner-2.3.4-py3-none-any.whl (81 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 81.1/81.1 kB 189.3 kB/s eta 0:00:00
+Collecting pexpect>=4.5 (from ansible_runner)
+  Downloading pexpect-4.8.0-py2.py3-none-any.whl (59 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.0/59.0 kB 91.6 kB/s eta 0:00:00
+Requirement already satisfied: packaging in /usr/lib/python3.11/site-packages (from ansible_runner) (23.1)
+Collecting python-daemon (from ansible_runner)
+  Downloading python_daemon-3.0.1-py3-none-any.whl (31 kB)
+Requirement already satisfied: pyyaml in /usr/lib64/python3.11/site-packages (from ansible_runner) (6.0.1)
+Requirement already satisfied: six in /usr/lib/python3.11/site-packages (from ansible_runner) (1.16.0)
+Collecting ptyprocess>=0.5 (from pexpect>=4.5->ansible_runner)
+  Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+Requirement already satisfied: docutils in /usr/lib/python3.11/site-packages (from python-daemon->ansible_runner) (0.20)
+Collecting lockfile>=0.10 (from python-daemon->ansible_runner)
+  Downloading lockfile-0.12.2-py2.py3-none-any.whl (13 kB)
+Requirement already satisfied: setuptools>=62.4.0 in /usr/lib/python3.11/site-packages (from python-daemon->ansible_runner) (68.0.0)
+Building wheels for collected packages: rpmfluff
+  Building wheel for rpmfluff (pyproject.toml): started
+  Building wheel for rpmfluff (pyproject.toml): finished with status 'done'
+  Created wheel for rpmfluff: filename=rpmfluff-0.6.3-py3-none-any.whl size=34016 sha256=3a14d0011d9feb8360a3b643c6f3ee821b528f0779bee5f97713a6a2e52ee397
+  Stored in directory: /root/.cache/pip/wheels/70/f6/ae/3bfafd5a62386a98de5e24420ff6df66465568d5c3aa343b32
+Successfully built rpmfluff
+Installing collected packages: rpmfluff, ptyprocess, lockfile, python-daemon, pexpect, ansible_runner
+Successfully installed ansible_runner-2.3.4 lockfile-0.12.2 pexpect-4.8.0 ptyprocess-0.7.0 python-daemon-3.0.1 rpmfluff-0.6.3
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Sep 27 16:02:29 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Wed Sep 27 16:02:29 2023 - INFO  - Start testing...
++ test_execution lorax-composer.service
++ service=lorax-composer.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-27 16:02:29'
++ test_restart lorax-composer.service
++ service=lorax-composer.service
++ systemctl restart lorax-composer.service
++ CHECK_RESULT 0 0 0 'lorax-composer.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='lorax-composer.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'Active: active'
++ systemctl status lorax-composer.service
+     Active: active (running) since Wed 2023-09-27 16:02:30 CST; 5s ago
++ CHECK_RESULT 0 0 0 'lorax-composer.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='lorax-composer.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop lorax-composer.service
++ CHECK_RESULT 0 0 0 'lorax-composer.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='lorax-composer.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status lorax-composer.service
++ grep 'Active: inactive'
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'lorax-composer.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='lorax-composer.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start lorax-composer.service
++ CHECK_RESULT 0 0 0 'lorax-composer.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='lorax-composer.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status lorax-composer.service
++ grep 'Active: active'
+     Active: active (running) since Wed 2023-09-27 16:02:42 CST; 5s ago
++ CHECK_RESULT 0 0 0 'lorax-composer.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='lorax-composer.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled lorax-composer.service
++ service=lorax-composer.service
+++ systemctl is-enabled lorax-composer.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ systemctl enable lorax-composer.service
+++ grep 'Created symlink'
+++ awk '{print $3}'
++ symlink_file=/etc/systemd/system/multi-user.target.wants/lorax-composer.service
++ find /etc/systemd/system/multi-user.target.wants/lorax-composer.service
+/etc/systemd/system/multi-user.target.wants/lorax-composer.service
++ CHECK_RESULT 0 0 0 'lorax-composer.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='lorax-composer.service enable failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable lorax-composer.service
+Removed "/etc/systemd/system/multi-user.target.wants/lorax-composer.service".
++ find /etc/systemd/system/multi-user.target.wants/lorax-composer.service
+find: ‘/etc/systemd/system/multi-user.target.wants/lorax-composer.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'lorax-composer.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='lorax-composer.service disable failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ grep -i 'fail\|error'
++ journalctl --since '2023-09-27 16:02:29' -u lorax-composer.service
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of lorax-composer.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of lorax-composer.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_reload lorax-composer.service
++ service=lorax-composer.service
++ systemctl start lorax-composer.service
++ systemctl reload lorax-composer.service
++ grep 'Job type reload is not applicable'
+Failed to reload lorax-composer.service: Job type reload is not applicable for unit lorax-composer.service.
++ CHECK_RESULT 0 0 0 'Job type reload is not applicable for unit lorax-composer.service'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Job type reload is not applicable for unit lorax-composer.service'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'Active: active'
++ systemctl status lorax-composer.service
+     Active: active (running) since Wed 2023-09-27 16:02:42 CST; 15s ago
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Wed Sep 27 16:02:58 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 27 16:02:58 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 27 16:02:59 2023 - INFO  - start environment cleanup.
++ systemctl stop lorax-composer.service
++ pip3 uninstall rpmfluff pycdlib ansible_runner -y
+Found existing installation: rpmfluff 0.6.3
+Uninstalling rpmfluff-0.6.3:
+  Successfully uninstalled rpmfluff-0.6.3
+Found existing installation: pycdlib 1.14.0
+Uninstalling pycdlib-1.14.0:
+  Successfully uninstalled pycdlib-1.14.0
+Found existing installation: ansible-runner 2.3.4
+Uninstalling ansible-runner-2.3.4:
+  Successfully uninstalled ansible-runner-2.3.4
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpw0rrplzc ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpw0rrplzc
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Sep 27 16:03:54 2023 - INFO  - Finish environment cleanup!

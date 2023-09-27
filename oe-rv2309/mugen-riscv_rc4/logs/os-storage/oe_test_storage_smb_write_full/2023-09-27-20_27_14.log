@@ -1,0 +1,565 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start loading data!'
++ message='Start loading data!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start loading data!'
+Wed Sep 27 20:27:18 2023 - INFO  - Start loading data!
+++ lsblk
+++ grep disk
+++ sed -n 2p
+++ awk '{print$1}'
++ remote_disk=vdb
++ LOG_INFO 'Loading data is complete!'
++ message='Loading data is complete!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Loading data is complete!'
+Wed Sep 27 20:27:18 2023 - INFO  - Loading data is complete!
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Sep 27 20:27:19 2023 - INFO  - Start environment preparation.
++ SSH_CMD 'yum install -y samba; sed -i '\''/testsamba/d'\'' /etc/security/opasswd;useradd testsamba;
+    (echo openEuler12#$;echo openEuler12#$) | smbpasswd -a testsamba -s' 10.0.0.10 'openEuler12#$' root
++ cmd='yum install -y samba; sed -i '\''/testsamba/d'\'' /etc/security/opasswd;useradd testsamba;
+    (echo openEuler12#$;echo openEuler12#$) | smbpasswd -a testsamba -s'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'yum install -y samba; sed -i '\''/testsamba/d'\'' /etc/security/opasswd;useradd testsamba;
+    (echo openEuler12#$;echo openEuler12#$) | smbpasswd -a testsamba -s' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:27:20 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:27:20 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:27:21 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 yum install -y samba; sed -i '/testsamba/d' /etc/security/opasswd;useradd testsamba;
+    (echo openEuler12#$;echo openEuler12#$) | smbpasswd -a testsamba -s
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
+Last metadata expiration check: 1:19:28 ago on Wed 27 Sep 2023 07:08:04 PM CST.
+Dependencies resolved.
+================================================================================
+ Package                  Architecture  Version                  Repo      Size
+================================================================================
+Installing:
+ samba                    riscv64       4.18.5-1.oe2309          OS       1.2 M
+Installing dependencies:
+ samba-common-tools       riscv64       4.18.5-1.oe2309          OS       370 k
+ samba-libs               riscv64       4.18.5-1.oe2309          OS        97 k
+
+Transaction Summary
+================================================================================
+Install  3 Packages
+
+Total download size: 1.7 M
+Installed size: 7.1 M
+Downloading Packages:
+(1/3): samba-libs-4.18.5-1.oe2309.riscv64.rpm   137 kB/s |  97 kB     00:00    
+(2/3): samba-common-tools-4.18.5-1.oe2309.riscv 449 kB/s | 370 kB     00:00    
+(3/3): samba-4.18.5-1.oe2309.riscv64.rpm        1.1 MB/s | 1.2 MB     00:01    
+--------------------------------------------------------------------------------
+Total                                           1.5 MB/s | 1.7 MB     00:01     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : samba-libs-4.18.5-1.oe2309.riscv64                     1/3 
+  Installing       : samba-common-tools-4.18.5-1.oe2309.riscv64             2/3 
+  Installing       : samba-4.18.5-1.oe2309.riscv64                          3/3 
+  Running scriptlet: samba-4.18.5-1.oe2309.riscv64                          3/3 
+  Verifying        : samba-4.18.5-1.oe2309.riscv64                          1/3 
+  Verifying        : samba-common-tools-4.18.5-1.oe2309.riscv64             2/3 
+  Verifying        : samba-libs-4.18.5-1.oe2309.riscv64                     3/3 
+
+Installed:
+  samba-4.18.5-1.oe2309.riscv64      samba-common-tools-4.18.5-1.oe2309.riscv64
+  samba-libs-4.18.5-1.oe2309.riscv64
+
+Complete!
++ ret=0
++ test 0 -ne 0
++ return 0
++ SSH_CMD 'cp -a /etc/samba/smb.conf /etc/samba/smb.conf.bak;echo  \" \" >> /etc/samba/smb.conf;
+	echo  \"\[testsamba\]\" >> /etc/samba/smb.conf;
+	echo  \"\tcomment = public stuff\" >> /etc/samba/smb.conf;
+	echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf;
+	echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf;
+	echo  \"\twriteable = yes\" >> /etc/samba/smb.conf' 10.0.0.10 'openEuler12#$' root
++ cmd='cp -a /etc/samba/smb.conf /etc/samba/smb.conf.bak;echo  \" \" >> /etc/samba/smb.conf;
+	echo  \"\[testsamba\]\" >> /etc/samba/smb.conf;
+	echo  \"\tcomment = public stuff\" >> /etc/samba/smb.conf;
+	echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf;
+	echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf;
+	echo  \"\twriteable = yes\" >> /etc/samba/smb.conf'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'cp -a /etc/samba/smb.conf /etc/samba/smb.conf.bak;echo  \" \" >> /etc/samba/smb.conf;
+	echo  \"\[testsamba\]\" >> /etc/samba/smb.conf;
+	echo  \"\tcomment = public stuff\" >> /etc/samba/smb.conf;
+	echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf;
+	echo  \"\tpath = /home/testsamba\" >> /etc/samba/smb.conf;
+	echo  \"\twriteable = yes\" >> /etc/samba/smb.conf' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:27:49 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:27:50 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:27:50 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 cp -a /etc/samba/smb.conf /etc/samba/smb.conf.bak;echo  " " >> /etc/samba/smb.conf;
+	echo  "[testsamba]" >> /etc/samba/smb.conf;
+	echo  "	comment = public stuff" >> /etc/samba/smb.conf;
+	echo  "	path = /home/testsamba" >> /etc/samba/smb.conf;
+	echo  "	path = /home/testsamba" >> /etc/samba/smb.conf;
+	echo  "	writeable = yes" >> /etc/samba/smb.conf
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ SSH_CMD 'systemctl start smb;systemctl enable smb;systemctl stop firewalld;systemctl stop firewalld
+	setsebool samba_export_all_ro on;setsebool samba_export_all_rw on' 10.0.0.10 'openEuler12#$' root
++ cmd='systemctl start smb;systemctl enable smb;systemctl stop firewalld;systemctl stop firewalld
+	setsebool samba_export_all_ro on;setsebool samba_export_all_rw on'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl start smb;systemctl enable smb;systemctl stop firewalld;systemctl stop firewalld
+	setsebool samba_export_all_ro on;setsebool samba_export_all_rw on' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:27:54 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:27:55 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:27:55 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 systemctl start smb;systemctl enable smb;systemctl stop firewalld;systemctl stop firewalld
+	setsebool samba_export_all_ro on;setsebool samba_export_all_rw on
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
+Created symlink /etc/systemd/system/multi-user.target.wants/smb.service → /usr/lib/systemd/system/smb.service.
+Could not change active booleans: Invalid boolean
+Could not change active booleans: Invalid boolean
++ ret=255
++ test 255 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:255'
++ message='Failed in remote CMD operation:255'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:255'
+Wed Sep 27 20:28:04 2023 - ERROR - Failed in remote CMD operation:255
++ return 255
++ DNF_INSTALL cifs-utils
++ pkgs=cifs-utils
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs cifs-utils --node 1 --tempfile ''
+Wed Sep 27 20:28:13 2023 - INFO  - pkgs:(cifs-utils) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl stop firewalld
++ mkdir -p /home/client
++ LOG_INFO 'Environmental preparation is over.'
++ message='Environmental preparation is over.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Environmental preparation is over.'
+Wed Sep 27 20:28:14 2023 - INFO  - Environmental preparation is over.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Wed Sep 27 20:28:14 2023 - INFO  - Start executing testcase.
++ SSH_CMD 'grep '\''testsamba'\'' /etc/passwd' 10.0.0.10 'openEuler12#$' root
++ cmd='grep '\''testsamba'\'' /etc/passwd'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'grep '\''testsamba'\'' /etc/passwd' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:28:15 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:28:15 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:28:16 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 grep 'testsamba' /etc/passwd
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
+testsamba:x:1001:1001::/home/testsamba:/bin/bash
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'ps -ef | grep -v '\''grep'\'' | grep -i '\''smb'\''' 10.0.0.10 'openEuler12#$' root
++ cmd='ps -ef | grep -v '\''grep'\'' | grep -i '\''smb'\'''
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'ps -ef | grep -v '\''grep'\'' | grep -i '\''smb'\''' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:28:22 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:28:22 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:28:23 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 ps -ef | grep -v 'grep' | grep -i 'smb'
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
+root        3900       1  2 20:27 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group
+root        3902    3900  0 20:27 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group
+root        3903    3900  0 20:27 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -d /home/client
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'mkfs.ext4 /dev/vdb' 10.0.0.10 'openEuler12#$' root
++ cmd='mkfs.ext4 /dev/vdb'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mkfs.ext4 /dev/vdb' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:28:27 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:28:27 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:28:28 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 mkfs.ext4 /dev/vdb
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/512000             done                            
+Creating filesystem with 512000 1k blocks and 128016 inodes
+Filesystem UUID: 1020cd5e-70c1-45d7-a188-a07e52bc359c
+Superblock backups stored on blocks: 
+	8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409
+
+Allocating group tables:  0/63     done                            
+Writing inode tables:  0/63     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/63     done
+
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'mount /dev/vdb /home/testsamba' 10.0.0.10 'openEuler12#$' root
++ cmd='mount /dev/vdb /home/testsamba'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mount /dev/vdb /home/testsamba' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:28:32 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:28:32 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:28:33 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 mount /dev/vdb /home/testsamba
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'chmod 777 /home/testsamba' 10.0.0.10 'openEuler12#$' root
++ cmd='chmod 777 /home/testsamba'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'chmod 777 /home/testsamba' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:28:37 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:28:37 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:28:38 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 chmod 777 /home/testsamba
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mount -t cifs -o 'username=testsamba,password=openEuler12#$' //10.0.0.10/testsamba /home/client
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ df -h
++ grep -i /home/client
++ grep 10.0.0.10
+//10.0.0.10/testsamba  459M   30M  430M   7% /home/client
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'dd if=/dev/zero of=/home/testsamba/test bs=1k' 10.0.0.10 'openEuler12#$' root
++ cmd='dd if=/dev/zero of=/home/testsamba/test bs=1k'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'dd if=/dev/zero of=/home/testsamba/test bs=1k' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:28:42 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:28:42 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:28:43 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 dd if=/dev/zero of=/home/testsamba/test bs=1k
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
+dd: error writing '/home/testsamba/test': No space left on device
+465218+0 records in
+465217+0 records out
+476382208 bytes (476 MB, 454 MiB) copied, 25.9386 s, 18.4 MB/s
++ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Wed Sep 27 20:29:13 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ dd if=/dev/zero of=/home/client/test1 bs=1M count=2
+dd: closing output file '/home/client/test1': No space left on device
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ SSH_CMD 'rm -rf /home/testsamba/test' 10.0.0.10 'openEuler12#$' root
++ cmd='rm -rf /home/testsamba/test'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'rm -rf /home/testsamba/test' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:29:14 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:29:14 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:29:15 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 rm -rf /home/testsamba/test
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dd if=/dev/zero of=/home/client/test1 bs=1M count=2
+2+0 records in
+2+0 records out
+2097152 bytes (2.1 MB, 2.0 MiB) copied, 0.118629 s, 17.7 MB/s
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of testcase execution.'
++ message='End of testcase execution.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution.'
+Wed Sep 27 20:29:21 2023 - INFO  - End of testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 27 20:29:22 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 27 20:29:22 2023 - INFO  - start environment cleanup.
++ umount /home/client
++ rmdir /home/client
++ SSH_CMD 'umount /home/testsamba;systemctl stop smb;rm -f /etc/samba/smb.conf;mv /etc/samba/smb.conf.bak /etc/samba/smb.conf;
+    yum remove samba -y;userdel -r testsamba; systemctl start firewalld' 10.0.0.10 'openEuler12#$' root
++ cmd='umount /home/testsamba;systemctl stop smb;rm -f /etc/samba/smb.conf;mv /etc/samba/smb.conf.bak /etc/samba/smb.conf;
+    yum remove samba -y;userdel -r testsamba; systemctl start firewalld'
++ remoteip=10.0.0.10
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'umount /home/testsamba;systemctl stop smb;rm -f /etc/samba/smb.conf;mv /etc/samba/smb.conf.bak /etc/samba/smb.conf;
+    yum remove samba -y;userdel -r testsamba; systemctl start firewalld' -i 10.0.0.10 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 20:29:23 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 20:29:23 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 20:29:24 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@10.0.0.10 umount /home/testsamba;systemctl stop smb;rm -f /etc/samba/smb.conf;mv /etc/samba/smb.conf.bak /etc/samba/smb.conf;
+    yum remove samba -y;userdel -r testsamba; systemctl start firewalld
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.10's password: 
+Dependencies resolved.
+================================================================================
+ Package                  Architecture  Version                 Repo       Size
+================================================================================
+Removing:
+ samba                    riscv64       4.18.5-1.oe2309         @OS       5.6 M
+Removing unused dependencies:
+ samba-common-tools       riscv64       4.18.5-1.oe2309         @OS       1.2 M
+ samba-libs               riscv64       4.18.5-1.oe2309         @OS       344 k
+
+Transaction Summary
+================================================================================
+Remove  3 Packages
+
+Freed space: 7.1 M
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Running scriptlet: samba-4.18.5-1.oe2309.riscv64                          1/1 
+  Running scriptlet: samba-4.18.5-1.oe2309.riscv64                          1/3 
+Removed "/etc/systemd/system/multi-user.target.wants/smb.service".
+
+  Erasing          : samba-4.18.5-1.oe2309.riscv64                          1/3 
+  Running scriptlet: samba-4.18.5-1.oe2309.riscv64                          1/3 
+  Erasing          : samba-common-tools-4.18.5-1.oe2309.riscv64             2/3 
+  Erasing          : samba-libs-4.18.5-1.oe2309.riscv64                     3/3 
+  Verifying        : samba-4.18.5-1.oe2309.riscv64                          1/3 
+  Verifying        : samba-common-tools-4.18.5-1.oe2309.riscv64             2/3 
+  Verifying        : samba-libs-4.18.5-1.oe2309.riscv64                     3/3 
+
+Removed:
+  samba-4.18.5-1.oe2309.riscv64      samba-common-tools-4.18.5-1.oe2309.riscv64
+  samba-libs-4.18.5-1.oe2309.riscv64
+
+Complete!
++ ret=0
++ test 0 -ne 0
++ return 0
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Sep 27 20:29:47 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Sep 27 20:29:47 2023 - INFO  - Finish environment cleanup.

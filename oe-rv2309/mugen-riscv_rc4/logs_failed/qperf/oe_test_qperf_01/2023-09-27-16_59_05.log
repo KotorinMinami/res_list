@@ -1,0 +1,61 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Sep 27 16:59:09 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL qperf
++ pkgs=qperf
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs qperf --node 1 --tempfile ''
+Wed Sep 27 16:59:20 2023 - INFO  - pkgs:(qperf) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ DNF_INSTALL qperf 2
++ pkgs=qperf
++ node=2
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs qperf --node 2 --tempfile ''
+Wed Sep 27 16:59:36 2023 - INFO  - pkgs:(qperf) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ SSH_CMD 'systemctl stop firewalld && nohup qperf &' 10.0.0.14 'openEuler12#$' root
++ cmd='systemctl stop firewalld && nohup qperf &'
++ remoteip=10.0.0.14
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl stop firewalld && nohup qperf &' -i 10.0.0.14 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Sep 27 16:59:37 2023 - WARN  - the remote user uses the default configuration.
+Wed Sep 27 16:59:37 2023 - WARN  - the remote password uses the default configuration.
+Wed Sep 27 16:59:38 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=0 -p 22 root@10.0.0.14 systemctl stop firewalld && nohup qperf &
+The authenticity of host '10.0.0.14 (10.0.0.14)' can't be established.
+ED25519 key fingerprint is SHA256:Nllcw8bvMZfN/392wLTeJrB4HYUzPiiqgx5OFQVArjw.
+This host key is known by the following other names/addresses:
+    ~/.ssh/known_hosts:1: localhost
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.0.0.14' (ED25519) to the list of known hosts.
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.14's password: 
+Wed Sep 27 17:29:05 2023 - ERROR - Timeout : Command 'bash -x oe_test_qperf_01.sh' timed out after 1799.999797296 seconds
