@@ -1,0 +1,371 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Sep 27 14:13:06 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL glusterfs-events
++ pkgs=glusterfs-events
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs glusterfs-events --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 5:14:23 ago on Wed 27 Sep 2023 08:59:17 AM CST.
+Dependencies resolved.
+================================================================================
+ Package                 Architecture   Version                 Repo       Size
+================================================================================
+Installing:
+ glusterfs-events        riscv64        10.3-2.oe2309           OS         41 k
+Installing dependencies:
+ glusterfs-server        riscv64        10.3-2.oe2309           OS        1.1 M
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total size: 1.1 M
+Installed size: 5.4 M
+Downloading Packages:
+[SKIPPED] glusterfs-events-10.3-2.oe2309.riscv64.rpm: Already downloaded       
+[SKIPPED] glusterfs-server-10.3-2.oe2309.riscv64.rpm: Already downloaded       
+Running transaction check
+Waiting for process with pid 2304 to finish.
+Transaction check succeeded.
+Running transaction test
+The downloaded packages were saved in cache until the next successful transaction.
+You can remove cached packages by executing '\''dnf clean packages'\''.
+Error: Transaction test error:
+  package glusterfs-server-10.3-2.oe2309.riscv64 is already installed
+  package glusterfs-events-10.3-2.oe2309.riscv64 is already installed'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 5:14:23 ago on Wed 27 Sep 2023 08:59:17 AM CST.
+Dependencies resolved.
+================================================================================
+ Package                 Architecture   Version                 Repo       Size
+================================================================================
+Installing:
+ glusterfs-events        riscv64        10.3-2.oe2309           OS         41 k
+Installing dependencies:
+ glusterfs-server        riscv64        10.3-2.oe2309           OS        1.1 M
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total size: 1.1 M
+Installed size: 5.4 M
+Downloading Packages:
+[SKIPPED] glusterfs-events-10.3-2.oe2309.riscv64.rpm: Already downloaded       
+[SKIPPED] glusterfs-server-10.3-2.oe2309.riscv64.rpm: Already downloaded       
+Running transaction check
+Waiting for process with pid 2304 to finish.
+Transaction check succeeded.
+Running transaction test
+The downloaded packages were saved in cache until the next successful transaction.
+You can remove cached packages by executing '\''dnf clean packages'\''.
+Error: Transaction test error:
+  package glusterfs-server-10.3-2.oe2309.riscv64 is already installed
+  package glusterfs-events-10.3-2.oe2309.riscv64 is already installed'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Sep 27 14:13:47 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Wed Sep 27 14:13:47 2023 - INFO  - Start testing...
++ test_execution glustereventsd.service
++ service=glustereventsd.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-09-27 14:13:47'
++ test_restart glustereventsd.service
++ service=glustereventsd.service
++ systemctl restart glustereventsd.service
++ CHECK_RESULT 0 0 0 'glustereventsd.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ grep 'Active: active'
++ systemctl status glustereventsd.service
+     Active: active (running) since Wed 2023-09-27 14:13:48 CST; 4s ago
++ CHECK_RESULT 0 0 0 'glustereventsd.service restart failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service restart failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl stop glustereventsd.service
++ CHECK_RESULT 0 0 0 'glustereventsd.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status glustereventsd.service
++ grep 'Active: inactive'
+     Active: inactive (dead)
++ CHECK_RESULT 0 0 0 'glustereventsd.service stop failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service stop failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl start glustereventsd.service
++ CHECK_RESULT 0 0 0 'glustereventsd.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
++ systemctl status glustereventsd.service
++ grep 'Active: active'
+     Active: active (running) since Wed 2023-09-27 14:14:00 CST; 5s ago
++ CHECK_RESULT 0 0 0 'glustereventsd.service start failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service start failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test_enabled glustereventsd.service
++ service=glustereventsd.service
+++ systemctl is-enabled glustereventsd.service
++ state=disabled
++ '[' disabled == enabled ']'
++ '[' disabled == disabled ']'
+++ systemctl enable glustereventsd.service
+++ grep 'Created symlink'
+++ awk '{print $3}'
++ symlink_file=/etc/systemd/system/multi-user.target.wants/glustereventsd.service
++ find /etc/systemd/system/multi-user.target.wants/glustereventsd.service
+/etc/systemd/system/multi-user.target.wants/glustereventsd.service
++ CHECK_RESULT 0 0 0 'glustereventsd.service enable failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service enable failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl disable glustereventsd.service
+Removed "/etc/systemd/system/multi-user.target.wants/glustereventsd.service".
++ find /etc/systemd/system/multi-user.target.wants/glustereventsd.service
+find: ‘/etc/systemd/system/multi-user.target.wants/glustereventsd.service’: No such file or directory
++ CHECK_RESULT 1 0 1 'glustereventsd.service disable failed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='glustereventsd.service disable failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ journalctl --since '2023-09-27 14:13:47' -u glustereventsd.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of glustereventsd.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of glustereventsd.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
+++ systemctl status glustereventsd.service
+++ grep Active
+++ awk '{print $2}'
++ cur_status=active
++ test 'active!=active'
++ systemctl start glustereventsd.service
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
++ sed -i 's\/usr/sbin/glustereventsd --pid-file /var/run/glustereventsd.pid\/usr/sbin/glustereventsd\g' /usr/lib/systemd/system/glustereventsd.service
++ systemctl daemon-reload
++ systemctl reload glustereventsd.service
++ CHECK_RESULT 0 0 0 'glustereventsd.service reload failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service reload failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl status glustereventsd.service
++ grep 'Active: active'
+     Active: active (running) since Wed 2023-09-27 14:14:00 CST; 36s ago
++ CHECK_RESULT 0 0 0 'glustereventsd.service reload causes the service status to change'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='glustereventsd.service reload causes the service status to change'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Wed Sep 27 14:14:37 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Sep 27 14:14:37 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 27 14:14:38 2023 - INFO  - start environment cleanup.
++ sed -i 's\/usr/sbin/glustereventsd\/usr/sbin/glustereventsd --pid-file /var/run/glustereventsd.pid\g' /usr/lib/systemd/system/glustereventsd.service
++ systemctl daemon-reload
++ systemctl reload glustereventsd.service
++ systemctl stop glustereventsd.service
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 5:14:23 ago on Wed 27 Sep 2023 08:59:17 AM CST.
+Dependencies resolved.
+================================================================================
+ Package                 Architecture   Version                 Repo       Size
+================================================================================
+Installing:
+ glusterfs-events        riscv64        10.3-2.oe2309           OS         41 k
+Installing dependencies:
+ glusterfs-server        riscv64        10.3-2.oe2309           OS        1.1 M
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total size: 1.1 M
+Installed size: 5.4 M
+Downloading Packages:
+[SKIPPED] glusterfs-events-10.3-2.oe2309.riscv64.rpm: Already downloaded       
+[SKIPPED] glusterfs-server-10.3-2.oe2309.riscv64.rpm: Already downloaded       
+Running transaction check
+Waiting for process with pid 2304 to finish.
+Transaction check succeeded.
+Running transaction test
+The downloaded packages were saved in cache until the next successful transaction.
+You can remove cached packages by executing 'dnf clean packages'.
+Error: Transaction test error:
+  package glusterfs-server-10.3-2.oe2309.riscv64 is already installed
+  package glusterfs-events-10.3-2.oe2309.riscv64 is already installed ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 5:14:23 ago on Wed 27 Sep 2023 08:59:17 AM CST.
+Dependencies resolved.
+================================================================================
+ Package                 Architecture   Version                 Repo       Size
+================================================================================
+Installing:
+ glusterfs-events        riscv64        10.3-2.oe2309           OS         41 k
+Installing dependencies:
+ glusterfs-server        riscv64        10.3-2.oe2309           OS        1.1 M
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total size: 1.1 M
+Installed size: 5.4 M
+Downloading Packages:
+[SKIPPED] glusterfs-events-10.3-2.oe2309.riscv64.rpm: Already downloaded       
+[SKIPPED] glusterfs-server-10.3-2.oe2309.riscv64.rpm: Already downloaded       
+Running transaction check
+Waiting for process with pid 2304 to finish.
+Transaction check succeeded.
+Running transaction test
+The downloaded packages were saved in cache until the next successful transaction.
+You can remove cached packages by executing '\''dnf clean packages'\''.
+Error: Transaction test error:
+  package glusterfs-server-10.3-2.oe2309.riscv64 is already installed
+  package glusterfs-events-10.3-2.oe2309.riscv64 is already installed'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 5:14:23 ago on Wed 27 Sep 2023 08:59:17 AM CST.\nDependencies resolved.\n================================================================================\n Package                 Architecture   Version                 Repo       Size\n================================================================================\nInstalling:\n glusterfs-events        riscv64        10.3-2.oe2309           OS         41 k\nInstalling dependencies:\n glusterfs-server        riscv64        10.3-2.oe2309           OS        1.1 M\n\nTransaction Summary\n================================================================================\nInstall  2 Packages\n\nTotal size: 1.1 M\nInstalled size: 5.4 M\nDownloading Packages:\n[SKIPPED] glusterfs-events-10.3-2.oe2309.riscv64.rpm: Already downloaded       \n[SKIPPED] glusterfs-server-10.3-2.oe2309.riscv64.rpm: Already downloaded       \nRunning transaction check\nWaiting for process with pid 2304 to finish.\nTransaction check succeeded.\nRunning transaction test\nThe downloaded packages were saved in cache until the next successful transaction.\nYou can remove cached packages by executing 'dnf clean packages'.\nError: Transaction test error:\n  package glusterfs-server-10.3-2.oe2309.riscv64 is already installed\n  package glusterfs-events-10.3-2.oe2309.riscv64 is already installed"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Sep 27 14:14:47 2023 - INFO  - Finish environment cleanup!

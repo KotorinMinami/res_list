@@ -1,0 +1,165 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Sep 27 12:49:26 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL openssl
++ pkgs=openssl
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs openssl --node 1 --tempfile ''
+Wed Sep 27 12:49:35 2023 - INFO  - pkgs:(openssl) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ mkdir /tmp/test
++ cd /tmp/test
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Sep 27 12:49:36 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Sep 27 12:49:36 2023 - INFO  - Start to run test.
++ openssl genrsa -out 1.key 1024
++ test -e 1.key
++ CHECK_RESULT 0 0 0 'Generation failure 1'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Generation failure 1'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn openssl enc -e -rc4 -in 1.key -out 1.key.enc
+enter RC4 encryption password:
+Verifying - enter RC4 encryption password:
+*** WARNING : deprecated key derivation used.
+Using -iter or -pbkdf2 would be better.
+Error setting cipher RC4
+2024779A3F000000:error:0308010C:digital envelope routines:inner_evp_generic_fetch:unsupported:crypto/evp/evp_fetch.c:373:Global default library context, Algorithm (RC4 : 40), Properties ()
++ test -e 1.key.enc
++ CHECK_RESULT 0 0 0 'Generation failure 2'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Generation failure 2'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ expect
+spawn openssl enc -d -rc4 -in 1.key.enc -out 1.key.dec
+enter RC4 decryption password:
+*** WARNING : deprecated key derivation used.
+Using -iter or -pbkdf2 would be better.
+Error setting cipher RC4
+20546C953F000000:error:0308010C:digital envelope routines:inner_evp_generic_fetch:unsupported:crypto/evp/evp_fetch.c:373:Global default library context, Algorithm (RC4 : 40), Properties ()
++ test -e 1.key.dec
++ CHECK_RESULT 0 0 0 'Generation failure 3'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Generation failure 3'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ diff 1.key 1.key.dec
+1,16d0
+< -----BEGIN PRIVATE KEY-----
+< MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMi/bcdGY4Kkf2WD
+< BdsaRbsJPpILyUAapmbmwf63HHOU4a+dmJG3PwRKje/Qb6YoT6t256pbXaVzyXc3
+< 7nPOr+C8gv+bM350KwWz+0pGmeo1cesQj48hZv9a+rnJlGwi/IP/vBqU4jAgJIZj
+< XUKvnbJldii+Lfbua7Cmi1pj+s59AgMBAAECgYBh3E/bsQiZiy8/gRu9r5UGlH8Y
+< Gv7EbTlpOFyhmwoXniBWx/C0OCxUHzQKEAYdbdFIuPI+LcP8//DaWT243q0FdzeF
+< r+1tK+klFN27L2SRAeg08ZcJ8WPGXLVmMnkrxzYP5ofCBtxVh9zZ4nj44zUT7YiD
+< 8QXQTQEjyFaQvbbXgQJBAPrdmguIXMtN2iXidcIqhOCip3XsVZLAWycI6z5GiZy/
+< GDsGOw8XI67Wz0Gd6paksRRu8Ev1IhYhF6bxznDGpNUCQQDM2zyqyql0HqUEL7cF
+< OO+l9K2V/Xy8JrEFFhk5/j/bYzet0/cwKcJmlD98n89cpqNiC1fotFl8YvNwBQps
+< 4HcJAkEAjPAAwmfq0iE75LrUs7AVlOpssHiFHvxIeaauGv+gAlrtrwNyHKlAV9LA
+< /7lLeTSvc65b/CCM9OfElPsWow9GvQJBALvwgsb56N6EYsXldJZQ9uOdB0fs5+vB
+< 33OYI4ql7DW8388VANlp5lSvu1L9VoNcydXgLEVseBB6w3XI2hirEekCQBWQrYts
+< 8SUjTgvOwMMr+7Q4t7y5bWBGB4tkAljqHYsNlM7E1p3Ar3ipQRbxY8YCrAIZEZNE
+< xwqfCfPDzoLtHPc=
+< -----END PRIVATE KEY-----
++ CHECK_RESULT 1 0 0 'decryption failure'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='decryption failure'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'decryption failure'
++ LOG_ERROR 'decryption failure'
++ message='decryption failure'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'decryption failure'
+Wed Sep 27 12:49:38 2023 - ERROR - decryption failure
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_openssl_rc4_encryption_file.sh line 56'
++ message='oe_test_openssl_rc4_encryption_file.sh line 56'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_openssl_rc4_encryption_file.sh line 56'
+Wed Sep 27 12:49:38 2023 - ERROR - oe_test_openssl_rc4_encryption_file.sh line 56
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Wed Sep 27 12:49:39 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Sep 27 12:49:39 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Sep 27 12:49:40 2023 - INFO  - start environment cleanup.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Sep 27 12:49:40 2023 - WARN  - no thing to do.
++ return 0
++ rm -rf /tmp/test
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Sep 27 12:49:41 2023 - INFO  - Finish environment cleanup!
