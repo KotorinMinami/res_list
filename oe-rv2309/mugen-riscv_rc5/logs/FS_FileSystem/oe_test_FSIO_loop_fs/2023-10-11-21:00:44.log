@@ -1,0 +1,276 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Oct 11 21:00:46 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20231011210046
++ virtualfs=/mnt/virtualfs_20231011210046
++ dd if=/dev/zero of=/mnt/virtualfs_20231011210046 bs=1M count=350
+350+0 records in
+350+0 records out
+367001600 bytes (367 MB, 350 MiB) copied, 3.90051 s, 94.1 MB/s
++ point=/mnt/point_20231011210046
++ mkdir /mnt/point_20231011210046
++ list=('ext3' 'ext4' 'xfs')
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Wed Oct 11 21:00:50 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 11 21:00:51 2023 - INFO  - Start to run test.
++ for var in "${list[@]}"
+++ losetup -f
++ loop=/dev/loop0
++ mknod -m 0660 /dev/loop0 b 7 0
+mknod: /dev/loop0: File exists
++ losetup /dev/loop0 /mnt/virtualfs_20231011210046
++ [[ ext3 =~ ext ]]
++ mkfs -t ext3 -m 1 -v /dev/loop0
+mke2fs 1.47.0 (5-Feb-2023)
+fs_types for mke2fs.conf resolution: 'ext3', 'small'
+Discarding device blocks:      0/358400             done                            
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+89760 inodes, 358400 blocks
+3584 blocks (1.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=67633152
+44 block groups
+8192 blocks per group, 8192 fragments per group
+2040 inodes per group
+Filesystem UUID: 55560b64-d987-471e-8aa7-41bbf72b7d1b
+Superblock backups stored on blocks: 
+	8193, 24577, 40961, 57345, 73729, 204801, 221185
+
+Allocating group tables:  0/44     done                            
+Writing inode tables:  0/4419/44     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/44     done
+
++ CHECK_RESULT 0 0 0 'mkfs ext3 for /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='mkfs ext3 for /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mount -t ext3 /dev/loop0 /mnt/point_20231011210046
++ df -T
++ grep /dev/loop0
++ grep ext3
+/dev/loop0     ext3        325607      47    321976   1% /mnt/point_20231011210046
++ CHECK_RESULT 0 0 0 'Mount fs ext3 on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount fs ext3 on /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount /mnt/point_20231011210046
++ CHECK_RESULT 0 0 0 'Umount fs ext3 on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs ext3 on /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ losetup -d /dev/loop0
++ rm -rf /dev/loop0
++ for var in "${list[@]}"
+++ losetup -f
++ loop=/dev/loop0
++ mknod -m 0660 /dev/loop0 b 7 0
++ losetup /dev/loop0 /mnt/virtualfs_20231011210046
++ [[ ext4 =~ ext ]]
++ mkfs -t ext4 -m 1 -v /dev/loop0
+mke2fs 1.47.0 (5-Feb-2023)
+fs_types for mke2fs.conf resolution: 'ext4', 'small'
+Discarding device blocks:      0/358400             done                            
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+89760 inodes, 358400 blocks
+3584 blocks (1.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=33947648
+44 block groups
+8192 blocks per group, 8192 fragments per group
+2040 inodes per group
+Filesystem UUID: 4904c634-2b4d-4281-b644-69c6a5f5c0ed
+Superblock backups stored on blocks: 
+	8193, 24577, 40961, 57345, 73729, 204801, 221185
+
+Allocating group tables:  0/44     done                            
+Writing inode tables:  0/44     done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information:  0/44     done
+
++ CHECK_RESULT 0 0 0 'mkfs ext4 for /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='mkfs ext4 for /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mount -t ext4 /dev/loop0 /mnt/point_20231011210046
++ df -T
++ grep /dev/loop0
++ grep ext4
+/dev/loop0     ext4        325599      14    317905   1% /mnt/point_20231011210046
++ CHECK_RESULT 0 0 0 'Mount fs ext4 on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount fs ext4 on /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount /mnt/point_20231011210046
++ CHECK_RESULT 0 0 0 'Umount fs ext4 on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs ext4 on /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ losetup -d /dev/loop0
++ rm -rf /dev/loop0
++ for var in "${list[@]}"
+++ losetup -f
++ loop=/dev/loop0
++ mknod -m 0660 /dev/loop0 b 7 0
++ losetup /dev/loop0 /mnt/virtualfs_20231011210046
++ [[ xfs =~ ext ]]
++ mkfs -t xfs -d name=/dev/loop0 -f
+meta-data=/dev/loop0             isize=512    agcount=4, agsize=22400 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=0
+data     =                       bsize=4096   blocks=89600, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=16384, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+Discarding blocks...Done.
++ CHECK_RESULT 0 0 0 'mkfs xfs for /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='mkfs xfs for /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mount -t xfs /dev/loop0 /mnt/point_20231011210046
++ df -T
++ grep /dev/loop0
++ grep xfs
+/dev/loop0     xfs         292864   20228    272636   7% /mnt/point_20231011210046
++ CHECK_RESULT 0 0 0 'Mount fs xfs on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount fs xfs on /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ umount /mnt/point_20231011210046
++ CHECK_RESULT 0 0 0 'Umount fs xfs on /dev/loop0 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs xfs on /dev/loop0 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ losetup -d /dev/loop0
++ rm -rf /dev/loop0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 11 21:00:54 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 11 21:00:54 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 11 21:00:54 2023 - INFO  - Start to restore the test environment.
++ rm -rf /dev/loop0 /mnt/point_20231011210046 /mnt/virtualfs_20231011210046
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 11 21:00:55 2023 - INFO  - End to restore the test environment.

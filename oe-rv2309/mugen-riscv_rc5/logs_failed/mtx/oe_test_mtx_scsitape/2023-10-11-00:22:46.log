@@ -1,0 +1,403 @@
++ source common/common.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n function ']'
++ config_params
++ LOG_INFO 'Start to config params of the case.'
++ message='Start to config params of the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to config params of the case.'
+Wed Oct 11 00:22:48 2023 - INFO  - Start to config params of the case.
++ common_config_params
++ DRIVER_MEDIUMX=L80
++ DRIVER_TAPE=T10000B
++ LOG_INFO 'End to config params of the case.'
++ message='End to config params of the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to config params of the case.'
+Wed Oct 11 00:22:48 2023 - INFO  - End to config params of the case.
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 11 00:22:49 2023 - INFO  - Start to prepare the test environment.
++ common_pre
++ DNF_INSTALL 'mtx rpm-build rpmdevtools git zlib-devel'
++ pkgs='mtx rpm-build rpmdevtools git zlib-devel'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'mtx rpm-build rpmdevtools git zlib-devel' --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:03:16 ago on Wed Oct 11 00:19:51 2023.
+Package git-2.41.0-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem 1: conflicting requests
+  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS
+ Problem 2: package rpmdevtools-8.10-9.oe2309.noarch from OS requires rpm-build >= 4.4.2.3, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:03:16 ago on Wed Oct 11 00:19:51 2023.
+Package git-2.41.0-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem 1: conflicting requests
+  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS
+ Problem 2: package rpmdevtools-8.10-9.oe2309.noarch from OS requires rpm-build >= 4.4.2.3, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
++ rpmdev-setuptree
+common/common.sh: line 34: rpmdev-setuptree: command not found
++ git clone https://gitee.com/src-openeuler/mhvtl.git ./tmp/mhvtl
+Cloning into './tmp/mhvtl'...
++ cp ./tmp/mhvtl/1.7-0_release.tar.gz ./tmp/mhvtl/build-kernel-module.patch ./tmp/mhvtl/build-mhvtl-module.patch /root/rpmbuild/SOURCES
+cp: target '/root/rpmbuild/SOURCES': No such file or directory
++ rpmbuild -bb ./tmp/mhvtl/mhvtl-utils.spec
+common/common.sh: line 37: rpmbuild: command not found
+++ arch
++ dnf install '/root/rpmbuild/RPMS/riscv64/*.rpm' -y
+Last metadata expiration check: 0:03:22 ago on Wed Oct 11 00:19:51 2023.
+Can not load RPM file: /root/rpmbuild/RPMS/riscv64/*.rpm.
+Could not open: /root/rpmbuild/RPMS/riscv64/*.rpm
++ systemctl start mhvtl.target
+Failed to start mhvtl.target: Unit mhvtl.target not found.
++ SLEEP_WAIT 5s
++ wait_time=5s
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5s --cmd '' --mode 1
+++ lsscsi -g
+++ grep L80
+++ grep -oE '/dev/sg.*'
++ PATH_MEDIUMX=
+++ lsscsi -g
+++ grep -m 1 T10000B
+++ grep -oE '/dev/st[0-9]*'
++ PATH_TAPE=
++ common_load
++ mtx -f next
+common/common.sh: line 64: mtx: command not found
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Oct 11 00:23:19 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 11 00:23:19 2023 - INFO  - Start to run test.
++ common_test
++ systemctl status mhvtl.target
++ grep 'mhvtl service allowing to start/stop'
+Unit mhvtl.target could not be found.
++ CHECK_RESULT 1 0 0 'mhvtl service WRONG'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='mhvtl service WRONG'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'mhvtl service WRONG'
++ LOG_ERROR 'mhvtl service WRONG'
++ message='mhvtl service WRONG'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'mhvtl service WRONG'
+Wed Oct 11 00:23:20 2023 - ERROR - mhvtl service WRONG
++ (( exec_result++ ))
++ LOG_ERROR 'common/common.sh line 52'
++ message='common/common.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'common/common.sh line 52'
+Wed Oct 11 00:23:20 2023 - ERROR - common/common.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ scsitape -f setblk 5
+oe_test_mtx_scsitape.sh: line 45: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f setblk error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f setblk error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f setblk error'
++ LOG_ERROR 'option: -f setblk error'
++ message='option: -f setblk error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f setblk error'
+Wed Oct 11 00:23:20 2023 - ERROR - option: -f setblk error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 46'
++ message='oe_test_mtx_scsitape.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 46'
+Wed Oct 11 00:23:21 2023 - ERROR - oe_test_mtx_scsitape.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ scsitape -f fsf 0
+oe_test_mtx_scsitape.sh: line 48: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f fsf error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f fsf error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f fsf error'
++ LOG_ERROR 'option: -f fsf error'
++ message='option: -f fsf error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f fsf error'
+Wed Oct 11 00:23:21 2023 - ERROR - option: -f fsf error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 49'
++ message='oe_test_mtx_scsitape.sh line 49'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 49'
+Wed Oct 11 00:23:22 2023 - ERROR - oe_test_mtx_scsitape.sh line 49
++ '[' 0 -eq 1 ']'
++ return 0
++ scsitape -f bsf 0
+oe_test_mtx_scsitape.sh: line 51: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f bsf error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f bsf error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f bsf error'
++ LOG_ERROR 'option: -f bsf error'
++ message='option: -f bsf error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f bsf error'
+Wed Oct 11 00:23:22 2023 - ERROR - option: -f bsf error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 52'
++ message='oe_test_mtx_scsitape.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 52'
+Wed Oct 11 00:23:22 2023 - ERROR - oe_test_mtx_scsitape.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ scsitape -f eod
+oe_test_mtx_scsitape.sh: line 54: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f eod error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f eod error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f eod error'
++ LOG_ERROR 'option: -f eod error'
++ message='option: -f eod error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f eod error'
+Wed Oct 11 00:23:23 2023 - ERROR - option: -f eod error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 55'
++ message='oe_test_mtx_scsitape.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 55'
+Wed Oct 11 00:23:23 2023 - ERROR - oe_test_mtx_scsitape.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ scsitape -f rewind
+oe_test_mtx_scsitape.sh: line 57: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f rewind error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f rewind error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f rewind error'
++ LOG_ERROR 'option: -f rewind error'
++ message='option: -f rewind error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f rewind error'
+Wed Oct 11 00:23:23 2023 - ERROR - option: -f rewind error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 58'
++ message='oe_test_mtx_scsitape.sh line 58'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 58'
+Wed Oct 11 00:23:24 2023 - ERROR - oe_test_mtx_scsitape.sh line 58
++ '[' 0 -eq 1 ']'
++ return 0
++ scsitape -f mark 0
+oe_test_mtx_scsitape.sh: line 60: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f mark error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f mark error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f mark error'
++ LOG_ERROR 'option: -f mark error'
++ message='option: -f mark error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f mark error'
+Wed Oct 11 00:23:24 2023 - ERROR - option: -f mark error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 61'
++ message='oe_test_mtx_scsitape.sh line 61'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 61'
+Wed Oct 11 00:23:24 2023 - ERROR - oe_test_mtx_scsitape.sh line 61
++ '[' 0 -eq 1 ']'
++ return 0
++ scsitape -f seek 0
+oe_test_mtx_scsitape.sh: line 63: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f seek  error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f seek  error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f seek  error'
++ LOG_ERROR 'option: -f seek  error'
++ message='option: -f seek  error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f seek  error'
+Wed Oct 11 00:23:25 2023 - ERROR - option: -f seek  error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 64'
++ message='oe_test_mtx_scsitape.sh line 64'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 64'
+Wed Oct 11 00:23:25 2023 - ERROR - oe_test_mtx_scsitape.sh line 64
++ '[' 0 -eq 1 ']'
++ return 0
++ echo '01AB.测试。
+' -f write 5 50
++ CHECK_RESULT 0 0 0 'option: -f write  error'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='option: -f write  error'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ scsitape -f read 5 50
+oe_test_mtx_scsitape.sh: line 69: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f read  error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f read  error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f read  error'
++ LOG_ERROR 'option: -f read  error'
++ message='option: -f read  error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f read  error'
+Wed Oct 11 00:23:26 2023 - ERROR - option: -f read  error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 70'
++ message='oe_test_mtx_scsitape.sh line 70'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 70'
+Wed Oct 11 00:23:26 2023 - ERROR - oe_test_mtx_scsitape.sh line 70
++ '[' 0 -eq 1 ']'
++ return 0
++ scsitape -f eject
+oe_test_mtx_scsitape.sh: line 72: scsitape: command not found
++ CHECK_RESULT 127 0 0 'option: -f eject  error'
++ actual_result=127
++ expect_result=0
++ mode=0
++ error_log='option: -f eject  error'
++ exit_mode=0
++ '[' -z 127 ']'
++ '[' 0 -eq 0 ']'
++ test 127x '!=' 0x
++ test -n 'option: -f eject  error'
++ LOG_ERROR 'option: -f eject  error'
++ message='option: -f eject  error'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'option: -f eject  error'
+Wed Oct 11 00:23:26 2023 - ERROR - option: -f eject  error
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_mtx_scsitape.sh line 73'
++ message='oe_test_mtx_scsitape.sh line 73'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_mtx_scsitape.sh line 73'
+Wed Oct 11 00:23:27 2023 - ERROR - oe_test_mtx_scsitape.sh line 73
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 11 00:23:27 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 10
++ test 10 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Oct 11 00:23:27 2023 - ERROR - failed to execute the case.
++ exit 10
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 11 00:23:28 2023 - INFO  - Start to restore the test environment.
++ common_post
++ rm -rf ./tmp /root/rpmbuild
++ systemctl stop mhvtl.target
+Failed to stop mhvtl.target: Unit mhvtl.target not loaded.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z Last metadata expiration check: 0:03:16 ago on Wed Oct 11 00:19:51 2023.
+Package git-2.41.0-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem 1: conflicting requests
+  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS
+ Problem 2: package rpmdevtools-8.10-9.oe2309.noarch from OS requires rpm-build >= 4.4.2.3, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS
+(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages) ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'Last metadata expiration check: 0:03:16 ago on Wed Oct 11 00:19:51 2023.
+Package git-2.41.0-1.oe2309.riscv64 is already installed.
+Error: 
+ Problem 1: conflicting requests
+  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS
+ Problem 2: package rpmdevtools-8.10-9.oe2309.noarch from OS requires rpm-build >= 4.4.2.3, but none of the providers can be installed
+  - conflicting requests
+  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS
+(try to add '\''--skip-broken'\'' to skip uninstallable packages or '\''--nobest'\'' to use not only best candidate packages)'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+OSError: [Errno 36] File name too long: "Last metadata expiration check: 0:03:16 ago on Wed Oct 11 00:19:51 2023.\nPackage git-2.41.0-1.oe2309.riscv64 is already installed.\nError: \n Problem 1: conflicting requests\n  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS\n Problem 2: package rpmdevtools-8.10-9.oe2309.noarch from OS requires rpm-build >= 4.4.2.3, but none of the providers can be installed\n  - conflicting requests\n  - nothing provides patch needed by rpm-build-4.18.1-8.oe2309.riscv64 from OS\n(try to add '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 11 00:23:30 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,121 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n '' ']'
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 11 16:13:45 2023 - INFO  - Start to run test.
++ service auditd restart
+Stopping logging: 
+Redirecting start to /bin/systemctl start auditd.service
++ auditctl -D
+No rules
++ CHECK_RESULT 0 0 0 'delete rules failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='delete rules failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ auditctl -w /etc/passwd -p wa -k passwd_changes
++ auditctl -l
++ grep -e '-w /etc/passwd -p wa -k passwd_changes'
+-w /etc/passwd -p wa -k passwd_changes
++ CHECK_RESULT 0 0 0 'catch failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='catch failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ date +%T
++ starttime=16:13:48
++ useradd Jevons
++ CHECK_RESULT 0 0 0 'useradd failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='useradd failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ date +%T
++ endtime=16:13:48
++ (( i=0 ))
++ (( i,10 ))
++ ausearch -ts 16:13:48 -te 16:13:48 -k passwd_changes
+----
+time->Wed Oct 11 16:13:48 2023
+type=PROCTITLE msg=audit(1697012028.157:16285): proctitle=617564697463746C002D77002F6574632F706173737764002D70007761002D6B007061737377645F6368616E676573
+type=PATH msg=audit(1697012028.157:16285): item=0 name="/etc/" inode=130305 dev=fd:02 mode=040755 ouid=0 ogid=0 rdev=00:00 nametype=PARENT cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=CWD msg=audit(1697012028.157:16285): cwd="/root/mugen/testcases/cli-test/audit/oe_test_audit_monitor_file_access"
+type=SOCKADDR msg=audit(1697012028.157:16285): saddr=100000000000000000000000
+type=SYSCALL msg=audit(1697012028.157:16285): arch=c00000f3 syscall=206 success=yes exit=1084 a0=4 a1=3fc8de6f80 a2=43c a3=0 items=1 ppid=23849 pid=23894 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=ttyS0 ses=1 comm="auditctl" exe="/usr/sbin/auditctl" subj=unconfined key=(null)
+type=CONFIG_CHANGE msg=audit(1697012028.157:16285): auid=0 ses=1 subj=unconfined op=add_rule key="passwd_changes" list=4 res=1
+----
+time->Wed Oct 11 16:13:48 2023
+type=PROCTITLE msg=audit(1697012028.285:16286): proctitle=75736572616464004A65766F6E73
+type=PATH msg=audit(1697012028.285:16286): item=0 name="/etc/passwd" inode=131852 dev=fd:02 mode=0100644 ouid=0 ogid=0 rdev=00:00 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=CWD msg=audit(1697012028.285:16286): cwd="/root/mugen/testcases/cli-test/audit/oe_test_audit_monitor_file_access"
+type=SYSCALL msg=audit(1697012028.285:16286): arch=c00000f3 syscall=56 success=yes exit=5 a0=ffffffffffffff9c a1=2ab6802ec8 a2=20902 a3=0 items=1 ppid=23849 pid=23900 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=ttyS0 ses=1 comm="useradd" exe="/usr/sbin/useradd" subj=unconfined key="passwd_changes"
+----
+time->Wed Oct 11 16:13:48 2023
+type=PROCTITLE msg=audit(1697012028.341:16289): proctitle=75736572616464004A65766F6E73
+type=PATH msg=audit(1697012028.341:16289): item=4 name="/etc/passwd" inode=132188 dev=fd:02 mode=0100644 ouid=0 ogid=0 rdev=00:00 nametype=CREATE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1697012028.341:16289): item=3 name="/etc/passwd" inode=131852 dev=fd:02 mode=0100644 ouid=0 ogid=0 rdev=00:00 nametype=DELETE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1697012028.341:16289): item=2 name="/etc/passwd+" inode=132188 dev=fd:02 mode=0100644 ouid=0 ogid=0 rdev=00:00 nametype=DELETE cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1697012028.341:16289): item=1 name="/etc/" inode=130305 dev=fd:02 mode=040755 ouid=0 ogid=0 rdev=00:00 nametype=PARENT cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=PATH msg=audit(1697012028.341:16289): item=0 name="/etc/" inode=130305 dev=fd:02 mode=040755 ouid=0 ogid=0 rdev=00:00 nametype=PARENT cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0
+type=CWD msg=audit(1697012028.341:16289): cwd="/root/mugen/testcases/cli-test/audit/oe_test_audit_monitor_file_access"
+type=SYSCALL msg=audit(1697012028.341:16289): arch=c00000f3 syscall=276 success=yes exit=0 a0=ffffffffffffff9c a1=3fde70ffb8 a2=ffffffffffffff9c a3=2ab6802ec8 items=5 ppid=23849 pid=23900 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=ttyS0 ses=1 comm="useradd" exe="/usr/sbin/useradd" subj=unconfined key="passwd_changes"
++ [[ 0 -ne 0 ]]
++ break
++ [[ 0 -eq 10 ]]
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 11 16:13:49 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 11 16:13:49 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 11 16:13:49 2023 - INFO  - Start to restore the test environment.
++ userdel -rf Jevons
++ auditctl -D
+No rules
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 11 16:13:50 2023 - INFO  - End to restore the test environment.
