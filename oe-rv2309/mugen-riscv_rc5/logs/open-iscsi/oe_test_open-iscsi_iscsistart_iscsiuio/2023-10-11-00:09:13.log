@@ -1,0 +1,450 @@
++ source ./common/open-iscsi_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 11 00:09:14 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL 'open-iscsi net-tools'
++ pkgs='open-iscsi net-tools'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'open-iscsi net-tools' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmps5bi_glc
++ '[' -z '' ']'
++ tmpfile=/tmp/tmps5bi_glc
++ DNF_INSTALL 'targetcli net-tools' 2
++ pkgs='targetcli net-tools'
++ node=2
++ '[' -z /tmp/tmps5bi_glc ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'targetcli net-tools' --node 2 --tempfile /tmp/tmps5bi_glc
++ tmpfile2=/tmp/tmps5bi_glc
++ '[' -z /tmp/tmps5bi_glc ']'
++ TARGET_CONF
+++ TEST_DISK 2
+++ id=2
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 2
++ unused_disk=vdb
++ test_disk=/dev/vdb1
+++ ip route
+++ grep 127.0.0.1
+++ awk '{print$3}'
++ LOCAL_NICS=
+++ cat /sys/class/net//address
+cat: /sys/class/net//address: No such file or directory
++ LOCAL_MAC=
++ SSH_CMD '
+    dnf install targetcli net-tools -y;
+    systemctl stop firewalld;
+    systemctl start target;
+    ' 127.0.0.1 'openEuler12#$' root
++ cmd='
+    dnf install targetcli net-tools -y;
+    systemctl stop firewalld;
+    systemctl start target;
+    '
++ remoteip=127.0.0.1
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c '
+    dnf install targetcli net-tools -y;
+    systemctl stop firewalld;
+    systemctl start target;
+    ' -i 127.0.0.1 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Oct 11 00:10:25 2023 - WARN  - the remote user uses the default configuration.
+Wed Oct 11 00:10:26 2023 - WARN  - the remote password uses the default configuration.
+Wed Oct 11 00:10:26 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@127.0.0.1 
+    dnf install targetcli net-tools -y;
+    systemctl stop firewalld;
+    systemctl start target;
+    
+
+Authorized users only. All activities may be monitored and reported.
+root@127.0.0.1's password: 
+Last metadata expiration check: 0:03:50 ago on Wed Oct 11 00:06:41 2023.
+Package targetcli-2.1.54-1.oe2309.noarch is already installed.
+Package net-tools-2.10-3.oe2309.riscv64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
++ ret=0
++ test 0 -ne 0
++ return 0
++ SSH_SCP ./common/target_config.json root@127.0.0.1:/etc/target/saveconfig.json 'openEuler12#$'
++ src=./common/target_config.json
++ dest=root@127.0.0.1:/etc/target/saveconfig.json
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s ./common/target_config.json -d root@127.0.0.1:/etc/target/saveconfig.json
+Wed Oct 11 00:10:33 2023 - WARN  - the remote password uses the default configuration.
+Wed Oct 11 00:10:33 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r ./common/target_config.json root@127.0.0.1:/etc/target/saveconfig.json
+
+Authorized users only. All activities may be monitored and reported.
+root@127.0.0.1's password: 
+target_config.json                              0%    0     0.0KB/s   --:-- ETAtarget_config.json                            100% 4892     1.4MB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ SSH_CMD '
+    sed -i '\''s|DISK_NAME|/dev/vdb1|g'\'' /etc/target/saveconfig.json;
+    sed -i '\''s/IP_ADDRESS/127.0.0.1/g'\'' /etc/target/saveconfig.json;
+    systemctl restart target;
+    netstat -tulnp|grep 3260;
+    ' 127.0.0.1 'openEuler12#$' root
++ cmd='
+    sed -i '\''s|DISK_NAME|/dev/vdb1|g'\'' /etc/target/saveconfig.json;
+    sed -i '\''s/IP_ADDRESS/127.0.0.1/g'\'' /etc/target/saveconfig.json;
+    systemctl restart target;
+    netstat -tulnp|grep 3260;
+    '
++ remoteip=127.0.0.1
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c '
+    sed -i '\''s|DISK_NAME|/dev/vdb1|g'\'' /etc/target/saveconfig.json;
+    sed -i '\''s/IP_ADDRESS/127.0.0.1/g'\'' /etc/target/saveconfig.json;
+    systemctl restart target;
+    netstat -tulnp|grep 3260;
+    ' -i 127.0.0.1 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Oct 11 00:10:38 2023 - WARN  - the remote user uses the default configuration.
+Wed Oct 11 00:10:38 2023 - WARN  - the remote password uses the default configuration.
+Wed Oct 11 00:10:38 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@127.0.0.1 
+    sed -i 's|DISK_NAME|/dev/vdb1|g' /etc/target/saveconfig.json;
+    sed -i 's/IP_ADDRESS/127.0.0.1/g' /etc/target/saveconfig.json;
+    systemctl restart target;
+    netstat -tulnp|grep 3260;
+    
+
+Authorized users only. All activities may be monitored and reported.
+root@127.0.0.1's password: 
+tcp        0      0 127.0.0.1:3260          0.0.0.0:*               LISTEN      -                   
++ ret=0
++ test 0 -ne 0
++ return 0
++ sed -i 's/InitiatorName=.*$/InitiatorName=iqn.2020-08.com.example:client/g' /etc/iscsi/initiatorname.iscsi
++ systemctl restart iscsid
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ systemctl status iscsid
++ grep -i running
+     Active: active (running) since Wed 2023-10-11 00:10:42 CST; 2s ago
++ cp -r /etc/iscsi/ifaces/iface.example /etc/iscsi/ifaces/iface.
++ echo 'iface.transport_name = tcp
+iface.initiatorname = iqn.2020-08.com.example:client
+iface.net_ifacename = 
+iface.hwaddress = 
+iface.ipaddress = 127.0.0.1
+iface.bootproto = static'
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Wed Oct 11 00:10:45 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 11 00:10:45 2023 - INFO  - Start to run test.
++ iscsistart -h
++ grep Usage
+Usage: iscsistart [OPTION]
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ iscsistart -v
+++ grep -Eo '[0-9]*\.[0-9]*\.[0-9]*'
+++ rpm -qi open-iscsi
+++ grep Version
+++ awk '{print$3}'
++ test 2.1.5 == 2.1.5
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iscsiuio -h
+oe_test_open-iscsi_iscsistart_iscsiuio.sh: line 35: iscsiuio: command not found
++ grep Usage
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 36'
++ message='oe_test_open-iscsi_iscsistart_iscsiuio.sh line 36'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 36'
+Wed Oct 11 00:10:46 2023 - ERROR - oe_test_open-iscsi_iscsistart_iscsiuio.sh line 36
++ '[' 0 -eq 1 ']'
++ return 0
++ iscsiuio -v
+oe_test_open-iscsi_iscsistart_iscsiuio.sh: line 37: iscsiuio: command not found
++ grep -oE 'Version.*[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+'
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 38'
++ message='oe_test_open-iscsi_iscsistart_iscsiuio.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 38'
+Wed Oct 11 00:10:46 2023 - ERROR - oe_test_open-iscsi_iscsistart_iscsiuio.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl restart iscsid
++ iscsiuio -f -d 4
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ iscsiadm -m node -T iqn.2020-08.com.example:server -p 127.0.0.1 -u
+iscsiadm: No matching sessions found
++ iscsistart -i iqn.2020-08.com.example:client -t iqn.2020-08.com.example:server -g 1 -a 127.0.0.1 -p 3260
++ grep 'operational now'
+iscsistart: Connection1:0 to [target: iqn.2020-08.com.example:server, portal: 127.0.0.1,3260] through [iface: default] is operational now
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl restart iscsid
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ iscsiadm -m node -T iqn.2020-08.com.example:server -p 127.0.0.1 -u
++ grep successful
+Logout of [sid: 1, target: iqn.2020-08.com.example:server, portal: 127.0.0.1,3260] successful.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iscsistart -i iqn.2020-08.com.example:client -t iqn.2020-08.com.example:server -g 1 -a 127.0.0.1 -p 3260 -u admin -w 123456 -d 4
++ grep 'operational now'
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 50'
++ message='oe_test_open-iscsi_iscsistart_iscsiuio.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 50'
+Wed Oct 11 00:10:54 2023 - ERROR - oe_test_open-iscsi_iscsistart_iscsiuio.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ systemctl restart iscsid
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ iscsiadm -m node -T iqn.2020-08.com.example:server -p 127.0.0.1 -u
++ grep successful
+iscsiadm: No matching sessions found
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 54'
++ message='oe_test_open-iscsi_iscsistart_iscsiuio.sh line 54'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 54'
+Wed Oct 11 00:10:57 2023 - ERROR - oe_test_open-iscsi_iscsistart_iscsiuio.sh line 54
++ '[' 0 -eq 1 ']'
++ return 0
++ iscsistart -i iqn.2020-08.com.example:client -t iqn.2020-08.com.example:server -g 1 -a 127.0.0.1 -p 3260 -U admin -W 123456
++ grep 'operational now'
+iscsistart: Connection3:0 to [target: iqn.2020-08.com.example:server, portal: 127.0.0.1,3260] through [iface: default] is operational now
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl restart iscsid
++ SLEEP_WAIT 2
++ wait_time=2
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 2 --cmd '' --mode 1
++ iscsiadm -m node -T iqn.2020-08.com.example:server -p 127.0.0.1 -u
++ grep successful
+Logout of [sid: 3, target: iqn.2020-08.com.example:server, portal: 127.0.0.1,3260] successful.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ iscsistart -i iqn.2020-08.com.example:client -t iqn.2020-08.com.example:server -g 1 -a 127.0.0.1 -p 3260 -u admin -w 123456 -P node.session.auth.authmethod=CHAP
++ grep 'operational now'
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 62'
++ message='oe_test_open-iscsi_iscsistart_iscsiuio.sh line 62'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_open-iscsi_iscsistart_iscsiuio.sh line 62'
+Wed Oct 11 00:11:03 2023 - ERROR - oe_test_open-iscsi_iscsistart_iscsiuio.sh line 62
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Wed Oct 11 00:11:03 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 5
++ test 5 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Oct 11 00:11:03 2023 - ERROR - failed to execute the case.
++ exit 5
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 11 00:11:04 2023 - INFO  - Start to restore the test environment.
++ SSH_CMD '
+    dd if=/dev/zero of=/dev/vdb bs=2G count=1;
+    rm -rf /tmp/disk_info.sh;
+    ' 127.0.0.1 'openEuler12#$' root
++ cmd='
+    dd if=/dev/zero of=/dev/vdb bs=2G count=1;
+    rm -rf /tmp/disk_info.sh;
+    '
++ remoteip=127.0.0.1
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c '
+    dd if=/dev/zero of=/dev/vdb bs=2G count=1;
+    rm -rf /tmp/disk_info.sh;
+    ' -i 127.0.0.1 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Oct 11 00:11:04 2023 - WARN  - the remote user uses the default configuration.
+Wed Oct 11 00:11:05 2023 - WARN  - the remote password uses the default configuration.
+Wed Oct 11 00:11:05 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@127.0.0.1 
+    dd if=/dev/zero of=/dev/vdb bs=2G count=1;
+    rm -rf /tmp/disk_info.sh;
+    
+
+Authorized users only. All activities may be monitored and reported.
+root@127.0.0.1's password: 
+dd: error writing '/dev/vdb': No space left on device
+0+1 records in
+0+0 records out
+524288000 bytes (524 MB, 500 MiB) copied, 4.35419 s, 120 MB/s
++ ret=0
++ test 0 -ne 0
++ return 0
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmps5bi_glc ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmps5bi_glc
++ '[' 0 -ne 0 ']'
++ pkill -9 iscsiuio_log
++ rm -rf ./iscsiuio_log.result
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Wed Oct 11 00:11:23 2023 - INFO  - Finish restoring the test environment.
