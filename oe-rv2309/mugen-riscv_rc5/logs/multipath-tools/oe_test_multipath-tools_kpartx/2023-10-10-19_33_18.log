@@ -1,0 +1,452 @@
++ source common_multipath-tools.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Tue Oct 10 19:33:20 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
+++ TEST_DISK 2
+++ id=2
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 2
++ remote_disks='vdb vdc vdd'
+++ echo vdb vdc vdd
+++ awk -F ' ' '{for(i=1;i<=NF;i++) if ($i!~/[0-9]/)j=i;print $j}'
++ remote_disk=/dev/vdd
++ P_SSH_CMD --node 2 --cmd 'dnf install -y scsi-target-utils; 
+        echo -e '\''n\np\n1\n\n+2000M\nw'\'' | fdisk /dev/vdd; 
+        echo -e '\''<target iqn.2013-12.com.make:ws.httpd>\nbacking-store /dev/vdd\n</target>'\'' >>/etc/tgt/targets.conf; 
+        systemctl restart tgtd; 
+        systemctl stop firewalld;'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'dnf install -y scsi-target-utils; 
+        echo -e '\''n\np\n1\n\n+2000M\nw'\'' | fdisk /dev/vdd; 
+        echo -e '\''<target iqn.2013-12.com.make:ws.httpd>\nbacking-store /dev/vdd\n</target>'\'' >>/etc/tgt/targets.conf; 
+        systemctl restart tgtd; 
+        systemctl stop firewalld;'
+OS                                              2.0 kB/s |  12 kB     00:05    
+OS                                              2.0 MB/s |  19 MB     00:09    
+Last metadata expiration check: 0:00:03 ago on Tue Oct 10 19:33:47 2023.
+Dependencies resolved.
+================================================================================
+ Package                   Architecture  Version                 Repo      Size
+================================================================================
+Installing:
+ scsi-target-utils         riscv64       1.0.79-4.oe2309         OS       193 k
+Installing dependencies:
+ perl-Config-General       noarch        2.65-1.oe2309           OS        39 k
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total download size: 232 k
+Installed size: 682 k
+Downloading Packages:
+(1/2): perl-Config-General-2.65-1.oe2309.noarch 353 kB/s |  39 kB     00:00    
+(2/2): scsi-target-utils-1.0.79-4.oe2309.riscv6 722 kB/s | 193 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                            38 kB/s | 232 kB     00:06     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : perl-Config-General-2.65-1.oe2309.noarch               1/2 
+  Installing       : scsi-target-utils-1.0.79-4.oe2309.riscv64              2/2 
+  Running scriptlet: scsi-target-utils-1.0.79-4.oe2309.riscv64              2/2 
+  Verifying        : perl-Config-General-2.65-1.oe2309.noarch               1/2 
+  Verifying        : scsi-target-utils-1.0.79-4.oe2309.riscv64              2/2 
+
+Installed:
+  perl-Config-General-2.65-1.oe2309.noarch                                      
+  scsi-target-utils-1.0.79-4.oe2309.riscv64                                     
+
+Complete!
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS (MBR) disklabel with disk identifier 0x8f4c4c0a.
+
+Command (m for help): Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): Partition number (1-4, default 1): First sector (2048-1023999, default 2048): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1023999, default 1023999): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1023999, default 1023999): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1023999, default 1023999): 
+Command (m for help): 
++ DNF_REMOVE iscsi-initiator-utils
++ node=iscsi-initiator-utils
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Tue Oct 10 19:34:13 2023 - WARN  - no thing to do.
++ return 0
++ DNF_INSTALL 'iscsi-initiator-utils multipath-tools device-mapper-event device-mapper'
++ pkgs='iscsi-initiator-utils multipath-tools device-mapper-event device-mapper'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'iscsi-initiator-utils multipath-tools device-mapper-event device-mapper' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmp_g2j1deb
++ '[' -z '' ']'
++ tmpfile=/tmp/tmp_g2j1deb
++ systemctl restart iscsid
++ iscsiadm -m discovery -t sendtargets -p 10.0.0.13
+10.0.0.13:3260,1 iqn.2013-12.com.make:ws.httpd
++ iscsiadm -m node -T iqn.2013-12.com.make:ws.httpd -l
+Logging in to [iface: default, target: iqn.2013-12.com.make:ws.httpd, portal: 10.0.0.13,3260]
+Login to [iface: default, target: iqn.2013-12.com.make:ws.httpd, portal: 10.0.0.13,3260] successful.
++ mpathconf --enable --with_multipathd y
++ service multipathd start
+Redirecting to /bin/systemctl start multipathd.service
++ multipath -v2
++ multipath -ll
++ echo '
+defaults {
+       user_friendly_names       yes
+       max_fds                   max
+       queue_without_daemon      no
+       flush_on_last_del         yes
+}
+
+devices {
+       device {
+               vendor                  "IET "
+               product                 "VIRTUAL-DISK"
+               path_grouping_policy    multibus
+               getuid_callout          "/sbin/scsi_id -g -u -s/block/%n"
+               path_checker            directio
+               path_selector           "round-robin 0"
+               hardware_handler        "0"
+               failback                15
+               rr_weight               priorities
+               no_path_retry           queue
+               rr_min_io               100
+               product_blacklist       LUNZ
+       }
+}'
++ lsmod
++ grep dm_multipath
+dm_multipath          299008  0
+dm_mod               1568768  3 dm_multipath
++ modprobe dm_multipath
++ service multipathd restart
+Redirecting to /bin/systemctl restart multipathd.service
++ chkconfig --level 345 multipathd on
+Note: Forwarding request to 'systemctl enable multipathd.service'.
+Created symlink /etc/systemd/system/sysinit.target.wants/multipathd.service → /usr/lib/systemd/system/multipathd.service.
+Created symlink /etc/systemd/system/sockets.target.wants/multipathd.socket → /usr/lib/systemd/system/multipathd.socket.
+++ TEST_DISK 1
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ local_disks='sda vdb vdc vdd'
+++ echo sda vdb vdc vdd
+++ awk -F ' ' '/sd[a-z]/ {for(i=1;i<=NF;i++) if ($i~/sd/ && $i!~/[0-9]/)j=i;print $j}'
++ local_disk=sda
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Tue Oct 10 19:35:31 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Oct 10 19:35:31 2023 - INFO  - Start to run test.
++ kpartx -a -f -v /dev/sda
++ grep ' map sda1'
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_multipath-tools_kpartx.sh line 32'
++ message='oe_test_multipath-tools_kpartx.sh line 32'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_multipath-tools_kpartx.sh line 32'
+Tue Oct 10 19:35:32 2023 - ERROR - oe_test_multipath-tools_kpartx.sh line 32
++ '[' 0 -eq 1 ']'
++ return 0
++ kpartx -u /dev/sda
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ lsblk
++ grep sda1
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_multipath-tools_kpartx.sh line 36'
++ message='oe_test_multipath-tools_kpartx.sh line 36'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_multipath-tools_kpartx.sh line 36'
+Tue Oct 10 19:35:32 2023 - ERROR - oe_test_multipath-tools_kpartx.sh line 36
++ '[' 0 -eq 1 ']'
++ return 0
++ kpartx -l /dev/sda
++ grep sda1
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_multipath-tools_kpartx.sh line 38'
++ message='oe_test_multipath-tools_kpartx.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_multipath-tools_kpartx.sh line 38'
+Tue Oct 10 19:35:33 2023 - ERROR - oe_test_multipath-tools_kpartx.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ kpartx -n /dev/sda
++ grep sda1
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_multipath-tools_kpartx.sh line 40'
++ message='oe_test_multipath-tools_kpartx.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_multipath-tools_kpartx.sh line 40'
+Tue Oct 10 19:35:33 2023 - ERROR - oe_test_multipath-tools_kpartx.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ kpartx -s /dev/sda
++ grep /dev/sda
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_multipath-tools_kpartx.sh line 42'
++ message='oe_test_multipath-tools_kpartx.sh line 42'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_multipath-tools_kpartx.sh line 42'
+Tue Oct 10 19:35:34 2023 - ERROR - oe_test_multipath-tools_kpartx.sh line 42
++ '[' 0 -eq 1 ']'
++ return 0
++ kpartx -g /dev/sda
++ grep sda
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_multipath-tools_kpartx.sh line 44'
++ message='oe_test_multipath-tools_kpartx.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_multipath-tools_kpartx.sh line 44'
+Tue Oct 10 19:35:34 2023 - ERROR - oe_test_multipath-tools_kpartx.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ kpartx -p p /dev/sda
++ grep sdap
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_multipath-tools_kpartx.sh line 46'
++ message='oe_test_multipath-tools_kpartx.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_multipath-tools_kpartx.sh line 46'
+Tue Oct 10 19:35:35 2023 - ERROR - oe_test_multipath-tools_kpartx.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ kpartx -r /dev/sda
++ grep sda
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_multipath-tools_kpartx.sh line 48'
++ message='oe_test_multipath-tools_kpartx.sh line 48'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_multipath-tools_kpartx.sh line 48'
+Tue Oct 10 19:35:35 2023 - ERROR - oe_test_multipath-tools_kpartx.sh line 48
++ '[' 0 -eq 1 ']'
++ return 0
++ kpartx -d /dev/sda
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ls -l /dev/mapper/
++ grep 'sda1 \-> '
+grep: warning: stray \ before -
++ CHECK_RESULT 1 1
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Tue Oct 10 19:35:36 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 8
++ test 8 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Tue Oct 10 19:35:36 2023 - ERROR - failed to execute the case.
++ exit 8
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Tue Oct 10 19:35:36 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ P_SSH_CMD --node 2 --cmd 'dnf remove -y scsi-target-utils; echo -e '\''d\nw\n'\'' | fdisk /dev/vdd'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'dnf remove -y scsi-target-utils; echo -e '\''d\nw\n'\'' | fdisk /dev/vdd'
+Dependencies resolved.
+================================================================================
+ Package                   Architecture  Version                Repo       Size
+================================================================================
+Removing:
+ scsi-target-utils         riscv64       1.0.79-4.oe2309        @OS       575 k
+Removing unused dependencies:
+ perl-Config-General       noarch        2.65-1.oe2309          @OS       108 k
+
+Transaction Summary
+================================================================================
+Remove  2 Packages
+
+Freed space: 682 k
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Running scriptlet: scsi-target-utils-1.0.79-4.oe2309.riscv64              1/1 
+  Running scriptlet: scsi-target-utils-1.0.79-4.oe2309.riscv64              1/2 
+  Erasing          : scsi-target-utils-1.0.79-4.oe2309.riscv64              1/2 
+warning: /etc/tgt/targets.conf saved as /etc/tgt/targets.conf.rpmsave
+
+  Running scriptlet: scsi-target-utils-1.0.79-4.oe2309.riscv64              1/2 
+  Erasing          : perl-Config-General-2.65-1.oe2309.noarch               2/2 
+  Verifying        : perl-Config-General-2.65-1.oe2309.noarch               1/2 
+  Verifying        : scsi-target-utils-1.0.79-4.oe2309.riscv64              2/2 
+
+Removed:
+  perl-Config-General-2.65-1.oe2309.noarch                                      
+  scsi-target-utils-1.0.79-4.oe2309.riscv64                                     
+
+Complete!
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS (MBR) disklabel with disk identifier 0x560ff29c.
+
+Command (m for help): 
+Command (m for help): 
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
++ iscsiadm -m node --logoutall=all
+Logging out of session [sid: 1, target: iqn.2013-12.com.make:ws.httpd, portal: 10.0.0.13,3260]
+Logout of [sid: 1, target: iqn.2013-12.com.make:ws.httpd, portal: 10.0.0.13,3260] successful.
++ multipath -F
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmp_g2j1deb ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmp_g2j1deb
++ '[' 0 -ne 0 ']'
+++ ls
+++ grep -vE .sh
++ del_file=
++ rm -rf /tmp/disk1
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Tue Oct 10 19:37:35 2023 - INFO  - End to restore the test environment.
