@@ -1,0 +1,348 @@
++ source ./common/disk_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment!'
++ message='Start to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment!'
+Wed Oct 11 10:42:15 2023 - INFO  - Start to prepare the test environment!
++ check_free_disk
+++ TEST_DISK
+++ id=1
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 1
++ disks='vdb vdc'
++ disk_list=($disks)
++ local_disk=vdb
++ local_disk1=vdc
++ local_disk2=
++ local_disk3=
++ DNF_INSTALL fio
++ pkgs=fio
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs fio --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpfnlnbmog
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpfnlnbmog
++ test -f test.txt
++ touch test.txt
++ LOG_INFO 'End to prepare the test environment!'
++ message='End to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment!'
+Wed Oct 11 10:46:40 2023 - INFO  - End to prepare the test environment!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Wed Oct 11 10:46:40 2023 - INFO  - Start executing testcase!
++ fio-dedupe -o 1 /dev/vdb
++ grep 'items processed'
+0.00% done4.39% done (367171KiB/sec)10.55% done (492458KiB/sec)15.77% done (428000KiB/sec)21.44% done (449939KiB/sec)27.59% done (505976KiB/sec)34.08% done (538308KiB/sec)40.14% done (505880KiB/sec)45.21% done (424286KiB/sec)50.88% done (456861KiB/sec)56.69% done (481644KiB/sec)62.21% done (457359KiB/sec)67.87% done (473243KiB/sec)73.93% done (503873KiB/sec)79.98% done (494070KiB/sec)85.89% done (485898KiB/sec)91.50% done (463622KiB/sec)96.92% done (451047KiB/sec)Threads(4): 524288 items processed
++ CHECK_RESULT 0 0 0 'fio-dedupe -o option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -o option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -c 1 /dev/vdc
++ grep 'items processed'
+0.00% done1.61% done (134629KiB/sec)3.27% done (138158KiB/sec)5.32% done (166054KiB/sec)7.18% done (154412KiB/sec)9.03% done (155027KiB/sec)10.74% done (142788KiB/sec)12.40% done (138709KiB/sec)14.16% done (146868KiB/sec)16.26% done (172674KiB/sec)18.21% done (162539KiB/sec)20.21% done (162100KiB/sec)22.12% done (158476KiB/sec)23.97% done (155027KiB/sec)25.68% done (142788KiB/sec)27.20% done (125968KiB/sec)29.15% done (163187KiB/sec)31.01% done (154412KiB/sec)32.76% done (146285KiB/sec)34.86% done (176128KiB/sec)36.77% done (159107KiB/sec)38.57% done (149754KiB/sec)40.48% done (159744KiB/sec)42.43% done (163187KiB/sec)44.14% done (142788KiB/sec)46.09% done (155741KiB/sec)47.90% done (144060KiB/sec)49.85% done (162539KiB/sec)51.61% done (142332KiB/sec)53.56% done (158146KiB/sec)55.37% done (145723KiB/sec)57.13% done (141784KiB/sec)58.69% done (130549KiB/sec)60.06% done (113777KiB/sec)61.82% done (145707KiB/sec)63.62% done (149754KiB/sec)65.67% done (166054KiB/sec)67.48% done (150948KiB/sec)69.14% done (134424KiB/sec)71.19% done (169992KiB/sec)72.80% done (135168KiB/sec)74.56% done (146868KiB/sec)75.88% done (109714KiB/sec)77.54% done (137070KiB/sec)79.39% done (153802KiB/sec)81.20% done (149754KiB/sec)83.06% done (155648KiB/sec)84.47% done (116454KiB/sec)86.13% done (138158KiB/sec)87.74% done (128486KiB/sec)89.55% done (148000KiB/sec)91.31% done (142883KiB/sec)93.02% done (140000KiB/sec)94.58% done (125547KiB/sec)96.19% done (134629KiB/sec)97.41% done (101992KiB/sec)98.88% done (122390KiB/sec)Threads(4): 524288 items processed
++ CHECK_RESULT 0 0 0 'fio-dedupe -c option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -c option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -B 1 /dev/vdc
+Will check </dev/vdc>, size <2147483648>, using 4 threads
+0.00% done4.05% done (335936KiB/sec)8.84% done (399808KiB/sec)13.48% done (387569KiB/sec)18.12% done (381490KiB/sec)22.90% done (387459KiB/sec)27.78% done (406349KiB/sec)31.79% done (334533KiB/sec)36.18% done (355830KiB/sec)40.28% done (342693KiB/sec)44.78% done (373841KiB/sec)48.97% done (350852KiB/sec)53.76% done (399808KiB/sec)58.79% done (420207KiB/sec)63.18% done (367171KiB/sec)67.77% done (383490KiB/sec)72.07% done (353380KiB/sec)76.03% done (329142KiB/sec)80.57% done (373458KiB/sec)85.30% done (395729KiB/sec)90.09% done (398222KiB/sec)94.29% done (345349KiB/sec)97.51% done (269258KiB/sec)Threads(4): 524288 items processed
+Extents=524288, Unique extents=0
+De-dupe ratio: 1:infinite
+Fio setting: dedupe_percentage=100
++ CHECK_RESULT 0 0 0 'fio-dedupe -B option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -B option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio-dedupe -p 1 /dev/vdc
+Will check </dev/vdc>, size <2147483648>, using 4 threads
+0.00% done4.10% done (342693KiB/sec)8.20% done (337317KiB/sec)12.50% done (359011KiB/sec)17.09% done (377474KiB/sec)22.02% done (405584KiB/sec)26.12% done (337317KiB/sec)30.66% done (369116KiB/sec)34.23% done (295462KiB/sec)38.57% done (351876KiB/sec)43.16% done (374536KiB/sec)47.71% done (374929KiB/sec)52.39% done (385505KiB/sec)56.49% done (341333KiB/sec)61.38% done (407968KiB/sec)65.09% done (310055KiB/sec)69.19% done (342693KiB/sec)73.68% done (375330KiB/sec)78.17% done (373841KiB/sec)82.42% done (349364KiB/sec)86.04% done (301896KiB/sec)90.48% done (371250KiB/sec)94.68% done (340015KiB/sec)98.93% done (354932KiB/sec)Threads(4): 524288 items processed
+Extents=524288, Unique extents=0
+De-dupe ratio: 1:infinite
+Fio setting: dedupe_percentage=100
++ CHECK_RESULT 0 0 0 'fio-dedupe -p option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio-dedupe -p option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio --filename=test_file --direct=1 --rw=randwrite --numjobs=1 --iodepth=16 --ioengine=libaio --bs=4k --group_reporting --name=zhangyi --log_avg_msec=500 --write_bw_log=test-fio --size=1G
+zhangyi: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=16
+fio-3.34
+Starting 1 process
+zhangyi: Laying out IO file (1 file / 1024MiB)
+
+zhangyi: (groupid=0, jobs=1): err= 0: pid=1378: Wed Oct 11 10:48:39 2023
+  write: IOPS=3200, BW=12.5MiB/s (13.1MB/s)(1024MiB/81910msec); 0 zone resets
+    slat (usec): min=121, max=25674, avg=254.37, stdev=206.58
+    clat (usec): min=368, max=364213, avg=4728.26, stdev=7564.22
+     lat (usec): min=673, max=378321, avg=4982.62, stdev=7597.62
+    clat percentiles (msec):
+     |  1.00th=[    3],  5.00th=[    4], 10.00th=[    4], 20.00th=[    4],
+     | 30.00th=[    4], 40.00th=[    4], 50.00th=[    5], 60.00th=[    5],
+     | 70.00th=[    5], 80.00th=[    6], 90.00th=[    7], 95.00th=[    7],
+     | 99.00th=[    9], 99.50th=[   10], 99.90th=[   54], 99.95th=[  215],
+     | 99.99th=[  342]
+   bw (  KiB/s): min= 2714, max=18420, per=99.96%, avg=12797.40, stdev=2299.12, samples=162
+   iops        : min=  678, max= 4605, avg=3199.12, stdev=574.79, samples=162
+  lat (usec)   : 500=0.01%, 750=0.01%
+  lat (msec)   : 2=0.01%, 4=47.61%, 10=51.96%, 20=0.22%, 50=0.10%
+  lat (msec)   : 100=0.01%, 250=0.06%, 500=0.04%
+  cpu          : usr=10.65%, sys=81.02%, ctx=1823, majf=0, minf=9
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=100.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.1%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,262144,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=16
+
+Run status group 0 (all jobs):
+  WRITE: bw=12.5MiB/s (13.1MB/s), 12.5MiB/s-12.5MiB/s (13.1MB/s-13.1MB/s), io=1024MiB (1074MB), run=81910-81910msec
+
+Disk stats (read/write):
+  vda: ios=0/261452, merge=0/8669, ticks=0/104005, in_queue=107784, util=99.77%
++ CHECK_RESULT 0 0 0 'fio --filename=test_file option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio --filename=test_file option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=3931871/0, merge=0/0, ticks=990591/0, in_queue=990591, util=94.53%
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=write -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=1407/3931215, merge=0/136, ticks=341/1474459, in_queue=1474801, util=99.97%
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=randread -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
+mytest: (g=0): rw=randread, bs=(R) 16.0KiB-16.0KiB, (W) 16.0KiB-16.0KiB, (T) 16.0KiB-16.0KiB, ioengine=psync, iodepth=1
+...
+fio-3.34
+Starting 30 threads
+
+mytest: (groupid=0, jobs=30): err= 0: pid=1465: Wed Oct 11 11:02:38 2023
+  read: IOPS=14.8k, BW=232MiB/s (243MB/s)(60.0GiB/264823msec)
+    clat (usec): min=119, max=197568, avg=1925.76, stdev=1285.44
+     lat (usec): min=120, max=197570, avg=1928.64, stdev=1286.72
+    clat percentiles (usec):
+     |  1.00th=[  318],  5.00th=[  578], 10.00th=[  799], 20.00th=[ 1090],
+     | 30.00th=[ 1336], 40.00th=[ 1549], 50.00th=[ 1762], 60.00th=[ 2008],
+     | 70.00th=[ 2278], 80.00th=[ 2606], 90.00th=[ 3064], 95.00th=[ 3523],
+     | 99.00th=[ 5538], 99.50th=[ 7242], 99.90th=[14353], 99.95th=[19268],
+     | 99.99th=[34866]
+   bw (  KiB/s): min=106178, max=712686, per=100.00%, avg=245300.98, stdev=2501.06, samples=15239
+   iops        : min= 6623, max=44526, avg=15317.38, stdev=156.33, samples=15239
+  lat (usec)   : 250=0.38%, 500=3.28%, 750=5.02%, 1000=7.67%
+  lat (msec)   : 2=43.49%, 4=37.24%, 10=2.69%, 20=0.18%, 50=0.04%
+  lat (msec)   : 100=0.01%, 250=0.01%
+  cpu          : usr=1.65%, sys=7.70%, ctx=3896493, majf=0, minf=120
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=3932160,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=232MiB/s (243MB/s), 232MiB/s-232MiB/s (243MB/s-243MB/s), io=60.0GiB (64.4GB), run=264823-264823msec
+
+Disk stats (read/write):
+  vdb: ios=3930521/0, merge=0/0, ticks=1040644/0, in_queue=1040644, util=95.13%
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=randwrite -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest
++ grep vdb
+  vdb: ios=1396/3931448, merge=0/15, ticks=563/2162524, in_queue=2163087, util=99.79%
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fio -filename=/dev/vdb -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=200G -numjobs=30 -runtime=1000 -group_reporting -name=mytest --output test.txt
+Wed Oct 11 11:12:13 2023 - ERROR - Timeout : Command 'bash -x oe_test_fio_002.sh' timed out after 1799.9996718999998 seconds
+++ post_test
+++ LOG_INFO 'Start environment cleanup.'
+++ message='Start environment cleanup.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment cleanup.'
+Wed Oct 11 11:14:15 2023 - INFO  - Start environment cleanup.
+++ rm -rf test-fio_bw.1.log test.txt test_file dellr720-day2
+++ DNF_REMOVE
+++ node=1
+++ pkg_list=
+++ mode=0
+++ [[ -z /tmp/tmpfnlnbmog ]]
+++ '[' 0 -ne 0 ']'
+++ '[' 1 == 0 ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpfnlnbmog
+++ '[' 0 -ne 0 ']'
+++ LOG_INFO 'Finish environment cleanup.'
+++ message='Finish environment cleanup.'
+++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Oct 11 11:14:45 2023 - INFO  - Finish environment cleanup.
++ test -f test.txt
++ CHECK_RESULT 0 0 0 'fio -filename=/dev option failed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ genfio -d /dev/vdb,/dev/vdc,/dev/ -a -b 4k,128k,1m -r 100 -a -x dellr720-day2/
+oe_test_fio_002.sh: line 51: genfio: command not found
++ test -d dellr720-day2
++ CHECK_RESULT 1 0 0 'fio -filename=/dev option failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='fio -filename=/dev option failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'fio -filename=/dev option failed'
++ LOG_ERROR 'fio -filename=/dev option failed'
++ message='fio -filename=/dev option failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'fio -filename=/dev option failed'
+Wed Oct 11 11:14:46 2023 - ERROR - fio -filename=/dev option failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fio_002.sh line 53'
++ message='oe_test_fio_002.sh line 53'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fio_002.sh line 53'
+Wed Oct 11 11:14:47 2023 - ERROR - oe_test_fio_002.sh line 53
++ '[' 0 -eq 1 ']'
++ return 0
++ genfio -h
+oe_test_fio_002.sh: line 54: genfio: command not found
++ grep -i usage
++ CHECK_RESULT 1 0 0 'genfio -h option failed'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='genfio -h option failed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'genfio -h option failed'
++ LOG_ERROR 'genfio -h option failed'
++ message='genfio -h option failed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'genfio -h option failed'
+Wed Oct 11 11:14:47 2023 - ERROR - genfio -h option failed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_fio_002.sh line 55'
++ message='oe_test_fio_002.sh line 55'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_fio_002.sh line 55'
+Wed Oct 11 11:14:48 2023 - ERROR - oe_test_fio_002.sh line 55
++ '[' 0 -eq 1 ']'
++ return 0
++ LOG_INFO 'End of testcase execution!'
++ message='End of testcase execution!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of testcase execution!'
+Wed Oct 11 11:14:48 2023 - INFO  - End of testcase execution!
++ CASE_RESULT 0
++ case_re=0
++ test -z 2
++ test 2 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Oct 11 11:14:49 2023 - ERROR - failed to execute the case.
++ exit 2
++ post_test
++ LOG_INFO 'Start environment cleanup.'
++ message='Start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment cleanup.'
+Wed Oct 11 11:14:50 2023 - INFO  - Start environment cleanup.
++ rm -rf test-fio_bw.1.log test.txt test_file dellr720-day2
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpfnlnbmog ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpfnlnbmog
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Wed Oct 11 11:14:58 2023 - INFO  - Finish environment cleanup.

@@ -1,0 +1,171 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 11 09:53:09 2023 - INFO  - Start to prepare the test environment.
++ df -h /
++ grep overlay
++ DNF_INSTALL rsyslog
++ pkgs=rsyslog
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs rsyslog --node 1 --tempfile ''
+Wed Oct 11 09:53:17 2023 - INFO  - pkgs:(rsyslog) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl start rsyslog
+++ pgrep rsyslog
++ old_id=38126
+++ date
+++ awk '{print $6}'
++ old_timezone=2023
+++ timedatectl
+++ grep 'Time zone'
+++ awk '{print $3}'
++ old_zone=Asia/Shanghai
++ rm -rf /etc/localtime
++ cp -f /var/log/messages /var/log/messages.bak
++ echo ''
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Oct 11 01:53:19 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 11 01:53:20 2023 - INFO  - Start to run test.
++ ln -sf /usr/share/zoneinfo/NZ /etc/localtime
++ CHECK_RESULT 0 0 0 'Failed to execute cp'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to execute cp'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ date
++ grep 2023
+Wed Oct 11 14:53:20 NZDT 2023
++ CHECK_RESULT 0 0 1 'Time zone changed'
++ actual_result=0
++ expect_result=0
++ mode=1
++ error_log='Time zone changed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 1 -eq 0 ']'
++ test 0x == 0x
++ test -n 'Time zone changed'
++ LOG_ERROR 'Time zone changed'
++ message='Time zone changed'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Time zone changed'
+Wed Oct 11 14:53:20 2023 - ERROR - Time zone changed
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_rsyslog_10.sh line 44'
++ message='oe_test_rsyslog_10.sh line 44'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_rsyslog_10.sh line 44'
+Wed Oct 11 14:53:21 2023 - ERROR - oe_test_rsyslog_10.sh line 44
++ '[' 0 -eq 1 ']'
++ return 0
++ SLEEP_WAIT 900
++ wait_time=900
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 900 --cmd '' --mode 1
++ pgrep rsyslog
++ grep 38126
++ CHECK_RESULT 1 0 1 'Pid not changed'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='Pid not changed'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ date
++ grep -i NZ
+Wed Oct 11 15:08:22 NZDT 2023
++ CHECK_RESULT 0 0 0 'Time zone not changed'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Time zone not changed'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep 'timezone changed' /var/log/messages
+Oct 11 10:00:01 openeuler journal: [11922.096099] timezone changed....new NZDT+1300 old CST+0800
++ CHECK_RESULT 0 0 0 '/var/log/messages not logged'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='/var/log/messages not logged'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 11 15:08:22 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Oct 11 15:08:23 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 11 15:08:23 2023 - INFO  - Start to restore the test environment.
++ df -h /
++ grep overlay
++ rm -rf /etc/localtime
++ timedatectl set-timezone Asia/Shanghai
++ mv -f /var/log/messages.bak /var/log/messages
++ systemctl restart rsyslog
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Oct 11 10:08:26 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 11 10:08:26 2023 - INFO  - End to restore the test environment.

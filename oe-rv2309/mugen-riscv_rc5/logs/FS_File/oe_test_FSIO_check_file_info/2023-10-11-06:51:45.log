@@ -1,0 +1,313 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Oct 11 06:51:48 2023 - INFO  - Start environment preparation.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20231011065148
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20231011065148
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20231011064250
++++ printf test_vggroup20231011064250
+++ vggroup=test_vggroup20231011064250
+++ count=1
+++ msg='test_vggroup20231011064250 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120231011065148
+++ point=/tmp/point120231011065148
+++ lvcreate -n test_lv120231011065148 -L 512M test_vggroup20231011064250 -y
+++ mkfs -t ext3 /dev/test_vggroup20231011064250/test_lv120231011065148
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point120231011065148
+++ mount /dev/test_vggroup20231011064250/test_lv120231011065148 /tmp/point120231011065148
+++ msg='test_vggroup20231011064250 /tmp/point120231011065148 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220231011065148
+++ point=/tmp/point220231011065148
+++ lvcreate -n test_lv220231011065148 -L 512M test_vggroup20231011064250 -y
+++ mkfs -t ext4 /dev/test_vggroup20231011064250/test_lv220231011065148
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point220231011065148
+++ mount /dev/test_vggroup20231011064250/test_lv220231011065148 /tmp/point220231011065148
+++ msg='test_vggroup20231011064250 /tmp/point120231011065148 /tmp/point220231011065148 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320231011065148
+++ point=/tmp/point320231011065148
+++ lvcreate -n test_lv320231011065148 -L 512M test_vggroup20231011064250 -y
+++ mkfs -t xfs /dev/test_vggroup20231011064250/test_lv320231011065148
+++ mkdir /tmp/point320231011065148
+++ mount /dev/test_vggroup20231011064250/test_lv320231011065148 /tmp/point320231011065148
+++ msg='test_vggroup20231011064250 /tmp/point120231011065148 /tmp/point220231011065148 /tmp/point320231011065148 '
+++ count=4
+++ echo test_vggroup20231011064250 /tmp/point120231011065148 /tmp/point220231011065148 /tmp/point320231011065148
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Oct 11 06:51:51 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 11 06:51:51 2023 - INFO  - Start to run test.
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point120231011065148
++ echo test
++ stat /tmp/point120231011065148/testfile
++ grep Inode
+Device: 252,0	Inode: 12          Links: 1
++ CHECK_RESULT 0 0 0 'The stat info of /tmp/point120231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The stat info of /tmp/point120231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ file /tmp/point120231011065148/testfile
++ grep 'ASCII text'
+/tmp/point120231011065148/testfile: ASCII text
++ CHECK_RESULT 0 0 0 'The file type of /tmp/point120231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The file type of /tmp/point120231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ wc /tmp/point120231011065148/testfile
++ grep '1 1 5'
+1 1 5 /tmp/point120231011065148/testfile
++ CHECK_RESULT 0 0 0 'The count of /tmp/point120231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The count of /tmp/point120231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220231011065148
++ echo test
++ stat /tmp/point220231011065148/testfile
++ grep Inode
+Device: 252,1	Inode: 12          Links: 1
++ CHECK_RESULT 0 0 0 'The stat info of /tmp/point220231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The stat info of /tmp/point220231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ file /tmp/point220231011065148/testfile
++ grep 'ASCII text'
+/tmp/point220231011065148/testfile: ASCII text
++ CHECK_RESULT 0 0 0 'The file type of /tmp/point220231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The file type of /tmp/point220231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ wc /tmp/point220231011065148/testfile
++ grep '1 1 5'
+1 1 5 /tmp/point220231011065148/testfile
++ CHECK_RESULT 0 0 0 'The count of /tmp/point220231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The count of /tmp/point220231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320231011065148
++ echo test
++ stat /tmp/point320231011065148/testfile
++ grep Inode
+Device: 252,2	Inode: 131         Links: 1
++ CHECK_RESULT 0 0 0 'The stat info of /tmp/point320231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The stat info of /tmp/point320231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ file /tmp/point320231011065148/testfile
++ grep 'ASCII text'
+/tmp/point320231011065148/testfile: ASCII text
++ CHECK_RESULT 0 0 0 'The file type of /tmp/point320231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The file type of /tmp/point320231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ wc /tmp/point320231011065148/testfile
++ grep '1 1 5'
+1 1 5 /tmp/point320231011065148/testfile
++ CHECK_RESULT 0 0 0 'The count of /tmp/point320231011065148/testfile is false.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='The count of /tmp/point320231011065148/testfile is false.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 11 06:51:53 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 11 06:51:53 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 11 06:51:54 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20231011064250 /tmp/point120231011065148 /tmp/point220231011065148 /tmp/point320231011065148
++ list='test_vggroup20231011064250 /tmp/point120231011065148 /tmp/point220231011065148 /tmp/point320231011065148'
++ REMOVE_FS 'test_vggroup20231011064250 /tmp/point120231011065148 /tmp/point220231011065148 /tmp/point320231011065148'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20231011064250
+++ df -T
+++ grep test_vggroup20231011064250
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20231011064250-test_lv120231011065148
+/dev/mapper/test_vggroup20231011064250-test_lv220231011065148
+/dev/mapper/test_vggroup20231011064250-test_lv320231011065148'
++ [[ /dev/mapper/test_vggroup20231011064250-test_lv120231011065148
+/dev/mapper/test_vggroup20231011064250-test_lv220231011065148
+/dev/mapper/test_vggroup20231011064250-test_lv320231011065148 == '' ]]
++ umount -f test_vggroup20231011064250
+umount: test_vggroup20231011064250: no mount point specified.
++ rm -rf test_vggroup20231011064250
++ DELETE_LV /dev/mapper/test_vggroup20231011064250-test_lv120231011065148 /dev/mapper/test_vggroup20231011064250-test_lv220231011065148 /dev/mapper/test_vggroup20231011064250-test_lv320231011065148
++ lvname=/dev/mapper/test_vggroup20231011064250-test_lv120231011065148
++ lvremove /dev/mapper/test_vggroup20231011064250-test_lv120231011065148 -y
+  Logical volume test_vggroup20231011064250/test_lv120231011065148 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120231011065148
+++ df -T
+++ grep /tmp/point120231011065148
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231011064250-test_lv120231011065148
++ [[ /dev/mapper/test_vggroup20231011064250-test_lv120231011065148 == '' ]]
++ umount -f /tmp/point120231011065148
++ rm -rf /tmp/point120231011065148
++ DELETE_LV /dev/mapper/test_vggroup20231011064250-test_lv120231011065148
++ lvname=/dev/mapper/test_vggroup20231011064250-test_lv120231011065148
++ lvremove /dev/mapper/test_vggroup20231011064250-test_lv120231011065148 -y
+  Logical volume "test_lv120231011065148" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220231011065148
+++ df -T
+++ grep /tmp/point220231011065148
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231011064250-test_lv220231011065148
++ [[ /dev/mapper/test_vggroup20231011064250-test_lv220231011065148 == '' ]]
++ umount -f /tmp/point220231011065148
++ rm -rf /tmp/point220231011065148
++ DELETE_LV /dev/mapper/test_vggroup20231011064250-test_lv220231011065148
++ lvname=/dev/mapper/test_vggroup20231011064250-test_lv220231011065148
++ lvremove /dev/mapper/test_vggroup20231011064250-test_lv220231011065148 -y
+  Logical volume "test_lv220231011065148" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320231011065148
+++ df -T
+++ grep /tmp/point320231011065148
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231011064250-test_lv320231011065148
++ [[ /dev/mapper/test_vggroup20231011064250-test_lv320231011065148 == '' ]]
++ umount -f /tmp/point320231011065148
++ rm -rf /tmp/point320231011065148
++ DELETE_LV /dev/mapper/test_vggroup20231011064250-test_lv320231011065148
++ lvname=/dev/mapper/test_vggroup20231011064250-test_lv320231011065148
++ lvremove /dev/mapper/test_vggroup20231011064250-test_lv320231011065148 -y
+  Logical volume "test_lv320231011065148" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 11 06:51:56 2023 - INFO  - End to restore the test environment.

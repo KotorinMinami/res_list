@@ -1,0 +1,234 @@
++ source common/common_dnf.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 11 06:56:38 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ OLD_LANG=C.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL vim
++ pkgs=vim
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs vim --node 1 --tempfile ''
++ tmpfile2='Last metadata expiration check: 0:01:52 ago on Wed 11 Oct 2023 06:55:12 AM CST.
+No match for argument: vim
+Error: Unable to find a match: vim'
++ '[' -z '' ']'
++ tmpfile='Last metadata expiration check: 0:01:52 ago on Wed 11 Oct 2023 06:55:12 AM CST.
+No match for argument: vim
+Error: Unable to find a match: vim'
++ rpm -e vim-enhanced
+error: package vim-enhanced is not installed
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Oct 11 06:57:05 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 11 06:57:06 2023 - INFO  - Start to run test.
++ dnf --assumeno install tree
++ grep 'Operation aborted'
+Operation aborted.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ rpm -q tree
++ grep 'package tree is not installed'
+package tree is not installed
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf autoremove -y
++ grep Removing:
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_assumeno_autoremove.sh line 36'
++ message='oe_test_dnf_assumeno_autoremove.sh line 36'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_assumeno_autoremove.sh line 36'
+Wed Oct 11 06:57:17 2023 - ERROR - oe_test_dnf_assumeno_autoremove.sh line 36
++ '[' 0 -eq 1 ']'
++ return 0
++ rpm -qa
++ grep vim-common
++ CHECK_RESULT 1 1 0
++ actual_result=1
++ expect_result=1
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 1x
++ return 0
++ dnf -y --nobest install httpd
++ grep 'Complete!'
+Complete!
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf -b -y install httpd
++ grep 'Nothing to do'
+Nothing to do.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf makecache
++ grep 'Metadata cache created'
+Metadata cache created.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf -C repoquery kernel
++ grep kernel
+Last metadata expiration check: 0:00:06 ago on Wed 11 Oct 2023 06:57:46 AM CST.
+kernel-0:6.4.0-10.1.0.20.oe2309.riscv64
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf clean all
++ grep 'files removed'
+8 files removed
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf -C repoquery kernel
++ grep Error
+Error: Cache-only enabled but no cache for 'OS'
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Wed Oct 11 06:58:01 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Oct 11 06:58:02 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 11 06:58:02 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ export LANG=C.UTF-8
++ LANG=C.UTF-8
++ DNF_REMOVE 1 httpd
++ node=1
++ pkg_list=httpd
++ mode=0
++ [[ -z Last metadata expiration check: 0:01:52 ago on Wed 11 Oct 2023 06:55:12 AM CST.
+No match for argument: vim
+Error: Unable to find a match: vim ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs httpd --tempfile 'Last metadata expiration check: 0:01:52 ago on Wed 11 Oct 2023 06:55:12 AM CST.
+No match for argument: vim
+Error: Unable to find a match: vim'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'Last metadata expiration check: 0:01:52 ago on Wed 11 Oct 2023 06:55:12 AM CST.\nNo match for argument: vim\nError: Unable to find a match: vim'
++ '[' 0 -ne 0 ']'
++ dnf clean all
+0 files removed
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Wed Oct 11 06:58:09 2023 - INFO  - Finish restoring the test environment.

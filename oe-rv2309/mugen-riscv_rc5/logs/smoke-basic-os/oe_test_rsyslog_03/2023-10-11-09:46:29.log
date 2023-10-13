@@ -1,0 +1,127 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 11 09:46:31 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL rsyslog
++ pkgs=rsyslog
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs rsyslog --node 1 --tempfile ''
+Wed Oct 11 09:46:40 2023 - INFO  - pkgs:(rsyslog) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ systemctl start rsyslog
++ cp -f /run/log/journal/4df2c20bde1b44bcb793249417f056cb/system.journal '/run/log/journal/*/system.journal.bak'
+cp: cannot create regular file '/run/log/journal/*/system.journal.bak': No such file or directory
++ cp -f /run/log/imjournal.state /run/log/imjournal.state.bak
++ echo ''
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Oct 11 09:46:41 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 11 09:46:41 2023 - INFO  - Start to run test.
++ systemctl restart systemd-journald
++ CHECK_RESULT 0 0 0 'Systemd-journald not started'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Systemd-journald not started'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl restart rsyslog
++ CHECK_RESULT 0 0 0 'Rsyslog not started'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Rsyslog not started'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -f /run/log/journal/4df2c20bde1b44bcb793249417f056cb/system.journal
++ CHECK_RESULT 0 0 0 'Failed to find system.journal'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to find system.journal'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep '[0-9]' /run/log/imjournal.state
+s=c8b30bb73c1c446a916d56efb4d34443;i=2149;b=99290563de4d4feba8925c21f4c7f1b4;m=296f8da8b;t=60766fec0018c;x=27eaf4994b253551
++ CHECK_RESULT 0 0 0 'File has no content'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='File has no content'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 11 09:46:43 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 11 09:46:44 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 11 09:46:44 2023 - INFO  - Start to restore the test environment.
++ mv -f '/run/log/journal/*/system.journal.bak' /run/log/journal/4df2c20bde1b44bcb793249417f056cb/system.journal
+mv: cannot stat '/run/log/journal/*/system.journal.bak': No such file or directory
++ mv -f /run/log/imjournal.state.bak /run/log/imjournal.state
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Oct 11 09:46:45 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 11 09:46:45 2023 - INFO  - End to restore the test environment.
