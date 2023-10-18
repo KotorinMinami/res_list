@@ -1,0 +1,57 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 18 06:53:12 2023 - INFO  - Start to prepare the test environment.
++ useradd Jevons
+useradd: user 'Jevons' already exists
++ echo HUAWEI666
++ passwd Jevons --stdin
+Changing password for user Jevons.
+passwd: all authentication tokens updated successfully.
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Oct 18 06:53:13 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 18 06:53:13 2023 - INFO  - Start to run test.
++ service auditd restart
+Stopping logging: 
+Redirecting start to /bin/systemctl start auditd.service
++ auditctl -D
+No rules
+++ date +%T
++ starttime=06:53:17
++ expect
+spawn ssh Jevons@localhost
+invalid command name "expect{"
+    while executing
+"expect{"
++ SLEEP_WAIT 10
++ wait_time=10
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 10 --cmd '' --mode 1
+++ date +%T
++ endtime=06:53:28
++ ausearch -ts 06:53:17 -te 06:53:28 -m USER_LOGIN -sv no
+Wed Oct 18 07:23:10 2023 - ERROR - Timeout : Command 'bash -x oe_test_audit_monitor_security_event.sh' timed out after 1799.9997119 seconds

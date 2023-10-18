@@ -1,0 +1,241 @@
++ source ../common/common_ndisc6.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 18 03:47:59 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'ndisc6 xinetd time'
++ pkgs='ndisc6 xinetd time'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'ndisc6 xinetd time' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpj4xwhoo7
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpj4xwhoo7
+++ hostname
++ hostname_init=openeuler
++ hostname newlocalhost
+++ ip addr show enp0s3
+++ grep -w inet6
+++ awk '{print $2}'
+++ awk -F / '{print $1}'
+++ awk 'NR==1{print $1}'
++ NODE1_IPV6=fe80::26cf:4c61:55db:f400
+++ P_SSH_CMD --node 2 --cmd 'ip addr show enp0s2'
+++ grep -w inet6
+++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'ip addr show enp0s2'
+++ awk '{print $2}'
+++ awk -F / '{print $1}'
+++ awk 'NR==1{print $1}'
++ NODE2_IPV6=fe80::1028:d402:e66f:b115
++ cp /etc/resolv.conf /etc/resolv.conf-bak
++ sed -i 's/name/#&/' /etc/resolv.conf
++ sed -i 6s/yes/no/g /etc/xinetd.d/echo-stream
++ systemctl restart xinetd
++ DNF_INSTALL xinetd 2
++ pkgs=xinetd
++ node=2
++ '[' -z /tmp/tmpj4xwhoo7 ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs xinetd --node 2 --tempfile /tmp/tmpj4xwhoo7
++ tmpfile2=/tmp/tmpj4xwhoo7
++ '[' -z /tmp/tmpj4xwhoo7 ']'
++ P_SSH_CMD --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
+
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Oct 18 03:49:35 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 18 03:49:36 2023 - INFO  - Start to run test.
++ addr2name -4 192.168.114.3
++ grep newlocalhost
+newlocalhost
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ addr2name -6 fe80::26cf:4c61:55db:f400
++ grep newlocalhost
+newlocalhost
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ addr2name -c 192.168.114.3
++ grep newlocalhost
+newlocalhost
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ addr2name -c fe80::26cf:4c61:55db:f400
++ grep newlocalhost
+newlocalhost
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ addr2name -m 192.168.114.3 fe80::26cf:4c61:55db:f400
++ grep newlocalhost
+newlocalhost
+newlocalhost
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ addr2name -n 192.168.114.3
++ grep newlocalhost
+newlocalhost
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ addr2name -n fe80::26cf:4c61:55db:f400
++ grep newlocalhost
+newlocalhost
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ addr2name -r newlocalhost
++ grep newlocalhost
+newlocalhost
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ rpm -qa ndisc6
+++ awk -F - '{print $2}'
++ ndisc6_version=1.0.4
++ addr2name -V
++ grep 1.0.4
+addrinfo 1.0.4 ($Rev$)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ addr2name -h
++ grep help
+  -h, --help     display this help and exit
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 18 03:49:39 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 18 03:49:40 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 18 03:49:40 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpj4xwhoo7 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpj4xwhoo7
++ '[' 0 -ne 0 ']'
++ hostname openeuler
++ cp -rf /etc/resolv.conf-bak /etc/resolv.conf
++ rm -rf file runtime /etc/resolv.conf-bak
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 18 03:49:54 2023 - INFO  - End to restore the test environment.

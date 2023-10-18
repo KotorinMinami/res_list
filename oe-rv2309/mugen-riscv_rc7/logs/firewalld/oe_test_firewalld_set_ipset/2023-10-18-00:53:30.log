@@ -1,0 +1,251 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Wed Oct 18 00:53:33 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL httpd
++ pkgs=httpd
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs httpd --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpozmrytuu
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpozmrytuu
++ sudo systemctl start httpd
++ sudo systemctl start firewalld
+++ echo 192.168.0.0
++ source_ip=192.168.0.0
++ set_name=testipset
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Oct 18 00:54:19 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Wed Oct 18 00:54:20 2023 - INFO  - Start executing testcase.
++ SSH_CMD 'ping  192.168.114.2 -c 1' 192.168.114.6 'openEuler12#$' root
++ cmd='ping  192.168.114.2 -c 1'
++ remoteip=192.168.114.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'ping  192.168.114.2 -c 1' -i 192.168.114.6 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Oct 18 00:54:21 2023 - WARN  - the remote user uses the default configuration.
+Wed Oct 18 00:54:21 2023 - WARN  - the remote password uses the default configuration.
+Wed Oct 18 00:54:22 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.6 ping  192.168.114.2 -c 1
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.6's password: 
+PING 192.168.114.2 (192.168.114.2) 56(84) bytes of data.
+64 bytes from 192.168.114.2: icmp_seq=1 ttl=64 time=1.50 ms
+
+--- 192.168.114.2 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 1.497/1.497/1.497/0.000 ms
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ sudo firewall-cmd --permanent --new-ipset=testipset --type=hash:net
+success
++ sudo firewall-cmd --permanent --get-ipsets
++ grep testipset
+testipset
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ cat
++ sudo firewall-cmd --permanent --ipset=testipset --add-entries-from-file=iplist.txt
+success
++ sudo firewall-cmd --permanent --ipset=testipset --get-entries
++ grep 192.168.0.3
+192.168.0.3
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ sudo firewall-cmd --permanent --ipset=testipset --remove-entries-from-file=iplist.txt
+success
++ sudo firewall-cmd --permanent --ipset=testipset --get-entries
++ grep 192.168.0.3
++ CHECK_RESULT 1 0 1
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ sudo firewall-cmd --permanent --ipset=testipset --add-entry=192.168.0.0/16
+success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ sudo firewall-cmd --permanent --ipset=testipset --get-entries
++ grep 192.168.0.0/16
+192.168.0.0/16
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ sudo firewall-cmd --permanent --zone=drop --add-source=ipset:testipset
+success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ sudo firewall-cmd --reload
+success
++ systemctl restart firewalld
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_CMD 'ping  192.168.114.2 -c 1' 192.168.114.6 'openEuler12#$' root
++ cmd='ping  192.168.114.2 -c 1'
++ remoteip=192.168.114.6
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'ping  192.168.114.2 -c 1' -i 192.168.114.6 -u root -p 'openEuler12#$' -t 300 -o 22
+Wed Oct 18 00:55:21 2023 - WARN  - the remote user uses the default configuration.
+Wed Oct 18 00:55:22 2023 - WARN  - the remote password uses the default configuration.
+Wed Oct 18 00:55:22 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.6 ping  192.168.114.2 -c 1
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.6's password: 
+PING 192.168.114.2 (192.168.114.2) 56(84) bytes of data.
+
+--- 192.168.114.2 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
++ ret=1
++ test 1 -ne 0
++ LOG_ERROR 'Failed in remote CMD operation:1'
++ message='Failed in remote CMD operation:1'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Failed in remote CMD operation:1'
+Wed Oct 18 00:55:36 2023 - ERROR - Failed in remote CMD operation:1
++ return 1
++ CHECK_RESULT 1 0 1
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ LOG_INFO 'Finish testcase execution.'
++ message='Finish testcase execution.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish testcase execution.'
+Wed Oct 18 00:55:36 2023 - INFO  - Finish testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 18 00:55:37 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Wed Oct 18 00:55:37 2023 - INFO  - start environment cleanup.
++ sudo firewall-cmd --permanent --zone=drop --remove-source=ipset:testipset
+success
++ sudo firewall-cmd --permanent --delete-ipset=testipset
+success
++ sudo firewall-cmd --reload
+success
++ sudo systemctl start firewalld
++ rm -rf iplist.txt
++ sudo systemctl stop httpd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpozmrytuu ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpozmrytuu
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Wed Oct 18 00:56:13 2023 - INFO  - Finish environment cleanup!

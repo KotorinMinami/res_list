@@ -1,0 +1,274 @@
++ source ../../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Oct 18 04:57:30 2023 - INFO  - Start to prepare the database config.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20231018045730
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20231018045730
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20231018044350
++++ printf test_vggroup20231018044350
+++ vggroup=test_vggroup20231018044350
+++ count=1
+++ msg='test_vggroup20231018044350 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120231018045730
+++ point=/tmp/point120231018045730
+++ lvcreate -n test_lv120231018045730 -L 512M test_vggroup20231018044350 -y
+++ mkfs -t ext3 /dev/test_vggroup20231018044350/test_lv120231018045730
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point120231018045730
+++ mount /dev/test_vggroup20231018044350/test_lv120231018045730 /tmp/point120231018045730
+++ msg='test_vggroup20231018044350 /tmp/point120231018045730 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220231018045730
+++ point=/tmp/point220231018045730
+++ lvcreate -n test_lv220231018045730 -L 512M test_vggroup20231018044350 -y
+++ mkfs -t ext4 /dev/test_vggroup20231018044350/test_lv220231018045730
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point220231018045730
+++ mount /dev/test_vggroup20231018044350/test_lv220231018045730 /tmp/point220231018045730
+++ msg='test_vggroup20231018044350 /tmp/point120231018045730 /tmp/point220231018045730 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320231018045730
+++ point=/tmp/point320231018045730
+++ lvcreate -n test_lv320231018045730 -L 512M test_vggroup20231018044350 -y
+++ mkfs -t xfs /dev/test_vggroup20231018044350/test_lv320231018045730
+++ mkdir /tmp/point320231018045730
+++ mount /dev/test_vggroup20231018044350/test_lv320231018045730 /tmp/point320231018045730
+++ msg='test_vggroup20231018044350 /tmp/point120231018045730 /tmp/point220231018045730 /tmp/point320231018045730 '
+++ count=4
+++ echo test_vggroup20231018044350 /tmp/point120231018045730 /tmp/point220231018045730 /tmp/point320231018045730
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Wed Oct 18 04:57:35 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 18 04:57:36 2023 - INFO  - Start to run test.
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point120231018045730
++ cp ./test.sh /tmp/point120231018045730/test.sh
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ bash /tmp/point120231018045730/test.sh
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ umount /tmp/point120231018045730
++ grep 'target is busy'
+umount: /tmp/point120231018045730: target is busy.
++ CHECK_RESULT 0 0 0 'Umount fs /tmp/point120231018045730 unexpectly.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs /tmp/point120231018045730 unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220231018045730
++ cp ./test.sh /tmp/point220231018045730/test.sh
++ SLEEP_WAIT 1
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ bash /tmp/point220231018045730/test.sh
++ umount /tmp/point220231018045730
++ grep 'target is busy'
+umount: /tmp/point220231018045730: target is busy.
++ CHECK_RESULT 0 0 0 'Umount fs /tmp/point220231018045730 unexpectly.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs /tmp/point220231018045730 unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320231018045730
++ cp ./test.sh /tmp/point320231018045730/test.sh
++ SLEEP_WAIT 1
++ bash /tmp/point320231018045730/test.sh
++ wait_time=1
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 1 --cmd '' --mode 1
++ umount /tmp/point320231018045730
++ grep 'target is busy'
+umount: /tmp/point320231018045730: target is busy.
++ CHECK_RESULT 0 0 0 'Umount fs /tmp/point320231018045730 unexpectly.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs /tmp/point320231018045730 unexpectly.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 18 04:57:42 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 18 04:57:42 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 18 04:57:43 2023 - INFO  - Start to restore the test environment.
+++ ps -ef
+++ grep test.sh
+++ awk '{print $2}'
++ process='11685
+11691
+11699
+11709'
++ for i in $process
++ kill 11685
++ for i in $process
++ kill 11691
++ for i in $process
++ kill 11699
++ for i in $process
++ kill 11709
+oe_test_FSIO_umount_busy.sh: line 44: kill: (11709) - No such process
++ SLEEP_WAIT 5
++ wait_time=5
++ cmd=
++ mode=1
++ python3 /root/mugen/libs/locallibs/sleep_wait.py --time 5 --cmd '' --mode 1
+++ echo test_vggroup20231018044350 /tmp/point120231018045730 /tmp/point220231018045730 /tmp/point320231018045730
++ list='test_vggroup20231018044350 /tmp/point120231018045730 /tmp/point220231018045730 /tmp/point320231018045730'
++ REMOVE_FS 'test_vggroup20231018044350 /tmp/point120231018045730 /tmp/point220231018045730 /tmp/point320231018045730'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20231018044350
+++ df -T
+++ grep test_vggroup20231018044350
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20231018044350-test_lv120231018045730
+/dev/mapper/test_vggroup20231018044350-test_lv220231018045730
+/dev/mapper/test_vggroup20231018044350-test_lv320231018045730'
++ [[ /dev/mapper/test_vggroup20231018044350-test_lv120231018045730
+/dev/mapper/test_vggroup20231018044350-test_lv220231018045730
+/dev/mapper/test_vggroup20231018044350-test_lv320231018045730 == '' ]]
++ umount -f test_vggroup20231018044350
+umount: test_vggroup20231018044350: no mount point specified.
++ rm -rf test_vggroup20231018044350
++ DELETE_LV /dev/mapper/test_vggroup20231018044350-test_lv120231018045730 /dev/mapper/test_vggroup20231018044350-test_lv220231018045730 /dev/mapper/test_vggroup20231018044350-test_lv320231018045730
++ lvname=/dev/mapper/test_vggroup20231018044350-test_lv120231018045730
++ lvremove /dev/mapper/test_vggroup20231018044350-test_lv120231018045730 -y
+  Logical volume test_vggroup20231018044350/test_lv120231018045730 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120231018045730
+++ df -T
+++ grep /tmp/point120231018045730
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231018044350-test_lv120231018045730
++ [[ /dev/mapper/test_vggroup20231018044350-test_lv120231018045730 == '' ]]
++ umount -f /tmp/point120231018045730
++ rm -rf /tmp/point120231018045730
++ DELETE_LV /dev/mapper/test_vggroup20231018044350-test_lv120231018045730
++ lvname=/dev/mapper/test_vggroup20231018044350-test_lv120231018045730
++ lvremove /dev/mapper/test_vggroup20231018044350-test_lv120231018045730 -y
+  Logical volume "test_lv120231018045730" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220231018045730
+++ df -T
+++ grep /tmp/point220231018045730
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231018044350-test_lv220231018045730
++ [[ /dev/mapper/test_vggroup20231018044350-test_lv220231018045730 == '' ]]
++ umount -f /tmp/point220231018045730
++ rm -rf /tmp/point220231018045730
++ DELETE_LV /dev/mapper/test_vggroup20231018044350-test_lv220231018045730
++ lvname=/dev/mapper/test_vggroup20231018044350-test_lv220231018045730
++ lvremove /dev/mapper/test_vggroup20231018044350-test_lv220231018045730 -y
+  Logical volume "test_lv220231018045730" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320231018045730
+++ df -T
+++ grep /tmp/point320231018045730
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231018044350-test_lv320231018045730
++ [[ /dev/mapper/test_vggroup20231018044350-test_lv320231018045730 == '' ]]
++ umount -f /tmp/point320231018045730
++ rm -rf /tmp/point320231018045730
++ DELETE_LV /dev/mapper/test_vggroup20231018044350-test_lv320231018045730
++ lvname=/dev/mapper/test_vggroup20231018044350-test_lv320231018045730
++ lvremove /dev/mapper/test_vggroup20231018044350-test_lv320231018045730 -y
+  Logical volume "test_lv320231018045730" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 18 04:57:52 2023 - INFO  - End to restore the test environment.

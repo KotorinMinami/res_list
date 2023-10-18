@@ -1,0 +1,582 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 0 -eq 0 ]]
++++ lsblk
++++ grep test_vggroup
++++ awk '{print $1}'
++++ head -n 1
++++ cut -d - -f 1
+++ vggroup=└─test_vggroup20231018040449
+++ vggroup=test_vggroup20231018040449
+++ vgremove test_vggroup20231018040449 -y
+  Logical volume "test_lv120231018043134" successfully removed.
+  Volume group "test_vggroup20231018040449" successfully removed
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environment preparation.'
++ message='Start environment preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment preparation.'
+Wed Oct 18 04:31:46 2023 - INFO  - Start environment preparation.
++ DNF_INSTALL tar
++ pkgs=tar
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs tar --node 1 --tempfile ''
+Wed Oct 18 04:31:58 2023 - INFO  - pkgs:(tar) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
+++ date +%Y%m%d%H%M%S
++ cur_date=20231018043158
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20231018043158
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20231018043158
+++++ lsblk
+++++ grep disk
+++++ tail -n 1
+++++ awk '{print $1}'
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 0 -eq 0 ]]
++++ vggroup=test_vggroup20231018043158
++++ vgcreate test_vggroup20231018043158 /dev/vdb
++++ printf test_vggroup20231018043158
+++ vggroup=test_vggroup20231018043158
+++ count=1
+++ msg='test_vggroup20231018043158 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120231018043158
+++ point=/tmp/point120231018043158
+++ lvcreate -n test_lv120231018043158 -L 512M test_vggroup20231018043158 -y
+++ mkfs -t ext3 /dev/test_vggroup20231018043158/test_lv120231018043158
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point120231018043158
+++ mount /dev/test_vggroup20231018043158/test_lv120231018043158 /tmp/point120231018043158
+++ msg='test_vggroup20231018043158 /tmp/point120231018043158 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220231018043158
+++ point=/tmp/point220231018043158
+++ lvcreate -n test_lv220231018043158 -L 512M test_vggroup20231018043158 -y
+++ mkfs -t ext4 /dev/test_vggroup20231018043158/test_lv220231018043158
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point220231018043158
+++ mount /dev/test_vggroup20231018043158/test_lv220231018043158 /tmp/point220231018043158
+++ msg='test_vggroup20231018043158 /tmp/point120231018043158 /tmp/point220231018043158 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320231018043158
+++ point=/tmp/point320231018043158
+++ lvcreate -n test_lv320231018043158 -L 512M test_vggroup20231018043158 -y
+++ mkfs -t xfs /dev/test_vggroup20231018043158/test_lv320231018043158
+++ mkdir /tmp/point320231018043158
+++ mount /dev/test_vggroup20231018043158/test_lv320231018043158 /tmp/point320231018043158
+++ msg='test_vggroup20231018043158 /tmp/point120231018043158 /tmp/point220231018043158 /tmp/point320231018043158 '
+++ count=4
+++ echo test_vggroup20231018043158 /tmp/point120231018043158 /tmp/point220231018043158 /tmp/point320231018043158
++ testFile1=testFile120231018043158
++ testFile2=testFile220231018043158
++ testFile3=testFile320231018043158
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point120231018043158
++ echo 'test file 1'
++ echo 'test file 2'
++ echo 'test file 3'
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220231018043158
++ echo 'test file 1'
++ echo 'test file 2'
++ echo 'test file 3'
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320231018043158
++ echo 'test file 1'
++ echo 'test file 2'
++ echo 'test file 3'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Wed Oct 18 04:32:02 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 18 04:32:02 2023 - INFO  - Start to run test.
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point120231018043158
++ testTar=/tmp/point120231018043158/testTar20231018043158.tar
++ tar -Pcf /tmp/point120231018043158/testTar20231018043158.tar /tmp/point120231018043158/testFile120231018043158 /tmp/point120231018043158/testFile220231018043158 /tmp/point120231018043158/testFile320231018043158
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point120231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point120231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -Ptvf /tmp/point120231018043158/testTar20231018043158.tar
++ grep testFile1
+-rw-r--r-- root/root        12 2023-10-18 04:32 /tmp/point120231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files in tar in /tmp/point120231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files in tar in /tmp/point120231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -Pxvf /tmp/point120231018043158/testTar20231018043158.tar
+/tmp/point120231018043158/testFile120231018043158
+/tmp/point120231018043158/testFile220231018043158
+/tmp/point120231018043158/testFile320231018043158
++ CHECK_RESULT 0 0 0 'Decompress file by tar in /tmp/point120231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress file by tar in /tmp/point120231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -czf /tmp/point120231018043158/testTar20231018043158.tar.gz /tmp/point120231018043158/testFile120231018043158 /tmp/point120231018043158/testFile220231018043158 /tmp/point120231018043158/testFile320231018043158
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point120231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point120231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -xzvf /tmp/point120231018043158/testTar20231018043158.tar.gz
++ grep testFile1
+tmp/point120231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point120231018043158/testTar20231018043158.tar.gz failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point120231018043158/testTar20231018043158.tar.gz failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q 'test file 1' /tmp/point120231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point120231018043158/testFile120231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point120231018043158/testFile120231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -cjf /tmp/point120231018043158/testTar20231018043158.tar.bz2 /tmp/point120231018043158/testFile120231018043158 /tmp/point120231018043158/testFile220231018043158 /tmp/point120231018043158/testFile320231018043158
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point120231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point120231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -xjvf /tmp/point120231018043158/testTar20231018043158.tar.bz2
++ grep testFile1
+tmp/point120231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point120231018043158/testTar20231018043158.tar.bz2 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point120231018043158/testTar20231018043158.tar.bz2 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q 'test file 2' /tmp/point120231018043158/testFile220231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point120231018043158/testFile220231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point120231018043158/testFile220231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220231018043158
++ testTar=/tmp/point220231018043158/testTar20231018043158.tar
++ tar -Pcf /tmp/point220231018043158/testTar20231018043158.tar /tmp/point220231018043158/testFile120231018043158 /tmp/point220231018043158/testFile220231018043158 /tmp/point220231018043158/testFile320231018043158
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point220231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point220231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -Ptvf /tmp/point220231018043158/testTar20231018043158.tar
++ grep testFile1
+-rw-r--r-- root/root        12 2023-10-18 04:32 /tmp/point220231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files in tar in /tmp/point220231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files in tar in /tmp/point220231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -Pxvf /tmp/point220231018043158/testTar20231018043158.tar
+/tmp/point220231018043158/testFile120231018043158
+/tmp/point220231018043158/testFile220231018043158
+/tmp/point220231018043158/testFile320231018043158
++ CHECK_RESULT 0 0 0 'Decompress file by tar in /tmp/point220231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress file by tar in /tmp/point220231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -czf /tmp/point220231018043158/testTar20231018043158.tar.gz /tmp/point220231018043158/testFile120231018043158 /tmp/point220231018043158/testFile220231018043158 /tmp/point220231018043158/testFile320231018043158
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point220231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point220231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -xzvf /tmp/point220231018043158/testTar20231018043158.tar.gz
++ grep testFile1
+tmp/point220231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point220231018043158/testTar20231018043158.tar.gz failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point220231018043158/testTar20231018043158.tar.gz failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q 'test file 1' /tmp/point220231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point220231018043158/testFile120231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point220231018043158/testFile120231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -cjf /tmp/point220231018043158/testTar20231018043158.tar.bz2 /tmp/point220231018043158/testFile120231018043158 /tmp/point220231018043158/testFile220231018043158 /tmp/point220231018043158/testFile320231018043158
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point220231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point220231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -xjvf /tmp/point220231018043158/testTar20231018043158.tar.bz2
++ grep testFile1
+tmp/point220231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point220231018043158/testTar20231018043158.tar.bz2 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point220231018043158/testTar20231018043158.tar.bz2 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q 'test file 2' /tmp/point220231018043158/testFile220231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point220231018043158/testFile220231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point220231018043158/testFile220231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320231018043158
++ testTar=/tmp/point320231018043158/testTar20231018043158.tar
++ tar -Pcf /tmp/point320231018043158/testTar20231018043158.tar /tmp/point320231018043158/testFile120231018043158 /tmp/point320231018043158/testFile220231018043158 /tmp/point320231018043158/testFile320231018043158
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point320231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point320231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -Ptvf /tmp/point320231018043158/testTar20231018043158.tar
++ grep testFile1
+-rw-r--r-- root/root        12 2023-10-18 04:32 /tmp/point320231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files in tar in /tmp/point320231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files in tar in /tmp/point320231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -Pxvf /tmp/point320231018043158/testTar20231018043158.tar
+/tmp/point320231018043158/testFile120231018043158
+/tmp/point320231018043158/testFile220231018043158
+/tmp/point320231018043158/testFile320231018043158
++ CHECK_RESULT 0 0 0 'Decompress file by tar in /tmp/point320231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Decompress file by tar in /tmp/point320231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -czf /tmp/point320231018043158/testTar20231018043158.tar.gz /tmp/point320231018043158/testFile120231018043158 /tmp/point320231018043158/testFile220231018043158 /tmp/point320231018043158/testFile320231018043158
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point320231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point320231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -xzvf /tmp/point320231018043158/testTar20231018043158.tar.gz
++ grep testFile1
+tmp/point320231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point320231018043158/testTar20231018043158.tar.gz failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point320231018043158/testTar20231018043158.tar.gz failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q 'test file 1' /tmp/point320231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point320231018043158/testFile120231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point320231018043158/testFile120231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -cjf /tmp/point320231018043158/testTar20231018043158.tar.bz2 /tmp/point320231018043158/testFile120231018043158 /tmp/point320231018043158/testFile220231018043158 /tmp/point320231018043158/testFile320231018043158
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from hard link targets
++ CHECK_RESULT 0 0 0 'Compress file by tar in /tmp/point320231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Compress file by tar in /tmp/point320231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tar -xjvf /tmp/point320231018043158/testTar20231018043158.tar.bz2
++ grep testFile1
+tmp/point320231018043158/testFile120231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point320231018043158/testTar20231018043158.tar.bz2 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point320231018043158/testTar20231018043158.tar.bz2 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep -q 'test file 2' /tmp/point320231018043158/testFile220231018043158
++ CHECK_RESULT 0 0 0 'Check files /tmp/point320231018043158/testFile220231018043158 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check files /tmp/point320231018043158/testFile220231018043158 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 18 04:32:04 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 18 04:32:05 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 18 04:32:05 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20231018043158 /tmp/point120231018043158 /tmp/point220231018043158 /tmp/point320231018043158
++ list='test_vggroup20231018043158 /tmp/point120231018043158 /tmp/point220231018043158 /tmp/point320231018043158'
++ REMOVE_FS 'test_vggroup20231018043158 /tmp/point120231018043158 /tmp/point220231018043158 /tmp/point320231018043158'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20231018043158
+++ df -T
+++ grep test_vggroup20231018043158
+++ awk '{print $1}'
++ lv='/dev/mapper/test_vggroup20231018043158-test_lv120231018043158
+/dev/mapper/test_vggroup20231018043158-test_lv220231018043158
+/dev/mapper/test_vggroup20231018043158-test_lv320231018043158'
++ [[ /dev/mapper/test_vggroup20231018043158-test_lv120231018043158
+/dev/mapper/test_vggroup20231018043158-test_lv220231018043158
+/dev/mapper/test_vggroup20231018043158-test_lv320231018043158 == '' ]]
++ umount -f test_vggroup20231018043158
+umount: test_vggroup20231018043158: no mount point specified.
++ rm -rf test_vggroup20231018043158
++ DELETE_LV /dev/mapper/test_vggroup20231018043158-test_lv120231018043158 /dev/mapper/test_vggroup20231018043158-test_lv220231018043158 /dev/mapper/test_vggroup20231018043158-test_lv320231018043158
++ lvname=/dev/mapper/test_vggroup20231018043158-test_lv120231018043158
++ lvremove /dev/mapper/test_vggroup20231018043158-test_lv120231018043158 -y
+  Logical volume test_vggroup20231018043158/test_lv120231018043158 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120231018043158
+++ df -T
+++ grep /tmp/point120231018043158
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231018043158-test_lv120231018043158
++ [[ /dev/mapper/test_vggroup20231018043158-test_lv120231018043158 == '' ]]
++ umount -f /tmp/point120231018043158
++ rm -rf /tmp/point120231018043158
++ DELETE_LV /dev/mapper/test_vggroup20231018043158-test_lv120231018043158
++ lvname=/dev/mapper/test_vggroup20231018043158-test_lv120231018043158
++ lvremove /dev/mapper/test_vggroup20231018043158-test_lv120231018043158 -y
+  Logical volume "test_lv120231018043158" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220231018043158
+++ df -T
+++ grep /tmp/point220231018043158
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231018043158-test_lv220231018043158
++ [[ /dev/mapper/test_vggroup20231018043158-test_lv220231018043158 == '' ]]
++ umount -f /tmp/point220231018043158
++ rm -rf /tmp/point220231018043158
++ DELETE_LV /dev/mapper/test_vggroup20231018043158-test_lv220231018043158
++ lvname=/dev/mapper/test_vggroup20231018043158-test_lv220231018043158
++ lvremove /dev/mapper/test_vggroup20231018043158-test_lv220231018043158 -y
+  Logical volume "test_lv220231018043158" successfully removed.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320231018043158
+++ df -T
+++ grep /tmp/point320231018043158
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231018043158-test_lv320231018043158
++ [[ /dev/mapper/test_vggroup20231018043158-test_lv320231018043158 == '' ]]
++ umount -f /tmp/point320231018043158
++ rm -rf /tmp/point320231018043158
++ DELETE_LV /dev/mapper/test_vggroup20231018043158-test_lv320231018043158
++ lvname=/dev/mapper/test_vggroup20231018043158-test_lv320231018043158
++ lvremove /dev/mapper/test_vggroup20231018043158-test_lv320231018043158 -y
+  Logical volume "test_lv320231018043158" successfully removed.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Wed Oct 18 04:32:08 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 18 04:32:08 2023 - INFO  - End to restore the test environment.

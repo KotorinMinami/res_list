@@ -1,0 +1,206 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 18 01:03:13 2023 - INFO  - Start to prepare the test environment.
+++ firewall-cmd --state
++ CHECK_RESULT running running 0 'firewalld.service not running'
++ actual_result=running
++ expect_result=running
++ mode=0
++ error_log='firewalld.service not running'
++ exit_mode=0
++ '[' -z running ']'
++ '[' 0 -eq 0 ']'
++ test runningx '!=' runningx
++ return 0
++ ls -l './*.info'
+ls: cannot access './*.info': No such file or directory
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Oct 18 01:03:18 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 18 01:03:19 2023 - INFO  - Start to run test.
+++ firewall-cmd --get-zones
++ CHECK_RESULT 'block dmz drop external home internal public trusted work' 'block dmz drop external home internal libvirt nm-shared public trusted work' 0 'check default exists zone fail'
++ actual_result='block dmz drop external home internal public trusted work'
++ expect_result='block dmz drop external home internal libvirt nm-shared public trusted work'
++ mode=0
++ error_log='check default exists zone fail'
++ exit_mode=0
++ '[' -z 'block dmz drop external home internal public trusted work' ']'
++ '[' 0 -eq 0 ']'
++ test 'block dmz drop external home internal public trusted workx' '!=' 'block dmz drop external home internal libvirt nm-shared public trusted workx'
++ test -n 'check default exists zone fail'
++ LOG_ERROR 'check default exists zone fail'
++ message='check default exists zone fail'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check default exists zone fail'
+Wed Oct 18 01:03:24 2023 - ERROR - check default exists zone fail
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_default_rules.sh line 30'
++ message='oe_test_firewalld_default_rules.sh line 30'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_default_rules.sh line 30'
+Wed Oct 18 01:03:24 2023 - ERROR - oe_test_firewalld_default_rules.sh line 30
++ '[' 0 -eq 1 ']'
++ return 0
+++ firewall-cmd --get-target --permanent
++ CHECK_RESULT default default 0 'check default target fail'
++ actual_result=default
++ expect_result=default
++ mode=0
++ error_log='check default target fail'
++ exit_mode=0
++ '[' -z default ']'
++ '[' 0 -eq 0 ']'
++ test defaultx '!=' defaultx
++ return 0
+++ firewall-cmd --get-default-zone
++ CHECK_RESULT public public 0 'check default zone fail'
++ actual_result=public
++ expect_result=public
++ mode=0
++ error_log='check default zone fail'
++ exit_mode=0
++ '[' -z public ']'
++ '[' 0 -eq 0 ']'
++ test publicx '!=' publicx
++ return 0
+++ ip a
+++ grep 192.168.114.2 -B2
+++ head -1
+++ awk -F : '{print $2}'
+++ awk '{print $1}'
++ NODE1_Interface=enp0s3
+++ firewall-cmd --list-all
+++ grep interfaces
+++ awk '{print $NF}'
++ CHECK_RESULT enp0s5 enp0s3 0 'check values of interfaces in runtime public zone fail'
++ actual_result=enp0s5
++ expect_result=enp0s3
++ mode=0
++ error_log='check values of interfaces in runtime public zone fail'
++ exit_mode=0
++ '[' -z enp0s5 ']'
++ '[' 0 -eq 0 ']'
++ test enp0s5x '!=' enp0s3x
++ test -n 'check values of interfaces in runtime public zone fail'
++ LOG_ERROR 'check values of interfaces in runtime public zone fail'
++ message='check values of interfaces in runtime public zone fail'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'check values of interfaces in runtime public zone fail'
+Wed Oct 18 01:03:38 2023 - ERROR - check values of interfaces in runtime public zone fail
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_default_rules.sh line 35'
++ message='oe_test_firewalld_default_rules.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_default_rules.sh line 35'
+Wed Oct 18 01:03:38 2023 - ERROR - oe_test_firewalld_default_rules.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
+++ firewall-cmd --list-all --permanent
+++ grep interfaces
+++ awk '{print $1}'
++ CHECK_RESULT interfaces: interfaces: 0 'check values of interfaces in permanent public zone fail'
++ actual_result=interfaces:
++ expect_result=interfaces:
++ mode=0
++ error_log='check values of interfaces in permanent public zone fail'
++ exit_mode=0
++ '[' -z interfaces: ']'
++ '[' 0 -eq 0 ']'
++ test interfaces:x '!=' interfaces:x
++ return 0
+++ firewall-cmd --list-all
+++ head -1
++ CHECK_RESULT 'public (active)' 'public (active)' 0 'runtime public zone status fail'
++ actual_result='public (active)'
++ expect_result='public (active)'
++ mode=0
++ error_log='runtime public zone status fail'
++ exit_mode=0
++ '[' -z 'public (active)' ']'
++ '[' 0 -eq 0 ']'
++ test 'public (active)x' '!=' 'public (active)x'
++ return 0
+++ firewall-cmd --list-all --permanent
+++ head -1
++ CHECK_RESULT 'public (active)' public 0 'permanent public zone fail'
++ actual_result='public (active)'
++ expect_result=public
++ mode=0
++ error_log='permanent public zone fail'
++ exit_mode=0
++ '[' -z 'public (active)' ']'
++ '[' 0 -eq 0 ']'
++ test 'public (active)x' '!=' publicx
++ test -n 'permanent public zone fail'
++ LOG_ERROR 'permanent public zone fail'
++ message='permanent public zone fail'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'permanent public zone fail'
+Wed Oct 18 01:03:53 2023 - ERROR - permanent public zone fail
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_firewalld_default_rules.sh line 38'
++ message='oe_test_firewalld_default_rules.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_firewalld_default_rules.sh line 38'
+Wed Oct 18 01:03:53 2023 - ERROR - oe_test_firewalld_default_rules.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ firewall-cmd --list-all
++ grep -v -E 'interfaces|public'
++ firewall-cmd --list-all --permanent
++ grep -v -E 'interfaces|public'
++ diff runtime_rule.info permanent_rule.info -b
++ CHECK_RESULT 0 0 0 'compare other values of runtime permanent fail'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='compare other values of runtime permanent fail'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 18 01:04:03 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Oct 18 01:04:03 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 18 01:04:04 2023 - INFO  - Start to restore the test environment.
++ ls -l ./permanent_rule.info ./runtime_rule.info
+-rw-r--r-- 1 root root 236 Oct 18 01:04 ./permanent_rule.info
+-rw-r--r-- 1 root root 236 Oct 18 01:03 ./runtime_rule.info
++ rm -rf ./permanent_rule.info ./runtime_rule.info
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 18 01:04:04 2023 - INFO  - End to restore the test environment.

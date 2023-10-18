@@ -1,0 +1,310 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Oct 18 04:58:01 2023 - INFO  - Start to prepare the database config.
++ point_list=($(CREATE_FS))
+++ CREATE_FS
+++ fs_type='ext3 ext4 xfs'
++++ date +%Y%m%d%H%M%S
+++ cur_date=20231018045801
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20231018045801
+++++ lsblk
+++++ grep disk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20231018044350
++++ printf test_vggroup20231018044350
+++ vggroup=test_vggroup20231018044350
+++ count=1
+++ msg='test_vggroup20231018044350 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120231018045801
+++ point=/tmp/point120231018045801
+++ lvcreate -n test_lv120231018045801 -L 512M test_vggroup20231018044350 -y
+++ mkfs -t ext3 /dev/test_vggroup20231018044350/test_lv120231018045801
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point120231018045801
+++ mount /dev/test_vggroup20231018044350/test_lv120231018045801 /tmp/point120231018045801
+++ msg='test_vggroup20231018044350 /tmp/point120231018045801 '
+++ count=2
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv220231018045801
+++ point=/tmp/point220231018045801
+++ lvcreate -n test_lv220231018045801 -L 512M test_vggroup20231018044350 -y
+++ mkfs -t ext4 /dev/test_vggroup20231018044350/test_lv220231018045801
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point220231018045801
+++ mount /dev/test_vggroup20231018044350/test_lv220231018045801 /tmp/point220231018045801
+++ msg='test_vggroup20231018044350 /tmp/point120231018045801 /tmp/point220231018045801 '
+++ count=3
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv320231018045801
+++ point=/tmp/point320231018045801
+++ lvcreate -n test_lv320231018045801 -L 512M test_vggroup20231018044350 -y
+++ mkfs -t xfs /dev/test_vggroup20231018044350/test_lv320231018045801
+++ mkdir /tmp/point320231018045801
+++ mount /dev/test_vggroup20231018044350/test_lv320231018045801 /tmp/point320231018045801
+++ msg='test_vggroup20231018044350 /tmp/point120231018045801 /tmp/point220231018045801 /tmp/point320231018045801 '
+++ count=4
+++ echo test_vggroup20231018044350 /tmp/point120231018045801 /tmp/point220231018045801 /tmp/point320231018045801
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Wed Oct 18 04:58:06 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 18 04:58:06 2023 - INFO  - Start to run test.
+++ seq 1 3
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point120231018045801
++ echo test
++ umount /tmp/point120231018045801
++ nohup vi /tmp/point120231018045801/testFile
+Vim: Warning: Output is not to a terminal
+Vim: Warning: Input is not from a terminal
++ CHECK_RESULT 0 0 0 'Umount fs /tmp/point120231018045801 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs /tmp/point120231018045801 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point220231018045801
++ echo test
++ umount /tmp/point220231018045801
++ nohup vi /tmp/point220231018045801/testFile
+Vim: Warning: Output is not to a terminal
+Vim: Warning: Input is not from a terminal
++ CHECK_RESULT 0 0 0 'Umount fs /tmp/point220231018045801 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs /tmp/point220231018045801 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ for i in $(seq 1 $((${#point_list[@]} - 1)))
++ var=/tmp/point320231018045801
++ echo test
++ umount /tmp/point320231018045801
++ nohup vi /tmp/point320231018045801/testFile
+Vim: Warning: Output is not to a terminal
+Vim: Warning: Input is not from a terminal
++ CHECK_RESULT 0 0 0 'Umount fs /tmp/point320231018045801 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount fs /tmp/point320231018045801 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 18 04:58:08 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+
+E558: Terminal entry not found in terminfo
+'unknown' not known. Available builtin terminals are:
+    builtin_ansi
+    builtin_xterm
+    builtin_iris-ansi
+    builtin_dumb
+defaulting to 'ansi'
+Wed Oct 18 04:58:09 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+
+E558: Terminal entry not found in terminfo
+'unknown' not known. Available builtin terminals are:
+    builtin_ansi
+    builtin_xterm
+    builtin_iris-ansi
+    builtin_dumb
+defaulting to 'ansi'
+Wed Oct 18 04:58:09 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20231018044350 /tmp/point120231018045801 /tmp/point220231018045801 /tmp/point320231018045801
++ list='test_vggroup20231018044350 /tmp/point120231018045801 /tmp/point220231018045801 /tmp/point320231018045801'
++ REMOVE_FS 'test_vggroup20231018044350 /tmp/point120231018045801 /tmp/point220231018045801 /tmp/point320231018045801'
++ point_list=($1)
+++ seq 0 3
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20231018044350
+
+E558: Terminal entry not found in terminfo
+'unknown' not known. Available builtin terminals are:
+    builtin_ansi
+    builtin_xterm
+    builtin_iris-ansi
+    builtin_dumb
+defaulting to 'ansi'
+++ df -T
+++ grep test_vggroup20231018044350
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120231018045801
+++ df -T
+++ grep /tmp/point120231018045801
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point220231018045801
+++ df -T
+++ grep /tmp/point220231018045801
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point320231018045801
+++ df -T
+++ grep /tmp/point320231018045801
+++ awk '{print $1}'
++ lv=
++ [[ '' == '' ]]
++ continue
++ rm -f ./nohup.out
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 18 04:58:10 2023 - INFO  - End to restore the test environment.
+[0m[H[2J[24;1H"/tmp/point120231018045801/testFile" [New][2;1H~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~[1;1H[24;1H[0mVim: Error reading input, exiting...
+Vim: Finished.
+[24;1H
+[0m[H[2J[24;1H"/tmp/point220231018045801/testFile" [New][2;1H~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~[1;1H[24;1H[0mVim: Error reading input, exiting...
+Vim: Finished.
+[24;1H
+[0m[H[2J[24;1H"/tmp/point320231018045801/testFile" [New][2;1H~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~[1;1H[24;1H[0mVim: Error reading input, exiting...
+Vim: Finished.
+[24;1H

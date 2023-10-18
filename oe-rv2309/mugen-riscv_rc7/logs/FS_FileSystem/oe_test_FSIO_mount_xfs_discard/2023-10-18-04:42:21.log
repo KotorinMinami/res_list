@@ -1,0 +1,153 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 0 -eq 0 ]]
++++ lsblk
++++ grep test_vggroup
++++ awk '{print $1}'
++++ cut -d - -f 1
++++ head -n 1
+++ vggroup=└─test_vggroup20231018044146
+++ vggroup=test_vggroup20231018044146
+++ vgremove test_vggroup20231018044146 -y
+  Logical volume "test_lv20231018044146" successfully removed.
+  Volume group "test_vggroup20231018044146" successfully removed
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Wed Oct 18 04:42:25 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20231018044225
+++ CREATE_VG
++++ date +%Y%m%d%H%M%S
+++ cur_date=20231018044225
++++ lsblk
++++ grep disk
++++ tail -n 1
++++ awk '{print $1}'
+++ free_disk=vdb
+++ disk_name=/dev/vdb
+++ pvcreate /dev/vdb -f
+++ [[ 0 -eq 0 ]]
+++ vggroup=test_vggroup20231018044225
+++ vgcreate test_vggroup20231018044225 /dev/vdb
+++ printf test_vggroup20231018044225
++ vggroup=test_vggroup20231018044225
++ lv=test_lv20231018044225
++ lvcreate -n test_lv20231018044225 -L 2G test_vggroup20231018044225 -y
++ mkfs.xfs /dev/test_vggroup20231018044225/test_lv20231018044225
+meta-data=/dev/test_vggroup20231018044225/test_lv20231018044225 isize=512    agcount=4, agsize=131072 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=0
+data     =                       bsize=4096   blocks=524288, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=16384, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+Discarding blocks...Done.
++ xfs_point=/mnt/test20231018044225
++ mkdir /mnt/test20231018044225
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Wed Oct 18 04:42:27 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 18 04:42:27 2023 - INFO  - Start to run test.
++ mount -t xfs -o discard /dev/test_vggroup20231018044225/test_lv20231018044225 /mnt/test20231018044225
++ CHECK_RESULT 0 0 0 'Mount xfs by ro failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount xfs by ro failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo test
++ grep test /mnt/test20231018044225/testfile
+test
++ CHECK_RESULT 0 0 0 'Mount xfs by delalloc failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Mount xfs by delalloc failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 18 04:42:28 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Wed Oct 18 04:42:28 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 18 04:42:29 2023 - INFO  - Start to restore the test environment.
++ REMOVE_FS /mnt/test20231018044225
++ point_list=($1)
+++ seq 0 0
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/mnt/test20231018044225
+++ df -T
+++ grep /mnt/test20231018044225
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231018044225-test_lv20231018044225
++ [[ /dev/mapper/test_vggroup20231018044225-test_lv20231018044225 == '' ]]
++ umount -f /mnt/test20231018044225
++ rm -rf /mnt/test20231018044225
++ DELETE_LV /dev/mapper/test_vggroup20231018044225-test_lv20231018044225
++ lvname=/dev/mapper/test_vggroup20231018044225-test_lv20231018044225
++ lvremove /dev/mapper/test_vggroup20231018044225-test_lv20231018044225 -y
+  Logical volume "test_lv20231018044225" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 18 04:42:30 2023 - INFO  - End to restore the test environment.

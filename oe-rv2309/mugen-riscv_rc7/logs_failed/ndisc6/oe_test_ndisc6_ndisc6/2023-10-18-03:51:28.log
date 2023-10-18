@@ -1,0 +1,236 @@
++ source ../common/common_ndisc6.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Wed Oct 18 03:51:30 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'ndisc6 xinetd time'
++ pkgs='ndisc6 xinetd time'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'ndisc6 xinetd time' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpu_uv519d
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpu_uv519d
+++ hostname
++ hostname_init=openeuler
++ hostname newlocalhost
+++ ip addr show enp0s3
+++ grep -w inet6
+++ awk '{print $2}'
+++ awk -F / '{print $1}'
+++ awk 'NR==1{print $1}'
++ NODE1_IPV6=fe80::26cf:4c61:55db:f400
+++ P_SSH_CMD --node 2 --cmd 'ip addr show enp0s2'
+++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'ip addr show enp0s2'
+++ grep -w inet6
+++ awk '{print $2}'
+++ awk -F / '{print $1}'
+++ awk 'NR==1{print $1}'
++ NODE2_IPV6=fe80::1028:d402:e66f:b115
++ cp /etc/resolv.conf /etc/resolv.conf-bak
++ sed -i 's/name/#&/' /etc/resolv.conf
++ sed -i 6s/yes/no/g /etc/xinetd.d/echo-stream
++ systemctl restart xinetd
++ DNF_INSTALL xinetd 2
++ pkgs=xinetd
++ node=2
++ '[' -z /tmp/tmpu_uv519d ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs xinetd --node 2 --tempfile /tmp/tmpu_uv519d
+Wed Oct 18 03:52:25 2023 - INFO  - pkgs:(xinetd) is already installed
++ tmpfile2=
++ '[' -z /tmp/tmpu_uv519d ']'
++ P_SSH_CMD --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
+
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Wed Oct 18 03:52:31 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Wed Oct 18 03:52:32 2023 - INFO  - Start to run test.
++ ndisc6 -1 -r 3 -w 1000 fe80::1028:d402:e66f:b115 enp0s2
++ grep -i 52:54:00:11:45:12
+enp0s2: No such device
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_ndisc6.sh line 29'
++ message='oe_test_ndisc6_ndisc6.sh line 29'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_ndisc6.sh line 29'
+Wed Oct 18 03:52:33 2023 - ERROR - oe_test_ndisc6_ndisc6.sh line 29
++ '[' 0 -eq 1 ']'
++ return 0
++ ndisc6 -m -r 3 -w 1000 fe80::1028:d402:e66f:b115 enp0s2
++ grep -i 52:54:00:11:45:12
+enp0s2: No such device
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_ndisc6.sh line 31'
++ message='oe_test_ndisc6_ndisc6.sh line 31'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_ndisc6.sh line 31'
+Wed Oct 18 03:52:33 2023 - ERROR - oe_test_ndisc6_ndisc6.sh line 31
++ '[' 0 -eq 1 ']'
++ return 0
++ ndisc6 -n -r 3 -w 1000 fe80::1028:d402:e66f:b115 enp0s2
++ grep -i 52:54:00:11:45:12
+enp0s2: No such device
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_ndisc6.sh line 33'
++ message='oe_test_ndisc6_ndisc6.sh line 33'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_ndisc6.sh line 33'
+Wed Oct 18 03:52:34 2023 - ERROR - oe_test_ndisc6_ndisc6.sh line 33
++ '[' 0 -eq 1 ']'
++ return 0
++ ndisc6 -q -r 3 -w 1000 fe80::1028:d402:e66f:b115 enp0s2
++ grep -i 52:54:00:11:45:12
+enp0s2: No such device
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_ndisc6.sh line 35'
++ message='oe_test_ndisc6_ndisc6.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_ndisc6.sh line 35'
+Wed Oct 18 03:52:35 2023 - ERROR - oe_test_ndisc6_ndisc6.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
+++ rpm -qa ndisc6
+++ awk -F - '{print $2}'
++ ndisc6_version=1.0.4
++ ndisc6 -V
++ grep 1.0.4
+ndisc6: IPv6 Neighbor/Router Discovery userland tool 1.0.4 ($Rev$)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ndisc6 -v -r 3 -w 1000 fe80::1028:d402:e66f:b115 enp0s2
++ grep -i 52:54:00:11:45:12
+enp0s2: No such device
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_ndisc6_ndisc6.sh line 40'
++ message='oe_test_ndisc6_ndisc6.sh line 40'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_ndisc6_ndisc6.sh line 40'
+Wed Oct 18 03:52:37 2023 - ERROR - oe_test_ndisc6_ndisc6.sh line 40
++ '[' 0 -eq 1 ']'
++ return 0
++ ndisc6 -h
++ grep ndisc6
+Usage: ndisc6 [options] <IPv6 address> <interface>
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Wed Oct 18 03:52:38 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 5
++ test 5 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Wed Oct 18 03:52:38 2023 - ERROR - failed to execute the case.
++ exit 5
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Wed Oct 18 03:52:39 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpu_uv519d ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpu_uv519d
++ '[' 0 -ne 0 ']'
++ hostname openeuler
++ cp -rf /etc/resolv.conf-bak /etc/resolv.conf
++ rm -rf file runtime /etc/resolv.conf-bak
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Wed Oct 18 03:52:53 2023 - INFO  - End to restore the test environment.

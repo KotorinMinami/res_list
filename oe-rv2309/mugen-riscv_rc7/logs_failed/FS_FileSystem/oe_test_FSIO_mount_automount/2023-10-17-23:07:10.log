@@ -1,0 +1,505 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Tue Oct 17 23:07:14 2023 - INFO  - Start to prepare the database config.
+++ TEST_DISK 2
+++ id=2
+++ python3 /root/mugen/libs/locallibs/get_test_device.py --device disk --node 2
++ test_disk=/dev/vdb
++ ssh_cmd_node 'cp /etc/fstab /etc/fstab.bak'
++ cmd='cp /etc/fstab /etc/fstab.bak'
++ SSH_CMD 'cp /etc/fstab /etc/fstab.bak' 192.168.114.8 'openEuler12#$' root
++ cmd='cp /etc/fstab /etc/fstab.bak'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'cp /etc/fstab /etc/fstab.bak' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:07:22 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:07:22 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:07:23 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 cp /etc/fstab /etc/fstab.bak
+The authenticity of host '192.168.114.8 (192.168.114.8)' can't be established.
+ED25519 key fingerprint is SHA256:J335nOUVXELURzafeB2Z5YFddwejdAuXRpU8s+wzQNI.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '192.168.114.8' (ED25519) to the list of known hosts.
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'fdisk /dev/vdb << diskEof
+n
+p
+1
+
++100M
+n
+p
+2
+
++100M
+n
+p
+3
+
++350M
+w
+diskEof'
++ cmd='fdisk /dev/vdb << diskEof
+n
+p
+1
+
++100M
+n
+p
+2
+
++100M
+n
+p
+3
+
++350M
+w
+diskEof'
++ SSH_CMD 'fdisk /dev/vdb << diskEof
+n
+p
+1
+
++100M
+n
+p
+2
+
++100M
+n
+p
+3
+
++350M
+w
+diskEof' 192.168.114.8 'openEuler12#$' root
++ cmd='fdisk /dev/vdb << diskEof
+n
+p
+1
+
++100M
+n
+p
+2
+
++100M
+n
+p
+3
+
++350M
+w
+diskEof'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'fdisk /dev/vdb << diskEof
+n
+p
+1
+
++100M
+n
+p
+2
+
++100M
+n
+p
+3
+
++350M
+w
+diskEof' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:07:27 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:07:27 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:07:28 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 fdisk /dev/vdb << diskEof
+n
+p
+1
+
++100M
+n
+p
+2
+
++100M
+n
+p
+3
+
++350M
+w
+diskEof
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
+
+Welcome to fdisk (util-linux 2.39.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS (MBR) disklabel with disk identifier 0x25e0425e.
+
+Command (m for help): Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): Partition number (1-4, default 1): First sector (2048-41943039, default 2048): Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-41943039, default 41943039): 
+Created a new partition 1 of type 'Linux' and of size 100 MiB.
+
+Command (m for help): Partition type
+   p   primary (1 primary, 0 extended, 3 free)
+   e   extended (container for logical partitions)
+Select (default p): Partition number (2-4, default 2): First sector (206848-41943039, default 206848): Last sector, +/-sectors or +/-size{K,M,G,T,P} (206848-41943039, default 41943039): 
+Created a new partition 2 of type 'Linux' and of size 100 MiB.
+
+Command (m for help): Partition type
+   p   primary (2 primary, 0 extended, 2 free)
+   e   extended (container for logical partitions)
+Select (default p): Partition number (3,4, default 3): First sector (411648-41943039, default 411648): Last sector, +/-sectors or +/-size{K,M,G,T,P} (411648-41943039, default 41943039): 
+Created a new partition 3 of type 'Linux' and of size 350 MiB.
+
+Command (m for help): The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'mkfs.ext3 /dev/vdb1'
++ cmd='mkfs.ext3 /dev/vdb1'
++ SSH_CMD 'mkfs.ext3 /dev/vdb1' 192.168.114.8 'openEuler12#$' root
++ cmd='mkfs.ext3 /dev/vdb1'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mkfs.ext3 /dev/vdb1' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:07:32 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:07:32 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:07:33 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 mkfs.ext3 /dev/vdb1
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/102400             done                            
+Creating filesystem with 102400 1k blocks and 25584 inodes
+Filesystem UUID: ebc9c787-1121-4230-9391-38b27f88dfaf
+Superblock backups stored on blocks: 
+	8193, 24577, 40961, 57345, 73729
+
+Allocating group tables:  0/13     done                            
+Writing inode tables:  0/13     done                            
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information:  0/13     done
+
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'mkfs.ext4 /dev/vdb2'
++ cmd='mkfs.ext4 /dev/vdb2'
++ SSH_CMD 'mkfs.ext4 /dev/vdb2' 192.168.114.8 'openEuler12#$' root
++ cmd='mkfs.ext4 /dev/vdb2'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mkfs.ext4 /dev/vdb2' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:07:37 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:07:37 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:07:38 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 mkfs.ext4 /dev/vdb2
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/102400             done                            
+Creating filesystem with 102400 1k blocks and 25584 inodes
+Filesystem UUID: 991245b4-aa9d-4042-8400-2f75ccc2f5b7
+Superblock backups stored on blocks: 
+	8193, 24577, 40961, 57345, 73729
+
+Allocating group tables:  0/13     done                            
+Writing inode tables:  0/13     done                            
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information:  0/13     done
+
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'mkfs.xfs -f /dev/vdb3'
++ cmd='mkfs.xfs -f /dev/vdb3'
++ SSH_CMD 'mkfs.xfs -f /dev/vdb3' 192.168.114.8 'openEuler12#$' root
++ cmd='mkfs.xfs -f /dev/vdb3'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mkfs.xfs -f /dev/vdb3' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:07:41 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:07:42 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:07:43 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 mkfs.xfs -f /dev/vdb3
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
+meta-data=/dev/vdb3              isize=512    agcount=4, agsize=22400 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=0
+data     =                       bsize=4096   blocks=89600, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=16384, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+Discarding blocks...Done.
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'mkdir /mnt/test_ext3 /mnt/test_ext4 /mnt/test_xfs'
++ cmd='mkdir /mnt/test_ext3 /mnt/test_ext4 /mnt/test_xfs'
++ SSH_CMD 'mkdir /mnt/test_ext3 /mnt/test_ext4 /mnt/test_xfs' 192.168.114.8 'openEuler12#$' root
++ cmd='mkdir /mnt/test_ext3 /mnt/test_ext4 /mnt/test_xfs'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mkdir /mnt/test_ext3 /mnt/test_ext4 /mnt/test_xfs' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:07:46 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:07:47 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:07:48 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 mkdir /mnt/test_ext3 /mnt/test_ext4 /mnt/test_xfs
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'mount /dev/vdb1 /mnt/test_ext3'
++ cmd='mount /dev/vdb1 /mnt/test_ext3'
++ SSH_CMD 'mount /dev/vdb1 /mnt/test_ext3' 192.168.114.8 'openEuler12#$' root
++ cmd='mount /dev/vdb1 /mnt/test_ext3'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mount /dev/vdb1 /mnt/test_ext3' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:07:51 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:07:52 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:07:52 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 mount /dev/vdb1 /mnt/test_ext3
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'mount /dev/vdb2 /mnt/test_ext4'
++ cmd='mount /dev/vdb2 /mnt/test_ext4'
++ SSH_CMD 'mount /dev/vdb2 /mnt/test_ext4' 192.168.114.8 'openEuler12#$' root
++ cmd='mount /dev/vdb2 /mnt/test_ext4'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mount /dev/vdb2 /mnt/test_ext4' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:07:56 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:07:56 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:07:57 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 mount /dev/vdb2 /mnt/test_ext4
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'mount /dev/vdb3 /mnt/test_xfs'
++ cmd='mount /dev/vdb3 /mnt/test_xfs'
++ SSH_CMD 'mount /dev/vdb3 /mnt/test_xfs' 192.168.114.8 'openEuler12#$' root
++ cmd='mount /dev/vdb3 /mnt/test_xfs'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'mount /dev/vdb3 /mnt/test_xfs' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:08:01 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:08:01 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:08:02 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 mount /dev/vdb3 /mnt/test_xfs
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Tue Oct 17 23:08:08 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Tue Oct 17 23:08:09 2023 - INFO  - Start to run test.
++ ssh_cmd_node 'df -iT | grep '\''/dev/vdb*'\'''
++ cmd='df -iT | grep '\''/dev/vdb*'\'''
++ SSH_CMD 'df -iT | grep '\''/dev/vdb*'\''' 192.168.114.8 'openEuler12#$' root
++ cmd='df -iT | grep '\''/dev/vdb*'\'''
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'df -iT | grep '\''/dev/vdb*'\''' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:08:10 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:08:10 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:08:11 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 df -iT | grep '/dev/vdb*'
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
+/dev/vda1      vfat           0     0       0     - /boot
+/dev/vdb1      ext3       25584    11   25573    1% /mnt/test_ext3
+/dev/vdb2      ext4       25584    11   25573    1% /mnt/test_ext4
+/dev/vdb3      xfs       179200     3  179197    1% /mnt/test_xfs
++ ret=0
++ test 0 -ne 0
++ return 0
++ CHECK_RESULT 0 0 0 'Check fs is mounted failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Check fs is mounted failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ssh_cmd_node 'echo '\''/dev/vdb1 /mnt/test_ext3 ext3 defaults 0 0'\'' >> /etc/fstab'
++ cmd='echo '\''/dev/vdb1 /mnt/test_ext3 ext3 defaults 0 0'\'' >> /etc/fstab'
++ SSH_CMD 'echo '\''/dev/vdb1 /mnt/test_ext3 ext3 defaults 0 0'\'' >> /etc/fstab' 192.168.114.8 'openEuler12#$' root
++ cmd='echo '\''/dev/vdb1 /mnt/test_ext3 ext3 defaults 0 0'\'' >> /etc/fstab'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'echo '\''/dev/vdb1 /mnt/test_ext3 ext3 defaults 0 0'\'' >> /etc/fstab' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:08:14 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:08:15 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:08:15 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 echo '/dev/vdb1 /mnt/test_ext3 ext3 defaults 0 0' >> /etc/fstab
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'echo '\''/dev/vdb2 /mnt/test_ext4 ext4 defaults 0 0'\'' >> /etc/fstab'
++ cmd='echo '\''/dev/vdb2 /mnt/test_ext4 ext4 defaults 0 0'\'' >> /etc/fstab'
++ SSH_CMD 'echo '\''/dev/vdb2 /mnt/test_ext4 ext4 defaults 0 0'\'' >> /etc/fstab' 192.168.114.8 'openEuler12#$' root
++ cmd='echo '\''/dev/vdb2 /mnt/test_ext4 ext4 defaults 0 0'\'' >> /etc/fstab'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'echo '\''/dev/vdb2 /mnt/test_ext4 ext4 defaults 0 0'\'' >> /etc/fstab' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:08:19 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:08:19 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:08:20 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 echo '/dev/vdb2 /mnt/test_ext4 ext4 defaults 0 0' >> /etc/fstab
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ ssh_cmd_node 'echo '\''/dev/vdb3 /mnt/test_xfs xfs defaults 0 0'\'' >> /etc/fstab'
++ cmd='echo '\''/dev/vdb3 /mnt/test_xfs xfs defaults 0 0'\'' >> /etc/fstab'
++ SSH_CMD 'echo '\''/dev/vdb3 /mnt/test_xfs xfs defaults 0 0'\'' >> /etc/fstab' 192.168.114.8 'openEuler12#$' root
++ cmd='echo '\''/dev/vdb3 /mnt/test_xfs xfs defaults 0 0'\'' >> /etc/fstab'
++ remoteip=192.168.114.8
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'echo '\''/dev/vdb3 /mnt/test_xfs xfs defaults 0 0'\'' >> /etc/fstab' -i 192.168.114.8 -u root -p 'openEuler12#$' -t 300 -o 22
+Tue Oct 17 23:08:23 2023 - WARN  - the remote user uses the default configuration.
+Tue Oct 17 23:08:24 2023 - WARN  - the remote password uses the default configuration.
+Tue Oct 17 23:08:24 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=300 -p 22 root@192.168.114.8 echo '/dev/vdb3 /mnt/test_xfs xfs defaults 0 0' >> /etc/fstab
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
++ ret=0
++ test 0 -ne 0
++ return 0
++ REMOTE_REBOOT 2
++ node=2
++ waittime=
++ '[' x '!=' x ']'
++ python3 /root/mugen/libs/locallibs/remote_reboot.py reboot --node 2
+Tue Oct 17 23:08:34 2023 - WARN  - Failed to connect the remote machine:192.168.114.8.
+Tue Oct 17 23:08:34 2023 - WARN  - [Errno None] Unable to connect to port 22 on 192.168.114.8
+Tue Oct 17 23:37:11 2023 - ERROR - Timeout : Command 'bash -x oe_test_FSIO_mount_automount.sh' timed out after 1799.999735991 seconds
