@@ -1,0 +1,163 @@
++ source ../common/common_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Oct 19 23:28:55 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL dnf-automatic
++ pkgs=dnf-automatic
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs dnf-automatic --node 1 --tempfile ''
++ tmpfile2='everything                                      0.7  B/s | 146  B     03:21    
+Errors during downloading metadata for repository '\''everything'\'':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30001 ms: Timeout was reached]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Operation too slow. Less than 1000 bytes/sec transferred the last 30 seconds]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30003 ms: Timeout was reached]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [SSL connection timeout]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30002 ms: Timeout was reached]
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo '\''everything'\'': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried'
++ '[' -z '' ']'
++ tmpfile='everything                                      0.7  B/s | 146  B     03:21    
+Errors during downloading metadata for repository '\''everything'\'':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30001 ms: Timeout was reached]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Operation too slow. Less than 1000 bytes/sec transferred the last 30 seconds]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30003 ms: Timeout was reached]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [SSL connection timeout]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30002 ms: Timeout was reached]
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo '\''everything'\'': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried'
++ service=dnf-automatic-download.service
+++ date '+%Y-%m-%d %T'
++ log_time='2023-10-19 23:42:22'
++ status='inactive (dead)'
++ systemctl start dnf-automatic-download.service
+Failed to start dnf-automatic-download.service: Unit dnf-automatic-download.service not found.
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Oct 19 23:42:23 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start testing...'
++ message='Start testing...'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start testing...'
+Thu Oct 19 23:42:23 2023 - INFO  - Start testing...
++ systemctl status dnf-automatic-download.service
++ grep Active
++ grep -v 'inactive (dead)'
+Unit dnf-automatic-download.service could not be found.
++ CHECK_RESULT 1 0 1 'There is an error for the status of dnf-automatic-download.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error for the status of dnf-automatic-download.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ test_enabled dnf-automatic-download.service
++ service=dnf-automatic-download.service
+++ systemctl is-enabled dnf-automatic-download.service
++ state=not-found
++ '[' not-found == enabled ']'
++ '[' not-found == disabled ']'
++ '[' not-found == masked ']'
++ '[' not-found == static ']'
++ LOG_INFO 'Unit is indirect, ignoring.'
++ message='Unit is indirect, ignoring.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Unit is indirect, ignoring.'
+Thu Oct 19 23:42:24 2023 - INFO  - Unit is indirect, ignoring.
++ journalctl --since '2023-10-19 23:42:22' -u dnf-automatic-download.service
++ grep -i 'fail\|error'
++ grep -v -i 'DEBUG\|INFO\|WARNING'
++ grep -v libgpg-error
++ grep -v '_sasl_plugin_load failed on sasl_canonuser_init'
++ CHECK_RESULT 1 0 1 'There is an error message for the log of dnf-automatic-download.service'
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log='There is an error message for the log of dnf-automatic-download.service'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
++ LOG_INFO 'Finish test!'
++ message='Finish test!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish test!'
+Thu Oct 19 23:42:25 2023 - INFO  - Finish test!
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Oct 19 23:42:25 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Oct 19 23:42:26 2023 - INFO  - Start to restore the test environment.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z everything                                      0.7  B/s | 146  B     03:21    
+Errors during downloading metadata for repository 'everything':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30001 ms: Timeout was reached]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Operation too slow. Less than 1000 bytes/sec transferred the last 30 seconds]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30003 ms: Timeout was reached]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [SSL connection timeout]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30002 ms: Timeout was reached]
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile 'everything                                      0.7  B/s | 146  B     03:21    
+Errors during downloading metadata for repository '\''everything'\'':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30001 ms: Timeout was reached]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Operation too slow. Less than 1000 bytes/sec transferred the last 30 seconds]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30003 ms: Timeout was reached]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [SSL connection timeout]
+  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30002 ms: Timeout was reached]
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo '\''everything'\'': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: "everything                                      0.7  B/s | 146  B     03:21    \nErrors during downloading metadata for repository 'everything':\n  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)\n  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30001 ms: Timeout was reached]\n  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Operation too slow. Less than 1000 bytes/sec transferred the last 30 seconds]\n  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30003 ms: Timeout was reached]\n  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [SSL connection timeout]\n  - Curl error (28): Timeout was reached for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 [Failed to connect to mirrors.openeuler.org port 443 after 30002 ms: Timeout was reached]\n  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)\nError: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Oct 19 23:42:29 2023 - INFO  - End to restore the test environment.

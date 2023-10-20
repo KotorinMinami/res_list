@@ -1,0 +1,171 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 0 -eq 0 ]]
++++ lsblk
++++ grep test_vggroup
++++ awk '{print $1}'
++++ head -n 1
++++ cut -d - -f 1
+++ vggroup=└─test_vggroup20231019221715
+++ vggroup=test_vggroup20231019221715
+++ vgremove test_vggroup20231019221715 -y
+  Logical volume "test_lv20231019221714" successfully removed.
+  Volume group "test_vggroup20231019221715" successfully removed
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Thu Oct 19 22:18:04 2023 - INFO  - Start to prepare the database config.
+++ date +%Y%m%d%H%M%S
++ cur_date=20231019221805
+++ CREATE_VG
++++ date +%Y%m%d%H%M%S
+++ cur_date=20231019221805
++++ lsblk
++++ grep disk
++++ awk '{print $1}'
++++ tail -n 1
+++ free_disk=vdb
+++ disk_name=/dev/vdb
+++ pvcreate /dev/vdb -f
+++ [[ 0 -eq 0 ]]
+++ vggroup=test_vggroup20231019221805
+++ vgcreate test_vggroup20231019221805 /dev/vdb
+++ printf test_vggroup20231019221805
++ vggroup=test_vggroup20231019221805
++ lv=test_lv20231019221805
++ lvcreate -n test_lv20231019221805 -L 2G test_vggroup20231019221805 -y
++ mkfs.ext3 /dev/test_vggroup20231019221805/test_lv20231019221805
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks:      0/524288             done                            
+Creating filesystem with 524288 4k blocks and 131072 inodes
+Filesystem UUID: 1e8f8464-be1f-4515-b5ae-d888407aeb8b
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
+
+Allocating group tables:  0/16     done                            
+Writing inode tables:  0/16     done                            
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information:  0/16     done
+
++ testPoint=/mnt/test20231019221805
++ mkdir /mnt/test20231019221805
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Thu Oct 19 22:18:08 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Oct 19 22:18:08 2023 - INFO  - Start to run test.
++ mount -t ext3 /dev/test_vggroup20231019221805/test_lv20231019221805 /mnt/test20231019221805
++ echo 'test ext3 fs'
++ umount /mnt/test20231019221805
++ tune2fs -O extents,uninit_bg,dir_index /dev/test_vggroup20231019221805/test_lv20231019221805
+tune2fs 1.47.0 (5-Feb-2023)
++ CHECK_RESULT 0 0 0 'Umount ext3 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Umount ext3 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ fsck -pf /dev/test_vggroup20231019221805/test_lv20231019221805
+fsck from util-linux 2.39.1
+/dev/mapper/test_vggroup20231019221805-test_lv20231019221805: 12/131072 files (0.0% non-contiguous), 25406/524288 blocks
++ mount -t ext4 /dev/test_vggroup20231019221805/test_lv20231019221805 /mnt/test20231019221805
++ CHECK_RESULT 0 0 0 'mount ext4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='mount ext4 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ grep test /mnt/test20231019221805/testFile
+test ext3 fs
++ CHECK_RESULT 0 0 0 'Transfer ext3 to ext4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Transfer ext3 to ext4 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Oct 19 22:18:10 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Oct 19 22:18:10 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Oct 19 22:18:11 2023 - INFO  - Start to restore the test environment.
++ REMOVE_FS /mnt/test20231019221805
++ point_list=($1)
+++ seq 0 0
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/mnt/test20231019221805
+++ df -T
+++ grep /mnt/test20231019221805
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231019221805-test_lv20231019221805
++ [[ /dev/mapper/test_vggroup20231019221805-test_lv20231019221805 == '' ]]
++ umount -f /mnt/test20231019221805
++ rm -rf /mnt/test20231019221805
++ DELETE_LV /dev/mapper/test_vggroup20231019221805-test_lv20231019221805
++ lvname=/dev/mapper/test_vggroup20231019221805-test_lv20231019221805
++ lvremove /dev/mapper/test_vggroup20231019221805-test_lv20231019221805 -y
+  Logical volume "test_lv20231019221805" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Oct 19 22:18:12 2023 - INFO  - End to restore the test environment.

@@ -1,0 +1,341 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start environmental preparation.'
++ message='Start environmental preparation.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environmental preparation.'
+Thu Oct 19 23:54:04 2023 - INFO  - Start environmental preparation.
++ DNF_INSTALL libreswan
++ pkgs=libreswan
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpr1xm82nx
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpr1xm82nx
++ systemctl start firewalld
++ DNF_INSTALL libreswan 2
++ pkgs=libreswan
++ node=2
++ '[' -z /tmp/tmpr1xm82nx ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs libreswan --node 2 --tempfile /tmp/tmpr1xm82nx
+Thu Oct 19 23:54:52 2023 - INFO  - pkgs:(libreswan) is already installed
++ tmpfile2=
++ '[' -z /tmp/tmpr1xm82nx ']'
++ LOG_INFO 'End of environmental preparation!'
++ message='End of environmental preparation!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of environmental preparation!'
+Thu Oct 19 23:54:53 2023 - INFO  - End of environmental preparation!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase.'
++ message='Start executing testcase.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase.'
+Thu Oct 19 23:54:53 2023 - INFO  - Start executing testcase.
++ systemctl enable ipsec --now
+Created symlink /etc/systemd/system/multi-user.target.wants/ipsec.service → /usr/lib/systemd/system/ipsec.service.
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ipsec initnss
+NSS database already initialised - aborted
+To wipe the old NSS database, issue: rm /var/lib/ipsec/nss/*.db
++ CHECK_RESULT 42
++ actual_result=42
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 42 ']'
++ '[' 0 -eq 0 ']'
++ test 42x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_host_to_host_vpn.sh line 35'
++ message='oe_test_host_to_host_vpn.sh line 35'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_host_to_host_vpn.sh line 35'
+Thu Oct 19 23:55:01 2023 - ERROR - oe_test_host_to_host_vpn.sh line 35
++ '[' 0 -eq 1 ']'
++ return 0
++ firewall-cmd --add-service=ipsec
++ grep success
+success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ firewall-cmd --runtime-to-permanent
++ grep success
+success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ ipsec newhostkey --nssdir /etc/ipsec.d/
+++ awk '/Generated/{print $7}'
++ left_ckaid=b22983aa32ae16091df10131cef6aecdb895dae8
+++ ipsec showhostkey --left --ckaid b22983aa32ae16091df10131cef6aecdb895dae8 --nssdir /etc/ipsec.d/
+++ grep leftrsasigkey
+++ awk -F leftrsasigkey= '{print $2}'
+++ sed 's/^[ \t]*//g'
++ left_rsa=0sAwEAAanwdroWjVIkQWE8RcAOXB81BLtSEqKqEGn6RF8pTdD8QCbK17KaeIFFfnqrNjJv/Tv3DZyKDBZk48jFZelHVgZmetyjl/kFkhIY9Q6qIZMS5fQH806aDbKVly6lRiS2UDLoJuyFQ7lhZ3dBNv7W42Dv9p567cAEVgoF+I6GpZdxLRThiwMLMLTfBJvp0xWJMwDAk7b2EHh/D9mdKPNu7TTsvjWrBV/uwtXp/G1kh/a52p+F6SICv2BZCNYS9jxddUyF+YJkVvdwPE1voYVW3XxA4uj+Otsq8ypD9dJVKXnBUuCWoErl8hlJpyipqc3yJgpaKcLGinHDE5HoKoDUecQn7oqTpqVMNt0r5bHX+pQlxYbBfddiE6l/IOdDa8Q9f8X/aOIqUjA4uRgt0ccdgoxkixtL8CeKrBSiEHS5G7jQkBg7Oqe1SnOkm8vntBu4VyymiC7WWk99MaCwy3a6Y8rnvw05C9IOAKXuyyBq1HDchZ2IIsHw96qAKeDt9vhlVpqF3ZoclFEDmplTCk3I2kaP+RDK03Y+w/iA4Zk=
++ P_SSH_CMD --cmd 'systemctl start firewalld;systemctl enable ipsec --now' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'systemctl start firewalld;systemctl enable ipsec --now' --node 2
+
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ P_SSH_CMD --cmd 'firewall-cmd --add-service=\"ipsec\";firewall-cmd --runtime-to-permanent' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'firewall-cmd --add-service=\"ipsec\";firewall-cmd --runtime-to-permanent' --node 2
+success
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ P_SSH_CMD --cmd 'ipsec newhostkey --nssdir /etc/ipsec.d/ 2>&1 | grep Generated | cut -d '\'' '\'' -f 7 >/tmp/key.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec newhostkey --nssdir /etc/ipsec.d/ 2>&1 | grep Generated | cut -d '\'' '\'' -f 7 >/tmp/key.txt' --node 2
+
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_SCP root@192.168.114.8:/tmp/key.txt /tmp 'openEuler12#$'
++ src=root@192.168.114.8:/tmp/key.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s root@192.168.114.8:/tmp/key.txt -d /tmp
+Thu Oct 19 23:56:03 2023 - WARN  - the remote password uses the default configuration.
+Thu Oct 19 23:56:04 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r root@192.168.114.8:/tmp/key.txt /tmp
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
+key.txt                                         0%    0     0.0KB/s   --:-- ETAkey.txt                                       100%   41     5.1KB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
+++ cat /tmp/key.txt
++ right_ckaid=594fbf29ed82f3a53b797481942f9c4f1bcd476d
++ P_SSH_CMD --cmd 'ipsec showhostkey --right --ckaid 594fbf29ed82f3a53b797481942f9c4f1bcd476d --nssdir /etc/ipsec.d/ | grep rightrsasigkey > /tmp/rsa.txt' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec showhostkey --right --ckaid 594fbf29ed82f3a53b797481942f9c4f1bcd476d --nssdir /etc/ipsec.d/ | grep rightrsasigkey > /tmp/rsa.txt' --node 2
+
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ SSH_SCP root@192.168.114.8:/tmp/rsa.txt /tmp 'openEuler12#$'
++ src=root@192.168.114.8:/tmp/rsa.txt
++ dest=/tmp
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s root@192.168.114.8:/tmp/rsa.txt -d /tmp
+Thu Oct 19 23:56:12 2023 - WARN  - the remote password uses the default configuration.
+Thu Oct 19 23:56:12 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r root@192.168.114.8:/tmp/rsa.txt /tmp
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
+rsa.txt                                         0%    0     0.0KB/s   --:-- ETArsa.txt                                       100%  643    86.2KB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
+++ cat /tmp/rsa.txt
+++ awk -F rightrsasigkey= '{print $2}'
+++ sed 's/^[ \t]*//g'
++ right_rsa=0sAwEAAc1jUdwOGfgyr3MG/FWxNRqILbfA5l+5ZHRo8ub3D8zVTjpbGyjPAiOc0zyAiRNRAiJTclPiC7PRhuflHVEcaBQSazb8+31K09S3O16pKHELhB5dYmTiNjDJ+bTG+1h2kS0KHOk8lnjL9MtYu/IheqBApBDheV/lkwLbSm2IQhLM32+XiokXDs5cH3GJ/cw0aeIrDpMvQs2qTooaOVcnas+9//UP8y4bK0a4i2QEi/KK9u7ubdaxDU0+jazcA+fHQ7ZEWgr2Z5bYRdrjOB2ndeGaO2xDd9y7C7zo9VYzVFVrNrfNa/ezy8XQi200r5jRfLYzFaXTmWoZf/yyFeRI5t+0DdwDhgkDnWIHUGkCrsLxDKv3wJ8Pu/MlCiBad1vppUUxU/wmhSI7YCFFG0xHeOrPT1G2sPGklev+0SExiVLuQ8BHrCnkOxe58ErTk8AP39CL3mdZKC1A/OCikpBMB+bAFuZ4GsAq5uUOIbtgDIebgtyqoEPOoW5uj1MBogbzfTk8nsKiM4ySumz6fAZutyaD21FnfTYbrLJglCkt5AGL6ew1fS24C76yEunExa7K+5mN9gMP2OBWHOorcy6FRc0YRGi1R26QO9jKm1KT0CJ1
++ echo -e 'conn mytunnel\n    leftid=@west\n    left=192.168.114.4\n    leftrsasigkey=0sAwEAAanwdroWjVIkQWE8RcAOXB81BLtSEqKqEGn6RF8pTdD8QCbK17KaeIFFfnqrNjJv/Tv3DZyKDBZk48jFZelHVgZmetyjl/kFkhIY9Q6qIZMS5fQH806aDbKVly6lRiS2UDLoJuyFQ7lhZ3dBNv7W42Dv9p567cAEVgoF+I6GpZdxLRThiwMLMLTfBJvp0xWJMwDAk7b2EHh/D9mdKPNu7TTsvjWrBV/uwtXp/G1kh/a52p+F6SICv2BZCNYS9jxddUyF+YJkVvdwPE1voYVW3XxA4uj+Otsq8ypD9dJVKXnBUuCWoErl8hlJpyipqc3yJgpaKcLGinHDE5HoKoDUecQn7oqTpqVMNt0r5bHX+pQlxYbBfddiE6l/IOdDa8Q9f8X/aOIqUjA4uRgt0ccdgoxkixtL8CeKrBSiEHS5G7jQkBg7Oqe1SnOkm8vntBu4VyymiC7WWk99MaCwy3a6Y8rnvw05C9IOAKXuyyBq1HDchZ2IIsHw96qAKeDt9vhlVpqF3ZoclFEDmplTCk3I2kaP+RDK03Y+w/iA4Zk=\n    
+    rightid=@east\n    right=192.168.114.8\n    rightrsasigkey=0sAwEAAc1jUdwOGfgyr3MG/FWxNRqILbfA5l+5ZHRo8ub3D8zVTjpbGyjPAiOc0zyAiRNRAiJTclPiC7PRhuflHVEcaBQSazb8+31K09S3O16pKHELhB5dYmTiNjDJ+bTG+1h2kS0KHOk8lnjL9MtYu/IheqBApBDheV/lkwLbSm2IQhLM32+XiokXDs5cH3GJ/cw0aeIrDpMvQs2qTooaOVcnas+9//UP8y4bK0a4i2QEi/KK9u7ubdaxDU0+jazcA+fHQ7ZEWgr2Z5bYRdrjOB2ndeGaO2xDd9y7C7zo9VYzVFVrNrfNa/ezy8XQi200r5jRfLYzFaXTmWoZf/yyFeRI5t+0DdwDhgkDnWIHUGkCrsLxDKv3wJ8Pu/MlCiBad1vppUUxU/wmhSI7YCFFG0xHeOrPT1G2sPGklev+0SExiVLuQ8BHrCnkOxe58ErTk8AP39CL3mdZKC1A/OCikpBMB+bAFuZ4GsAq5uUOIbtgDIebgtyqoEPOoW5uj1MBogbzfTk8nsKiM4ySumz6fAZutyaD21FnfTYbrLJglCkt5AGL6ew1fS24C76yEunExa7K+5mN9gMP2OBWHOorcy6FRc0YRGi1R26QO9jKm1KT0CJ1\n    
+    authby=rsasig\n    auto=start'
++ SSH_SCP /etc/ipsec.d/my_host-to-host.conf root@192.168.114.8:/etc/ipsec.d/ 'openEuler12#$'
++ src=/etc/ipsec.d/my_host-to-host.conf
++ dest=root@192.168.114.8:/etc/ipsec.d/
++ remotepasswd='openEuler12#$'
++ connport=22
++ bash /root/mugen/libs/locallibs/sshscp.sh -p 'openEuler12#$' -o 22 -s /etc/ipsec.d/my_host-to-host.conf -d root@192.168.114.8:/etc/ipsec.d/
+Thu Oct 19 23:56:15 2023 - WARN  - the remote password uses the default configuration.
+Thu Oct 19 23:56:16 2023 - WARN  - the connect port using the default configuration
+spawn scp -P 22 -r /etc/ipsec.d/my_host-to-host.conf root@192.168.114.8:/etc/ipsec.d/
+
+Authorized users only. All activities may be monitored and reported.
+root@192.168.114.8's password: 
+my_host-to-host.conf                            0%    0     0.0KB/s   --:-- ETAmy_host-to-host.conf                          100% 1362   264.5KB/s   00:00    
++ ret=0
++ test 0 -ne 0
++ return 0
++ ipsec auto --add mytunnel
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ systemctl restart ipsec
++ ipsec setup start
+Redirecting to: systemctl start ipsec.service
++ P_SSH_CMD --cmd 'ipsec auto --add mytunnel;systemctl restart ipsec;ipsec setup start' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec auto --add mytunnel;systemctl restart ipsec;ipsec setup start' --node 2
+Redirecting to: systemctl start ipsec.service
++ ipsec auto --up mytunnel
+002 "mytunnel" #4: initiating Child SA using IKE SA #2
+002 "mytunnel" #2: IKE_AUTH request fragment 1 of 2 has duplicate Message ID 1; retransmitting response
+002 "mytunnel" #2: IKE_AUTH request fragment 1 of 2 has duplicate Message ID 1; retransmitting response
+189 "mytunnel" #4: sent CREATE_CHILD_SA request for new IPsec SA
+010 "mytunnel" #2: STATE_V2_ESTABLISHED_IKE_SA: retransmission; will wait 0.5 seconds for response
+010 "mytunnel" #2: STATE_V2_ESTABLISHED_IKE_SA: retransmission; will wait 1 seconds for response
+004 "mytunnel" #4: initiator established Child SA using #2; IPsec tunnel [192.168.114.4-192.168.114.4:0-65535 0] -> [192.168.114.8-192.168.114.8:0-65535 0] {ESP/ESN=>0xb368c01a <0x55eecb12 xfrm=AES_GCM_16_256-NONE-DH19 DPD=passive}
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ P_SSH_CMD --cmd 'ipsec auto --up mytunnel' --node 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --cmd 'ipsec auto --up mytunnel' --node 2
+002 "mytunnel" #4: initiating Child SA using IKE SA #1
+189 "mytunnel" #4: sent CREATE_CHILD_SA request for new IPsec SA
+004 "mytunnel" #4: initiator established Child SA using #1; IPsec tunnel [192.168.114.8-192.168.114.8:0-65535 0] -> [192.168.114.4-192.168.114.4:0-65535 0] {ESP/ESN=>0xf6698d5d <0x44c579cf xfrm=AES_GCM_16_256-NONE-DH19 DPD=passive}
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'Finish testcase execution.'
++ message='Finish testcase execution.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish testcase execution.'
+Thu Oct 19 23:56:47 2023 - INFO  - Finish testcase execution.
++ CASE_RESULT 0
++ case_re=0
++ test -z 1
++ test 1 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Oct 19 23:56:47 2023 - ERROR - failed to execute the case.
++ exit 1
++ post_test
++ LOG_INFO 'start environment cleanup.'
++ message='start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'start environment cleanup.'
+Thu Oct 19 23:56:48 2023 - INFO  - start environment cleanup.
++ systemctl stop ipsec
++ firewall-cmd --remove-service=ipsec
+success
++ firewall-cmd --runtime-to-permanent
+success
++ P_SSH_CMD 'systemctl stop ipsec;firewall-cmd --remove-service=ipsec;firewall-cmd --runtime-to-permanent' 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py 'systemctl stop ipsec;firewall-cmd --remove-service=ipsec;firewall-cmd --runtime-to-permanent' 2
+usage: ssh_cmd.py [-h] --cmd CMD [--node NODE] [--ip IP] [--password PASSWORD]
+                  [--port PORT] [--user USER] [--timeout TIMEOUT]
+ssh_cmd.py: error: the following arguments are required: --cmd
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpr1xm82nx ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpr1xm82nx
++ '[' 0 -ne 0 ']'
++ DNF_REMOVE 2 libreswan
++ node=2
++ pkg_list=libreswan
++ mode=0
++ [[ -z /tmp/tmpr1xm82nx ]]
++ '[' 0 -ne 0 ']'
++ '[' 2 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 2 --pkgs libreswan --tempfile /tmp/tmpr1xm82nx
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 153, in rpm_remove
+    conn = ssh_cmd.pssh_conn(
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/ssh_cmd.py", line 53, in pssh_conn
+    conn.connect(ip, port, user, password, timeout=timeout)
+  File "/usr/lib/python3.11/site-packages/paramiko/client.py", line 386, in connect
+    sock.connect(addr)
+TimeoutError: [Errno 110] Connection timed out
++ '[' 0 -ne 0 ']'
++ rm -rf /tmp/key.txt /tmp/rsa.txt /etc/ipsec.d/cert9.db /etc/ipsec.d/key4.db /etc/ipsec.d/my_host-to-host.conf /etc/ipsec.d/pkcs11.txt /var/lib/ipsec/nss/cert9.db /var/lib/ipsec/nss/key4.db
++ P_SSH_CMD 'rm -rf /tmp/key.txt /tmp/rsa.txt /etc/ipsec.d/* /var/lib/ipsec/nss/*.db' 2
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py 'rm -rf /tmp/key.txt /tmp/rsa.txt /etc/ipsec.d/* /var/lib/ipsec/nss/*.db' 2
+usage: ssh_cmd.py [-h] --cmd CMD [--node NODE] [--ip IP] [--password PASSWORD]
+                  [--port PORT] [--user USER] [--timeout TIMEOUT]
+ssh_cmd.py: error: the following arguments are required: --cmd
++ LOG_INFO 'Finish environment cleanup!'
++ message='Finish environment cleanup!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup!'
+Thu Oct 19 23:59:32 2023 - INFO  - Finish environment cleanup!

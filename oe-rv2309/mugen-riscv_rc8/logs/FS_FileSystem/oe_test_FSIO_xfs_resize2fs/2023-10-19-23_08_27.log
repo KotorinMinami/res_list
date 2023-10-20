@@ -1,0 +1,197 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 0 -eq 0 ]]
++++ lsblk
++++ grep test_vggroup
++++ awk '{print $1}'
++++ head -n 1
++++ cut -d - -f 1
+++ vggroup=├─test_vggroup20231019225427
+++ vggroup=test_vggroup20231019225427
+++ vgremove test_vggroup20231019225427 -y
+  Logical volume "test_lv120231019230813" successfully removed.
+  Logical volume "test_lv220231019230813" successfully removed.
+  Logical volume "test_lv320231019230813" successfully removed.
+  Volume group "test_vggroup20231019225427" successfully removed
+++ rm -rf /tmp/point120231019230813 /tmp/point220231019230813 /tmp/point320231019230813
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ grep expect
++ rpm -qa
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Thu Oct 19 23:08:31 2023 - INFO  - Start to prepare the database config.
++ point_list=($(CREATE_FS xfs))
+++ CREATE_FS xfs
+++ fs_type=xfs
++++ date +%Y%m%d%H%M%S
+++ cur_date=20231019230831
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20231019230831
+++++ lsblk
+++++ grep disk
+++++ tail -n 1
+++++ awk '{print $1}'
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 0 -eq 0 ]]
++++ vggroup=test_vggroup20231019230831
++++ vgcreate test_vggroup20231019230831 /dev/vdb
++++ printf test_vggroup20231019230831
+++ vggroup=test_vggroup20231019230831
+++ count=1
+++ msg='test_vggroup20231019230831 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120231019230831
+++ point=/tmp/point120231019230831
+++ lvcreate -n test_lv120231019230831 -L 512M test_vggroup20231019230831 -y
+++ mkfs -t xfs /dev/test_vggroup20231019230831/test_lv120231019230831
+++ mkdir /tmp/point120231019230831
+++ mount /dev/test_vggroup20231019230831/test_lv120231019230831 /tmp/point120231019230831
+++ msg='test_vggroup20231019230831 /tmp/point120231019230831 '
+++ count=2
+++ echo test_vggroup20231019230831 /tmp/point120231019230831
++ vggroup=test_vggroup20231019230831
++ xfs_point=/tmp/point120231019230831
+++ lsblk
+++ grep test_vggroup20231019230831
+++ awk '{print $1}'
+++ cut -d - -f 2
++ lv=test_lv120231019230831
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Thu Oct 19 23:08:33 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Oct 19 23:08:34 2023 - INFO  - Start to run test.
+++ df -i
+++ grep /dev/mapper/test_vggroup20231019230831-test_lv120231019230831
+++ awk '{print $2}'
++ size1=262144
++ lvextend -L +1G /dev/test_vggroup20231019230831/test_lv120231019230831
+  Size of logical volume test_vggroup20231019230831/test_lv120231019230831 changed from 512.00 MiB (128 extents) to 1.50 GiB (384 extents).
+  Logical volume test_vggroup20231019230831/test_lv120231019230831 successfully resized.
++ xfs_growfs /dev/test_vggroup20231019230831/test_lv120231019230831
+meta-data=/dev/mapper/test_vggroup20231019230831-test_lv120231019230831 isize=512    agcount=4, agsize=32768 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=0
+data     =                       bsize=4096   blocks=131072, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=16384, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+data blocks changed from 131072 to 393216
++ CHECK_RESULT 0 0 0 'Change size of xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Change size of xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ df -i
+++ grep /dev/mapper/test_vggroup20231019230831-test_lv120231019230831
+++ awk '{print $2}'
++ size2=786432
++ [[ 262144 -ne 786432 ]]
++ CHECK_RESULT 0 0 0 'Resize for xfs failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Resize for xfs failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Oct 19 23:08:35 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Oct 19 23:08:36 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Oct 19 23:08:36 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20231019230831 /tmp/point120231019230831
++ list='test_vggroup20231019230831 /tmp/point120231019230831'
++ REMOVE_FS 'test_vggroup20231019230831 /tmp/point120231019230831'
++ point_list=($1)
+++ seq 0 1
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20231019230831
+++ df -T
+++ grep test_vggroup20231019230831
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231019230831-test_lv120231019230831
++ [[ /dev/mapper/test_vggroup20231019230831-test_lv120231019230831 == '' ]]
++ umount -f test_vggroup20231019230831
+umount: test_vggroup20231019230831: no mount point specified.
++ rm -rf test_vggroup20231019230831
++ DELETE_LV /dev/mapper/test_vggroup20231019230831-test_lv120231019230831
++ lvname=/dev/mapper/test_vggroup20231019230831-test_lv120231019230831
++ lvremove /dev/mapper/test_vggroup20231019230831-test_lv120231019230831 -y
+  Logical volume test_vggroup20231019230831/test_lv120231019230831 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120231019230831
+++ df -T
+++ awk '{print $1}'
+++ grep /tmp/point120231019230831
++ lv=/dev/mapper/test_vggroup20231019230831-test_lv120231019230831
++ [[ /dev/mapper/test_vggroup20231019230831-test_lv120231019230831 == '' ]]
++ umount -f /tmp/point120231019230831
++ rm -rf /tmp/point120231019230831
++ DELETE_LV /dev/mapper/test_vggroup20231019230831-test_lv120231019230831
++ lvname=/dev/mapper/test_vggroup20231019230831-test_lv120231019230831
++ lvremove /dev/mapper/test_vggroup20231019230831-test_lv120231019230831 -y
+  Logical volume "test_lv120231019230831" successfully removed.
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Oct 19 23:08:38 2023 - INFO  - End to restore the test environment.

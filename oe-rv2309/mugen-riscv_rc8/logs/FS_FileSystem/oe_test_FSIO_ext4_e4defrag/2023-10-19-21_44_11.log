@@ -1,0 +1,179 @@
++ source ../common_lib/fsio_lib.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
+++ export 'FS_TYPE=ext3 ext4 xfs'
+++ FS_TYPE='ext3 ext4 xfs'
+++ export LANG=en_US.UTF-8
+++ LANG=en_US.UTF-8
+++ REMOVE_VG
+++ vggroup=
+++ [[ '' != '' ]]
++++ df -T
++++ grep test_vggroup
++++ awk '{print $7}'
+++ mounted=
+++ [[ '' != '' ]]
+++ lsblk
+++ grep test_vggroup
+++ [[ 1 -eq 0 ]]
+++ rm -rf '/tmp/point*'
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the database config.'
++ message='Start to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the database config.'
+Thu Oct 19 21:44:14 2023 - INFO  - Start to prepare the database config.
++ DNF_INSTALL e2fsprogs
++ pkgs=e2fsprogs
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs e2fsprogs --node 1 --tempfile ''
+Thu Oct 19 21:44:24 2023 - INFO  - pkgs:(e2fsprogs) is already installed
++ tmpfile2=
++ '[' -z '' ']'
++ tmpfile=
++ point_list=($(CREATE_FS ext4))
+++ CREATE_FS ext4
+++ fs_type=ext4
++++ date +%Y%m%d%H%M%S
+++ cur_date=20231019214424
++++ CREATE_VG
+++++ date +%Y%m%d%H%M%S
++++ cur_date=20231019214424
+++++ grep disk
+++++ lsblk
+++++ awk '{print $1}'
+++++ tail -n 1
++++ free_disk=vdb
++++ disk_name=/dev/vdb
++++ pvcreate /dev/vdb -f
++++ [[ 5 -eq 0 ]]
+++++ pvcreate /dev/vdb
+++++ grep test_vggroup
+++++ cut -d '"' -f 4
++++ vggroup=test_vggroup20231019214359
++++ printf test_vggroup20231019214359
+++ vggroup=test_vggroup20231019214359
+++ count=1
+++ msg='test_vggroup20231019214359 '
+++ for fs in ${fs_type[@]}
+++ lvname=test_lv120231019214424
+++ point=/tmp/point120231019214424
+++ lvcreate -n test_lv120231019214424 -L 512M test_vggroup20231019214359 -y
+++ mkfs -t ext4 /dev/test_vggroup20231019214359/test_lv120231019214424
+mke2fs 1.47.0 (5-Feb-2023)
+++ mkdir /tmp/point120231019214424
+++ mount /dev/test_vggroup20231019214359/test_lv120231019214424 /tmp/point120231019214424
+++ msg='test_vggroup20231019214359 /tmp/point120231019214424 '
+++ count=2
+++ echo test_vggroup20231019214359 /tmp/point120231019214424
++ vggroup=test_vggroup20231019214359
++ ext4_point=/tmp/point120231019214424
++ echo a
++ mkdir /tmp/point120231019214424/testDir
++ LOG_INFO 'Finish to prepare the database config.'
++ message='Finish to prepare the database config.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish to prepare the database config.'
+Thu Oct 19 21:44:26 2023 - INFO  - Finish to prepare the database config.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Oct 19 21:44:26 2023 - INFO  - Start to run test.
++ e4defrag /tmp/point120231019214424
+e4defrag 1.47.0 (5-Feb-2023)
+ext4 defragmentation for directory(/tmp/point120231019214424)
+[79;0H[K[3/4]/tmp/point120231019214424/testFile:	100%	[ OK ]
+
+	Success:			[ 1/4 ]
+	Failure:			[ 3/4 ]
++ CHECK_RESULT 0 0 0 'e4defrag for ext4 failed.'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='e4defrag for ext4 failed.'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Oct 19 21:44:27 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Oct 19 21:44:28 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Oct 19 21:44:28 2023 - INFO  - Start to restore the test environment.
+++ echo test_vggroup20231019214359 /tmp/point120231019214424
++ list='test_vggroup20231019214359 /tmp/point120231019214424'
++ REMOVE_FS 'test_vggroup20231019214359 /tmp/point120231019214424'
++ point_list=($1)
+++ seq 0 1
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=test_vggroup20231019214359
+++ df -T
+++ grep test_vggroup20231019214359
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231019214359-test_lv120231019214424
++ [[ /dev/mapper/test_vggroup20231019214359-test_lv120231019214424 == '' ]]
++ umount -f test_vggroup20231019214359
+umount: test_vggroup20231019214359: no mount point specified.
++ rm -rf test_vggroup20231019214359
++ DELETE_LV /dev/mapper/test_vggroup20231019214359-test_lv120231019214424
++ lvname=/dev/mapper/test_vggroup20231019214359-test_lv120231019214424
++ lvremove /dev/mapper/test_vggroup20231019214359-test_lv120231019214424 -y
+  Logical volume test_vggroup20231019214359/test_lv120231019214424 contains a filesystem in use.
++ for i in $(seq 0 $((${#point_list[@]} - 1)))
++ tmp=/tmp/point120231019214424
+++ grep /tmp/point120231019214424
+++ df -T
+++ awk '{print $1}'
++ lv=/dev/mapper/test_vggroup20231019214359-test_lv120231019214424
++ [[ /dev/mapper/test_vggroup20231019214359-test_lv120231019214424 == '' ]]
++ umount -f /tmp/point120231019214424
++ rm -rf /tmp/point120231019214424
++ DELETE_LV /dev/mapper/test_vggroup20231019214359-test_lv120231019214424
++ lvname=/dev/mapper/test_vggroup20231019214359-test_lv120231019214424
++ lvremove /dev/mapper/test_vggroup20231019214359-test_lv120231019214424 -y
+  Logical volume "test_lv120231019214424" successfully removed.
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z '' ]]
++ [[ -z '' ]]
++ LOG_WARN 'no thing to do.'
++ message='no thing to do.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level warn --message 'no thing to do.'
+Thu Oct 19 21:44:29 2023 - WARN  - no thing to do.
++ return 0
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Oct 19 21:44:30 2023 - INFO  - End to restore the test environment.

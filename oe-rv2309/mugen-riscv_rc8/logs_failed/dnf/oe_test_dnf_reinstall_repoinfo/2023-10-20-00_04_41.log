@@ -1,0 +1,378 @@
++ source common/common_dnf.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Fri Oct 20 00:04:43 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ OLD_LANG=C.UTF-8
++ export LANG=en_US.UTF-8
++ LANG=en_US.UTF-8
++ DNF_INSTALL tree
++ pkgs=tree
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs tree --node 1 --tempfile ''
++ tmpfile2='everything                                       50  B/s | 146  B     00:02    
+Errors during downloading metadata for repository '\''everything'\'':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo '\''everything'\'': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried'
++ '[' -z '' ']'
++ tmpfile='everything                                       50  B/s | 146  B     00:02    
+Errors during downloading metadata for repository '\''everything'\'':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo '\''everything'\'': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried'
++ LOG_INFO 'Finish preparing the test environment.'
++ message='Finish preparing the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish preparing the test environment.'
+Fri Oct 20 00:05:20 2023 - INFO  - Finish preparing the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Fri Oct 20 00:05:20 2023 - INFO  - Start to run test.
++ dnf -y reinstall tree
++ grep Reinstalled
+Errors during downloading metadata for repository 'everything':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 32'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 32'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 32'
+Fri Oct 20 00:05:28 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 32
++ '[' 0 -eq 1 ']'
++ return 0
++ rpm -q tree
++ grep tree
+package tree is not installed
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf remove -y tree
++ grep Removed
+No packages marked for removal.
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 36'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 36'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 36'
+Fri Oct 20 00:05:33 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 36
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf reinstall -y tree
++ grep 'Package tree available, but not installed'
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 38'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 38'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 38'
+Fri Oct 20 00:05:41 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 38
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf --repo=everything repolist
++ grep everything
+everything                              everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
+++ dnf --repo=everything repolist
+++ wc -l
++ ret=2
++ CHECK_RESULT 2 2 0
++ actual_result=2
++ expect_result=2
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 2x
++ return 0
++ dnf --repoid=everything repolist
++ grep everything
+everything                              everything
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoinfo
++ grep Repo-id
+everything                                       56  B/s | 146  B     00:02    
+Errors during downloading metadata for repository 'everything':
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+Error: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 46'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 46'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 46'
+Fri Oct 20 00:06:00 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 46
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf repolist
++ grep 'repo id'
+repo id                                 repo name
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf repoquery tree
++ grep tree
+everything                                       56  B/s | 146  B     00:02    
+Errors during downloading metadata for repository 'everything':
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+Error: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 50'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 50'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 50'
+Fri Oct 20 00:06:11 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 50
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf repoquery -all
++ grep /usr/bin/tree
+everything                                       56  B/s | 146  B     00:02    
+Errors during downloading metadata for repository 'everything':
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+Error: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 52'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 52'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 52'
+Fri Oct 20 00:06:19 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 52
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf -y install sysstat
++ rpm -q sysstat
++ grep sysstat
+package sysstat is not installed
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ dnf search vim
++ grep vim-enhanced
+Waiting for process with pid 3687 to finish.
+everything                                       56  B/s | 146  B     00:02    
+Errors during downloading metadata for repository 'everything':
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+Error: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 57'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 57'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 57'
+Fri Oct 20 00:06:26 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 57
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf update-minimal --assumeno
++ grep Upgrading:
+everything                                       52  B/s | 146  B     00:02    
+Errors during downloading metadata for repository 'everything':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried
++ CHECK_RESULT 1
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n ''
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_dnf_reinstall_repoinfo.sh line 59'
++ message='oe_test_dnf_reinstall_repoinfo.sh line 59'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_dnf_reinstall_repoinfo.sh line 59'
+Fri Oct 20 00:06:36 2023 - ERROR - oe_test_dnf_reinstall_repoinfo.sh line 59
++ '[' 0 -eq 1 ']'
++ return 0
++ dnf --version
++ grep -B 1 dnf
+4.16.2
+  Installed: dnf-0:4.16.2-1.oe2309.noarch at Thu 19 Oct 2023 09:03:38 AM GMT
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End of the test.'
++ message='End of the test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End of the test.'
+Fri Oct 20 00:06:39 2023 - INFO  - End of the test.
++ CASE_RESULT 0
++ case_re=0
++ test -z 8
++ test 8 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Fri Oct 20 00:06:40 2023 - ERROR - failed to execute the case.
++ exit 8
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Fri Oct 20 00:06:40 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ export LANG=C.UTF-8
++ LANG=C.UTF-8
++ DNF_REMOVE 1 'tree sysstat'
++ node=1
++ pkg_list='tree sysstat'
++ mode=0
++ [[ -z everything                                       50  B/s | 146  B     00:02    
+Errors during downloading metadata for repository 'everything':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs 'tree sysstat' --tempfile 'everything                                       50  B/s | 146  B     00:02    
+Errors during downloading metadata for repository '\''everything'\'':
+  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)
+  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)
+Error: Failed to download metadata for repo '\''everything'\'': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried'
+Traceback (most recent call last):
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 192, in <module>
+    exitcode = rpm_remove(args.node, args.pkgs, args.tempfile)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/mugen/libs/locallibs/rpm_manage.py", line 163, in rpm_remove
+    with open(tmpfile, "r") as f:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: "everything                                       50  B/s | 146  B     00:02    \nErrors during downloading metadata for repository 'everything':\n  - Status code: 404 for http://repo.openeuler.org/openEuler-23.09/everything/riscv64/repodata/repomd.xml (IP: 49.0.230.196)\n  - Status code: 404 for https://mirrors.openeuler.org/metalink?repo=23.09/everything&arch=riscv64 (IP: 49.0.229.174)\nError: Failed to download metadata for repo 'everything': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried"
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish restoring the test environment.'
++ message='Finish restoring the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish restoring the test environment.'
+Fri Oct 20 00:06:43 2023 - INFO  - Finish restoring the test environment.
