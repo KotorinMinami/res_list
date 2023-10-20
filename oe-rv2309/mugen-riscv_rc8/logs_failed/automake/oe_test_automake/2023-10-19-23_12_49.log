@@ -1,0 +1,250 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment!'
++ message='Start to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment!'
+Thu Oct 19 23:12:51 2023 - INFO  - Start to prepare the test environment!
++ DNF_INSTALL 'automake make'
++ pkgs='automake make'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'automake make' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpyt6u4p7z
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpyt6u4p7z
++ mkdir /tmp/main
++ LOG_INFO 'End to prepare the test environment!'
++ message='End to prepare the test environment!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment!'
+Thu Oct 19 23:13:26 2023 - INFO  - End to prepare the test environment!
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start executing testcase!'
++ message='Start executing testcase!'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start executing testcase!'
+Thu Oct 19 23:13:27 2023 - INFO  - Start executing testcase!
++ cd /tmp/main
++ echo '#include <stdio.h>
+int main(int argc, char** argv)
+{
+	printf("Hello, Auto Makefile!\n");
+	return 0;
+}'
++ autoscan
++ test -e autoscan.log
++ CHECK_RESULT 0 0 0 'autoscan.log fails to run'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='autoscan.log fails to run'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ test -e configure.scan
++ CHECK_RESULT 0 0 0 'autoscan.scan fails to run'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='autoscan.scan fails to run'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ mv configure.scan configure.in
++ sed -i 's/^AC_INIT.*/AC_INIT(main,1.0, pgpxc@163.com)/g' configure.in
++ sed -i 's/^AC_OUTPUT.*/AC_OUTPUT([Makefile])/g' configure.in
++ sed -i '6i AM_INIT_AUTOMAKE(main,1.0)' configure.in
++ aclocal
+aclocal: warning: autoconf input should be named 'configure.ac', not 'configure.in'
++ test -e aclocal.m4
++ CHECK_RESULT 0 0 0 'aclocal.m4 is not generated'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='aclocal.m4 is not generated'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ autoconf
+configure.in:6: warning: AM_INIT_AUTOMAKE: two- and three-arguments forms are deprecated.
+./lib/autoconf/general.m4:2434: AC_DIAGNOSE is expanded from...
+aclocal.m4:429: AM_INIT_AUTOMAKE is expanded from...
+configure.in:6: the top level
+configure.in:21: warning: AC_OUTPUT should be used without arguments.
+configure.in:21: You should run autoupdate.
++ test -e configure
++ CHECK_RESULT 0 0 0 'configure is not generated'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='configure is not generated'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ autoheader
+autoheader: warning: autoconf input should be named 'configure.ac', not 'configure.in'
++ test -e config.h.in
++ CHECK_RESULT 0 0 0 'config.h.in is not generated'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='config.h.in is not generated'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ echo 'AUTOMAKE_OPTIONS=foreign
+bin_PROGRAMS=main
+main_SOURCES=main.c'
++ automake --add-missing
+automake: warning: autoconf input should be named 'configure.ac', not 'configure.in'
+configure.in:6: warning: AM_INIT_AUTOMAKE: two- and three-arguments forms are deprecated.  For more info, see:
+configure.in:6: https://www.gnu.org/software/automake/manual/automake.html#Modernize-AM_005fINIT_005fAUTOMAKE-invocation
+configure.in:11: installing './compile'
+configure.in:6: installing './install-sh'
+configure.in:6: installing './missing'
+Makefile.am: installing './depcomp'
+automake: warning: autoconf input should be named 'configure.ac', not 'configure.in'
++ CHECK_RESULT 0 0 0 'Failed to add script files using automake --add-missing'
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log='Failed to add script files using automake --add-missing'
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ ./configure
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a race-free mkdir -p... /usr/bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for gcc... no
+checking for cc... no
+checking for cl.exe... no
+checking for clang... no
+configure: error: in `/tmp/main':
+configure: error: no acceptable C compiler found in $PATH
+See `config.log' for more details
++ CHECK_RESULT 1 0 0 './configure fails to run'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='./configure fails to run'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n './configure fails to run'
++ LOG_ERROR './configure fails to run'
++ message='./configure fails to run'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message './configure fails to run'
+Thu Oct 19 23:13:49 2023 - ERROR - ./configure fails to run
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_automake.sh line 62'
++ message='oe_test_automake.sh line 62'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_automake.sh line 62'
+Thu Oct 19 23:13:50 2023 - ERROR - oe_test_automake.sh line 62
++ '[' 0 -eq 1 ']'
++ return 0
++ make
+make: *** No targets specified and no makefile found.  Stop.
++ CHECK_RESULT 2 0 0 'Makefile test fails'
++ actual_result=2
++ expect_result=0
++ mode=0
++ error_log='Makefile test fails'
++ exit_mode=0
++ '[' -z 2 ']'
++ '[' 0 -eq 0 ']'
++ test 2x '!=' 0x
++ test -n 'Makefile test fails'
++ LOG_ERROR 'Makefile test fails'
++ message='Makefile test fails'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'Makefile test fails'
+Thu Oct 19 23:13:50 2023 - ERROR - Makefile test fails
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_automake.sh line 64'
++ message='oe_test_automake.sh line 64'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_automake.sh line 64'
+Thu Oct 19 23:13:51 2023 - ERROR - oe_test_automake.sh line 64
++ '[' 0 -eq 1 ']'
++ return 0
++ ./main
++ grep 'Hello, Auto Makefile!'
+oe_test_automake.sh: line 65: ./main: No such file or directory
++ CHECK_RESULT 1 0 0 'main fails to run'
++ actual_result=1
++ expect_result=0
++ mode=0
++ error_log='main fails to run'
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 0 -eq 0 ']'
++ test 1x '!=' 0x
++ test -n 'main fails to run'
++ LOG_ERROR 'main fails to run'
++ message='main fails to run'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'main fails to run'
+Thu Oct 19 23:13:51 2023 - ERROR - main fails to run
++ (( exec_result++ ))
++ LOG_ERROR 'oe_test_automake.sh line 66'
++ message='oe_test_automake.sh line 66'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'oe_test_automake.sh line 66'
+Thu Oct 19 23:13:52 2023 - ERROR - oe_test_automake.sh line 66
++ '[' 0 -eq 1 ']'
++ return 0
++ CASE_RESULT 0
++ case_re=0
++ test -z 3
++ test 3 -gt 0
++ LOG_ERROR 'failed to execute the case.'
++ message='failed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level error --message 'failed to execute the case.'
+Thu Oct 19 23:13:52 2023 - ERROR - failed to execute the case.
++ exit 3
++ post_test
++ LOG_INFO 'Start environment cleanup.'
++ message='Start environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start environment cleanup.'
+Thu Oct 19 23:13:53 2023 - INFO  - Start environment cleanup.
++ rm -rf /tmp/main
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpyt6u4p7z ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpyt6u4p7z
++ '[' 0 -ne 0 ']'
++ LOG_INFO 'Finish environment cleanup.'
++ message='Finish environment cleanup.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Finish environment cleanup.'
+Thu Oct 19 23:14:02 2023 - INFO  - Finish environment cleanup.
