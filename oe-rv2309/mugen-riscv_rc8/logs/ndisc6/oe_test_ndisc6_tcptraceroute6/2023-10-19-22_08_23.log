@@ -1,0 +1,227 @@
++ source ../common/common_ndisc6.sh
+++ source /root/mugen/libs/locallibs/common_lib.sh
++++ python3 --version
++++ '[' 0 -eq 0 ']'
++++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Thu Oct 19 22:08:25 2023 - INFO  - Start to prepare the test environment.
++ deploy_env
++ DNF_INSTALL 'ndisc6 xinetd time'
++ pkgs='ndisc6 xinetd time'
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs 'ndisc6 xinetd time' --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpbsl18_p4
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpbsl18_p4
+++ hostname
++ hostname_init=openeuler
++ hostname newlocalhost
+++ ip addr show enp0s2
+++ grep -w inet6
+++ awk '{print $2}'
+++ awk -F / '{print $1}'
+++ awk 'NR==1{print $1}'
++ NODE1_IPV6=fe80::e569:b86d:66e4:fa0c
+++ grep -w inet6
+++ P_SSH_CMD --node 2 --cmd 'ip addr show enp0s2'
+++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'ip addr show enp0s2'
+++ awk -F / '{print $1}'
+++ awk '{print $2}'
+++ awk 'NR==1{print $1}'
++ NODE2_IPV6=fe80::f90b:f475:e92e:cd9d
++ cp /etc/resolv.conf /etc/resolv.conf-bak
++ sed -i 's/name/#&/' /etc/resolv.conf
++ sed -i 6s/yes/no/g /etc/xinetd.d/echo-stream
++ systemctl restart xinetd
++ DNF_INSTALL xinetd 2
++ pkgs=xinetd
++ node=2
++ '[' -z /tmp/tmpbsl18_p4 ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs xinetd --node 2 --tempfile /tmp/tmpbsl18_p4
+Thu Oct 19 22:09:12 2023 - INFO  - pkgs:(xinetd) is already installed
++ tmpfile2=
++ '[' -z /tmp/tmpbsl18_p4 ']'
++ P_SSH_CMD --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
++ python3 /root/mugen/libs/locallibs/ssh_cmd.py --node 2 --cmd 'sed -i '\''6s/yes/no/g'\'' /etc/xinetd.d/echo-stream;systemctl restart xinetd;'
+
++ LOG_INFO 'End to prepare the test environment.'
++ message='End to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to prepare the test environment.'
+Thu Oct 19 22:09:18 2023 - INFO  - End to prepare the test environment.
+++ type -t run_test
++ '[' -n function ']'
++ run_test
++ LOG_INFO 'Start to run test.'
++ message='Start to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to run test.'
+Thu Oct 19 22:09:19 2023 - INFO  - Start to run test.
++ tcptraceroute6 -d -A -f 1 -i lo -m 30 -q 3 -w 5 -z 0 -t 22 -S localhost 7
++ grep '60 bytes'
+traceroute to localhost (::1) from ::1, port 7, from port 62237, 30 hops max, 60 bytes packets
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -g fe80::f90b:f475:e92e:cd9d localhost 7
++ grep '64 bytes'
+traceroute to localhost (::1) from ::1, port 7, from port 62235, 30 hops max, 64 bytes packets
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -d localhost 7
++ grep open
+ 1  localhost (::1)  0.101 ms [open]  0.058 ms  0.057 ms 
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -l 50 -S localhost 7
++ grep '50 bytes'
+traceroute to localhost (::1) from ::1, port 7, from port 62231, 30 hops max, 50 bytes packets
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -E localhost 7
++ grep 'bytes packets'
+traceroute to localhost (::1) from ::1, port 7, from port 62229, 30 hops max, 60 bytes packets
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -N localhost 7
++ grep '1  localhost (::1)'
+ 1  localhost (::1)  0.102 ms [open]  0.058 ms  0.057 ms 
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -n localhost 7
++ grep '1  localhost (::1)'
++ CHECK_RESULT 1 0 1
++ actual_result=1
++ expect_result=0
++ mode=1
++ error_log=
++ exit_mode=0
++ '[' -z 1 ']'
++ '[' 1 -eq 0 ']'
++ test 1x == 0x
++ return 0
+++ rpm -qa ndisc6
+++ awk -F - '{print $2}'
++ ndisc6_version=1.0.4
++ tcptraceroute6 -V
++ grep 1.0.4
+traceroute6: TCP & UDP IPv6 traceroute tool 1.0.4 ($Rev$)
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ tcptraceroute6 -h
++ grep tcptraceroute6
+Usage: tcptraceroute6 [options] <IPv6 hostname/address> [port number]
++ CHECK_RESULT 0
++ actual_result=0
++ expect_result=0
++ mode=0
++ error_log=
++ exit_mode=0
++ '[' -z 0 ']'
++ '[' 0 -eq 0 ']'
++ test 0x '!=' 0x
++ return 0
++ LOG_INFO 'End to run test.'
++ message='End to run test.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to run test.'
+Thu Oct 19 22:09:20 2023 - INFO  - End to run test.
++ CASE_RESULT 0
++ case_re=0
++ test -z ''
++ test 0 -eq 0
++ LOG_INFO 'succeed to execute the case.'
++ message='succeed to execute the case.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'succeed to execute the case.'
+Thu Oct 19 22:09:21 2023 - INFO  - succeed to execute the case.
++ exec_result=
++ exit 0
++ post_test
++ LOG_INFO 'Start to restore the test environment.'
++ message='Start to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to restore the test environment.'
+Thu Oct 19 22:09:21 2023 - INFO  - Start to restore the test environment.
++ clear_env
++ DNF_REMOVE
++ node=1
++ pkg_list=
++ mode=0
++ [[ -z /tmp/tmpbsl18_p4 ]]
++ '[' 0 -ne 0 ']'
++ '[' 1 == 0 ']'
++ python3 /root/mugen/libs/locallibs/rpm_manage.py remove --node 1 --pkgs '' --tempfile /tmp/tmpbsl18_p4
++ '[' 0 -ne 0 ']'
++ hostname openeuler
++ cp -rf /etc/resolv.conf-bak /etc/resolv.conf
++ rm -rf file runtime /etc/resolv.conf-bak
++ LOG_INFO 'End to restore the test environment.'
++ message='End to restore the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'End to restore the test environment.'
+Thu Oct 19 22:09:34 2023 - INFO  - End to restore the test environment.
