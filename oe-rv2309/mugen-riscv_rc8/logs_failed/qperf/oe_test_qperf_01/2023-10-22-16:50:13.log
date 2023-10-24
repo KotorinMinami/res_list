@@ -1,0 +1,56 @@
++ source /root/mugen/libs/locallibs/common_lib.sh
+++ python3 --version
+++ '[' 0 -eq 0 ']'
+++ source /root/mugen/libs/locallibs/common_lib_python.sh
++ main
+++ type -t post_test
++ '[' -n function ']'
++ trap post_test EXIT INT HUP TERM
++ rpm -qa
++ grep expect
+++ type -t config_params
++ '[' -n '' ']'
+++ type -t pre_test
++ '[' -n function ']'
++ pre_test
++ LOG_INFO 'Start to prepare the test environment.'
++ message='Start to prepare the test environment.'
++ python3 /root/mugen/libs/locallibs/mugen_log.py --level info --message 'Start to prepare the test environment.'
+Sun Oct 22 16:50:20 2023 - INFO  - Start to prepare the test environment.
++ DNF_INSTALL qperf
++ pkgs=qperf
++ node=1
++ '[' -z '' ']'
++ tmpfile=
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs qperf --node 1 --tempfile ''
++ tmpfile2=/tmp/tmpdaxqea9h
++ '[' -z '' ']'
++ tmpfile=/tmp/tmpdaxqea9h
++ DNF_INSTALL qperf 2
++ pkgs=qperf
++ node=2
++ '[' -z /tmp/tmpdaxqea9h ']'
+++ python3 /root/mugen/libs/locallibs/rpm_manage.py install --pkgs qperf --node 2 --tempfile /tmp/tmpdaxqea9h
++ tmpfile2=/tmp/tmpdaxqea9h
++ '[' -z /tmp/tmpdaxqea9h ']'
++ SSH_CMD 'systemctl stop firewalld && nohup qperf &' 10.0.0.5 'openEuler12#$' root
++ cmd='systemctl stop firewalld && nohup qperf &'
++ remoteip=10.0.0.5
++ remotepasswd='openEuler12#$'
++ remoteuser=root
++ timeout=300
++ connport=22
++ bash /root/mugen/libs/locallibs/sshcmd.sh -c 'systemctl stop firewalld && nohup qperf &' -i 10.0.0.5 -u root -p 'openEuler12#$' -t 300 -o 22
+Sun Oct 22 16:53:49 2023 - WARN  - the remote user uses the default configuration.
+Sun Oct 22 16:53:51 2023 - WARN  - the remote password uses the default configuration.
+Sun Oct 22 16:53:52 2023 - WARN  - the connect port using the default configuration
+spawn ssh -o ConnectTimeout=0 -p 22 root@10.0.0.5 systemctl stop firewalld && nohup qperf &
+The authenticity of host '10.0.0.5 (10.0.0.5)' can't be established.
+ED25519 key fingerprint is SHA256:dyLGVtrGchO+wGZTnJmD2TiJAv9c9hCqXDwGv/6cIzA.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.0.0.5' (ED25519) to the list of known hosts.
+
+Authorized users only. All activities may be monitored and reported.
+root@10.0.0.5's password: 
+Sun Oct 22 17:20:15 2023 - ERROR - Timeout : Command 'bash -x oe_test_qperf_01.sh' timed out after 1799.9988913979998 seconds
